@@ -1,0 +1,131 @@
+<div class="row backColor ml-3 mr-3 mt-3" (click) ="checkElement($event);">
+    <div class="col pl-3 pt-2 pr-3 pb-0 border-radius customClass">
+              <div class="row accord-heading mb-4" >
+                <div class="col customClass">
+                    <p class="text-left text-dark"><b class="subjectline">{{'designEditor.subjectlineComponent.subjectLinelbl' | translate}}</b></p>
+                    <p class="text-left text-muted text-decoration-none"><sub>{{'designEditor.subjectlineComponent.providechannelDetailslbl' | translate}}</sub></p>
+                </div>
+                <div class="col-1 text-right">
+                  <label class="btn buttonCss shadow-none float-end mt-2" type="button" *ngIf="!isFirstOpen" (click)="isFirstOpen=true; getSubjectdata()">{{'designEditor.editBtn' | translate}}</label>
+                </div>               
+
+              </div>
+              <div class="subjectWapper">
+                <div class="accord-content pl-5 pr-5 pt-4 pb-4 rounded" *ngIf="isFirstOpen">
+                  <div class="row" >
+                      <div class="col mr-3 mb-3">
+                        <label class="mr-1 font-8rem">{{'designEditor.subjectlineComponent.selectedVendorlbl' | translate}} <span class="" [innerHtml]="vendorDesc"></span></label>
+                        <label class="mr-1 font-8rem">{{'designEditor.subjectlineComponent.senderIslbl' | translate}}
+                          <ng-container *ngIf="!isBeautyCopy else editSenderName">
+                            <span class="labelMedium" [innerHtml]='beautyCopyName' (click)="editBeautyCopy();"></span>                          
+                          </ng-container>
+                          <ng-template #editSenderName>
+                            <input type="text" class="col-4 lable-size-1 p-1 borderinput" [(ngModel)]="beautyCopyName">
+                            <button type="button" class="btn btn-primary p-1 pl-2 pr-2 ml-2 mr-2" (click)="saveBeautyCopy()">{{'designEditor.okBtn' | translate}}</button>
+                          </ng-template>
+                          </label>
+                      </div>
+                      <div class="col mr-3 mb-4 d-none">
+                        <p><label class="col font-small text-truncate">{{'designEditor.subjectlineComponent.choosetheAccountToSendlbl' | translate}}</label></p>
+                        <p>
+                          <!-- <select  class="form-input form-control borderinput" [(ngModel)]="vendorId" name="vendorId">
+                            <option value="0" >Select</option>
+                            <option *ngFor="let list of vendorDataObj; let i = index" value="{{list.vendorDesc}}" >{{list.vendorDesc}}</option>
+                        </select> -->
+                        <input class="form-input form-control borderinput" [(ngModel)]="vendorDesc" name="vendorDesc" autocomplete="off">
+                      </p>
+                      </div>
+                      </div>                      
+                                              
+                  <div class="row">
+                    <div class="col mr-3 d-none">
+                      <p><label class="col font-small text-truncate">{{'designEditor.subjectlineComponent.enterSenderNamelbl' | translate}}</label></p>
+                      <p><select  class="form-input form-control borderinput" [(ngModel)]="senderConfigKey" name="senderConfigKey" autocomplete="off" [disabled]="true" (change)="setSenderid($event);getSubjectObj();">
+                        <option value="0" >{{'designEditor.selectlbl' | translate}}</option>
+                        <option *ngFor="let key of Object.keys(senderIdsObj); let i = index" value="{{key}}" >{{senderIdsObj[key]}}</option>
+                    </select></p>
+                    </div>
+                    <div class="col">
+                      <p><label class="col font-small text-truncate">{{'designEditor.subjectlineComponent.enterSubjectlbl' | translate}}</label></p>
+                      <div class="relative">
+                        <!-- <input class="form-input form-control mr-3 borderinput" id="subject_{{currentSplitId}}" placeholder="" type="text" (blur)="showEmojiPicker_subject = false" (focus)="showEmojiPicker_subject = false"
+                                  #subjectInputElement  name="subject" [(ngModel)]="subject" (change)="getSubjectObj();" autocomplete="off">  -->
+                                  
+                        <div [attr.contenteditable]="true" class="mr-3 borderinput subjectDiv" id="subject_{{currentSplitId}}" name="subject" [(ngModel)]="subject" ngDefaultControl isNative="true" perLine="7" showPreview="false" (blur)="showEmojiPicker_subject = false;subjectNpreheaderObj();" (focus)="showEmojiPicker_subject = false; mergeTagBtnEnable = false" #subjectInputElement (keydown.enter)="onEnter($event)" spellcheck="false" [innerHTML]="tempSubject | sanitizeHtml" (keyup)="getCaretIndex($event);" (click)="getCaretIndex($event);" (paste)="onPaste($event)">
+                        </div>
+                        <i (click) ="showEmojiPicker = false; showEmojiPicker_subject = !showEmojiPicker_subject" class="far fa-grin emojiIcon"></i><br>
+                        <button type="button" class="btn buttonCss shadow-none add-tags-subject" (click)="addTagsSubject(mergeTagModal)" [disabled]="mergeTagBtnEnable" (focus)="mergeTagBtnEnable = false"><span >{{'designEditor.subjectlineComponent.addTagsBtn' | translate}}</span></button>
+                        <emoji-mart class="emoji-mart-subject" [custom]="customEmojis" *ngIf="showEmojiPicker_subject" (emojiSelect)="addEmojiSubject($event)" title="{{'i18nObject.pickyourEmojiTooltip' | translate}}" [showPreview]="false" [enableSearch]="false" [enableFrequentEmojiSort]="true" [showSingleCategory]="true" [include]="['custom']"emoji="point_up" [i18n]="i18nObject" [emojiTooltip]="false"></emoji-mart>
+                      </div>
+                      
+                   </div>
+                  </div> 
+                  <div class="row" *ngIf="!isFailSafeTabActive">                        
+                    <div class="col" *ngIf="!isPreheaderInputEnable else enablePreHeader;">
+                      <label class="labelMedium" (click)="addPreHeader();"><strong>+</strong>{{'designEditor.subjectlineComponent.addPreheaderLinklbl' | translate}}</label> 
+                    </div> 
+                   
+                      <ng-template #enablePreHeader >
+                        <div class="col">
+                          <p><label class="col font-small text-truncate">{{'designEditor.subjectlineComponent.preheaderLabelshowingInEmailOptionallbl' | translate}}</label></p>
+                          <div class="relative">
+                            <!-- <input class="form-input form-control borderinput" id="preHeader_{{currentSplitId}}" placeholder="" type="text" (blur)="showEmojiPicker = false" (focus)="showEmojiPicker = false"
+                                        name="preHeader" [(ngModel)]="preHeader" autocomplete="off" (change)="getSubjectObj();"> -->
+
+                            <div [attr.contenteditable]="true" class="mr-3 borderinput preHeaderDiv" name="preHeader" [(ngModel)]="preHeader" ngDefaultControl id="preHeader_{{currentSplitId}}" (blur)="showEmojiPicker = false; subjectNpreheaderObj();" (focus)="showEmojiPicker = false; mergeTagBtnEnablePreHead = false " #preHeaderInputElement (keydown.enter)="onEnter($event)" spellcheck="false" [innerHTML]="tempPreheader | sanitizeHtml" (keyup)="getCaretIndex($event);" (click)="getCaretIndex($event);" (paste)="onPaste($event)"></div>
+                            
+                            <i (click) ="showEmojiPicker_subject =false; showEmojiPicker = !showEmojiPicker;" class="far fa-grin emojiIcon"></i><br>
+
+                            <button type="button" class="btn buttonCss shadow-none add-tags-subject" (click)="addTagsSubject(mergeTagModal)" [disabled]="mergeTagBtnEnablePreHead"><span >{{'designEditor.subjectlineComponent.addTagsBtn' | translate}}</span></button>
+
+                            <emoji-mart class="emoji-mart" [custom]="customEmojis" *ngIf="showEmojiPicker" (emojiSelect)="addEmojiPreHeader($event)" title="{{'i18nObject.pickyourEmojiTooltip' | translate}}" [showPreview]="false" [enableSearch]="false" [enableFrequentEmojiSort]="true" [showSingleCategory]="true" [include]="['custom']" emoji="point_up" [i18n]="i18nObject" [emojiTooltip]="false"></emoji-mart>
+                          </div>                                               
+                        </div>
+                        <i class="fas fa-trash trashIcon-Align" (click)="deletePreHeader();"></i>
+                     </ng-template>
+                           
+                </div>
+                <div class="row" *ngIf="isFailSafeTabActive">                        
+                  <div class="col" *ngIf="!isPreheaderInputEnableFailsafe && isFailSafeTabActive else enablePreHeader;">
+                    <label class="labelMedium" (click)="addPreHeaderfailSafe();"><strong>+</strong>{{'designEditor.subjectlineComponent.addPreheaderLinklbl' | translate}}</label> 
+                  </div>                  
+                    <ng-template #enablePreHeader >
+                      <div class="col">
+                        <p><label class="col font-small text-truncate">{{'designEditor.subjectlineComponent.preheaderLabelshowingInEmailOptionallbl' | translate}}</label></p>
+                        <div class="relative">
+                          <!-- <input class="form-input form-control borderinput" id="preHeader_{{currentSplitId}}" placeholder="" type="text" (blur)="showEmojiPicker = false" (focus)="showEmojiPicker = false"
+                                      name="preHeader" [(ngModel)]="preHeader" autocomplete="off" (change)="getSubjectObj();"> -->
+
+                          <div [attr.contenteditable]="true" class="mr-3 borderinput preHeaderDiv" name="preHeaderFailSafe" [(ngModel)]="preHeaderFailSafe" ngDefaultControl id="preHeaderFailSafe_{{currentSplitId}}" (blur)="showEmojiPicker = false; subjectNpreheaderObj();" (focus)="showEmojiPicker = false; mergeTagBtnEnablePreHead = false " #preHeaderFailsafeInputElement (keydown.enter)="onEnter($event)" spellcheck="false" [innerHTML]="tempPreheader | sanitizeHtml" (keyup)="getCaretIndex($event);" (click)="getCaretIndex($event);" (paste)="onPaste($event)"></div>
+                          
+                          <i (click) ="showEmojiPicker_subject =false; showEmojiPicker = !showEmojiPicker;" class="far fa-grin emojiIcon"></i><br>
+
+                          <button type="button" class="btn buttonCss shadow-none add-tags-subject" (click)="addTagsSubject(mergeTagModal)" [disabled]="mergeTagBtnEnablePreHead"><span >{{'designEditor.subjectlineComponent.addTagsBtn' | translate}}</span></button>
+
+                          <emoji-mart class="emoji-mart" [custom]="customEmojis" *ngIf="showEmojiPicker" (emojiSelect)="addEmojiPreHeader($event)" title="{{'i18nObject.pickyourEmojiTooltip' | translate}}" [showPreview]="false" [enableSearch]="false" [enableFrequentEmojiSort]="true" [showSingleCategory]="true" [include]="['custom']" emoji="point_up" [i18n]="i18nObject" [emojiTooltip]="false"></emoji-mart>
+                        </div>                                               
+                      </div>
+                      <i class="fas fa-trash trashIcon-Align" (click)="deletePreHeader();"></i>
+                   </ng-template>
+                         
+              </div>
+                
+                
+                        
+              </div>
+              <div class="row mr-0 ml-3 mt-3 mb-3" *ngIf="isFirstOpen">
+                <div class="col text-right mt-2">
+                    <button class="btn buttonCss shadow-none m-0" (click)="getSubjectObj();isFirstOpen=false;">{{'designEditor.doneBtn' | translate}}</button>
+                </div>
+              </div>
+    </div>
+</div>
+
+
+<ng-template #mergeTagModal>
+  <app-merge-tags></app-merge-tags>
+</ng-template>
+
+<div #mTags class="mergeTagsCode">
+  <span class="subjectOfferInserted" contenteditable="false" spellcheck="false"></span>&nbsp;
+</div>

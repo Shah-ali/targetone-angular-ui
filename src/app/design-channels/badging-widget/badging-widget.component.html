@@ -1,0 +1,353 @@
+<div class="badging-widget">
+<div class="tab-content mt-3">
+  <div class="fullscreen-white-overlay">
+    <!-- Header -->
+    <div class="header-bar">
+      <h1 class="title">{{ 'badgingwidget.SocialProof' | translate }}</h1>
+      <div class="header-buttons">
+       <button type="button" class="btn buttonCss shadow-none m-0 mr-1" id="closeBtn" (click)="onClose()">
+    {{ 'close' | translate }}
+  </button>
+  <button type="submit" class="btn buttonPrimaryCss shadow-none m-0"  (click)="insertData()">
+    {{ 'done' | translate }}
+  </button>
+  </div>
+    </div>
+
+    <!-- Content Layout -->
+    <div class="content-layout">
+      <div class="row gx-3">
+        <!-- Left Panel -->
+        <div class="col-md-3">
+          <div class="panel-box left-panel">
+            <!-- Tabs -->
+            <ul class="nav nav-tabs custom-tabs">
+              <li class="nav-item">
+                <a
+                  class="nav-link"
+                  [class.active]="activeTab === 'messagestyling'"
+                  (click)="setTab('messagestyling')"
+                >
+                  {{ 'badgingwidget.MessageStyling' | translate }}
+                </a>
+              </li>
+              <li class="nav-item">
+                <a
+                  class="nav-link"
+                  [class.active]="activeTab === 'displaysettings'"
+                  (click)="setTab('displaysettings')"
+                >
+                  {{ 'badgingwidget.DisplaySettings' | translate }}
+                </a>
+              </li>
+            </ul>
+
+            <!-- Message Styling Section -->
+            <div *ngIf="activeTab === 'messagestyling'" class="form-section">
+              <div class="ml-2 d-flex justify-content-end align-items-end">
+                <app-merge-tag-copy></app-merge-tag-copy>
+              </div>
+
+              <!-- Badge Icon -->
+              <div class="mb-3">
+                <label for="badgeIcon" class="form-label">
+                  {{ 'badgingwidget.BadgeIcon' | translate }}
+                </label>
+                <input
+                  type="text"
+                  id="badgeIcon"
+                  class="form-control"
+                  placeholder="Enter icon URL"
+                  [(ngModel)]="badge.icon"
+                />
+              </div>
+
+              <!-- Message -->
+              <div class="mb-3">
+                <label for="message" class="form-label">
+                  {{ 'badgingwidget.Messagelbl' | translate }}
+                </label>
+                <input
+                  type="text"
+                  id="message"
+                  class="form-control"
+                  [(ngModel)]="badge.message"
+                  placeholder="80 People Viewed Today"
+                />
+              </div>
+
+              <!-- Color Pickers -->
+              <div class="form-group color-group">
+                <div class="color-field">
+                  <label for="bgColor" class="form-label">
+                    {{ 'badgingwidget.Backgroundcolor' | translate }}
+                  </label>
+                  <div class="input-with-color">
+                    <input
+                      type="text"
+                      id="bgColor"
+                      class="form-control color-input"
+                      [(ngModel)]="badge.bgColor"
+                    />
+                    <input
+                      type="color"
+                      class="color-picker"
+                      [(ngModel)]="badge.bgColor"
+                    />
+                  </div>
+                </div>
+
+                <div class="color-field">
+                  <label for="fontColor" class="form-label">
+                    {{ 'badgingwidget.Fontcolor' | translate }}
+                  </label>
+                  <div class="input-with-color">
+                    <input
+                      type="text"
+                      id="fontColor"
+                      class="form-control color-input"
+                      [(ngModel)]="badge.fontColor"
+                    />
+                    <input
+                      type="color"
+                      class="color-picker"
+                      [(ngModel)]="badge.fontColor"
+                    />
+                  </div>
+                </div>
+
+                <div class="color-field">
+                  <label for="borderColor" class="form-label">
+                    {{ 'badgingwidget.Bordercolor' | translate }}
+                  </label>
+                  <div class="input-with-color">
+                    <input
+                      type="text"
+                      id="borderColor"
+                      class="form-control color-input"
+                      [(ngModel)]="badge.borderColor"
+                    />
+                    <input
+                      type="color"
+                      class="color-picker"
+                      [(ngModel)]="badge.borderColor"
+                    />
+                  </div>
+                </div>
+              </div>
+
+              <!-- Border Radius -->
+              <div class="mb-3">
+                <label class="form-label">
+                  {{ 'badgingwidget.Borderradius' | translate }}
+                </label>
+                <div class="d-flex align-items-center">
+                  <input
+                    type="number"
+                    class="form-control"
+                    [(ngModel)]="badge.borderRadius"
+                  />
+                  <span class="ms-2">px</span>
+                </div>
+              </div>
+
+              <!-- Font Size -->
+              <div class="mb-3">
+                <label class="form-label">
+                  {{ 'badgingwidget.Fontsize' | translate }}
+                </label>
+                <div class="d-flex align-items-center">
+                  <input
+                    type="number"
+                    class="form-control"
+                    [(ngModel)]="badge.fontSize"
+                  />
+                  <span class="ms-2">px</span>
+                </div>
+              </div>
+
+              <!-- Font Style -->
+              <div class="mb-3">
+                <label class="form-label d-block">
+                  {{ 'badgingwidget.Fontstyle' | translate }}
+                </label>
+                <select class="form-control" [(ngModel)]="badge.fontStyle">
+                  <option value="normal">Normal</option>
+                  <option value="italic">Italic</option>
+                  <option value="bold">Bold</option>
+                </select>
+              </div>
+            </div>
+
+       <!-- Display section -->
+<div *ngIf="activeTab === 'displaysettings'" class="form-section">
+  <h5 class="section-title position-title">
+    <label class="checkbox-label">
+      <input
+        type="checkbox"
+        [(ngModel)]="showAboveBelow"
+        title="Show Above/Below Options"
+      />
+      {{ 'badgingwidget.Positionlbl' | translate }}
+    </label>
+  </h5>
+
+  <div class="position-options">
+    <div *ngIf="showAboveBelow" class="above-below-options">
+      <label>
+        <input
+          type="radio"
+          name="position"
+          value="above"
+          [(ngModel)]="badge.position"
+        />
+        {{ 'badgingwidget.Abovelbl' | translate }}
+      </label>
+      <label>
+        <input
+          type="radio"
+          name="position"
+          value="below"
+          [(ngModel)]="badge.position"
+        />
+        {{ 'badgingwidget.Belowlbl' | translate }}
+      </label>
+    </div>
+  </div>
+
+              <!-- Margin -->
+              <h5 class="section-title margin-title mt-3">
+                {{ 'badgingwidget.Marginlbl' | translate }}
+              </h5>
+              <div class="margin-inputs">
+                <div class="input-box">
+                  <label class="input-label">{{ 'badgingwidget.Toplbl' | translate }}</label>
+                  <input
+                    type="number"
+                    class="square-input"
+                    [(ngModel)]="badge.marginTop"
+                  />
+                </div>
+                <div class="input-box">
+                  <label class="input-label">{{ 'badgingwidget.Rightlbl' | translate }}</label>
+                  <input
+                    type="number"
+                    class="square-input"
+                    [(ngModel)]="badge.marginRight"
+                  />
+                </div>
+                <div class="input-box">
+                  <label class="input-label">{{ 'badgingwidget.Bottomlbl' | translate }}</label>
+                  <input
+                    type="number"
+                    class="square-input"
+                    [(ngModel)]="badge.marginBottom"
+                  />
+                </div>
+                <div class="input-box">
+                  <label class="input-label">{{ 'badgingwidget.Leftlbl' | translate }}</label>
+                  <input
+                    type="number"
+                    class="square-input"
+                    [(ngModel)]="badge.marginLeft"
+                  />
+                </div>
+              </div>
+              
+
+              <!-- Padding -->
+              <h5 class="section-title padding-title mt-3">
+                {{ 'badgingwidget.Paddinglbl' | translate }}
+              </h5>
+              <div class="padding-inputs">
+                <div class="input-box">
+                  <label class="input-label">{{ 'badgingwidget.Toplbl' | translate }}</label>
+                  <input
+                    type="number"
+                    class="square-input"
+                    [(ngModel)]="badge.paddingTop"
+                  />
+                </div>
+                <div class="input-box">
+                  <label class="input-label">{{ 'badgingwidget.Rightlbl' | translate }}</label>
+                  <input
+                    type="number"
+                    class="square-input"
+                    [(ngModel)]="badge.paddingRight"
+                  />
+                </div>
+                <div class="input-box">
+                  <label class="input-label">{{ 'badgingwidget.Bottomlbl' | translate }}</label>
+                  <input
+                    type="number"
+                    class="square-input"
+                    [(ngModel)]="badge.paddingBottom"
+                  />
+                </div>
+                <div class="input-box">
+                  <label class="input-label">{{ 'badgingwidget.Leftlbl' | translate }}</label>
+                  <input
+                    type="number"
+                    class="square-input"
+                    [(ngModel)]="badge.paddingLeft"
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right Panel -->
+        <div class="col-md-9">
+          <div class="panel-box right-panel">
+            <h5 class="mb-3 preview-title">
+              {{ 'badgingwidget.Previewlbl' | translate }}
+            </h5>
+
+<div class="preview-image-wrapper d-flex flex-row flex-wrap gap-2">
+  <div class="product-with-badge" *ngFor="let img of productImages" style="flex: 0 0 auto; position: relative;">
+    
+    <!-- Above Badge -->
+    <div
+      *ngIf="badge.position === 'above'"
+      class="viewed-badge above"
+      [ngStyle]="getBadgeStyle()"
+    >
+      <img [src]="badge.icon || './assets/images/fireicon.png'" alt="Fire icon" class="fire-icon" />
+      <div class="viewed-text" [innerHTML]="badge.message || '80 People <br>Viewed today'"></div>
+    </div>
+
+    <!-- Image + Overlay Badge -->
+    <div class="image-container position-relative">
+      <!-- Overlay Badge -->
+      <div
+        *ngIf="badge.position === 'overlay'"
+        class="viewed-badge overlay"
+        [ngStyle]="getBadgeStyle(true)"
+      >
+        <img [src]="badge.icon || './assets/images/fireicon.png'" alt="Fire icon" class="fire-icon" />
+        <div class="viewed-text" [innerHTML]="badge.message || '80 People <br>Viewed today'"></div>
+      </div>
+
+      <img [src]="img" alt="Product" class="product-img" />
+    </div>
+
+    <!-- Below Badge -->
+    <div
+      *ngIf="badge.position === 'below'"
+      class="viewed-badge below"
+      [ngStyle]="getBadgeStyle()"
+    >
+      <img [src]="badge.icon || './assets/images/fireicon.png'" alt="Fire icon" class="fire-icon" />
+      <div class="viewed-text" [innerHTML]="badge.message || '80 People <br>Viewed today'"></div>
+    </div>
+    
+  </div>
+</div>
+</div>
+ </div> 
+</div> 
+</div> 
+</div> 
+</div>
+</div>

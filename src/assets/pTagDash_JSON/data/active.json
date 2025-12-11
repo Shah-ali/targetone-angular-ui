@@ -1,0 +1,31 @@
+{
+  "status": "SUCCESS",
+  "message": "SUCCESS",
+  "response": [
+    {
+      "tagId": 71,
+      "tagName": "duplicate-name",
+      "status": "active",
+      "activationDate": "2023-11-03",
+      "creationDate": null,
+      "deactivationDate": null
+    },
+    {
+      "tagId": 70,
+      "tagName": "product-context",
+      "status": "active",
+      "activationDate": "2023-11-04",
+      "creationDate": null,
+      "deactivationDate": null
+    },
+    {
+      "tagId": 69,
+      "tagName": "dme-preview",
+      "status": "active",
+      "activationDate": "2023-11-04",
+      "creationDate": null,
+      "deactivationDate": null
+    }
+  ],
+  "type": null
+}

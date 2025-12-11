@@ -1,0 +1,60 @@
+<div class="grpTopContainer">
+  <!-- <div class="action-bar row col-12 bluebar pl-1">
+      <div class="col-4">
+        Start
+      </div>
+      <div class="col-4 sizeSection">
+        <span>Template Size:</span>
+        <select (change)="onSizeChange($event)">
+          <option value="1920x1080">1920 x 1080</option>
+          <option value="390x844">390 x 844</option>
+        </select>
+      
+        <span style="margin-left: 20px">Aspect Ratio:</span>
+        <select (change)="onAspectRatioChange($event)">
+          <option value="16:9">16:9</option>
+          <option value="4:3">4:3</option>
+          <option value="1:1">1:1</option>
+        </select>
+      </div>
+      <div class="col-4 bttnSection">
+        <button class="btn buttonCss shadow-none m-0 buttonMaxSize">Simulate</button>
+        <button class="btn buttonCss shadow-none m-0 buttonMaxSize ml-2">Test WhatsApp</button>
+      </div>
+    </div> -->
+</div>
+<div class="grpContent">
+  <div class="sidebarLeft" [ngStyle]="{ width: isDataLayerVisible ? '30%' : '0' }">
+    <app-data-layer *ngIf="isDataLayerVisible"></app-data-layer>
+    <div
+      class="toggleArrow"
+      (click)="toggleDataLayer()"
+      [ngClass]="isDataLayerVisible ? 'sidebar__expand-handle' : 'sidebar__collapse-handle'">
+      <span>
+        <i class="fal mt-2 fa-sm fa-chevron-left"></i>
+      </span>
+    </div>
+  </div>
+  <!-- <div class="dataLayerSection">
+        <span>Merge Tag <button>Add Modal</button></span>
+        <p>This is the content area where you can add your main content.</p>
+      </div> -->
+  <!-- Floating Toolbar -->
+  <div class="floating-custom-blocks">
+    <div
+      *ngFor="let block of blockTypes"
+      class="block-icon"
+      [id]="block.id"
+      [title]="block.label"
+      [attr.data-block-id]="block.id">
+      <i [class]="block.icon"></i>
+    </div>
+  </div>
+
+  <div id="gjs">
+    <div id="mainContainer" style="width: 100%; height: calc(100vh - 50px); display: inline-block">
+      <!-- <h2 class="subtitle">You're currently viewing the default project.</h2> -->
+    </div>
+  </div>
+  <!-- <div class="panel-shortcuts" style="display: none" id="panel-shortcuts"></div> -->
+</div>

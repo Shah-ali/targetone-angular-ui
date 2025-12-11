@@ -1,0 +1,260 @@
+<div class="col-12 pr-0" id="outterWrapper">
+    <div class="loaderMask" *ngIf="showLoaderAgGrid">
+        <div class="spinner-border text-dark" role="status">
+            <span class="visually-hidden d-none">{{'designEditor.loadinglbl' | translate}}</span>
+        </div>
+    </div>
+    <div class="col-12 p-0" id="basicNAdvanceArea" *ngIf="basicAdvanceEnabled">
+        <div class="row col">
+            <div class="row col-11 align-items-center basicBorderStyle">
+                <input type="radio" value="1" id="basicLink" class="mr-2 pointer" [checked]="basicChecked" (click)="selectProductRecoType(1)">
+                <div class="col-1 p-0 mr-3">
+                    <img src="./assets/images/basicImage.svg" class="" height="60">
+                </div>
+                <div class="col-10 p-0">
+                    <label for="basicLink" class="pointer">{{'productRecoAdvanceComponent.typicalOptionLbl' | translate}}</label>
+                    <label class="smallFont m-0 d-block">{{'productRecoAdvanceComponent.subTitleTypicalOptionLbl' | translate}}</label>
+                </div>                
+            </div>
+            <div class="row col-11 align-items-center basicBorderStyle mt-5">
+                <input type="radio" value="1" id="advanceLink" class="mr-2 pointer" [checked]="advanceChecked" (click)="selectProductRecoType(2)">
+                <div class="col-1 p-0 mr-3">
+                    <img src="./assets/images/advanceImage.svg" class="" height="60">
+                </div>
+                <div class="col-10 p-0">
+                    <label for="advanceLink" class="pointer">{{'productRecoAdvanceComponent.advancedOptionLbl' | translate}}</label>
+                    <label class="smallFont m-0 d-block">{{'productRecoAdvanceComponent.subTitleAdvanceOptionLbl' | translate}}</label>
+                </div>
+                
+                
+            </div>
+        </div>
+    </div>
+    <div class="col-12 mt-2" *ngIf="advanceDetailsPage">
+        <div class="loaderMask" *ngIf="showLoader">
+            <div class="spinner-border text-dark" role="status">
+                <span class="visually-hidden d-none">{{'designEditor.loadinglbl' | translate}}</span>
+            </div>
+        </div>        
+        <div class="row col p-0">
+            <div class="col-6" id="leftSideModels">
+                <div class="row col p-0">
+                    <div class="col-12 p-0 mb-2">
+                        <!--Merge tags Area-->
+                        <div class="row col ml-1 pl-1 pr-1">
+                            <div class="col-2 p-0 displayDiv">
+                                <input type="radio" value="1" id="basicLink" class="mr-2" [checked]="basicChecked" (click)="goToAdvancePage();">
+                                <label for="basicLink" class="xSmallLable m-0">{{'productRecoAdvanceComponent.typicalOptionLbl' | translate}}</label>            
+                            </div>
+                            <div class="col-3 p-0 displayDiv">
+                                <input type="radio" value="1" id="advanceLink" class="mr-2" [checked]="advanceChecked">
+                                <label for="advanceLink" class="xSmallLable m-0">{{'productRecoAdvanceComponent.advancedOptionLbl' | translate}}</label>
+                            </div>
+                            <div class="col-7 pr-0 relative">
+                                <div class="floatingDivCopied smallFont" *ngIf="copiedDivEnabled">{{'productRecoAdvanceComponent.copiedTextFromMergeTagLbl' | translate}}</div>
+                                <ngx-dropdown-treeview #mergeTagsListData
+                                    [buttonClass]="customBootstrapStyle"
+                                    class="treeViewDropdownStyle"
+                                    [config]="configuration"
+                                    [items]="items"                             
+                                    (selectedChange)="onSelectedChange($event)"
+                                    >                                    
+                                </ngx-dropdown-treeview>
+                                
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 mb-2 panelStyleDesign" id="brandArea-panel">
+                        <!-- Brand Area -->
+                        <div class="row col pr-0">
+                            <div class="col-8 p-0 align-items-left">
+                                <label class="mediumFont bold">{{'productRecoAdvanceComponent.brandLbl' | translate}}</label>
+                            </div>
+                            <div class="col-4 p-0 align-items-right text-right">
+                                <label class="mediumFont bluelink" (click)="clearModelDataSelected(brandModel);">{{'clearLbl' | translate}}</label>
+                            </div>
+                        </div>
+                        <div class="row col pr-0">
+                            <div class="col-12 p-0 align-items-left">
+                               <input class="form-control mt-1 mb-1" [(ngModel)]="brandInputContent" title="{{brandInputContent}}">
+                            </div>                            
+                        </div>
+                        <div class="row col mt-2 mr-0 pr-0">
+                            <div class="col-3 p-0">
+                                <input type="radio" value="1" id="basicLink" class="mr-2"  [checked]="includeBrand" (click)="includeBrandMethod(1)">
+                                <label for="basicLink">{{'productRecoAdvanceComponent.includeRadioLbl' | translate}}</label>            
+                            </div>
+                            <div class="col-3 p-0">
+                                <input type="radio" value="1" id="advanceLink" class="mr-2" [checked]="excludeBrand" (click)="includeBrandMethod(0)">
+                                <label for="advanceLink">{{'productRecoAdvanceComponent.excludeRadioLbl' | translate}}</label>
+                            </div>
+                            <div class="col-6 text-right p-0">
+                                <button type="button" class="btn btn-outline-primary buttonStyle shadow-none" (click)="getModelTypeData(brandModel)">{{'webPushComponent.browserlbl' | translate}}</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 p-0">
+                        <!-- Category -->
+                        <div class="col-12 mb-2 panelStyleDesign" id="brandArea-panel">
+                        <div class="row col pr-0">
+                            <div class="col-8 p-0 align-items-left">
+                                <label class="mediumFont bold">{{'productRecoAdvanceComponent.categoryLbl' | translate}}</label>
+                            </div>
+                            <div class="col-4 p-0 align-items-right text-right">
+                                <label class="mediumFont bluelink" (click)="clearModelDataSelected(categoryModel);">{{'clearLbl' | translate}}</label>
+                            </div>
+                        </div>
+                        <div class="row col pr-0">
+                            <div class="col-12 p-0 align-items-left">
+                               <input class="form-control mt-1 mb-1" [(ngModel)]="categoryInputContent" title="{{categoryInputContent}}">
+                            </div>                            
+                        </div>
+                        <div class="row col mt-2 mr-0 pr-0">
+                            <div class="col-3 p-0">
+                                <input type="radio" value="1" id="basicLink" class="mr-2" [checked]="includeCategory" (click)="includeCategoryMethod(1)">
+                                <label for="basicLink">{{'productRecoAdvanceComponent.includeRadioLbl' | translate}}</label>            
+                            </div>
+                            <div class="col-3 p-0">
+                                <input type="radio" value="1" id="advanceLink" class="mr-2" [checked]="excludeCategory" (click)="includeCategoryMethod(0)">
+                                <label for="advanceLink">{{'productRecoAdvanceComponent.excludeRadioLbl' | translate}}</label>
+                            </div>
+                            <div class="col-6 text-right p-0">
+                                <button type="button" class="btn btn-outline-primary buttonStyle shadow-none" (click)="getModelTypeData(categoryModel)">{{'webPushComponent.browserlbl' | translate}}</button>
+                            </div>
+                        </div>
+                        </div>
+                    </div>
+                    <div class="col-12 p-0">
+                        <!-- Product Area-->
+                        <div class="col-12 mb-2 panelStyleDesign" id="brandArea-panel">
+                        <div class="row col pr-0">
+                            <div class="col-8 p-0 align-items-left">
+                                <label class="mediumFont">{{'productRecoAdvanceComponent.productLbl' | translate}}</label>
+                            </div>
+                            <div class="col-4 p-0 align-items-right text-right">
+                                <label class="mediumFont bluelink" (click)="clearModelDataSelected(productModel);">{{'clearLbl' | translate}}</label>
+                            </div>
+                        </div>
+                        <div class="row col pr-0">
+                            <div class="col-12 p-0 align-items-left">
+                               <input class="form-control mt-1 mb-1" [(ngModel)]="productInputContent" title="{{productInputContent}}">
+                            </div>                            
+                        </div>
+                        <div class="row col mt-2 mr-0 pr-0">
+                            <!-- <div class="col-3 p-0">
+                                <input type="radio" value="1" id="basicLink" class="mr-2" [checked]="includeProduct" (click)="includeProductMethod(1)">
+                                <label for="basicLink">Include</label>            
+                            </div>
+                            <div class="col-3 p-0">
+                                <input type="radio" value="1" id="advanceLink" class="mr-2" [checked]="excludeProduct" (click)="includeProductMethod(0)">
+                                <label for="advanceLink">Exclude</label>
+                            </div> -->
+                            <div class="col-12 text-right p-0">
+                                <button type="button" class="btn btn-outline-primary buttonStyle shadow-none" (click)="getModelTypeData(productModel)">{{'webPushComponent.browserlbl' | translate}}</button>
+                            </div>
+                        </div>
+                        </div>
+                        
+                    </div>
+                    <div class="col-12 p-0">
+                        <!-- Price Area -->
+                        <div class="col-12 mb-2 panelStyleDesign" id="brandArea-panel">
+                            <!-- Brand Area -->
+                        <div class="row col pr-0">
+                            <div class="col-8 p-0 align-items-left">
+                                <label class="mediumFont bold">{{'productRecoAdvanceComponent.priceLbl' | translate}}</label>
+                            </div>
+                            <div class="col-4 p-0 align-items-right text-right">
+                                <label class="mediumFont bluelink">{{'clearLbl' | translate}}</label>
+                            </div>
+                        </div>
+                        <div class="row col pr-0">
+                                <label class="mediumFont d-block mr-2">{{'productRecoAdvanceComponent.minLbl' | translate}}</label>
+                                <div class="col-4 p-0 align-items-left">
+                                   <input class="form-control mt-1 mb-1" [(ngModel)]="minPriceVal">
+                                </div>  
+                                <label class="mediumFont d-block ml-2 mr-2">{{'productRecoAdvanceComponent.maxLbl' | translate}}</label>
+                                <div class="col-4 p-0 align-items-left">
+                                    <input class="form-control mt-1 mb-1" [(ngModel)]="maxPriceVal">
+                                 </div>                           
+                        </div>
+                        <div class="row col mt-2 mr-0 pr-0">
+                            <div class="col-3 p-0">
+                                <input type="radio" value="1" id="basicLink" class="mr-2" [checked]="includePrice" (click)="includePriceMethod(1)">
+                                <label for="basicLink">{{'productRecoAdvanceComponent.includeRadioLbl' | translate}}</label>            
+                            </div>
+                            <div class="col-3 p-0">
+                                <input type="radio" value="1" id="advanceLink" class="mr-2" [checked]="excludePrice" (click)="includePriceMethod(0)">
+                                <label for="advanceLink">{{'productRecoAdvanceComponent.excludeRadioLbl' | translate}}</label>
+                            </div>
+                        </div>
+
+                        </div>
+                        
+                    </div>
+                    <div class="col-12 p-0">
+                        <!-- Extra parameters Area -->
+                        <div class="col-12 mb-3 panelStyleDesign" id="brandArea-panel">
+                            <div class="row col pr-0">
+                                <div class="col-8 p-0 align-items-left">
+                                    <label class="mediumFont bold">{{'productRecoAdvanceComponent.extraParametersLbl' | translate}}</label>
+                                </div>
+                                <div class="col-4 p-0 align-items-right text-right">
+                                    <label class="mediumFont bluelink pointer" (click)="clearKeyValueData();">{{'clearLbl' | translate}}</label>
+                                </div>
+                            </div>
+                           <div class="col pr-0" #keyValueAddSection id="keyValueAddArea">                            
+                            <div class="row col keyValueBlock p-0 mt-2" *ngFor="let item of keyValueArray">
+                                <label class="mediumFont mr-2 lineheight30">{{'designEditor.mobilePushComponent.key' | translate}}</label>
+                                <div class="col-4 p-0 align-items-left">
+                                   <input class="form-control mt-1 mb-1"  [(ngModel)]="item.key">
+                                </div>  
+                                <label class="mediumFont ml-2 mr-2 lineheight30">{{'designEditor.mobilePushComponent.value' | translate}}</label>
+                                <div class="col-4 p-0 align-items-left">
+                                    <input class="form-control mt-1 mb-1" [(ngModel)]="item.value">
+                                 </div>     
+                                 <div class="col-1 p-0 align-items-left">
+                                    <i class="far fa-plus-circle fa-lg linkColor ml-3 mt-3 pointer" (click)="addNewKeyValue(item)" *ngIf="item.add"></i> 
+                                    <i class="far fa-minus-circle fa-lg linkColor ml-3 mt-3 pointer" (click)="removeKeyValue(item)" *ngIf="!item.add"></i> 
+                                    
+                                 </div>   
+                            </div>                                                                 
+                        </div>
+                        <!-- <div class="col-12 text-right p-0">
+                            <button type="button" class="btn btn-outline-primary buttonStyle shadow-none" [disabled]="extraPramasLmitExceeded" (click)="addNewKeyValue(item)"><i class="far fa-plus"></i> Add</button>
+                        </div>                        -->
+
+                        </div>
+                        
+                    </div>
+                </div>
+            </div>
+            <div class="col-6" id="rightSideModelDetails">
+                <div class="col modelDataSection" *ngIf="defaultViewDataModel">
+                    <p class="smallFont text-center">{{'productRecoAdvanceComponent.clickOnBrowseToviewLookUpDataList' | translate}}</p>
+                </div>
+                <div class="col p-0" *ngIf="showContentAgGrid">
+                    <ag-grid-angular #myAgGrid
+                        style="width: 100%; height: calc(100vh - 280px)" 
+                        class="ag-theme-alpine"
+                        [rowData]="modelDataListsArry" 
+                        [columnDefs]="columnHeadersRuleReco"
+                        [defaultColDef]="defaultColDef"
+                        [rowSelection]="rowSelection"
+                        [getRowId]="getRowId"
+                        [animateRows]="true" 
+                        [pagination]="true" 
+                        [paginationPageSize]="17"
+                        [suppressRowClickSelection]="true"
+                        [localeText]="localeText" 
+                        (paginationChanged)="paginationChangeMethod($event)"
+                        >                        
+                    </ag-grid-angular>
+                    <div class="col p-0">
+                        <button class="btn btn-outline-primary buttonStyle shadow-none margin37" type="button" (click)="addSelectedModelToInputMethod();"><i class="far fa-plus"></i> {{'designEditor.addlbl' | translate}}</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

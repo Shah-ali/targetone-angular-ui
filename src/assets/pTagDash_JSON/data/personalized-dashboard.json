@@ -1,0 +1,757 @@
+[
+    {
+      "tagId": 1,
+      "tagName": "Tag1",
+      "status": "active",
+      "activationDate": "27-10-2024",
+      "creationDate": "",
+      "deactivationDate": "27-10-2024",
+      "associatedCampaigns": [
+        {
+          "compaignId": 1,
+          "compaignName": "Compaign Name 1"
+        },
+        {
+          "compaignId": 2,
+          "compaignName": "Compaign Name 2"
+        }
+       
+      ]
+    },
+    {
+      "tagId": 2,
+      "tagName": "Tag2",
+      "status": "active",
+      "activationDate": "28-10-2024",
+      "creationDate": "",
+      "deactivationDate": "28-10-2024",
+      "associatedCampaigns": [
+        {
+          "compaignId": 1,
+          "compaignName": "Compaign Name 1"
+        },
+        {
+          "compaignId": 2,
+          "compaignName": "Compaign Name 2"
+        },
+        {
+          "compaignId": 3,
+          "compaignName": "Compaign Name 3"
+        }
+      ]
+    },
+    {
+      "tagId": 3,
+      "tagName": "Tag3",
+      "status": "active",
+      "activationDate": "29-10-2024",
+      "creationDate": "",
+      "deactivationDate": "29-10-2024",
+      "associatedCampaigns": [
+        {
+          "compaignId": 1,
+          "compaignName": "Compaign Name 1"
+        },
+        {
+          "compaignId": 2,
+          "compaignName": "Compaign Name 2"
+        },
+        {
+          "compaignId": 3,
+          "compaignName": "Compaign Name 3"
+        },
+         {
+          "compaignId": 4,
+          "compaignName": "Compaign Name 4"
+        }
+      ]
+    },
+    {
+      "tagId": 4,
+      "tagName": "TagName 4",
+      "status": "active",
+      "activationDate": "30-10-2024",
+      "creationDate": "",
+      "deactivationDate": "30-10-2024",
+      "associatedCampaigns": [
+        {
+          "compaignId": 1,
+          "compaignName": "Compaign Name 1"
+        },
+        {
+          "compaignId": 3,
+          "compaignName": "Compaign Name 3"
+        },
+        {
+          "compaignId": 5,
+          "compaignName": "Compaign Name 5"
+        },
+         {
+          "compaignId": 4,
+          "compaignName": "Compaign Name 4"
+        },
+        {
+          "compaignId": 2,
+          "compaignName": "Compaign Name 2"
+        },
+        {
+          "compaignId": 6,
+          "compaignName": "Compaign Name 6"
+        },
+         {
+          "compaignId": 7,
+          "compaignName": "Compaign Name 7"
+        },
+         {
+          "compaignId": 8,
+          "compaignName": "Compaign Name 8"
+        },
+        {
+          "compaignId": 9,
+          "compaignName": "Compaign Name 9"
+        },
+        {
+          "compaignId": 10,
+          "compaignName": "Compaign Name 10"
+        }
+      ]
+    },
+    {
+      "tagId": 5,
+      "tagName": "Tag Name 5",
+      "status": "active",
+      "activationDate": "27-10-2024",
+      "creationDate": "",
+      "deactivationDate": "27-10-2024",
+      "associatedCampaigns": [
+        {
+          "compaignId": 1,
+          "compaignName": "Compaign Name 1"
+        },
+        {
+          "compaignId": 2,
+          "compaignName": "Compaign Name 2"
+        },
+        {
+          "compaignId": 5,
+          "compaignName": "Compaign Name 5"
+        }
+      ]
+    },
+    {
+      "tagId": 6,
+      "tagName": "Tag Name 6",
+      "status": "active",
+      "activationDate": "27-10-2024",
+      "creationDate": "",
+      "deactivationDate": "27-10-2024",
+      "associatedCampaigns": [
+        {
+          "compaignId": 5,
+          "compaignName": "Compaign Name 5"
+        }
+      ]
+    },
+    {
+      "tagId": 7,
+      "tagName": "Tag Name 7",
+      "status": "active",
+      "activationDate": "27-10-2024",
+      "creationDate": "",
+      "deactivationDate": "27-10-2024",
+      "associatedCampaigns": []
+    },
+    {
+      "tagId": 8,
+      "tagName": "Tag Name 8",
+      "status": "active",
+      "activationDate": "",
+      "creationDate": "",
+      "deactivationDate": "27-10-2024",
+      "associatedCampaigns": [
+        {
+          "compaignId": 1,
+          "compaignName": "Compaign Name 1"
+        },
+        {
+          "compaignId": 2,
+          "compaignName": "Compaign Name 2"
+        },
+        {
+          "compaignId": 3,
+          "compaignName": "Compaign Name 3"
+        }
+      ]
+    },
+    {
+      "tagId": 9,
+      "tagName": "Tag Name 9",
+      "status": "active",
+      "activationDate": "",
+      "creationDate": "",
+      "deactivationDate": "27-10-2024",
+      "associatedCampaigns": [
+        {
+          "compaignId": 1,
+          "compaignName": "Compaign Name 1"
+        },
+        {
+          "compaignId": 2,
+          "compaignName": "Compaign Name 2"
+        },
+        {
+          "compaignId": 3,
+          "compaignName": "Compaign Name 3"
+        }
+      ]
+    },{
+      "tagId": 10,
+      "tagName": "Tag Name 10",
+      "status": "active",
+      "activationDate": "27-10-2024",
+      "creationDate": "",
+      "deactivationDate": "27-10-2024",
+      "associatedCampaigns": [
+        {
+          "compaignId": 1,
+          "compaignName": "Compaign Name 1"
+        },
+        {
+          "compaignId": 2,
+          "compaignName": "Compaign Name 2"
+        },
+        {
+          "compaignId": 5,
+          "compaignName": "Compaign Name 5"
+        }
+      ]
+    },
+    {
+      "tagId": 11,
+      "tagName": "Tag Name 11",
+      "status": "active",
+      "activationDate": "27-10-2024",
+      "creationDate": "",
+      "deactivationDate": "27-10-2024",
+      "associatedCampaigns": [
+        {
+          "compaignId": 5,
+          "compaignName": "Compaign Name 5"
+        }
+      ]
+    },
+    {
+      "tagId": 12,
+      "tagName": "Tag Name 12",
+      "status": "active",
+      "activationDate": "27-10-2024",
+      "creationDate": "",
+      "deactivationDate": "27-10-2024",
+      "associatedCampaigns": []
+    },
+    {
+      "tagId": 13,
+      "tagName": "Tag Name 13",
+      "status": "active",
+      "activationDate": "",
+      "creationDate": "",
+      "deactivationDate": "27-10-2024",
+      "associatedCampaigns": [
+        {
+          "compaignId": 1,
+          "compaignName": "Compaign Name 1"
+        },
+        {
+          "compaignId": 2,
+          "compaignName": "Compaign Name 2"
+        },
+        {
+          "compaignId": 3,
+          "compaignName": "Compaign Name 3"
+        }
+      ]
+    },
+    {
+      "tagId": 14,
+      "tagName": "Tag Name 14",
+      "status": "active",
+      "activationDate": "",
+      "creationDate": "",
+      "deactivationDate": "27-10-2024",
+      "associatedCampaigns": [
+        {
+          "compaignId": 1,
+          "compaignName": "Compaign Name 1"
+        },
+        {
+          "compaignId": 2,
+          "compaignName": "Compaign Name 2"
+        },
+        {
+          "compaignId": 3,
+          "compaignName": "Compaign Name 3"
+        }
+      ]
+    },
+    {
+      "tagId": 15,
+      "tagName": "Tag Name 15",
+      "status": "draft",
+      "activationDate": "",
+      "creationDate": "27-10-2023",
+      "deactivationDate": "",
+      "associatedCampaigns": []
+    },
+    {
+      "tagId": 16,
+      "tagName": "Tag Name 16",
+      "status": "draft",
+      "activationDate": "",
+      "creationDate": "27-10-2023",
+      "deactivationDate": "",
+      "associatedCampaigns": []
+    },
+    {
+      "tagId": 17,
+      "tagName": "Tag Name 17",
+      "status": "draft",
+      "activationDate": "",
+      "creationDate": "27-10-2023",
+      "deactivationDate": "",
+      "associatedCampaigns": []
+    },
+    {
+      "tagId": 18,
+      "tagName": "Tag Name 18",
+      "status": "draft",
+      "activationDate": "",
+      "creationDate": "27-10-2023",
+      "deactivationDate": "",
+      "associatedCampaigns": []
+    },
+    {
+      "tagId": 19,
+      "tagName": "Tag Name 19",
+      "status": "inactive",
+      "activationDate": "27-10-2024",
+      "creationDate": "",
+      "deactivationDate": "27-10-2024",
+      "associatedCampaigns": [
+        {
+          "compaignId": 1,
+          "compaignName": "Compaign Name 1"
+        },
+        {
+          "compaignId": 2,
+          "compaignName": "Compaign Name 2"
+        },
+        {
+          "compaignId": 3,
+          "compaignName": "Compaign Name 3"
+        }
+      ]
+    },
+    {
+      "tagId": 20,
+      "tagName": "Tag Name 20",
+      "status": "inactive",
+      "activationDate": "27-10-2024",
+      "creationDate": "",
+      "deactivationDate": "27-10-2024",
+      "associatedCampaigns": [
+        {
+          "compaignId": 1,
+          "compaignName": "Compaign Name 1"
+        },
+        {
+          "compaignId": 2,
+          "compaignName": "Compaign Name 2"
+        },
+        {
+          "compaignId": 3,
+          "compaignName": "Compaign Name 3"
+        }
+      ]
+    },
+    {
+      "tagId": 21,
+      "tagName": "Tag Name 21",
+      "status": "inactive",
+      "activationDate": "27-10-2024",
+      "creationDate": "",
+      "deactivationDate": "27-10-2024",
+      "associatedCampaigns": [
+        {
+          "compaignId": 1,
+          "compaignName": "Compaign Name 1"
+        },
+        {
+          "compaignId": 2,
+          "compaignName": "Compaign Name 2"
+        },
+        {
+          "compaignId": 3,
+          "compaignName": "Compaign Name 3"
+        }
+      ]
+    },
+    {
+      "tagId": 22,
+      "tagName": "Tag Name 22",
+      "status": "inactive",
+      "activationDate": "27-10-2024",
+      "creationDate": "",
+      "deactivationDate": "27-10-2024",
+      "associatedCampaigns": [
+        {
+          "compaignId": 1,
+          "compaignName": "Compaign Name 1"
+        },
+        {
+          "compaignId": 3,
+          "compaignName": "Compaign Name 3"
+        },
+        {
+          "compaignId": 5,
+          "compaignName": "Compaign Name 5"
+        }
+      ]
+    },
+    {
+      "tagId": 23,
+      "tagName": "Tag Name 24",
+      "status": "inactive",
+      "activationDate": "27-10-2024",
+      "creationDate": "",
+      "deactivationDate": "27-10-2024",
+      "associatedCampaigns": [
+        {
+          "compaignId": 1,
+          "compaignName": "Compaign Name 1"
+        },
+        {
+          "compaignId": 2,
+          "compaignName": "Compaign Name 2"
+        },
+        {
+          "compaignId": 5,
+          "compaignName": "Compaign Name 5"
+        }
+      ]
+    },
+    {
+      "tagId": 24,
+      "tagName": "Tag Name 24",
+      "status": "inactive",
+      "activationDate": "27-10-2024",
+      "creationDate": "",
+      "deactivationDate": "27-10-2024",
+      "associatedCampaigns": [
+        {
+          "compaignId": 5,
+          "compaignName": "Compaign Name 5"
+        }
+      ]
+    },
+    {
+      "tagId": 25,
+      "tagName": "Tag Name 25",
+      "status": "inactive",
+      "activationDate": "27-10-2024",
+      "creationDate": "",
+      "deactivationDate": "27-10-2024",
+      "associatedCampaigns": []
+    },
+    {
+      "tagId": 26,
+      "tagName": "Tag Name 26",
+      "status": "inactive",
+      "activationDate": "",
+      "creationDate": "",
+      "deactivationDate": "19-10-2024",
+      "associatedCampaigns": [
+        {
+          "compaignId": 1,
+          "compaignName": "Compaign Name 1"
+        },
+        {
+          "compaignId": 2,
+          "compaignName": "Compaign Name 2"
+        },
+        {
+          "compaignId": 3,
+          "compaignName": "Compaign Name 3"
+        }
+      ]
+    },
+    {
+      "tagId": 27,
+      "tagName": "Tag Name 27",
+      "status": "inactive",
+      "activationDate": "",
+      "creationDate": "",
+      "deactivationDate": "20-10-2024",
+      "associatedCampaigns": [
+        {
+          "compaignId": 1,
+          "compaignName": "Compaign Name 1"
+        },
+        {
+          "compaignId": 2,
+          "compaignName": "Compaign Name 2"
+        },
+        {
+          "compaignId": 3,
+          "compaignName": "Compaign Name 3"
+        }
+      ]
+    },
+    {
+      "tagId": 28,
+      "tagName": "Tag Name 28",
+      "status": "draft",
+      "activationDate": "",
+      "creationDate": "21-10-2023",
+      "deactivationDate": "",
+      "associatedCampaigns": []
+    },
+    {
+      "tagId": 29,
+      "tagName": "Tag Name 29",
+      "status": "draft",
+      "activationDate": "",
+      "creationDate": "22-10-2023",
+      "deactivationDate": "",
+      "associatedCampaigns": []
+    },
+    {
+      "tagId": 30,
+      "tagName": "Tag Name 31",
+      "status": "draft",
+      "activationDate": "",
+      "creationDate": "25-10-2023",
+      "deactivationDate": "",
+      "associatedCampaigns": []
+    },
+    {
+      "tagId": 31,
+      "tagName": "Tag Name 32",
+      "status": "draft",
+      "activationDate": "",
+      "creationDate": "22-10-2023",
+      "deactivationDate": "",
+      "associatedCampaigns": []
+    },
+    {
+      "tagId": 32,
+      "tagName": "Tag Name 32",
+      "status": "draft",
+      "activationDate": "",
+      "creationDate": "21-10-2023",
+      "deactivationDate": "",
+      "associatedCampaigns": []
+    },
+    {
+      "tagId": 33,
+      "tagName": "Tag Name 33",
+      "status": "draft",
+      "activationDate": "",
+      "creationDate": "29-10-2023",
+      "deactivationDate": "",
+      "associatedCampaigns": []
+    },
+    {
+      "tagId": 34,
+      "tagName": "Tag Name 34",
+      "status": "draft",
+      "activationDate": "",
+      "creationDate": "28-10-2023",
+      "deactivationDate": "",
+      "associatedCampaigns": []
+    },
+    {
+      "tagId": 36,
+      "tagName": "Tag Name 36",
+      "status": "draft",
+      "activationDate": "",
+      "creationDate": "27-10-2023",
+      "deactivationDate": "",
+      "associatedCampaigns": []
+    },{
+      "tagId": 37,
+      "tagName": "Tag Name 37",
+      "status": "inactive",
+      "activationDate": "27-10-2024",
+      "creationDate": "",
+      "deactivationDate": "27-10-2024",
+      "associatedCampaigns": [
+        {
+          "compaignId": 1,
+          "compaignName": "Compaign Name 1"
+        },
+        {
+          "compaignId": 2,
+          "compaignName": "Compaign Name 2"
+        },
+        {
+          "compaignId": 3,
+          "compaignName": "Compaign Name 3"
+        }
+      ]
+    },
+    {
+      "tagId": 38,
+      "tagName": "Tag Name 38",
+      "status": "inactive",
+      "activationDate": "27-10-2024",
+      "creationDate": "",
+      "deactivationDate": "27-10-2024",
+      "associatedCampaigns": [
+        {
+          "compaignId": 1,
+          "compaignName": "Compaign Name 1"
+        },
+        {
+          "compaignId": 2,
+          "compaignName": "Compaign Name 2"
+        },
+        {
+          "compaignId": 3,
+          "compaignName": "Compaign Name 3"
+        }
+      ]
+    },
+    {
+      "tagId": 39,
+      "tagName": "Tag Name 39",
+      "status": "inactive",
+      "activationDate": "27-10-2024",
+      "creationDate": "",
+      "deactivationDate": "27-10-2024",
+      "associatedCampaigns": [
+        {
+          "compaignId": 1,
+          "compaignName": "Compaign Name 1"
+        },
+        {
+          "compaignId": 2,
+          "compaignName": "Compaign Name 2"
+        },
+        {
+          "compaignId": 3,
+          "compaignName": "Compaign Name 3"
+        }
+      ]
+    },
+    {
+      "tagId": 40,
+      "tagName": "Tag Name 40",
+      "status": "inactive",
+      "activationDate": "27-10-2024",
+      "creationDate": "",
+      "deactivationDate": "27-10-2024",
+      "associatedCampaigns": [
+        {
+          "compaignId": 1,
+          "compaignName": "Compaign Name 1"
+        },
+        {
+          "compaignId": 3,
+          "compaignName": "Compaign Name 3"
+        },
+        {
+          "compaignId": 5,
+          "compaignName": "Compaign Name 5"
+        }
+      ]
+    },
+    {
+      "tagId": 41,
+      "tagName": "Tag Name 41",
+      "status": "inactive",
+      "activationDate": "27-10-2024",
+      "creationDate": "",
+      "deactivationDate": "27-10-2024",
+      "associatedCampaigns": [
+        {
+          "compaignId": 1,
+          "compaignName": "Compaign Name 1"
+        },
+        {
+          "compaignId": 2,
+          "compaignName": "Compaign Name 2"
+        },
+        {
+          "compaignId": 5,
+          "compaignName": "Compaign Name 5"
+        }
+      ]
+    },
+    {
+      "tagId": 42,
+      "tagName": "Tag Name 42",
+      "status": "inactive",
+      "activationDate": "27-10-2024",
+      "creationDate": "",
+      "deactivationDate": "27-10-2024",
+      "associatedCampaigns": [
+        {
+          "compaignId": 5,
+          "compaignName": "Compaign Name 5"
+        }
+      ]
+    },
+    {
+      "tagId": 43,
+      "tagName": "Tag Name 43",
+      "status": "inactive",
+      "activationDate": "27-10-2024",
+      "creationDate": "",
+      "deactivationDate": "27-10-2024",
+      "associatedCampaigns": []
+    },
+    {
+      "tagId": 44,
+      "tagName": "Tag Name 44",
+      "status": "inactive",
+      "activationDate": "",
+      "creationDate": "",
+      "deactivationDate": "19-10-2024",
+      "associatedCampaigns": [
+        {
+          "compaignId": 1,
+          "compaignName": "Compaign Name 1"
+        },
+        {
+          "compaignId": 2,
+          "compaignName": "Compaign Name 2"
+        },
+        {
+          "compaignId": 3,
+          "compaignName": "Compaign Name 3"
+        }
+      ]
+    },
+    {
+      "tagId": 45,
+      "tagName": "Tag Name 45",
+      "status": "inactive",
+      "activationDate": "",
+      "creationDate": "",
+      "deactivationDate": "20-10-2024",
+      "associatedCampaigns": [
+        {
+          "compaignId": 1,
+          "compaignName": "Compaign Name 1"
+        },
+        {
+          "compaignId": 2,
+          "compaignName": "Compaign Name 2"
+        },
+        {
+          "compaignId": 3,
+          "compaignName": "Compaign Name 3"
+        }
+      ]
+    }
+  ]

@@ -1,0 +1,50 @@
+<div class="modal-header">
+  <h5 class="modal-title" id="exampleModalLabel">
+    <span class="largeLable">{{ 'inlineJSComponent.label.useScript' | translate }}</span>
+  </h5>
+  <div><app-merge-tag-copy></app-merge-tag-copy></div>
+</div>
+<div class="modal-body">
+  <p>{{ selectedFuncData?.name }}</p>
+  <div class="func-container">
+    <div class="row m-0 help-section" *ngIf="closeHelpSection">
+      <div class="col-1 p-0 pt-2 pl-2 info">
+        <i class="far fa-info-circle infoColor mr-2"></i>
+      </div>
+      <div class="col-10 p-0 py-2 help-content">
+        <span>{{ 'inlineJSComponent.label.help' | translate }}</span>
+        <ul>
+          <li>{{ 'inlineJSComponent.label.helpDetails1' | translate }}</li>
+          <li>{{ 'inlineJSComponent.label.helpDetails2' | translate }}</li>
+        </ul>
+      </div>
+      <div class="closeHelp" (click)="closeHelpSection = false">
+        <i class="fal fa-times fa-lg"></i>  
+      </div>
+    </div>
+
+    <div class="row input-section mt-3">
+      <div class="col-8 mb-2 input-field" *ngFor="let param of selectedParams">
+        <label class="control-label">{{ param.id }}</label>
+        <input type="text" name="param1" class="form-control" [(ngModel)]="formData[param.id]"/>
+        <div *ngIf="param.error" class="error-message" [id]="param.id + 'Error'">
+          {{ param.error }}
+        </div>
+      </div>
+    </div>
+    <hr />
+    <div class="view-script-section">
+      <label>{{ 'inlineJSComponent.label.script' | translate }}</label>
+      <textarea class="form-control" readonly [value]="selectionFunction()" [ngStyle]="selectedFuncData.inlineJsFunction.outputType === 'multi' ? { 'height': '150px' } : {'height': 'auto'}"></textarea>
+    </div>
+  </div>
+</div>
+<div class="modal-footer d-flex justify-content-right">
+  <button type="submit" class="btn buttonCss shadow-none m-0 mr-1" id="closeBtn" (click)="onClose()">
+    {{ 'close' | translate }}
+  </button>
+  <button type="button" #t1="ngbTooltip" triggers="manual"
+  ngbTooltip="{{ 'copiedLbl' | translate }}" class="btn buttonPrimaryCss shadow-none m-0 mr-1" id="btnDone" (click)="copyFuncScript(t1)">
+    {{ 'copy' | translate }}
+  </button>
+</div>

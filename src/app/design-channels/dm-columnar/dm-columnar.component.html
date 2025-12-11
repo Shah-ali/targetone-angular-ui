@@ -1,0 +1,137 @@
+<app-channels></app-channels>
+<div class="col-12 dmColumnarLayoutContainer">
+    <div class="row col-12 p-0 m-0  mb-3 relative">
+        <h6 class="col p-0 pl-1 m-0 mt-3 titleHeadtext"></h6>
+         <button class="btn buttonStyle buttonCssStyle shadow-none mr-3" (click)="openOfferSliderPopup($event, 'columnValue_0');">{{'designEditor.beeEditorComponent.globalMergeTaglbl2' | translate}}</button>
+        <button class="btn buttonStyle buttonCssStyle shadow-none p-0" (click)="finalSaveMethod();">{{'save' | translate}}</button>
+        
+            <div class="col-1 d-none inappActionListEnable">
+                <select class="smallLabel">
+                  <option value="-1">{{'dmMultiOfferComponent.actionsLbl' | translate}}</option>
+                  <option>{{'dmFreeTextComponent.testLbl' | translate}} {{channelObj.channelName}}</option>
+                </select>
+            </div>
+        
+    </div>
+    <div class="row innerContainer col-12 p-0 m-0">
+        <div class="col p-4 tempLayoutSection p-4">
+            <div class="row col p-0 heading">
+                <div class="col mt-1 p-0">
+                    <h6 class="col"><label class="smallLable">{{'dmColumnarCompontent.DMColumnarLbl' | translate}}</label></h6>
+                </div>
+            </div>
+            <div class="row col saveasTemplate liteBckgrd mb-4 m-0">
+                <div class="col-4 p-0">
+                    <p class="m-0 p-0"><label class="smallLable text-muted">{{'dmColumnarCompontent.templateLbl' | translate}}</label></p>
+                    <p class=""> 
+                        <select class="col-6 p-0 xSmallLabel inputStyle text-muted" #columnarTemplateElement (change)="getColumnarTemplateData($event);">
+                            <option value="-1">{{'dmColumnarCompontent.selectTemplateLbl' | translate}}</option>
+                            <option *ngFor="let x of columnarTemplates" value="{{x.dbKey}}">{{x.templateName}}</option>
+                        </select>
+                    </p>
+                </div>
+                <div class="col p-0 text-right">
+                    <button class="btn buttonStyle buttonCssStyle shadow-none p-0 mt-3" (click)="openPopupForSaveAsTemplate();" [disabled]="selectedColumnarTemplate == '-1'">{{'designEditor.failsafePage.saveastemplatebtn' | translate}}</button>
+                </div>
+                <div class="col-5 p-3 saveAsTemplatePopup" *ngIf="isSaveAsTemplateEnable">
+                    <div class="row col outerWrap mt-4 m-0">
+                        <label class="col-2 p-0 verticalMiddle">{{'dmColumnarCompontent.nameLbl' | translate}}: </label>
+                        <input class="col form-control inputStyle" placeholder="{{'dmColumnarCompontent.templateNameLbl' | translate}}" [(ngModel)]="templateNameEntered">
+                    </div>
+                    <div class="row col justify-content-end p-0 ">
+                        <div class="col-12 text-right p-0 mt-5">
+                            <button class="btn buttonStyle buttonCssStyle shadow-none p-0 smallLabel inputStyle mr-2 mt-2 blueColorBtn" type="button" (click)="callSaveAsTemplate();">{{'designEditor.saveBtn' | translate}}</button> 
+                            <label class="btn buttonStyle buttonCssStyle shadow-none p-0 smallLabel inputStyle m-0 mt-2" (click)="closeSaveAsTemplatePopup();">{{'designEditor.closeBtn' | translate}}</label>
+                        </div>                         
+                    </div>
+                </div>
+            </div>
+
+            <!-- Table data columnar -->
+            <div class="outerWrap col p-0" *ngIf="columnarTableData.length > 0">
+                <div class="row col m-0 p-0">
+                    <div class="col p-3 backgroundWhite columnarTable" id="tableColumnar" #tableColumnarData>
+                        <div class="row col p-0 m-0">
+                            <div class="col-3 ml"><label class="smallLabel">{{'dmColumnarCompontent.columnNamelbl' | translate}}</label></div>
+                            <div class="col-5"><label class="smallLabel">{{'dmColumnarCompontent.columnValueLbl' | translate}}</label></div>
+                            <div class="col-2 text-center"><label class="smallLabel">{{'dmColumnarCompontent.orderLbl' | translate}}</label></div>
+                            <div class="col-2 text-center"><label class="smallLabel">{{'dmMultiOfferComponent.actionLbl' | translate}}</label></div>
+                        </div>                        
+                        <div class="col p-0 scrollTable table-striped" #colValInputContent>
+                            <div class="row rowStripe p-3" *ngFor="let x of columnarTableData; let i = index" id="row_{{x.id}}">
+                                <div class="col-3">
+                                    <input class="form-control inputStyle xSmallLabel col-9 colName_{{x.id}}" placeholder="{{'dmColumnarCompontent.columnNamelbl' | translate}}" value="{{x.colname}}" (keyup)="getColunmValues($event,'name',x.id);" (change)="getColunmValues($event,'name',x.id);" (paste)="getColunmValues($event,'name',x.id);" (keydown.Tab)="getColunmValues($event,'name',x.id);" (click)="getColunmValues($event,'name',x.id);">
+                                </div>
+                                <div class="col-5">
+                                    <div class="columnValueArea position-relative">
+                                        <div [attr.contenteditable]="true" class="columnValueInp editable xSmallLabel col-11 pl-2 pt-1 colVal_{{x.id}}" [innerHTML]="x.colvalue"
+                                            id="columnValueInp_{{x.id}}" name="columnValueInp" (keyup)="getCaretIndex($event,x.id); getColunmValues($event,'value',x.id);" (click)="getCaretIndex($event,x.id); getColunmValues($event,'value',x.id);"
+                                            spellcheck="false" (paste)="getCaretIndex($event,x.id); getColunmValues($event,'value',x.id);" (keydown.Tab)="getCaretIndex($event,x.id); getColunmValues($event,'value',x.id);"                               
+                                            ngDefaultControl isNative="true" perLine="7" showPreview="false" (change)="getCaretIndex($event,x.id); getColunmValues($event,'value',x.id);"
+                                            >
+                                        </div>
+                                        <!-- <emoji-mart class="emoji-mart-inapp" [custom]="customEmojis" *ngIf="emojisToggle" title="Pick your emoji…" [showPreview]="false" 
+                                        (emojiSelect)="addEmojiItem($event, 'title')" [enableSearch]="false" [enableFrequentEmojiSort]="true" [showSingleCategory]="true" 
+                                            [include]="['custom']" emoji="point_up">
+                                        </emoji-mart> -->
+                
+                                        <!-- <div class="d-inline iconContainer blueBorder ">
+                                            <span class="fal fa-plus plus_{{x.id}} blueColor" id="plus_{{x.id}}" [ngClass]="enablePlusBtn && orderRowId == x.id ? '' : 'disabledPlusBtn'" (click)="openOfferSliderPopup($event, 'columnValue_{{x.id}}');"></span>
+                                        </div> -->
+                                    </div>
+                                </div>
+                                <div class="col-2 text-center">
+                                    <i class="fas fa-caret-up mr-2 fa-lg order_{{x.id}}" *ngIf="i != 0" (click)="columnMoveUp(x.id,i);"></i>
+                                    <i class="fas fa-caret-down fa-lg order_{{x.id}}" (click)="columnMoveDown(x.id,i);"></i>
+                                </div>
+                                <div class="col-2 text-center pl-4">
+                                    <i class="far fa-trash-alt trash_{{x.id}} pointer" (click)="deleteFieldsColumns(x.id);"></i>
+                                </div>
+                            </div>                      
+                        </div>                          
+                    </div>
+                    
+                </div>
+                <div class="row col p-0 mt-3" id="addFieldsBtn">
+                    <div class="col text-right">
+                        <button type="button" class="btn buttonStyle buttonCssStyle shadow-none p-0" (click)="addFieldsColumn($event)"><i class="fas fa-plus mr-2"></i> {{'dmColumnarCompontent.addFieldLbl' | translate}}</button>
+                    </div>
+                </div>
+            </div>
+            
+            
+
+            <div class="col outerwrap m-0 p-0" #exportSettingsElements>
+                <div class="row col p-0 m-0">
+                    <h6><label>{{'dmFreeTextComponent.exportSettingsLbl' | translate}}</label></h6>
+                </div>
+                <div class="row col liteBckgrd m-0">
+                    <div class="col-2 p-0">
+                        <p><label for="" class="xSmallLabel text-muted">{{'dmColumnarCompontent.delimiterLbl' | translate}}</label></p>
+                        <p><select name="" id="" class="xSmallLabel text-muted inputStyle col-10 delimiterSelect" (change)="selectDelimiter($event)">
+                            <option value=",">{{'dmColumnarCompontent.commaLbl' | translate}}</option>
+                            <option value="|">{{'dmColumnarCompontent.pipeLbl' | translate}}</option>
+                            <option value="~">{{'dmColumnarCompontent.tildeLbl' | translate}}</option>
+                        </select></p>
+                    </div>
+                    <div class="col-2 p-0">
+                        <p><label for="" class="xSmallLabel text-muted">{{'dmColumnarCompontent.enclosureLbl' | translate}}</label></p>
+                        <p><select name="" id="" class="xSmallLabel text-muted inputStyle col-10 enclosureSelect" (change)="selectEnclosure($event)">
+                            <option value='-1'>{{'dmColumnarCompontent.noenclosureLbl' | translate}}</option>
+                            <option value="'">{{'dmColumnarCompontent.singleQuotesLbl' | translate}}</option>
+                            <option value='"'>{{'dmColumnarCompontent.doubleQuotesLbl' | translate}}</option>
+                        </select></p>
+                    </div>
+                </div>
+                <div class="row col-4 p-0 mt-2 m-0">
+                    <input type="checkbox" class="verticalMiddle mr-2 includeHeaderCheck" (click)="checkIncludeHeader($event);">
+                    <label class="smallLabel m-0">{{'dmColumnarCompontent.includeFileHeaderLbl' | translate}}</label>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="customeOffers relative" *ngIf="offerDrawerSectionEnable" [ngClass]="offerDrawerSectionEnable ? 'slideIN':'slideOUT'">
+    <app-offers-drawer [dataFromParent]="modalRef" (onCloseOfferPopup)="onCloseOfferDrawer();" (offersAppendToInput)="finalOffersSelected($event);"></app-offers-drawer>
+</div>
+<!-- <div class="backdrop_offerSlider" *ngIf="backropOffersEnable"></div> -->

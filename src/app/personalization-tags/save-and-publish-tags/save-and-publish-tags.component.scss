@@ -1,0 +1,19 @@
+@import '../../../custom-style.scss';
+.buttonCss{
+    @include secondaryBttn;
+  }
+  .buleBtn{
+    background-color: #3366FF;
+    color: #FFF;
+  }
+ .publichTagArea{
+    background: #fff;
+    height: calc(100vh - 150px);
+ }
+ .tagsScriptCodeArea{
+    background: #fff;
+    height: calc(100vh - 470px);
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    width: 94%;
+ }

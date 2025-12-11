@@ -1,0 +1,43 @@
+<app-tag-failsafe (callBeeInstance)="saveEmail()" (updateBeeEditorTempObj)="reloadBeeEditor($event)"></app-tag-failsafe>
+<div class="outterwrapper justify-content-center row col">
+  <div class="col-4 p-0 mt-4 p-5 publichTagArea">
+    <div class="col p-0 mb-2">
+      <div class="col text-left text-muted">
+        <label class="smallLabel">{{'dmColumnarCompontent.nameLbl' | translate}}</label>
+      </div>
+      <div class="col">
+        <input class="form-control" [(ngModel)]="ptagName" (keyup)="updatePtagName(ptagName);">
+      </div>
+    </div>
+    <!-- <div class="col p-0 mb-2 d-none">
+    <div class="col text-left text-muted">
+        <label class="smallLabel">Department</label>
+    </div>
+    <div class="col">
+        <input class="form-control" >
+    </div>
+</div> -->
+    <div class="col p-0 mb-2">
+      <div class="col text-left text-muted">
+        <label class="smallLabel">{{'simulatePtagComponent.tagURLLbl' | translate}}</label>
+      </div>
+      <div class="col tagsScriptCodeArea ml-3">
+        <div class="row col mt-3" *ngFor="let item of urlMapArry | keyvalue">
+          <label class="smallLabel mr-3">{{item.key}}:</label>
+          <!-- <div class="mr-2 smallLabel">&lt;{{item.value}}&gt;</div> -->
+          <span
+            ><i
+              class="far fa-copy mediumLable align-text-top"
+              #t1="ngbTooltip"
+              triggers="manual"
+              ngbTooltip="{{'copiedLbl' | translate}}"
+              (click)="copyToPaste(t1,item.value)"></i
+          ></span>
+          
+          <hr />
+        </div>
+        
+      </div>
+    </div>
+  </div>
+</div>

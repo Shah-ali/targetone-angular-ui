@@ -1,0 +1,80 @@
+<div class="outerWrapper col fullPreviewArea">    
+    <div class="row col p-0">          
+        <div class="col-9" id="leftSidePreviewSection"> 
+            <div class="col p-0 mt-2 mb-2">
+                <label class="fullprevwLable">{{'fullpreviewComponent.fullPreviewtitleLbl' | translate}}</label>
+            </div>
+            <div class="col p-0">
+                <div class="col p-0  deviceSwitchArea">
+                    <div class="col mt-2 mb-3 text-center">
+                        <i class="far fa-desktop fa-lg blue mr-2" (click)="swicthDeviceMethod('desktop');" [ngClass]="!isMobileDeviceEnabled ? 'blue':'grey'" title="{{'designEditor.emailEditor.desktoplbl' | translate}}"></i> | 
+                        <i class="far fa-mobile fa-lg ml-2" [ngClass]="isMobileDeviceEnabled ? 'blue':'grey'" (click)="swicthDeviceMethod('mobile');" title="{{'designEditor.emailEditor.mobilelbl' | translate}}"></i>
+                    </div>
+                </div>
+            </div>       
+            <div class="col p-0">
+                <div class="backShadeLayer"></div>
+                <div class="col htmlSectionApperdArea p-0">
+                    <iframe class="" #htmlSectionApperdAreaForDesign [ngClass]="isMobileDeviceEnabled ? 'mobileView' : ''" id="thumbnailContent" allowfullscreen>
+                    </iframe>
+                </div>
+            </div>
+        </div>
+        <div class="col-3" id="rightSidePreviewSection">
+            <div class="col previewControls">
+                <div class="col p-0 previewControlLabel">
+                    <label class="p-0 fullprevwLable">{{'fullpreviewComponent.previewControlLbl' | translate}}</label>
+                </div>
+                <hr class="hrFullLine"/>
+                <!-- Panel Section of right side Html div structure-->
+                <div class="col p-0" #eachSectionForTemplateBlocks *ngFor="let item of tempateBlocksArryJson; let i = index;">
+                    <div class="col p-0 {{item.name}}" *ngIf="item.maxCount > 1 && item.displayType != 'text'">
+                        <div class="row col mb-2">
+                            <div class="col p-0">
+                                <label class="mediumFont">{{item.name}}</label>
+                            </div>
+                            <div class="col-2 p-0">
+                                <div class="toggleButton col-10 d-inline-block p-0 marginTop30" *ngIf="item.supportCondition">
+                                    <label class="switch ml-3">
+                                        <input type="checkbox" class="enableImageCk" id="" [checked]="true" (click)="hideTemplateBlockSecton($event,i);">
+                                        <span class="slider round"></span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row col mb-2">
+                            <div class="col sliderWithCount">
+
+                                <ngx-slider #ngxSliderElements *ngIf="item.maxCount == 0" [(value)]="item.maxVal" [options]="{
+                                    floor: 0,
+                                    showSelectionBar: false,
+                                    ceil:  item.maxCount,
+                                    animate: true
+                                  }" (click)="onChangeSLiderVal($event,i,item.maxVal);"></ngx-slider>
+                                  <ngx-slider #ngxSliderElements *ngIf="item.maxCount > 0" [(value)]="item.maxVal" [options]="{
+                                    floor: 1,
+                                    showSelectionBar: true,
+                                    ceil:  item.maxCount,
+                                    animate: true
+                                  }" (click)="onChangeSLiderVal($event,i,item.maxVal);"></ngx-slider>
+                            </div>
+                        </div>
+                        <div class="row col">
+                            <label class="mediumFont blue" (click)="scrollToTopView(i);">{{'fullpreviewComponent.highlightOnPreviewLbl' | translate}}</label>
+                        </div>
+                        <hr class=""/>
+                    </div>                   
+               </div>  
+
+            </div>
+        </div>
+    </div>
+ </div>
+ <div class="footerBtn col mt-2 mb-3">
+    <div class="col p-0  text-right">
+        <button type="button" class="btn btn-outline-primary buttonStyle shadow-none mt-1 mr-4" (click)="closefullPreview();">{{'close' | translate}}</button>
+    </div>
+</div>
+
+
+

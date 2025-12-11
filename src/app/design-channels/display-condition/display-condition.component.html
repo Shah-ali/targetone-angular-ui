@@ -1,0 +1,594 @@
+<div class="modal-header">
+  <div class="rowConfigurationHeader">
+    <span>{{ 'beeEditorGlobalComponent.rowConfiguration' | translate }}</span>
+    <!-- <button type="button" class="close pull-right" (mousedown)="onClose()" aria-label="Close">
+    <span aria-hidden="true">&times;</span>
+  </button> -->
+    <div class="rowNameSection mt-3" *ngIf="isPersonalizeTagMode && tempDynamicContent && this.selectedLayout">
+      <div class="col-12 p-0 rowNameInputSection">
+        <label
+          >{{ 'designEditor.rowLabelName.name' | translate }}:&nbsp;<span *ngIf="!isRowNameEditable">{{
+            rowNameValue
+          }}</span></label
+        >
+        <input
+          *ngIf="isRowNameEditable"
+          type="text"
+          name="rowName"
+          class="form-control shadow-none"
+          [(ngModel)]="rowNameValue" />
+        <i class="fal fa-pencil-alt ml-2" *ngIf="!isRowNameEditable" (click)="editRowName()"></i>
+        <i class="fas fa-check ml-2" (click)="validateRowName()" *ngIf="isRowNameEditable"></i>
+        <div *ngIf="scriptNameError" class="error-message ml-3">
+          {{ scriptNameError }}
+        </div>
+      </div>
+      <span class="col-12 p-0 rowNameDesc">
+        <i class="far fa-info-circle"></i>&nbsp;{{ 'designEditor.rowLabelName.rowLabelNameInfo' | translate }}
+      </span>
+    </div>
+  </div>
+</div>
+<div class="modal-body">
+  <div class="loaderMaskWrapper" *ngIf="showLoader">
+    <div class="loaderImage"></div>
+  </div>
+
+  <div class="rowConfiguration row mx-2" [ngClass]="showLoader ? 'loaderMask' : ''">
+    <div class="col-2 tabs-section">
+      <ul class="m-0 p-0 mt-1">
+        <!-- <li
+          *ngFor="let extension of extensions; let i = index"
+          (click)="selectLeftTabs(i)"
+          [ngClass]="{'active': extension.hidden, 'hidden': !extension.display}">
+          <ng-container *ngIf="extension.display">
+            {{ extension.label | translate }}
+          </ng-container>
+        </li> -->
+
+        <li (click)="selectLeftTabs(0)" *ngIf="!ensembleAiEnabled" [ngClass]="{ active: extensions[0].hidden, hidden: !extensions[0].display }">
+          {{ extensions[0].label | translate }}
+        </li>
+        <li (click)="selectLeftTabs(1)" *ngIf="!ensembleAiEnabled" [ngClass]="{ active: extensions[1].hidden, hidden: !extensions[1].display, disabledConditionLiBtn: mergeTagExtJSON.length <= 1 }">
+          {{ extensions[1].label | translate }}
+        </li>
+        <li
+          (click)="selectLeftTabs(2)"
+          *ngIf="enablePreviewOption"
+          [ngClass]="{ active: extensions[2].hidden, hidden: !extensions[2].display }">
+          {{ extensions[2].label | translate }}
+        </li>
+        <li class="disabled-tab" *ngIf="!enablePreviewOption && !ensembleAiEnabled" [ngClass]="{ hidden: !extensions[2].display }">
+          {{ 'designEditor.rowPreview.previewIsLoadingTxt' | translate }}
+        </li>
+        <li (click)="selectLeftTabs(3)" [ngClass]="{ active: extensions[3].hidden, hidden: !extensions[3].display }">
+          {{ extensions[3].label | translate }}
+        </li>
+      </ul>
+    </div>
+    <div class="col-10">
+      <div class="row mergeTagExt-section" [ngStyle]="selectedSectionIndex !== 0 ? {'display': 'none'} : null">
+        <div class="col-6 col-md-4 mergeTag-section mr-2">
+          <h4>{{ 'designEditor.mergeTagExtensions.mergeTags' | translate }}</h4>
+
+          <div class="allTags">
+            <ul>
+              <ng-container *ngFor="let item of mergeTagExtJSON; let first = first">
+                <li
+                  class="row m-0 rootLabel"
+                  [ngClass]="{ rowSelected: first }"
+                  *ngIf="item.child == null"
+                  (click)="selectItem($event, item)">
+                  <div class="col col-10 px-2">
+                    <img class="mergeTagsIcons" src="./assets/images/merge-tags-ext/{{ item.icon }}" />
+                    <span>{{ item.name }}</span>
+                  </div>
+                  <div class="section-2 col col-2 m-0 text-right">
+                    <i class="fas fa-caret-right"></i>
+                  </div>
+                </li>
+
+                <li class="row m-0 parentDiv" *ngIf="item.child != null && this.selectedLayout">
+                  <div class="col">
+                    <div class="row cpDiv">
+                      <div class="col col-7 px-2">
+                        <img class="mergeTagsIcons" src="./assets/images/merge-tags-ext/{{ item.icon }}" />
+                        <span>{{ item.name }}</span>
+                      </div>
+                      <div class="col col-5 m-0 text-right">
+                        <button class="btn buttonCss shadow-none m-0 mr-1" (click)="openAddMergeTag(item.type)">
+                          + {{ 'designEditor.mergeTagExtensions.add' | translate }}
+                        </button>
+                      </div>
+                    </div>
+                    <div class="row childDiv">
+                      <ul class="col col-12 px-2">
+                        <ng-container *ngFor="let childItem of item.child">
+                          <li
+                            class="row m-0"
+                            *ngIf="selectedRowModelName == childItem.name"
+                            (click)="selectItem($event, childItem)">
+                            <div class="col col-8 px-2">
+                              <img class="mergeTagsIcons" src="./assets/images/merge-tags-ext/{{ childItem.icon }}" />
+                              <span>{{ childItem.name }}</span>
+                            </div>
+                            <div
+                              class="section-2 col col-2 m-0 p-0 text-right"
+                              *ngIf="selectedRowModelName != childItem.name">
+                              <i class="fal fa-pencil-alt fa-sm mr-2"></i>
+                              <i class="far fa-trash fa-sm mr-2"></i>
+                            </div>
+                            <div class="section-2 col col-2 m-0 text-right">
+                              <i class="fas fa-caret-right"></i>
+                            </div>
+                          </li>
+                        </ng-container>
+
+                        <ng-container *ngFor="let cItem of selectExtObj">
+                          <li
+                            class="row m-0"
+                            *ngIf="item.type == cItem.ctype && selectedRowModelName != cItem.name"
+                            (click)="selectItem($event, cItem)">
+                            <div class="col col-8 px-2">
+                              <img class="mergeTagsIcons" src="./assets/images/merge-tags-ext/{{ cItem.icon }}" />
+                              <span>{{ cItem.name }}</span>
+                            </div>
+                            <div class="section-2 col col-2 m-0 p-0 text-right">
+                              <i
+                                class="fal fa-pencil-alt fa-sm mr-2"
+                                ngbTooltip="{{ 'designEditor.mergeTagExtensions.edit' | translate }}"
+                                tooltipClass="ngbTooltipStyle"
+                                (click)="editExtMergeTag(item.type, cItem.name)"></i>
+                              <i
+                                class="far fa-trash fa-sm mr-2"
+                                ngbTooltip="{{ 'designEditor.mergeTagExtensions.delete' | translate }}"
+                                tooltipClass="ngbTooltipStyle"
+                                (click)="deleteExtMergeTag(cItem.name)"></i>
+                            </div>
+                            <div class="section-2 col col-2 m-0 text-right">
+                              <i class="fas fa-caret-right"></i>
+                            </div>
+                          </li>
+                        </ng-container>
+                      </ul>
+                    </div>
+                  </div>
+                </li>
+              </ng-container>
+            </ul>
+            <!-- overlay of add tag section -->
+            <div class="addTagSection m-0 p-4" [hidden]="hiddenAddTagSection">
+              <div class="row">
+                <div class="col">
+                  <div class="row heading">
+                    <div class="col col-7 px-2" *ngIf="modelTypeSelected != 'api'">
+                      {{ 'designEditor.mergeTagExtensions.add' | translate }} {{ modelTypeSelected }}
+                    </div>
+                    <div class="col col-7 px-2" *ngIf="modelTypeSelected == 'api'">
+                      {{ 'designEditor.mergeTagExtensions.add' | translate }} {{ modelTypeSelected | uppercase }}
+                    </div>
+                    <div class="col col-5 m-0 text-right">
+                      <i class="fal fa-times fa-lg" (click)="closeMergeTagExt()"></i>
+                    </div>
+                  </div>
+
+                  <div class="row">
+                    <div class="col col-12 px-2 mt-1">
+                      <!-- <select name="mergeTagExt" [(ngModel)]="selectedExtValue" (ngModelChange)="onChangeExtValue($event, '')">
+                        <option value="-1" selected>
+                          {{ 'designEditor.mergeTagExtensions.select' | translate }} {{ modelTypeSelected }}
+                        </option>
+                        <ng-container *ngFor="let childObj of addDropdownObj">
+                          <option [value]="childObj.name" *ngIf="selectedRowModelName != childObj.name">
+                            {{ childObj.name }}
+                          </option>
+                        </ng-container>
+                      </select> -->
+
+                      <div class="mergeTagExt-dropdown">
+                        <div class="search-input-box" (click)="openExtDropdown()">
+                          <input
+                            type="text"
+                            class="form-control shadow-none"
+                            placeholder="{{ 'searchLbl' | translate }}"
+                            [(ngModel)]="selectedExtValue"
+                            (input)="filterExtOptions($event)" />
+                          <i class="far" [class.fa-angle-down]="!showExtDropdown" [class.fa-angle-up]="showExtDropdown"></i>
+                        </div>
+                        <ul *ngIf="showExtDropdown">
+                          <ng-container *ngFor="let childObj of filteredExtOptions">
+                            <li (click)="selectExtOption(childObj.name)">
+                              <span>{{ childObj.name }}</span>
+                              <span *ngIf="childObj.type == 'api' && !childObj.isMultiObjOutput" class="singleObject">{{
+                                'designEditor.mergeTagExtensions.single' | translate
+                              }}</span>
+                              <span *ngIf="childObj.type == 'api' && childObj.isMultiObjOutput" class="multiObject">{{
+                                'designEditor.mergeTagExtensions.multi' | translate
+                              }}</span>
+                            </li>
+                          </ng-container>
+                        </ul>
+                      </div>
+                    </div>
+                    <hr *ngIf="!isModelDME" />
+                  </div>
+                  <div class="api-input-fields-section" *ngIf="!isModelDME && !hiddenInputSection">
+                    <div class="row inputSection" *ngFor="let inputObj of childInputs" (click)="toggleArrowIcon(arrowIcon)">
+                      <div class="mergeTagExt-dropdown">
+                        <div class="col col-12 mt-3">
+                          <label class="m-0">{{ inputObj.name }}</label>
+                        </div>
+                        <div class="col col-12">
+                          <div class="search-input-box">
+                            <input
+                              type="text"
+                              class="form-control shadow-none"
+                              placeholder="{{ 'searchLbl' | translate }}"
+                              name="{{ inputObj.name }}"
+                              #inputParamElement
+                              [(ngModel)]="inputObj.value"
+                              value="{{ inputObj.value }}" />
+                            <i class="far fa-angle-down" #arrowIcon></i>
+                          </div>
+                          <div class="inputParamParent">
+                            <ngx-dropdown-treeview
+                              [buttonClass]="treeDropdownButtonStyle"
+                              class="inputParamtreeContainer"
+                              [config]="configuration"
+                              [items]="childInputTreeObj"
+                              (selectedChange)="onSelectedMergeTagChange($event, inputParamElement, inputObj)">
+                            </ngx-dropdown-treeview>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="row buttonSection">
+                    <hr *ngIf="!isModelDME" />
+                    <button class="btn buttonCss shadow-none m-0 mr-1" *ngIf="!editMergeTagBttn" (click)="addExtMergeTags()">
+                      {{ 'designEditor.mergeTagExtensions.add' | translate }}
+                    </button>
+                    <button class="btn buttonCss shadow-none m-0 mr-1" *ngIf="editMergeTagBttn" (click)="addExtMergeTags()">
+                      {{ 'designEditor.mergeTagExtensions.edit' | translate }}
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col m-0 mergeTag-inputs">
+          <div class="mergeTag-inputs-heading">
+            <h4>{{ selectedItem?.name }}</h4>
+            <span (click)="copyAllToClipboard(selectedItem.name)">{{ 'clipboard.copyAllToClipboardLbl' | translate }}</span>
+          </div>
+          <div class="table-section-xy">
+            <table class="table mergeTagsTableCtr">
+              <thead class="thead-dark">
+                <tr>
+                  <th scope="col">{{ 'designEditor.mergeTagExtensions.fieldName' | translate }}</th>
+                  <th scope="col">{{ 'designEditor.mergeTagExtensions.mergeTag' | translate }}</th>
+                  <th scope="col" class="text-center">{{ 'designEditor.mergeTagExtensions.action' | translate }}</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let item of selectedTableData; let i = index">
+                  <td [attr.rowspan]="1">{{ item.name }}</td>
+                  <!-- <td>{{ item.value }}</td> -->
+                  <ng-container *ngIf="ifFreeStyleLayout(item.value); else stringValue">
+                    <td class="inner-table-cell freeStyle-table-row" colspan="2">
+                      <span
+                        class="expand show"
+                        (click)="toggleInnerTable($event, 'collapse', i)"
+                        [class.hide]="rowExpansionState[i]">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
+                          <path
+                            d="M64 80c-8.8 0-16 7.2-16 16V416c0 8.8 7.2 16 16 16H384c8.8 0 16-7.2 16-16V96c0-8.8-7.2-16-16-16H64zM0 96C0 60.7 28.7 32 64 32H384c35.3 0 64 28.7 64 64V416c0 35.3-28.7 64-64 64H64c-35.3 0-64-28.7-64-64V96zM200 344V280H136c-13.3 0-24-10.7-24-24s10.7-24 24-24h64V168c0-13.3 10.7-24 24-24s24 10.7 24 24v64h64c13.3 0 24 10.7 24 24s-10.7 24-24 24H248v64c0 13.3-10.7 24-24 24s-24-10.7-24-24z" />
+                        </svg>
+                      </span>
+                      <span
+                        class="collapse show"
+                        (click)="toggleInnerTable($event, 'expand', i)"
+                        [class.hide]="!rowExpansionState[i]">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
+                          <path
+                            d="M64 80c-8.8 0-16 7.2-16 16V416c0 8.8 7.2 16 16 16H384c8.8 0 16-7.2 16-16V96c0-8.8-7.2-16-16-16H64zM0 96C0 60.7 28.7 32 64 32H384c35.3 0 64 28.7 64 64V416c0 35.3-28.7 64-64 64H64c-35.3 0-64-28.7-64-64V96zM152 232H296c13.3 0 24 10.7 24 24s-10.7 24-24 24H152c-13.3 0-24-10.7-24-24s10.7-24 24-24z" />
+                        </svg>
+                      </span>
+                      {{ item.displayName }}
+                      <table class="inner-table hide">
+                        <thead></thead>
+                        <tbody>
+                          <tr *ngFor="let value of item.value" [class.hide]="!rowExpansionState[i]">
+                            <td>{{ value }}</td>
+
+                            <td class="left-align-td">
+                              <i
+                                class="far fa-copy align-text-top"
+                                #t1="ngbTooltip"
+                                triggers="manual"
+                                ngbTooltip="{{ 'copiedLbl' | translate }}"
+                                (click)="copyPasteChildElement(t1, value)"></i>
+                            </td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </td>
+                    <!-- <td class="text-center">
+                      <i
+                        class="far fa-copy align-text-top"
+                        #t1="ngbTooltip"
+                        triggers="manual"
+                        ngbTooltip="{{'copiedLbl' | translate}}"
+                        (click)="copyToPaste(t1, item.value)"
+                      ></i>
+                    </td> -->
+                  </ng-container>
+
+                  <ng-template #stringValue>
+                    <td>
+                      {{ item.value }}
+                    </td>
+
+                    <td class="text-center">
+                      <i
+                        class="far fa-copy align-text-top"
+                        #t1="ngbTooltip"
+                        triggers="manual"
+                        ngbTooltip="{{ 'copiedLbl' | translate }}"
+                        (click)="copyToPaste(t1, item.value)"></i>
+                    </td>
+                  </ng-template>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <div class="queryBuilder-section" [ngStyle]="selectedSectionIndex !== 1 ? {'display': 'none'} : null">
+        <div class="row m-0 mt-3 relative">
+          <query-builder
+            [formControl]="queryCtrl"
+            [classNames]="bootstrapClassNames"
+            [config]="configCtrl"
+            [allowRuleset]="allowRuleset"
+            [allowCollapse]="allowCollapse"
+            [emptyMessage]="emptyMessage"
+            (ngModelChange)="onQueryBuilderChange($event)">
+            <!-- <ng-container *queryButtonGroup="let ruleset"></ng-container> -->
+            <ng-container
+              class="queryButtonGroup"
+              *queryButtonGroup="
+                let ruleset;
+                let addRule = addRule;
+                let addRuleSet = addRuleSet;
+                let removeRuleSet = removeRuleSet
+              ">
+              <button
+                type="button"
+                style="border-radius: 7px"
+                class="btn buttonCss shadow-none m-0 mr-1"
+                (click)="addManualRuleSetMethod(ruleset, addRule)"
+                [disabled]="isPublishActiveContentEnabled">
+                + {{ 'designEditor.displayConditions.addFilter' | translate }}
+              </button>
+              <button
+                type="button"
+                style="border-radius: 7px"
+                class="btn buttonCss shadow-none m-0 mr-1"
+                (click)="addManualRuleSetMethod(ruleset, addRuleSet)"
+                [disabled]="isPublishActiveContentEnabled">
+                + {{ 'designEditor.displayConditions.addGroup' | translate }}
+              </button>
+              <button
+                type="button"
+                (click)="removeRuleManualMethod(ruleset, removeRuleSet)"
+                *ngIf="removeRuleSet"
+                class="btn q-remove-button"
+                [disabled]="isPublishActiveContentEnabled">
+                <i class="fal fa-times fa-lg"></i>
+              </button>
+              <ng-container *queryRemoveButton="let rule; let removeRule = removeRule">
+                <button
+                  type="button"
+                  (click)="removeRuleManualMethod(rule, removeRule)"
+                  class="btn customXicon"
+                  [disabled]="isPublishActiveContentEnabled">
+                  <i class="fal fa-times fa-lg"></i>
+                </button>
+              </ng-container>
+            </ng-container>
+            <div class="col-auto" *queryInput="let rule; type: 'textarea'">
+              <textarea class="form-control" [(ngModel)]="rule.value" placeholder="Custom Textarea"></textarea>
+            </div>
+
+            <ng-container class="" *queryField="let rule; let i = index; let fields = fields; let onChange = onChange">
+              <img src="./assets/images/drag_indicator.svg" style="width: 31px; height: 25px" />
+              <span class="selectedConditionSpan"></span>
+              <!-- <select [(ngModel)]="rule.field" (ngModelChange)="onChange($event, rule)" class="algoDropdown">
+                <option *ngFor="let field of fields" [value]="field.value">{{field.name}}</option>
+              </select> -->
+              <!-- <ngx-dropdown-treeview
+                #mergeTagsListData
+                [buttonClass]="customBootstrapStyle"
+                class="treeViewDropdownStyle"
+                [config]="configuration"
+                [items]="items"
+                (selectedChange)="onSelectedChange($event, rule)">
+              </ngx-dropdown-treeview> -->
+              <div class="relative">
+                <input
+                  #filterInputElement
+                  type="text"
+                  id="updateParams"
+                  class="form-control algoDropdown mediumFont shadow-none col-12 mt-1 addFilterInput_{{ rule.index }} pointer pr-3"
+                  [attr.data-keyname]="rule.index"
+                  [(ngModel)]="selectedDataObj[rule.index]"
+                  autocomplete="off"
+                  title="{{ selectedDataObj[rule.index] }}"
+                  (click)="showMergeTagDropDownMethod($event, rule.index)" />
+                <i
+                  class="fas text-right caretPositionRight"
+                  [ngClass]="
+                    openMergeTagDataPopup && currentSelectedInput == rule.index ? 'fa-caret-up' : 'fa-caret-down'
+                  "></i>
+                <ng-container *ngIf="currentSelectedInput == rule.index">
+                  <app-custom-tree-expand-merge-tag
+                    #customTreeMergeTagComponentReference
+                    [currentSelectedInput]="rule.index"
+                    [mergeTagDataItems]="items"
+                    [parentMergeTagExtJSON]="mergeTagExtJSON"
+                    (sendMergeTagDataToComponent)="
+                      updateParamsInputs($event, rule.index, rule, onChange)"                      
+                      [currentDynamicContentRule] = "selectedRowModelData"
+                      [selectedRowModelName]="selectedRowModelName"
+                    ></app-custom-tree-expand-merge-tag>
+                </ng-container>
+              </div>
+            </ng-container>
+            <ng-container class="" *queryOperator="let rule; let i = index; let fields = fields; let onChange = onChange">
+              <div class="p-0 mr-3">
+                <select
+                class="form-select form-control algoOperator smallLabel shadow-none col mt-1 ml-2"
+                [(ngModel)]="rule.operator"
+                (ngModelChange)="onOperatorChange($event, rule, onChange)">
+                <option *ngFor="let op of rule.operators" [value]="op">
+                  {{ op | titlecase }}
+                </option>
+              </select>
+              </div>              
+            </ng-container>
+            <ng-container *queryInput="let rule; type: 'object'; let field=field">
+              <div *ngIf="rule.operator === 'between'; else defaultInput" class="m-0 p-0">
+                <div class="ml-1">
+                  <div class="mb-2">
+                    <label class="smallFont m-0">{{'header.personalisationTags.fromDateLbl' | translate}}</label>
+                    <input type="text" class="form-control algoInput smallLabel col" [(ngModel)]="rule.value[0]" (ngModelChange)="onBetweenValueChange($event, rule)">
+                  </div>
+                  <div class="">
+                    <label class="smallFont m-0">{{'header.personalisationTags.toDateLbl' | translate}}</label>
+                    <input type="text" class="form-control algoInput smallLabel col" [(ngModel)]="rule.value[1]" (ngModelChange)="onBetweenValueChange($event, rule)">
+                  </div>
+                </div>              
+                
+              </div>              
+          
+                <ng-template #defaultInput>
+                  <div class="p-0">
+                   <input type="text" class="form-control algoInput smallLabel mt-1" [(ngModel)]="rule.value" (change)="onValueChange($event, rule)" />
+                 </div>      
+                </ng-template>         
+            </ng-container>
+          </query-builder>
+          
+        </div>
+        <div class="empty-condition-builder" *ngIf="queryDisplay.rules.length == 0">
+          {{ 'designEditor.displayConditions.emptyRuleMessageText' | translate }}
+        </div>
+        <!-- <p style="margin-top: 50px">{{ queryDisplay | json }}</p> -->
+      </div>
+
+      <div class="preview-section" [ngStyle]="selectedSectionIndex !== 2 ? {'display': 'none'} : null">
+        <div *ngIf="tempDynamicContent != undefined">
+          <h3 class="col-8 mt-4 mb-0 d-flex justify-content-between">
+            <span>Preview</span>
+            <div class="deviceView">
+              <span>View as:</span>
+              <i class="far fa-desktop ml-2" (click)="switchDeviceView(1)" [class.selected]="!dcRowPreview.isMobileView" ngbTooltip="{{ 'designEditor.emailEditor.desktoplbl' | translate }}"></i>
+              <i class="far fa-mobile ml-3" (click)="switchDeviceView(2)" [class.selected]="dcRowPreview.isMobileView" ngbTooltip="{{ 'designEditor.emailEditor.mobilelbl' | translate }}"></i>
+            </div>
+          </h3>
+          <hr class="ml-0 mt-0" />
+          <app-dc-row-preview
+            [maxCountVal]="maxCountAttributeValue"
+            [rowStyleSelected]="rowStyleSelected"
+            [layoutStyleSelected]="layoutStyleSelected"
+            #dcRowPreview></app-dc-row-preview>
+        </div>
+      </div>
+      <div class="imageSettings-section" [ngStyle]="selectedSectionIndex !== 3 ? {'display': 'none'} : null">
+          <div class="row p-0 m-0">
+            <div class="col">
+              <h6 class="my-3 font-bold">{{'designEditor.mergeTagExtensions.imageSettings' | translate}}</h6>
+              <hr class="ml-0" />
+              <div calss="col p-0" *ngFor="let mainobj of imageTypeObj">
+                <div class="row col-4 mr-2 mt-5 imageType">
+                  <div class="col-5 p-0">
+                    <label for="imageType" class="innerLabel mediumFont mt-2">{{ 'designEditor.displayConditions.imageTypeLbl' | translate }}</label>
+                  </div>
+                  <div class="col-5 p-0">
+                    <select
+                    id="border-style"
+                    class="form-control mediumFont" 
+                    [(ngModel)]="imageSettingsObj.imageType"
+                    (change)="selectImageTypeMethod($event,true);"                   
+                    >
+                    <option value="{{ext.value}}" *ngFor="let ext of mainobj.imageTypeOptions">
+                      {{ext.label}}
+                    </option>
+                    
+                  </select>
+                  </div>           
+                  
+                </div>
+                <div class="row col-4 mr-2 mt-3 borderType">
+                  <div class="col-5 p-0">
+                    <label for="imageSize" class="innerLabel mediumFont mt-2">{{ 'designEditor.displayConditions.imageDepthLbl' | translate }}</label>
+                  </div>
+                  <div class="col-5 p-0">
+                    <input *ngIf="!readyonlydepthEnable"
+                    id="imageSize"
+                    class="form-control mediumFont pl-3"
+                    type="number" maxlength="3"                   
+                    min="80"
+                    max="100"     
+                    [maxlength]="3"            
+                    (change)="imageQualityValUpdateMethod($event);"    
+                    [(ngModel)]="imageSettingsObj.imageQuality"
+                     />
+                     <input *ngIf="readyonlydepthEnable"
+                    id="imageSize"
+                    class="form-control mediumFont pl-3"
+                    type="number" maxlength="3" 
+                    min="100"                
+                    max="100"  
+                    [maxlength]="3"                  
+                    [(ngModel)]="imageSettingsObj.imageQuality"
+                    (change)="imageQualityValUpdateMethod($event);"
+                    readonly
+                     />                      
+                  </div>
+                  <div class="col-1 mt-2">
+                    %
+                  </div>           
+                  
+                </div>
+                
+              </div>
+            </div>
+          </div>
+
+          <div class="col mt-5">
+            <p class="smallLabel m-0 mb-2">{{'designEditor.displayConditions.imageDepthInputLbl' | translate}}</p>
+            <p class="smallLabel m-0 mb-2 text-muted">{{'designEditor.displayConditions.imageMinimumMaximumValueLbl' | translate}}</p>
+            <p class="smallLabel m-0 mb-2 text-muted">{{'designEditor.displayConditions.higherValueindicatesimageQualityLbl' | translate}}</p>
+          </div>
+      </div>
+    </div>
+  </div>
+  </div>
+<div class="modal-footer d-flex justify-content-right m-3 pb-0">
+  <button type="button" class="btn buttonCss shadow-none m-0 mr-1" (mousedown)="onClose()">
+    {{ 'designEditor.cancelBtn' | translate }}
+  </button>
+  <button
+    type="submit"
+    [ngClass]="!enableApplyBttn ? 'disabledBtn' : ''"
+    class="btn buttonPrimaryCss shadow-none m-0"
+    (click)="saveQuery('clickFromBttn')"
+    [disabled]="isPublishActiveContentEnabled || scriptNameError != ''">
+    {{ 'designEditor.applyBtn' | translate }}
+  </button>
+</div>

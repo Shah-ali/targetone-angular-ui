@@ -1,0 +1,288 @@
+<div class="col modal-header">
+    <h5 class="modal-title" id="exampleModalLabel">
+        <span class="mediumLable" *ngIf="!editModeEnabled">{{'apiPersonalization.createAPIIntegrationLbl' | translate}}</span>
+        <span class="mediumLable" *ngIf="editModeEnabled">{{'apiPersonalization.modifyAPIIntegrationLbl' | translate}}</span>
+  </h5>
+  <button type="button" class="close" (mousedown)="onClose()" aria-label="Close">
+    <span aria-hidden="true"><i class="fal fa-times crossColor"></i></span>
+</button>
+</div>
+<div class="modal-body">    
+    <div class="col p-0 createApibodyContent">
+    <div class="row col p-0 m-0">
+        <div class="col p-0 mb-3 mt-2">
+            <ul class="nav tabsLiStyle">
+                <li *ngFor="let x of restAPINJsAPIObj">
+                    <input type="radio" class="mr-2 cursor-pointer verticalAlignMiddle" value="{{x.saveVal}}" id="api_{{x.id}}" [checked]="x.checked" (click)="switchBtRestNJsAPIMethod($event);">
+                    <label for="api_{{x.id}}" class="smallLabel m-0 cursor-pointer">{{x.name}}</label>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div class="col p-0">          
+    <div class="row col mb-3">
+        <div class="col-7 p-0">
+            <div class="col p-0">
+                <label class="smallLabel mr-3 pl-2 control-label">{{'apiPersonalization.apiNameLbl' | translate}}</label>
+                <i class="far fa-info-circle " ngbTooltip="{{'apiPersonalization.apiNameInfoText' | translate}}" tooltipClass="ngbTooltipStyle" placement="right" ></i>
+            </div>
+            <div class="row col ">
+                <div class="col-12 p-0">
+                    <div class="col-6 p-0"><input class="form-control mr-2" type="text" [(ngModel)]="apiName" pattern="[a-zA-Z][a-zA-Z0-9_]*"
+                    required #nameFieldControl="ngModel"></div>
+                    <div class="error-message" *ngIf="true && nameFieldControl.invalid && (nameFieldControl.dirty || nameFieldControl.touched)">
+                        <div *ngIf="nameFieldControl.hasError('pattern')">{{'apiPersonalization.apiNameFiledValidationMsg1' | translate}}</div>
+                        <div *ngIf="nameFieldControl.hasError('required')">{{'apiPersonalization.apiNameFiledValidationMsg2' | translate}}</div>
+                    </div>
+                </div>
+            </div>            
+        </div>
+    </div>
+    <div class="row col mb-3">
+        <div class="col p-0">
+            <div class="col p-0">
+                <label class="smallLabel mr-3 pl-2 control-label">{{'apiPersonalization.apiDescriptionLbl' | translate}}</label>
+                <i class="far fa-info-circle" ngbTooltip="{{'apiPersonalization.apiDescriptionInfoLbl' | translate}}" tooltipClass="ngbTooltipStyle" placement="right"></i>
+            </div>
+            <div class="col p-0">
+                <div class="col p-0">
+                    <textarea class="form-control mr-2 smallLabel" rows="3" [(ngModel)]="apiDescription" required #descFieldControl="ngModel"></textarea>
+                    <div class="error-message" *ngIf="true && descFieldControl.invalid && (descFieldControl.dirty || descFieldControl.touched)">
+                        <div *ngIf="descFieldControl.hasError('required')">{{'apiPersonalization.apiDescriptionCannotBeEmptyLbl' | translate}}</div>
+                    </div>
+                    <!-- <input class="form-control mr-2 smallLabel" type="text" placeholder="" [(ngModel)]="apiBasedUrl" (change)="generateParams();"> -->
+                </div>
+                <!-- <div class="col p-0 mt-2 pl-2">
+                    <p class="xSmallLable text-muted">{{'apiPersonalization.thridUrlExampleLbl' | translate}}</p>
+                </div> -->
+            </div>            
+        </div>
+    </div>
+    <!-- <hr class="width98Css ml-1" *ngIf="!isRestApiEnable"/>  -->
+    <div class="row col mb-3 mt-3 p-0 m-0" id="scriptFusionJsArea" *ngIf="!isRestApiEnable">
+        <div class="col p-0">
+            <div class="col p-0 pl-2">
+                <label class="smallLabel mr-3 control-label">{{'fusionJSComponent.selectFusionJSScriptLbl' | translate}}</label>
+                <i class="far fa-info-circle" ngbTooltip="{{'apiPersonalization.scriptSelectionLbl' | translate}}" tooltipClass="ngbTooltipStyle"></i>
+            </div>
+            <div class="row col p-0 m-0" >
+                <div class="col-3 p-0">
+                    <!-- <select class="form-control" (change)="selectScriptMethod($event,false);" [(ngModel)]="selectedScriptVal">
+                        <option value="-1">Select script</option>
+                        <option *ngFor="let x of scriptDropdownArryList" value="{{x.jsKey}}">{{x.scriptName}}</option>
+                    </select> -->
+                    <div class="scriptJsApi-dropdown">
+                        <div class="search-input-box" (click)="openScriptDropdown()">
+                          <input
+                            type="text"
+                            class="form-control shadow-none jsapiInput"
+                            placeholder="{{'fusionJSComponent.searchscriptLbl' | translate}}"
+                            [(ngModel)]="selectedScriptName"
+                            value="selectedScriptVal"
+                            (input)="searchScriptJsMethod($event)" />
+                          <i
+                            class="far"
+                            [class.fa-angle-down]="!showScriptDropdown"
+                            [class.fa-angle-up]="showScriptDropdown"></i>
+                        </div>
+                        <ul *ngIf="showScriptDropdown">                            
+                          <ng-container *ngFor="let list of filteredScriptOptions; let i=index; let islast = last">
+                            <li (click)="selectScriptMethod(list.jsKey,false);" class="pb-2" [ngClass]="[islast ? 'borderBttmZero' : '', selectedScriptVal == list.jsKey ? 'activeScriptSelected':'']">
+                                <label class="mediumFont mt-3">{{list.scriptName}}</label>
+                                <p class="m-0 p-0"><label class="xSmallLable">published By: {{list.publishedBy}}</label> |
+                                    <label class="xSmallLable">published Date: {{list.publishedDate}}</label></p>
+                                <p class="m-0 p-0"><label class="xSmallLable ellipseText">Description: {{list.Description}}</label></p>                          
+                            </li>
+                          </ng-container>
+                        </ul>
+                      </div>
+                </div>
+                                
+            </div>            
+        </div>            
+    </div>
+    <hr class="width98Css ml-1" *ngIf="!isRestApiEnable"/> 
+
+    <div class="row col mb-3" *ngIf="isRestApiEnable">
+        <div class="col p-0">
+            <div class="col p-0">
+                <label class="smallLabel mr-3 pl-2 control-label">{{'apiPersonalization.thirdPartyURLLbl' | translate}}</label>
+                <i class="far fa-info-circle" ngbTooltip="{{'apiPersonalization.apiThirdPartyUrlInfoText' | translate}}" tooltipClass="ngbTooltipStyle2" placement="right"></i>
+            </div>
+            <div class="col p-0">
+                <div class="col p-0">
+                    <textarea class="form-control mr-2 smallLabel" rows="3" [(ngModel)]="apiBasedUrl" (change)="generateParams();" required #urlFieldControl="ngModel"></textarea>
+                    <div class="error-message" *ngIf="true && urlFieldControl.invalid && (urlFieldControl.dirty || urlFieldControl.touched)">
+                        <div *ngIf="urlFieldControl.hasError('required')">{{'apiPersonalization.thridPartyUrlCannotbeEmptyLbl' | translate}}</div>
+                    </div>
+                    <!-- <input class="form-control mr-2 smallLabel" type="text" placeholder="" [(ngModel)]="apiBasedUrl" (change)="generateParams();"> -->
+                </div>
+                <div class="col p-0 mt-2 pl-2">
+                    <p class="xSmallLable text-muted">{{'apiPersonalization.thridUrlExampleLbl' | translate}}</p>
+                </div>
+            </div>            
+        </div>
+    </div>
+    <div class="col p-0 pl-2" *ngIf="!isRestApiEnable">
+        <label class="smallLabel mr-3">{{'apiPersonalization.APIinputParametersLbl' | translate}}</label>
+        <i class="far fa-info-circle" ngbTooltip="{{'apiPersonalization.apiInputParametersInfoText' | translate}}" tooltipClass="ngbTooltipStyle"></i>
+    </div>
+    <div class="row col wellPaddSty mb-3 backGrnd fusionJspart pl-1" id="apiInputParametersSection" *ngIf="!isRestApiEnable">
+        <div class="col p-0">            
+            <div class="row col p-0 pl-2" #paramsCollectFusionJs>
+                <ng-container *ngFor="let item of collectParamsFusionJs; let i=index">
+                    <div class="col-2 mt-2 params-{{i}}" id="params-{{i}}" >
+                        <div class="col p-0">
+                            <label class="smallLabel text-truncate m-0 w-100">{{item.key}}</label>
+                        </div>
+                        <div class="col p-0">
+                            <input class="form-control smallLabel" type="text" [(ngModel)]="item.value" placeholder="{{item.key}}"> <!-- [(ngModel)]="" (change)="" (keyup.Tab)="" -->
+                        </div>
+                    </div>
+                </ng-container>
+                                
+            </div>            
+        </div>            
+    </div>
+    <div class="row col wellPaddSty mb-3 backGrnd" id="apiInputParametersSection" *ngIf="isRestApiEnable">
+        <div class="col">
+            <div class="col p-0 pl-2">
+                <label class="smallLabel mr-3">{{'apiPersonalization.APIinputParametersLbl' | translate}}</label>
+                <i class="far fa-info-circle" ngbTooltip="{{'apiPersonalization.apiInputParametersInfoText' | translate}}" tooltipClass="ngbTooltipStyle"></i>
+            </div>
+            <div class="row col p-0 pl-2" #paramsCollectionInput>
+                <ng-container *ngFor="let item of collectParams; let i=index">
+                    <div class="col-2 mt-2 params-{{i}}" id="params-{{i}}"  *ngFor="let subItem of item | keyvalue">
+                        <div class="col p-0">
+                            <label class="smallLabel text-truncate m-0 w-100">{{subItem.key}}</label>
+                        </div>
+                        <div class="col p-0">
+                            <input class="form-control smallLabel" type="text" [(ngModel)]="subItem.value" (change)="getParamsValues($event,subItem.key,i);" (keyup.Tab)="getParamsValues($event,subItem.key,i);">
+                        </div>
+                    </div>
+                </ng-container>
+                                
+            </div>            
+        </div>            
+    </div>
+    <div class="row col wellPaddSty mb-3 backGrnd" id="keyValuepairSection" *ngIf="isRestApiEnable">
+        <div class="col">
+            <div class="col p-0">
+                <input type="checkbox" class="mr-2" [checked]="includeHeadersCheckEnable" (click)="includeHeadersMethod($event);">
+                <label class="smallLabel  mr-3 m-0 vAlign-textTop">{{'apiPersonalization.includeHeaderLbl' | translate}}</label>
+                <i class="far fa-info-circle" ngbTooltip="{{'apiPersonalization.apiIncludeHeaderInfoText' | translate}}" tooltipClass="ngbTooltipStyle"></i>
+            </div>
+            <div class="row col p-0 pl-3" *ngIf="includeHeadersCheckEnable">
+                <div class="col pr-0" #keyValueAddSection id="keyValueAddArea">                            
+                    <div class="row col keyValueBlock p-0 mt-2" *ngFor="let item of keyValueArray; let i=index;">
+                        <div class="col-2 p-0">
+                            <div class="col p-0">
+                                <div class="row col p-0 m-0">
+                                    <label class="smallLabel  mr-2 lineheight30">{{'apiPersonalization.nameApiLbl' | translate}}</label>
+                                </div>
+                                <div class="row col p-0 m-0">
+                                    <input class="form-control mt-1 mb-1 smallLabel mr-3"  [(ngModel)]="item.key" [disabled]="!includeHeadersCheckEnable">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-9 p-0">
+                            <div class="col p-0">
+                                <div class="row col p-0 m-0">
+                                    <label class="smallLabel  ml-2 mr-2 lineheight30">{{'designEditor.mobilePushComponent.value' | translate}}</label>
+                                </div>
+                                <div class="row col p-0 m-0">
+                                    <input class="form-control mt-1 mb-1 smallLabel mr-3" [(ngModel)]="item.value" [disabled]="!includeHeadersCheckEnable">
+                                </div>
+                            </div>
+                        </div>                            
+                         <div class="col-1 p-0 align-items-left">
+                            <div class="col p-0">                                
+                                <div class="row col p-0 mt-4">
+                                    <!-- <i class="far fa-plus-circle fa-lg  ml-3 mt-4 pointer" (click)="addNewKeyValue(item)" *ngIf="item.add"></i>  -->
+                                    <i class="far fa-minus-circle fa-lg ml-3 mt-4 pointer" (click)="removeKeyValue(item)" *ngIf="!item.add && i != 0"></i> 
+                                </div>
+                            </div>
+                            
+                            
+                         </div>  
+                         
+                    </div>                                                                 
+                </div>                      
+                <div class="row col-12 p-0 m-0 mt-3 mb-2 justify-content-end width98Css">
+                    <button type="button" class="btn buttonCss shadow-none m-0" [disabled]="extraPramasLmitExceeded || !includeHeadersCheckEnable" (click)="addNewKeyValue()"><i class="far fa-plus"></i> {{'beeEditorGlobalComponent.addAnotherLbl' | translate}}</button>
+                </div>             
+            </div>            
+        </div>            
+    </div>
+    
+    <hr class="width98Css ml-1" *ngIf="isRestApiEnable"/> 
+    <div class="row col wellPaddSty mb-3 backGrnd apiTestingSection" *ngIf="isRestApiEnable">
+        <div class="col">
+            <div class="col p-0">
+                <div class="col p-0 pl-2">
+                    <label class="smallLabel mr-3">{{'apiPersonalization.APITestingLbl' | translate}}</label>
+                    <i class="far fa-info-circle" ngbTooltip="{{'apiPersonalization.apiTestingInfoText' | translate}}" tooltipClass="ngbTooltipStyle"></i>
+                </div>
+                <div class="col p-0 pl-2">
+                    <div class="col p-0">
+                        <label class="smallLabel linkColor urlWrapping">{{APITestingUrl}}</label>
+                    </div>                
+                </div>
+            </div> 
+            
+        </div>   
+                
+    </div>
+    <div class="row col p-0 justify-content-end text-right m-0 width98Css mb-3">
+        <button type="button" class="btn buttonCss shadow-none m-0" *ngIf="isRestApiEnable" (click)="generateSmapleJSonMethod(APITestingUrl,keyValueArray);" [disabled]="showLoader">{{'apiPersonalization.generateSampleJsonLbl' | translate}}</button>
+        <button type="button" class="btn buttonCss shadow-none m-0" *ngIf="!isRestApiEnable" [disabled]="showLoader" (click)="executeJsScriptMethod();">{{'fusionJSComponent.executeCodeFusionLbl' | translate}}</button>
+    </div>
+    <ng-container *ngIf="successMgsEnabled">
+        <div class="row successMsgSampleJSON m-0">
+            <div class="col">
+                <i class="far fa-check-circle mr-2"></i>
+               <label class="mediumFont">{{'apiPersonalization.successfullyGeneratedSampleJSONLbl' | translate}}</label>
+            </div>
+            <div class="col text-right">
+                <i class="fal fa-times pointer" (click)="successMgsEnabled = false"></i>
+            </div>          
+        </div>
+    </ng-container>
+    <hr class="width98Css ml-1"/>  
+    <div class="row col p-0 mb-2 m-0">
+        <label class="smallLabel mr-3 pl-2 control-label">{{'apiPersonalization.apiIntegrationAccordionLbl' | translate}}</label>
+        <i class="far fa-info-circle" ngbTooltip="{{'apiPersonalization.apiIntegrationAccordionLbl' | translate}}" tooltipClass="ngbTooltipStyle2" placement="right"></i>
+    </div>   
+    <div class="row col mb-3">        
+        <ul class="nav tabsLiStyle">
+            <li *ngFor="let x of singleMultiCheckEnable">
+                <input type="radio" class="mr-2 cursor-pointer" value="{{x.singleVal}}" id="{{x.id}}" [checked]="x.checked" (click)="singleMultiCheckMethod($event,keyValueArray);">
+                <label for="{{x.id}}" class="smallLabel m-0 cursor-pointer">{{x.name}}</label>
+            </li>
+        </ul>
+    </div>
+    <div class="col wellPaddSty mb-3 jsonToGridConversionSection">
+        <div class="loaderMask" *ngIf="showLoader">
+            <div class="spinner-border text-dark" role="status">
+               <span class="visually-hidden d-none">{{'designEditor.loadinglbl' | translate}}</span>
+            </div>
+        </div>
+        <div class="col">
+            <div class="col p-0 pl-2">
+                <label class="smallLabel mr-3">{{'apiPersonalization.sampleJSONLbl' | translate}}</label>
+                <i class="far fa-info-circle" ngbTooltip="{{'apiPersonalization.apiSampleJSONText' | translate}}" tooltipClass="ngbTooltipStyle" placement="right"></i>
+            </div>
+            <div class="col JsonToGridViewArea">                
+                <app-convert-json-to-grid-view #jsonToGridViewContent [apiBasedUrl]="apiBasedUrl" [multiArrayPath]="multiArrayPath" [APITestingUrl]="APITestingUrl" [singleOrMultiVal]="singleOrMultiVal" [isRestApiEnable]="isRestApiEnable" [isEditMode]="isEditMode" (showloader)="showloaderMethod($event);"></app-convert-json-to-grid-view>
+            </div>
+        </div>
+        
+    </div>   
+       
+</div>
+</div>
+</div>     
+<div class="modal-footer d-flex border-0">    
+    <button type="button" class="btn buttonCss shadow-none m-0 mr-2" id="closeBtn" (click)="onClose()">{{'cancel' | translate}}</button>
+    <button type="submit" class="btn buttonPrimaryCss shadow-none m-0" [disabled]="tenentPriviledgeEditDisabled" (click)="saveAPIIntegration()">{{'save' | translate}}</button>
+ </div>

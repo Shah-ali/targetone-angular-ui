@@ -1,0 +1,91 @@
+<div class="modal-header">
+    <h5 class="modal-title pl-4" id="exampleModalLabel">
+		<span *ngIf="previewClientContent; else spamTitle">{{'designEditor.previewOnClientComponent.previewOnClientlbl' | translate}}</span>
+  </h5>
+  <ng-template #spamTitle>
+    <span>{{'designEditor.previewOnClientComponent.spamChecklbl' | translate}}</span>
+  </ng-template>
+    <button type="button" class="close pull-right mr-0" (mousedown)="onClose()" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+<div class="modal-body modalBodyStyle">
+    <div class="col-12 p-0" *ngIf="previewClientContent">
+        <ul class="nav padd15 tabsLiStyle" id="">
+            <li class="dashboard-tab" [ngClass]="device == 0 ? 'active' : ''" (click)="switchPreviewDevice(0);">{{'designEditor.emailEditor.desktoplbl' | translate}}</li>
+            <li class=""[ngClass]="device == 1 ? 'active' : ''" (click)="switchPreviewDevice(1);">{{'designEditor.emailEditor.mobilelbl' | translate}}</li>
+        </ul>
+    </div>
+    <div class="col-12 p-0">
+        <div class="col-12 row pt-2" id="previewOnClient_Content" *ngIf="previewClientContent; else spamCheck">
+            <div class="row col-12" *ngIf="!previewSilderImages; else previewImageSlider">
+                <div class="col-1 p-0 pt-3 pb-3 thumbImages pointer" *ngFor="let item of previewClientDataObj; let i = index;" (click)="showPreviewSlider(item);">
+                    <div class="text-center">
+                      <img class="img-responsive" name="" src="http://{{item.fullPageImageThumb}}" style="height:50px;width:53px">
+                      <p class="xSmallLable text-center pt-2">{{item.applicationLongName}}</p>
+                    </div>                
+                </div>
+            </div>
+            <ng-template #previewImageSlider>
+                 <div class="col-12 relative p-0">
+                    <label>{{selectedClientName}}</label>
+                    <i class="fas fa-times cancelSapmDesc" (click)="previewSilderImages = false;"></i>
+                </div>
+                <div class="col-12 p-0" *ngIf="previewSilderImages" style="max-width: 100%;">
+                    <ng-image-slider [images]="imageObject" [imagePopup]="false" [imageSize]="{'width':'1400px','height':'4500px'}" [manageImageRatio]=false slideImage="1" #nav></ng-image-slider>
+                </div>
+            </ng-template>
+        </div>       
+            
+        <ng-template #spamCheck>
+        <div class="col-12" id="spamTest_Content" *ngIf="(!previewClientContent && !isSpamDescEnable); else spamDescriptionTemplate">
+            <div class="col-3 p-0 pb-3 thumbImages pointer" *ngFor="let item of previewClientDataObj; let i = index;" (click)="getSpamDescription(item);">
+                    <div class="col spamTemp spamRed text-left  pt-1 pb-1">
+                        <p>{{item.applicationName}}</p>
+                    <div class="col p-0">
+                            <h4 class="resultSpam">{{item.spamScore}}</h4>
+                            <p class="mb-0">Score</p>
+                    </div>
+                </div>          
+            </div>            
+    </div>
+  </ng-template>
+    <ng-template #spamDescriptionTemplate>
+                <div class="col-12 relative">
+                    <i class="fas fa-times cancelSapmDesc" (click)="isSpamDescEnable = false;"></i>
+                </div>
+                <div class="col-12" *ngFor="let itemDesc of spamDescObj" id="sapmDescriptionArea">
+                    <div class="col-12" id="spamTestMail_{{itemDesc.id}}" style="border-bottom:1px solid #ccc;padding-bottom:10px;margin-top:30px;">
+                        <span>{{itemDesc.key}}</span>
+                  </div>
+                  <div class="row col-12 p-4" id="spamDescList_<@=id@>">
+                        <div class="col-2">
+                              <div class="" style="text-align:center;" >
+                                    <h4 class="resultSpam">{{itemDesc.rating}}</h4>
+                                    <p>{{'designEditor.previewOnClientComponent.ratinglbl' | translate}}</p>
+                              </div>
+                        </div>
+                        <div class="row col">
+                              <div class="col-1">
+                                <!-- <img src="resources/img/arrowIcon.png" style="width:20px;height:20px;margin-top: 6px;" /> -->
+                                <i class="fas fa-chevron-right"></i>
+                            </div>
+                              <div class="col">{{itemDesc.description}}</div>
+                        </div>
+                        <div class="clearfix"></div>
+                  </div>
+                </div>
+    </ng-template>
+    
+</div>
+<div class="row p-0 col-12 m-0">
+    <div class="col-2 p-0" *ngIf="previewClientContent; else spamDownloadLink">
+        <label class="linkColor pointer" (click)="downloadCallMenthod(1);">{{'designEditor.previewOnClientComponent.downloadLinkslbl' | translate}}</label>
+    </div>
+    <ng-template #spamDownloadLink>
+        <label class="linkColor pointer" (click)="downloadCallMenthod(2);">{{'designEditor.previewOnClientComponent.downloadLinkslbl' | translate}}</label>
+    </ng-template>
+    <div class="col p-0 text-right">
+        <button type="button" class="btn btn-outline-primary buttonStyle shadow-none " id="closeBtn" (click)="onClose()">{{'designEditor.closeBtn' | translate}}</button>
+    </div>
+</div>

@@ -1,0 +1,193 @@
+.header-component {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  position: relative;
+  padding: 0.7rem 2% 0 2%;
+  height: 3.91rem;
+  .title {
+    font-size: 1.4rem;
+    display: inline;
+    padding-right: 10px;
+
+    .header-help-icon {
+      margin: 0 10px;
+      cursor: pointer;
+      position: absolute;
+      right: -5px;
+      top: 3px;
+    }
+
+    .visual-help-icon {
+      margin: 0 10px;
+      cursor: pointer;
+      position: absolute;
+      right: 24px;
+      top: 4px;
+      width: 22px;
+    }
+  }
+  .truncateTextPname{
+    display: inline-flex;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    max-width: 180px;
+    cursor: pointer;
+  }
+  .title-d {
+    border-right: 1px solid;
+  }
+
+  .header-seprator {
+    display: inline;
+    font-size: 24px;
+    font-weight: 10;
+    position: relative;
+    top: 3px;
+  }
+
+  .pEditorHeader {
+    display: inline;
+  }
+
+  div.promo-name {
+    display: inline;
+    font-size: 14px;
+    color: #666f80;
+    padding: 0 10px;
+
+    input {
+      display: inline;
+      width: auto;
+      max-width: 200px;
+      height: 21px;
+      color: #666f80;
+    }
+
+    i {
+      font-size: 12px;
+      position: relative;
+      padding: 10px;
+      cursor: pointer;
+
+      ::before {
+        cursor: pointer;
+      }
+    }
+  }
+
+  li {
+    list-style-type: none;
+  }
+  .breadcrumb li + li:before {
+    content: ' > ';
+    color: black;
+  }
+
+  h1 {
+    color: #333;
+    margin-bottom: 0rem;
+  }
+
+  h2 {
+    color: #000;
+    opacity: 0.3;
+    font-size: 0.8rem;
+    margin-bottom: 0rem;
+  }
+
+  .btn {
+    padding: 0.6rem 1rem;
+  }
+
+  // nav {
+  //   margin-top: 5px;
+  // }
+
+  .breadcrumb {
+    background-color: transparent;
+    padding: 0;
+    font-size: 0.9rem;
+  }
+
+  .breadcrumb-item {
+    a {
+      color: #007bff;
+      cursor: pointer;
+    }
+    &.active {
+      color: #007bff;
+      text-decoration: underline;
+      text-underline-position: under;
+    }
+  }
+
+  $breadcrumb-divider: quote('|');
+}
+.login-User-Details-Popup {
+  position: absolute;
+  width: 333px;
+  height: 213px;
+  background: #ffffff;
+  border: 1px solid #d9d9d9;
+  box-sizing: border-box;
+  box-shadow: 0px 6px 18px rgba(0, 0, 0, 0.06);
+  border-radius: 10px;
+  right: 13px;
+  top: 64px;
+  z-index: 9999;
+
+  .loginUser-name {
+    height: 86px;
+    border-bottom: 1px solid #d9d9d9;
+    padding: 24px 10px 10px 10px;
+  }
+  .logoutlist {
+    list-style: none;
+
+    img {
+      margin-right: 20px;
+    }
+  }
+  .logoutlist li {
+    padding: 10px;
+    font-size: 14px;
+    line-height: 30px;
+  }
+  .userName-Dts {
+    font-style: normal;
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 21px;
+    color: #333333;
+    margin: 0;
+    cursor: pointer;
+  }
+  .userSubname-Dts {
+    font-style: normal;
+    font-weight: 500;
+    font-size: 12px;
+    line-height: 18px;
+    align-items: center;
+    color: #666666;
+    cursor: pointer;
+    word-break: break-all;
+  }
+  .user-settings-icons,
+  .user-logout-icons {
+    margin-right: 20px;
+    font-size: 20px;
+    vertical-align: middle;
+  }
+  .redColor {
+    color: #f4312a;
+  }
+  .mrgRtlt0 {
+    margin-right: 0;
+    margin-left: 0;
+  }
+  .pointer {
+    cursor: pointer;
+  }
+}

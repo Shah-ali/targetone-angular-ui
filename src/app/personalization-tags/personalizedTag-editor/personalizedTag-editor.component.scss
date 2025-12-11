@@ -1,0 +1,127 @@
+@import '../../../custom-style.scss';
+.buttonCss {
+  @include secondaryBttn;
+}
+
+.inline-js-container {
+  border: 1px solid #cccccc;
+  background-color: #f8f8f8;
+  padding-top: 10px;
+  border-radius: 5px;
+  position: absolute;
+  top: 68px;
+  right: 0;
+  height: calc(100vh - 137px);
+
+  .expendedSection {
+    width: 423px;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    align-content: center;
+
+    .header {
+      display: flex;
+      width: 100%;
+      padding: 5px 10px;
+      align-items: center;
+      justify-content: space-between;
+
+      .close img {
+        cursor: pointer;
+      }
+
+      .text {
+        color: #026fe9;
+        font-size: 14px;
+      }
+    }
+
+    hr {
+      width: 100%;
+      background-color: #cccccc;
+    }
+
+    .listofInlineJSFuncSection {
+      margin: 0 10px;
+      background-color: #fff;
+      padding: 10px;
+
+      .createSection {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+
+        span {
+          font-size: 14px;
+          color: #000;
+        }
+        button {
+          margin: 0 !important;
+        }
+      }
+
+      hr {
+        background-color: #ccc;
+      }
+
+      .listOfScripts {
+        height: calc(100vh - 431px);
+        overflow: auto;
+
+        .script-name {
+          font-size: 14px;
+          font-weight: 500;
+        }
+
+        .script-desc {
+          font-size: 12px;
+          font-weight: 400;
+        }
+
+        .actions {
+          display: flex;
+          justify-content: flex-start;
+          align-items: center;
+
+          .func-owner-2 {
+            font-size: 12px;
+            background-color: #ecf5ff;
+            color: #026fe9;
+            padding: 5px 10px;
+            border-radius: 3px;
+            text-transform: uppercase;
+          }
+
+          .func-owner-1 {
+            font-size: 12px;
+            background-color: #fff6e7;
+            color: #db880e;
+            padding: 5px 10px;
+            border-radius: 3px;
+            text-transform: uppercase;
+          }
+
+          .use-func-bttn {
+            font-size: 12px;
+          }
+        }
+
+        .disabled-section {
+          display: flex;
+          align-items: center;
+          color: #026fe9;
+          .disabled-function {
+            margin-right: 10px;
+          }
+
+          label {
+            font-size: 13px;
+            font-weight: 400;
+            margin: 0;
+          }
+        }
+      }
+    }
+  }
+}

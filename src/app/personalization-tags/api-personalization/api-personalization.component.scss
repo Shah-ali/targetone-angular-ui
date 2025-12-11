@@ -1,0 +1,150 @@
+@import '../../../custom-style.scss';
+.buttonCss {
+  @include secondaryBttn;
+}
+.buttonPrimaryCss {
+  @include primaryBttn;
+}
+.loaderMask{
+  position: absolute;
+  height: 100vh;
+  width: 100%;
+  z-index: 1;
+  background-color: rgb(238, 238, 238);
+  display: flex;
+  align-items: center; 
+  justify-content: center; 
+  font-size: 24px;
+  opacity: 30%;
+  overflow: hidden;
+  z-index: 10;
+}
+
+.apiPersonalizationConatiner {
+  .reco-section {
+    background-color: #fff;
+    padding: 15px;
+  }
+  .smallFont {
+    font-size: 0.69rem;
+  }
+  .mediumFont {
+    font-size: 0.75rem;
+  }
+  padding: 15px;
+  min-height: calc(100vh - 56px);
+  overflow: auto;
+  background-color: #f0f2f6;
+
+  .separator {
+    margin: 10px 0;
+  }
+
+  .title {
+    font-size: 1rem;
+    color: #232323;
+  }
+  .subTitle {
+    font-size: 0.75rem;
+    color: #949494;
+    ;
+  } 
+
+  /* #cancelBtn {
+    font-size: 0.9rem;
+    border: 0;
+    background: 0;
+    margin-right: 10px;
+  } */
+  #doneBtn {
+    &.disabled {
+      pointer-events: none;
+      opacity: 0.5;
+    }
+  }
+
+  .apiFieldSelectionSection {
+    background-color: #fff;
+    padding: 25px;
+  }
+  .numberInCircle{     
+    border-radius: 0.8em;
+    -moz-border-radius: 0.8em;
+    -webkit-border-radius: 0.8em;
+    display: inline-block;
+    font-weight: normal;
+    line-height: 1.6em;
+    margin-right: 15px;
+    text-align: center;
+    width: 1.6em; 
+}
+.blue{
+color:#FFF;
+background: #026FE9;
+border:1px solid #026FE9;
+border-radius: 15px;
+}
+.grey{
+color:#666666;
+background: #FFF;
+border:1px solid #BFBFBF;
+}$primary: #28A54D;
+$checkmarkColor: white;
+$size: 30px;
+$checkmarkFat: 3px;
+.circle {
+position: relative;
+background: $primary;
+border-radius: 50%;
+width: $size;
+height: $size;
+margin-right: 10px;
+display: inline-block;
+vertical-align: top;
+top: -3px;
+}
+
+.checkmark {
+position: absolute;
+transform: rotate(45deg) translate(-50%, -50%);
+left: 35%;
+top: 45%;
+height: calc($size/3);
+width: calc($size/6);
+border-bottom: $checkmarkFat solid $checkmarkColor;
+border-right: $checkmarkFat solid $checkmarkColor;
+}
+.heigt35{
+  height: 35px;
+}
+.labelMiddle{
+  margin:0 auto;
+}
+.displayAreaView{
+  border:1px dotted #656625;
+  background-color: #FDFCF7;
+  color: #656625;
+  padding: 10%;
+  align-items: center;
+  margin:0 auto;
+  height: calc(100vh - 262px);
+  border-radius: 12px; 
+}
+.dottedBorder{
+  border:1px dotted #656625;
+  height: calc(100vh - 262px);
+  border-radius: 12px;
+  overflow-x: hidden;
+    overflow-y: auto;
+    padding-bottom: 20px;
+}
+}
+
+.select-items-section {
+    border: 1px dotted #656625;
+    color: #656625;
+    padding: 10px;
+    align-items: center;
+    margin: 0 auto;
+    border-radius: 12px;
+}

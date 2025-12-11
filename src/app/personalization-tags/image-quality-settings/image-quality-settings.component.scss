@@ -1,0 +1,13 @@
+@import "../../../custom-style.scss";
+.buttonCss {
+  @include secondaryBttn;
+}
+
+.buttonPrimaryCss {
+  @include primaryBttn;
+}
+
+.imageSettings-section{
+    width: 100%;
+    height: 100%;
+}

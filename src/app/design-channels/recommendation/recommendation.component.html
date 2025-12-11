@@ -1,0 +1,290 @@
+<div class="modal-container recommendationConatiner">
+    <div class="loaderMask" *ngIf="showLoader">
+        <div class="spinner-border text-dark" role="status">
+            <span class="visually-hidden d-none">{{'designEditor.loadinglbl' | translate}}</span>
+        </div>
+    </div>
+    <div class="col-12 mainContainer p-0">
+        <div class="reco-section">
+            <div class="d-flex">
+                <div class="col-6 d-flex flex-column p-0">
+                    <div class="title">{{'designEditor.offerDrawerComponent.recommendations' | translate}}</div>
+                    <div class="subTitle">{{'recommendationComponent.chooseTemplateToAddInEmailLbl' | translate}}</div>
+                </div>
+                <div class="col-6 d-flex justify-content-end p-0 align-items-center">
+                    <button type="button" class="close" (mousedown)="onClose()" aria-label="Close">
+                        <span aria-hidden="true"><i class="fal fa-times crossColor"></i></span>
+                    </button>
+                    <div><button type="button" id="cancelBtn" (click)="onClose()">{{'cancel' | translate}}</button></div>
+                    <div>
+                        <button type="button" id="doneBtn" (click)="insertRecommendation()" [ngClass]="{'disabled': editModeEnable === false}"
+                        class="btn btn-outline-primary buttonStyle shadow-none">{{'designEditor.doneBtn' | translate}}</button>
+                    </div>
+                </div>
+            </div>
+            <hr class="separator"/>
+        </div>
+
+        <div class="innerContentMargin" id="recoSelectionSection" *ngIf="!editModeEnable">
+            <div class="searchNCreateReco position-relative d-flex col-12 p-0">
+                <div class="searchReco col-6 p-0">
+                    <i class="fa fa-search iconPosition"></i>
+                    <input type="text" placeholder="{{'recommendationComponent.searchRecommendationRuleLbl' | translate}}" (keydown)="searchRecommendation(searchText)"
+                    id="searchInput" class="shadow-none" [(ngModel)]="searchText"/>
+                </div>
+                <div class="recoTypeStyle d-flex flex-column col-3 p-0">
+                    <div class="text mb-1">{{'recommendationComponent.recommendationTypeLbl' | translate}}</div>
+                    <div class="col-12 p-0">
+                        <!-- <select class="form-control shadow-none col-3 recoDropdownStyle col-12" 
+                            [(ngModel)]="recoType" (change)="selectRecoType(recoType)">
+                            <option value="All" selected>{{'journeySetUp.all' | translate}}</option>
+                            <option *ngFor="let item of recommendationNodes" [value]="item.name">{{item.name}}</option>
+                        </select> -->
+                    </div>
+                </div>
+                <div class="col-3 p-0">
+                    <button class="createRecoBtn invisible" type="button">
+                        <i class="fa fa-plus mr-2"></i>
+                        <span>{{'recommendationComponent.createRecommendationRuleLbl' | translate}}</span>
+                    </button>
+                </div>
+            </div>
+
+            <div class="col-12 p-0 d-flex recentList" *ngIf="!noResultFound">
+                <div class="col-6 p-0 text">{{'recommendationComponent.recentlyUsedLbl' | translate}}</div>
+                <div class="col-6 p-0 text-right cursor-pointer invisible">
+                    <i class="far fa-redo-alt iconColor mr-2"></i>
+                    <span class="refreshList">{{'recommendationComponent.refreshListLbl' | translate}}</span>
+                </div>
+            </div>
+
+            <div class="recoListContainer">
+                <div class="recoListDiv cursor-pointer mb-3" (click)="selectRecommendation(item)" *ngFor="let item of tempListArray">
+                    <div class="col-12 p-0 d-flex mb-4">
+                        <div class="recoTitle col-6 p-0">{{item.name}}</div>
+                        <div class="col-6 p-0 text-right"><span class="recoTypeSelection">{{item.nodeType}}</span></div>
+                    </div>
+                    <div class="d-flex col-12 p-0">
+                        <div class="col-4 p-0">
+                            <div class="recoHeading">{{'recommendationComponent.pageTypeLbl' | translate}}</div>
+                            <div class="recoData">{{item.pageType}}</div>
+                        </div>
+                        <div class="col-4 dataSeparator">
+                            <div class="recoHeading">{{'recommendationComponent.placementsLbl' | translate}}</div>
+                            <div class="recoData">{{item.placement}}</div>
+                        </div>
+                        <div class="col-4 dataSeparator">
+                            <div class="recoHeading">{{'recommendationComponent.backfilloffersLbl' | translate}}</div>
+                            <div class="recoData">{{item.backfillOffers}}</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="noResultFound col-12 pt-2" *ngIf="noResultFound">
+                    <span class="text">{{'recommendationComponent.noResultFoundLbl' | translate}}</span><span class="reset ml-2 cursor-pointer" (click)="resetcommendation()">{{'recommendationComponent.resetLbl' | translate}}</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="recoEditSection" *ngIf="editModeEnable">
+        <div class="innerContainer col-12 d-flex p-0">
+            <div class="leftSection col-4 p-0">
+                <div class="recoRule">
+                    <div class="editReco col-12 d-flex divStyle">
+                        <div class="col-6 p-0 text">{{'recommendationComponent.recommendationRuleStep1Lbl' | translate}}</div>
+                        <div class="text-right col-6 p-0">
+                            <i class="fa fa-pencil cursor-pointer" (click)="editRecoSelection()"></i>
+                        </div>
+                    </div>
+                    <div class="col-12 pt-4 pb-4">
+                        <div class="selectedReco">
+                            <div class="title mb-3">{{selectedReco.name}}</div>
+                            <div class="col-12 p-0 d-flex">
+                                <div class="col-6 p-0">
+                                    <div class="heading">{{'recommendationComponent.placementsLbl' | translate}}</div>
+                                    <div class="content">{{selectedReco.placement}}</div>
+                                </div>
+                                <div class="col-6 p-0">
+                                    <div class="heading">{{'recommendationComponent.backfilloffersLbl' | translate}}</div>
+                                    <div class="content">{{selectedReco.backfillOffers}}</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="recoLayout mt-2">
+                    <div class="chooseLayout col-12 d-flex divStyle">
+                        <div class="col-6 p-0 text">{{'recommendationComponent.chooselayoutStep2Lbl' | translate}}</div>
+                        <div class="text-right col-6 p-0"><i class="fa fa-angle-down cursor-pointer"></i></div>
+                    </div>
+
+                    <div class="layoutConatiner col-12 pt-4 mb-3">
+                        <div class="col-6 p-0 text-center mb-4 d-inline-block" *ngFor="let item of layoutArray"><img src="{{item.imgUrl}}"
+                            (click)="selectLayout(item.templateName, item.dbKey)" [ngClass]="{'selected': layout === item.templateName}"/>
+                        </div>
+                    </div>
+                </div>
+                <div class="recoSettings mt-2">
+                    <div class="recoNumber col-12 d-flex divStyle">
+                        <div class="col-10 p-0 text">{{'recommendationComponent.setNumberOfProducts' | translate}} <span class="info"><i class="fal fa-info-circle ml-2" title="{{'recommendationComponent.setNumberOfProductsInfo' | translate}}"></i></span></div>
+                        <div class="text-right col-2 p-0"><i class="fa fa-angle-down cursor-pointer"></i></div>
+                    </div>
+                    <div class="col-12 pt-3 pb-5">
+                        <div class="headText">{{'recommendationComponent.numberOfRecommendationsLbl' | translate}}</div>
+                        <div>
+                            <input class="shadow-none inputStyle" type="number" min="1" max="8" placeholder="{{'recommendationComponent.enterNumberLbl' | translate}}" 
+                            [(ngModel)]="noOfReco" (change)="changeNumberOfCards(noOfReco)"/>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="recoPreview col-8 ml-3">
+                <div class="previewHeader mb-4 pt-2">{{'recommendationComponent.previewLbl' | translate}}</div>
+                <div *ngIf="layout === 'layout1' || layout === 'layout3'">
+                    <div class="productPreview col-12 d-flex mb-4 layout1" *ngFor="let item of previewArr; let i = index" 
+                    [ngClass]="{'reverseLayout': layout === 'layout3'}">
+                        <div class="col-12 p-0 d-flex reverseContent">
+                            <div class="col-2 p-0 mt-2"><img [attr.width]="107" [attr.height]="116" [attr.src]="offerDataJson[i].offerImgUrl" /></div>
+                            <div class="itemDetails col-10 p-0 mt-2 pr-5">
+                                <div class="itemTitle">{{offerDataJson[i].offerTitle}}</div>
+                                <div class="itemDescription">
+                                    {{offerDataJson[i].offerDesc}}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="productParent col-12 p-0" *ngIf="layout === 'layout2' || layout === 'layout4'"
+                    [ngClass]="{'layout4': layout === 'layout4'}">
+                    <div class="productPreview col-3 mb-4 layout2" *ngFor="let item of previewArr; let i = index">
+                        <div class="text-center"><img [attr.width]="107" [attr.height]="116" [attr.src]="offerDataJson[i].offerImgUrl" /></div>
+                        <div class="itemDetails">
+                            <div class="itemTitle mt-2">{{offerDataJson[i].offerTitle}}</div>
+                            <div class="itemDescription mt-2">
+                                {{offerDataJson[i].offerDesc}}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div #recoDiv class="recommendationCards">
+    <div class="container" style="
+        background: transparent;
+        width: 100%;
+        text-align: center;">
+        <cmp-widgets id="widgets">
+            <cmp-widget class="cmp-widget" name="rrRecoPlacement" [attr.id]="'w'+tempWidgetCount" [attr.noOfItems]="previewArr.length" isOffer="true" categoryId="category1" [attr.placementIds]="placementId"></cmp-widget>
+        </cmp-widgets>
+
+        <!-- Use widgets tag with NO_ERRORS_SCHEMA -->
+        <!-- <widgets id="widgets">
+            <widget name="rrRecoPlacement" id="w1" [attr.noOfItems]="previewArr.length" isOffer="true" categoryId="category1" [attr.placementIds]="placementId"></widget>
+        </widgets> -->
+
+        <!-- layout 1 and layout 3 widgets -->
+        <div *ngIf="layout === 'layout1' || layout === 'layout3'" style="text-align:left; padding: 10px 10px 1px 10px;">
+            <div class="productPreview" *ngFor="let item of previewArr index as i" style="
+                padding: 15px;
+                background: #FFFFFF;
+                margin-bottom: 10px;
+                border-radius: 5px;
+                overflow: auto;
+                box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 1px 3px 1px;
+                -webkit-box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 1px 3px 1px;
+                -moz-box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 1px 3px 1px;">
+
+                <div style="padding: 10px 15px 7px 0px; width: 16%"
+                [ngStyle]="(layout === 'layout3' && i%2 !== 0) ? {'float': 'right', 'padding': '10px 0 7px 15px'} : {'float': 'left'}">
+                    <img class="recoActualImage" [attr.src]="'{Widget.w'+tempWidgetCount+'.'+(i+1)+'.'+widgetAttributes['imgURL']+'}'" style="
+                    width: 80px;
+                    height: 80px;
+                    border-radius: 6px;display: none;"/>
+                    <img class="recoTempImage" [attr.src]="offerDataJson[i].offerImgUrl" style="
+                     width: 80px;
+                     height: 80px;
+                     border-radius: 6px;"/>
+                </div>
+                <div class="itemDetails" style="width: 84%; padding-top: 15px;"
+                    [ngStyle]="(layout === 'layout3' && i%2 !== 0) ? {'float': 'right', 'text-align': 'right'} : {'float': 'left'}">
+                    <div class="itemTitle"
+                        [attr.title]="'{Widget.w'+tempWidgetCount+'.'+(i+1)+'.'+widgetAttributes['title']+'}'" style="
+                        color: #333;
+                        font-size: 1rem;
+                        font-weight: 700;
+                        white-space: nowrap;
+                        overflow: hidden;
+                        text-overflow: ellipsis;">
+                        {{'{Widget.w'+tempWidgetCount+'.'+(i+1)+"."+widgetAttributes["title"]}}
+                    </div>
+                    <div class="itemDescription" style="
+                        color: #333;
+                        font-weight: 400;
+                        margin-top: 10px;
+                        font-size: 12px;
+                        line-height: 22px;
+                        word-break: break-all;"
+                        [attr.title]="'{Widget.w'+tempWidgetCount+'.'+(i+1)+'.'+widgetAttributes['desc']+'}'">
+                        {{'{Widget.w'+tempWidgetCount+'.'+(i+1)+"."+widgetAttributes["desc"]}}
+                    </div>
+                </div>
+                <div style="clear:both"></div>
+            </div>
+        </div>
+
+        <!-- layout 2 and layout 4 widgets -->
+        <div *ngIf="layout === 'layout2' || layout === 'layout4'" style="padding-bottom: 10px; width: 100%"
+            [ngStyle]="layout === 'layout4' ? {'margin': '0 auto'} : {}">
+            <div class="productPreview" *ngFor="let item of previewArr index as i" style="
+                height:auto;
+                display: inline-block;
+                margin: 10px 5px 0 5px;
+                background: #fff;
+                padding: 15px;
+                border-radius: 5px;
+                box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 1px 3px 1px;
+                -webkit-box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 1px 3px 1px;
+                -moz-box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 1px 3px 1px;"
+                [ngStyle]="layout === 'layout4' ? {'width': '45%'} : {'width': '23%'}">
+                <div style="text-align:center;">
+                    <img class="recoActualImage" [attr.src]="'{Widget.w'+tempWidgetCount+'.'+(i+1)+'.'+widgetAttributes['imgURL']+'}'" style="
+                        width: 80px;
+                        height: 80px;
+                        border-radius: 6px;display: none;"/>
+                    <img class="recoTempImage" [attr.src]="offerDataJson[i].offerImgUrl" style="
+                    width: 80px;
+                    height: 80px;
+                    border-radius: 6px;"/>
+                </div>
+                <div class="itemDetails">
+                    <div class="itemTitle" style="
+                        color: #333;
+                        font-size: 1rem;
+                        font-weight: 700;
+                        margin-top: 10px;
+                        white-space: nowrap;
+                        overflow: hidden;
+                        text-overflow: ellipsis;"
+                        [attr.title]="'{Widget.w'+tempWidgetCount+'.'+(i+1)+'.'+widgetAttributes['title']+'}'">
+                        {{'{Widget.w'+tempWidgetCount+'.'+(i+1)+"."+widgetAttributes["title"]}}
+                    </div>
+                    <div class="itemDescription" style="
+                        color: #333;
+                        font-weight: 400;
+                        margin-top: 10px;
+                        font-size: 12px;
+                        line-height: 22px;
+                        word-break: break-all;"
+                        [attr.title]="'{Widget.w'+tempWidgetCount+'.'+(i+1)+'.'+widgetAttributes['desc']+'}'">
+                        {{'{Widget.w'+tempWidgetCount+'.'+(i+1)+"."+widgetAttributes["desc"]}}
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- <input type="hidden" value="" class="t1_p_recommendation"/> -->
+        <input type="hidden" value="{{tempRecoSelected | json}}" class="t1_p_recommendation"/>
+    </div>
+</div>

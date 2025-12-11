@@ -1,0 +1,374 @@
+{ 
+    "ruleBuilderData" : [
+    {
+      "ruleName": "Rule1",
+      "ruleDesc": "Rule one description, Rule one description, Rule one description",
+      "status": "Published",
+      "dataset": 1,
+      "activityType": 0,
+      "createdBy": 0,
+      "validTill": 0,
+      "actions": 0
+    },
+    {
+    "ruleName": "Rule2",
+    "ruleDesc": "Rule two description",
+    "status": "Published",
+    "dataset": 3,
+    "activityType": 0,
+    "createdBy": 0,
+    "validTill": 0,
+    "actions": 0
+    },
+    {
+    "ruleName": "Rule3",
+    "ruleDesc": "Celica",
+    "status": "Draft",
+    "dataset": 0,
+    "activityType": 0,
+    "createdBy": 0,
+    "validTill": 0,
+    "actions": 0
+    },
+    {
+    "ruleName": "Rule4",
+    "ruleDesc": "Celica",
+    "status": "Draft",
+    "dataset": 1,
+    "activityType": 0,
+    "createdBy": 0,
+    "validTill": 0,
+    "actions": 0
+    },
+    {
+    "ruleName": "Rule5",
+    "ruleDesc": "reeese",
+    "status": "Published",
+    "dataset": 0,
+    "activityType": 0,
+    "createdBy": 0,
+    "validTill": 0,
+    "actions": 0
+    },
+    {
+    "ruleName": "Rule6",
+    "ruleDesc": "Rule 6 description",
+    "status": "Draft",
+    "dataset": 5,
+    "activityType": 0,
+    "createdBy": 0,
+    "validTill": 0,
+    "actions": 0
+    },
+    {
+    "ruleName": "Rule7",
+    "ruleDesc": "Rule 7 description",
+    "status": "Draft",
+    "dataset": 5,
+    "activityType": 0,
+    "createdBy": 0,
+    "validTill": 0,
+    "actions": 0
+    },
+    {
+    "ruleName": "Rule8",
+    "ruleDesc": "Rule 8 description",
+    "status": "Draft",
+    "dataset": 5,
+    "activityType": 0,
+    "createdBy": 0,
+    "validTill": 0,
+    "actions": 0
+    },
+    {
+    "ruleName": "Rule6",
+    "ruleDesc": "Rule 6 description",
+    "status": "Draft",
+    "dataset": 5,
+    "activityType": 0,
+    "createdBy": 0,
+    "validTill": 0,
+    "actions": 0
+    },
+    {
+    "ruleName": "Rule9",
+    "ruleDesc": "Rule 9 description",
+    "status": "Draft",
+    "dataset": 5,
+    "activityType": 0,
+    "createdBy": 0,
+    "validTill": 0,
+    "actions": 0
+    },
+    {
+    "ruleName": "Rule10",
+    "ruleDesc": "Rule 10 description",
+    "status": "Draft",
+    "dataset": 5,
+    "activityType": 0,
+    "createdBy": 0,
+    "validTill": 0,
+    "actions": 0
+    },
+    {
+    "ruleName": "Rule11",
+    "ruleDesc": "Rule 11 description",
+    "status": "Draft",
+    "dataset": 5,
+    "activityType": 0,
+    "createdBy": 0,
+    "validTill": 0,
+    "actions": 0
+    },
+    {
+    "ruleName": "Rule12",
+    "ruleDesc": "Rule 12 description",
+    "status": "Draft",
+    "dataset": 5,
+    "activityType": 0,
+    "createdBy": 0,
+    "validTill": 0,
+    "actions": 0
+    },
+    {
+    "ruleName": "Rule13",
+    "ruleDesc": "Rule 13 description",
+    "status": "Draft",
+    "dataset": 5,
+    "activityType": 0,
+    "createdBy": 0,
+    "validTill": 0,
+    "actions": 0
+    },
+    {
+    "ruleName": "Rule14",
+    "ruleDesc": "Rule 14 description",
+    "status": "Draft",
+    "dataset": 5,
+    "activityType": 0,
+    "createdBy": 0,
+    "validTill": 0,
+    "actions": 0
+    },
+    {
+    "ruleName": "Rule15",
+    "ruleDesc": "Rule 15 description",
+    "status": "Draft",
+    "dataset": 5,
+    "activityType": 0,
+    "createdBy": 0,
+    "validTill": 0,
+    "actions": 0
+    },
+    {
+    "ruleName": "Rule16",
+    "ruleDesc": "Rule 16 description",
+    "status": "Draft",
+    "dataset": 5,
+    "activityType": 0,
+    "createdBy": 0,
+    "validTill": 0,
+    "actions": 0
+    },
+    {
+    "ruleName": "Rule17",
+    "ruleDesc": "Rule 17 description",
+    "status": "Draft",
+    "dataset": 5,
+    "activityType": 0,
+    "createdBy": 0,
+    "validTill": 0,
+    "actions": 0
+    },
+    {
+    "ruleName": "Rule18",
+    "ruleDesc": "Rule 18 description",
+    "status": "Draft",
+    "dataset": 5,
+    "activityType": 0,
+    "createdBy": 0,
+    "validTill": 0,
+    "actions": 0
+    },
+    {
+    "ruleName": "Rule19",
+    "ruleDesc": "Rule 19 description",
+    "status": "Draft",
+    "dataset": 5,
+    "activityType": 0,
+    "createdBy": 0,
+    "validTill": 0,
+    "actions": 0
+    },
+    {
+    "ruleName": "Rule20",
+    "ruleDesc": "Rule 20 description",
+    "status": "Draft",
+    "dataset": 5,
+    "activityType": 0,
+    "createdBy": 0,
+    "validTill": 0,
+    "actions": 0
+    },
+    {
+    "ruleName": "Rule21",
+    "ruleDesc": "Rule 21 description",
+    "status": "Draft",
+    "dataset": 5,
+    "activityType": 0,
+    "createdBy": 0,
+    "validTill": 0,
+    "actions": 0
+    },
+    {
+    "ruleName": "Rule22",
+    "ruleDesc": "Rule 22 description",
+    "status": "Draft",
+    "dataset": 5,
+    "activityType": 0,
+    "createdBy": 0,
+    "validTill": 0,
+    "actions": 0
+    },
+    {
+    "ruleName": "Rule23",
+    "ruleDesc": "Rule 23 description",
+    "status": "Draft",
+    "dataset": 5,
+    "activityType": 0,
+    "createdBy": 0,
+    "validTill": 0,
+    "actions": 0
+    },
+    {
+    "ruleName": "Rule24",
+    "ruleDesc": "Rule 24 description",
+    "status": "Draft",
+    "dataset": 5,
+    "activityType": 0,
+    "createdBy": 0,
+    "validTill": 0,
+    "actions": 0
+    },
+    {
+    "ruleName": "Rule25",
+    "ruleDesc": "Rule 25 description",
+    "status": "Draft",
+    "dataset": 5,
+    "activityType": 0,
+    "createdBy": 0,
+    "validTill": 0,
+    "actions": 0
+    },
+    {
+    "ruleName": "Rule26",
+    "ruleDesc": "Rule 26 description",
+    "status": "Draft",
+    "dataset": 5,
+    "activityType": 0,
+    "createdBy": 0,
+    "validTill": 0,
+    "actions": 0
+    },
+    {
+    "ruleName": "Rule27",
+    "ruleDesc": "Rule 27 description",
+    "status": "Draft",
+    "dataset": 5,
+    "activityType": 0,
+    "createdBy": 0,
+    "validTill": 0,
+    "actions": 0
+    },
+    {
+    "ruleName": "Rule28",
+    "ruleDesc": "Rule 28 description",
+    "status": "Draft",
+    "dataset": 5,
+    "activityType": 0,
+    "createdBy": 0,
+    "validTill": 0,
+    "actions": 0
+    },
+    {
+    "ruleName": "Rule29",
+    "ruleDesc": "Rule 29 description",
+    "status": "Draft",
+    "dataset": 5,
+    "activityType": 0,
+    "createdBy": 0,
+    "validTill": 0,
+    "actions": 0
+    },
+    {
+    "ruleName": "Rule30",
+    "ruleDesc": "Rule 30 description",
+    "status": "Draft",
+    "dataset": 5,
+    "activityType": 0,
+    "createdBy": 0,
+    "validTill": 0,
+    "actions": 0
+    },
+    {
+    "ruleName": "Rule31",
+    "ruleDesc": "Rule 31 description",
+    "status": "Draft",
+    "dataset": 5,
+    "activityType": 0,
+    "createdBy": 0,
+    "validTill": 0,
+    "actions": 0
+    },
+    {
+    "ruleName": "Rule32",
+    "ruleDesc": "Rule 32 description",
+    "status": "Draft",
+    "dataset": 5,
+    "activityType": 0,
+    "createdBy": 0,
+    "validTill": 0,
+    "actions": 0
+    },
+    {
+    "ruleName": "Rule33",
+    "ruleDesc": "Rule 33 description",
+    "status": "Draft",
+    "dataset": 5,
+    "activityType": 0,
+    "createdBy": 0,
+    "validTill": 0,
+    "actions": 0
+    },
+    {
+    "ruleName": "Rule34",
+    "ruleDesc": "Rule 34 description",
+    "status": "Draft",
+    "dataset": 5,
+    "activityType": 0,
+    "createdBy": 0,
+    "validTill": 0,
+    "actions": 0
+    },
+    {
+    "ruleName": "Rule35",
+    "ruleDesc": "Rule 35 description",
+    "status": "Draft",
+    "dataset": 5,
+    "activityType": 0,
+    "createdBy": 0,
+    "validTill": 0,
+    "actions": 0
+    },
+    {
+    "ruleName": "Rule 36",
+    "ruleDesc": "Rule 36 description",
+    "status": "Draft",
+    "dataset": 5,
+    "activityType": 0,
+    "createdBy": 0,
+    "validTill": 0,
+    "actions": 0
+    }
+  ]
+}

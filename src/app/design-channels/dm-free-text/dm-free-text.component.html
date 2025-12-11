@@ -1,0 +1,61 @@
+<app-channels></app-channels>
+<div class="col-12 dmLayoutContainer">
+    <div class="row col-12 p-0 m-0  mb-3 relative">
+        <h6 class="col p-0 pl-1 m-0 mt-3 titleHeadtext"></h6>
+        <button class="btn buttonStyle buttonCssStyle shadow-none mr-3" (click)="openOfferSliderPopup($event, 'attribute');">{{'designEditor.beeEditorComponent.globalMergeTaglbl2' | translate}}</button>
+        <button class="btn buttonStyle buttonCssStyle shadow-none p-0" (click)="finalSaveMethod();">{{'save' | translate}}</button>
+        
+            <div class="col-1 d-none inappActionListEnable">
+                <select class="smallLabel">
+                  <option value="-1">{{'dmMultiOfferComponent.actionsLbl' | translate}}</option>
+                  <option>{{'dmMultiOfferComponent.testLbl' | translate}} {{channelObj.channelName}}</option>
+                </select>
+            </div>
+        
+    </div>
+    <div class="row innerContainer col-12 p-0 m-0">
+        <div class="col p-4 tempLayoutSection">
+            <div class="row p-0" #dmContentElements>
+                <div class="col p-0">
+                    <div class="col">
+                        <label class="smallLabel">{{'dmFreeTextComponent.exportSettingsLbl' | translate}}</label>
+                    </div>
+                    <div class="col mt-2">
+                        <input type="checkbox" class="verticalMiddle mr-1 includeheadersChk" id="includeHeadersCheck" (click)="checkIncludeHeader($event)">
+                        <label for="includeHeadersCheck" class="smallLabel color333">{{'dmFreeTextComponent.includeHeaderFileLbl' | translate}}</label>
+                    </div>
+                    <div class="col mt-2" *ngIf="isIncludeHeaders">
+                        <label class="smallLabel">{{'dmFreeTextComponent.columnHeaderlbl' | translate}}</label>
+                        <textarea class="input-control col radiusStyle inputStyle columnHeaderText" placeholder="{{'dmFreeTextComponent.ExFristNameLastNameLbl' | translate}}" [(ngModel)]="columnHerderVal"></textarea>
+                    </div>
+                    <div class="col mt-4">
+                        <label class="smallLabel">{{'dmFreeTextComponent.attributeLbl' | translate}}</label>
+                        <div class="attributeDiv position-relative col attributeTabContent" #attributeInputContent>
+                            <div [attr.contenteditable]="true" class="attribute editable radiusStyle" 
+                                id="attribute" name="dmAttribute" (keyup)="getCaretIndex($event,'attribute');" (click)="getCaretIndex($event,'attribute');"
+                                spellcheck="false" (paste)="getCaretIndex($event,'attribute');" (keydown.Tab)="getCaretIndex($event,'attribute');"                               
+                                ngDefaultControl isNative="true" perLine="7" showPreview="false"
+                                >
+                            </div>
+                            <!-- <emoji-mart class="emoji-mart-inapp" [custom]="customEmojis" *ngIf="emojisToggle" title="Pick your emoji…" [showPreview]="false" 
+                            (emojiSelect)="addEmojiItem($event, 'title')" [enableSearch]="false" [enableFrequentEmojiSort]="true" [showSingleCategory]="true" 
+                                [include]="['custom']" emoji="point_up">
+                            </emoji-mart> -->
+    
+                            <!-- <div class="d-inline iconContainer">
+                                <span class="fal fa-plus" id="" [ngClass]="enablePlusBtn ? '' : 'disabledPlusBtn'" (click)="openOfferSliderPopup($event, 'attribute');"></span>
+                            </div> -->
+                        </div>
+                    </div>
+                </div>                
+            </div>
+        </div>
+
+    </div>
+   
+
+</div> <!--End Div-->
+<div class="customeOffers relative" *ngIf="offerDrawerSectionEnable" [ngClass]="offerDrawerSectionEnable ? 'slideIN':'slideOUT'">
+    <app-offers-drawer [dataFromParent]="modalRef" (onCloseOfferPopup)="onCloseOfferDrawer();" (offersAppendToInput)="finalOffersSelected($event);"></app-offers-drawer>
+</div>
+<!-- <div class="backdrop_offerSlider" *ngIf="backropOffersEnable"></div> -->

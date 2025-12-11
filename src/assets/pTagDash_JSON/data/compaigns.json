@@ -1,0 +1,42 @@
+[
+  {
+    "compaignId": "campaign1",
+    "compaignName": "Compaign Name 1"
+  },
+  {
+    "compaignId": "campaign3",
+    "compaignName": "Compaign Name 3"
+  },
+  {
+    "compaignId": "campaign5",
+    "compaignName": "Compaign Name 5"
+  },
+  {
+    "compaignId": "campaign4",
+    "compaignName": "Compaign Name 4"
+  },
+  {
+    "compaignId": "campaign2",
+    "compaignName": "Compaign Name 2"
+  },
+  {
+    "compaignId": "campaign6",
+    "compaignName": "Compaign Name 6"
+  },
+  {
+    "compaignId": "campaign7",
+    "compaignName": "Compaign Name 7"
+  },
+  {
+    "compaignId": "campaign8",
+    "compaignName": "Compaign Name 8"
+  },
+  {
+    "compaignId": "campaign9",
+    "compaignName": "Compaign Name 9"
+  },
+  {
+    "compaignId": "campaign10",
+    "compaignName": "Compaign Name 10"
+  }
+]

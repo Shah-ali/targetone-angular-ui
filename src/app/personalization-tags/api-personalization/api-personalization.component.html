@@ -1,0 +1,164 @@
+<div class="modal-container apiPersonalizationConatiner">
+  <div class="loaderMask" *ngIf="showLoader">
+    <div class="spinner-border text-dark" role="status">
+      <span class="visually-hidden d-none">{{ 'recommendationComponent.loadinglbl' | translate }}</span>
+    </div>
+  </div>
+  <div class="col-12 mainContainer p-0">
+      <div class="row reco-section m-0">
+          <div class="col-3 d-flex flex-column p-0">
+            <div class="title" *ngIf="navigatorActiveStage1 else layoutTitle">{{ 'apiPersonalization.title' | translate }}</div>
+            <ng-template #layoutTitle>
+              <div class="title">{{'recommendationComponent.selectLayout' | translate}}</div>
+            </ng-template>
+            
+
+            <ng-template #layoutSubTitle>
+              <div class="subTitle text-truncate defaultPointer" title="{{'apiPersonalization.selectLayoutToBeIncludedEmailTemplateLbl' | translate}}">{{'apiPersonalization.selectLayoutToBeIncludedEmailTemplateLbl' | translate}}</div>
+              
+            </ng-template> 
+          </div>
+            <!-- <div class="col-4 d-flex flex-column p-0 headerLabls" *ngIf="productContentDialogId == 'reco-rule'">
+                <div class="title">{{'recommendationComponent.productRecommendationlbl' | translate}}</div>
+                <div class="subTitle">{{'recommendationComponent.chooseTemplateToAddInEmailLbl' | translate}}</div>
+            </div> -->
+            <div class="col-6 flex-column p-0">
+                <!-- <div class="title">{{'DMEComponentLabels.selectDMElbl' | translate}}</div>
+                <div class="subTitle">{{'DMEComponentLabels.subTitleChooseMgsLbl' | translate}}</div> -->
+                <div class="row col p-0 justify-content-center" id="navigatorCntext" *ngIf="multiArrayPath">
+                    <div class="text-left mr-5 p-0" id="navOne">
+                        <span class="numberInCircle blue" *ngIf="navigatorActiveStage1" [ngClass]="navigatorActiveStage1 ? 'blue':'grey'">1</span>
+                        <div class="circle" *ngIf="checkmarkEnable1">
+                            <div class="checkmark"></div> 
+                        </div>
+                        <label class="fontSmall navi-placemt-1">{{'apiPersonalization.title' | translate}}</label>
+                    </div>
+                    <div class="text-left mr-5 p-0" id="navTwo">
+                        <span class="numberInCircle grey" *ngIf="(!navigatorActiveStage2 && !checkmarkEnable2) else highlightBlue">2</span>
+                        <ng-template #highlightBlue>
+                            <span class="numberInCircle" *ngIf="(navigatorActiveStage2 && !checkmarkEnable2)" [ngClass]="navigatorActiveStage2 ? 'blue':'grey'">2</span>  
+                        </ng-template>
+                        <div class="circle" *ngIf="checkmarkEnable2">
+                            <div class="checkmark"></div> 
+                        </div>                           
+                        <label class="fontSmall navi-advds-2">{{'recommendationComponent.selectLayout' | translate}}</label>
+                    </div>                       
+                   
+                </div>
+            </div>
+            <div class="row col-3 justify-content-end p-0 m-0">
+              <button type="button" class="btn buttonCss shadow-none m-0 mr-1 heigt35" *ngIf="multiArrayPath && checkmarkEnable1" id="backBtn" (click)="backToGridPage($event)"><i class="far fa-arrow-left"></i> {{ 'backLbl' | translate }}</button>
+                <button type="button" class="btn buttonCss shadow-none m-0 mr-1 heigt35" id="cancelBtn" (click)="onClose()">{{ 'cancel' | translate }}</button>
+                <button type="button" class="btn buttonPrimaryCss shadow-none m-0 mr-1 heigt35" *ngIf="multiArrayPath && !checkmarkEnable1 && !isMergedTagOffersDrawerOpen" [disabled]="!viewParameterSectionEnabled" id="nextBtn" (click)="redirectToLayoutPage($event)">{{ 'nextLbl' | translate }} <i class="far fa-arrow-right"></i></button>
+                <button type="button" id="doneBtn" *ngIf="multiArrayPath && checkmarkEnable1" [disabled]="isPublishedPersonalization" (click)="insertApiRow(false)" class="btn buttonPrimaryCss shadow-none m-0 heigt35">
+                  {{ 'done' | translate }}
+                </button>
+                <button type="button" id="doneBtn" *ngIf="!multiArrayPath || isMergedTagOffersDrawerOpen" (click)="insertApiRow(isMergedTagOffersDrawerOpen)" [disabled]="!viewParameterSectionEnabled || ispromoExecutedOrRunning" class="btn buttonPrimaryCss shadow-none m-0 heigt35">
+                  {{ 'done' | translate }}
+                </button>
+            </div>
+    </div>
+    <hr *ngIf="navigatorActiveStage2" class="m-0"/>
+    <div class="col-12 mt-2 apiFieldSelectionSection p-0" id="apiFieldSelectionSection" *ngIf="!navigatorActiveStage2 && !checkmarkEnable1, else chooseLayoutPage">
+        <div class="row col apiNameSection p-0">
+          <div class="col-8 mt-3 mb-3">
+            <div class="row col-12 p-0 d-flex p-0 justify-content-end m-0">
+              <div class="col">
+                <div class="subTitle" *ngIf="navigatorActiveStage1 else layoutSubTitle">
+                  <div class="row m-0 col pl-2">
+                    <ul class="nav tabsLiStyle tabsNoSpace mb-3">
+                        <li *ngFor="let x of singleMultiCheckEnable" [ngClass]="x.checked? 'active':''" id="{{x.id}}" (click)="singleMultiCheckMethod(x.singleVal);">
+                            <!-- <input type="radio" class="mr-2 cursor-pointer" [(value)]="x.singleVal" id="{{x.id}}" [checked]="x.checked"> -->
+                            <label for="{{x.id}}" [ngClass]="x.checked? 'blueColor':''" class="mediumSmallLable m-0 cursor-pointer">{{x.name}}</label>
+                        </li>
+                    </ul>
+                </div>
+                </div>
+              </div>
+              <div class="searchReco col-3">
+                  <input type="text" placeholder="{{'searchLbl' | translate}}" (keyup)="searchByModelName($event)"
+                  id="searchInput" class="shadow-none form-control mediumFont" [(ngModel)]="searchText"/>
+              </div>
+           </div>
+            <div class="outerWrapTable col">
+              <ag-grid-angular #agGrid
+                  style="width: 100%; height: calc(100vh - 262px)" 
+                  class="ag-theme-alpine"
+                  [rowData]="modelDataListsArry" 
+                  [columnDefs]="columnHeadersRuleReco"
+                  [defaultColDef]="defaultColDef"
+                  [rowSelection]="rowSelection"
+                  [getRowId]="getRowId"
+                  [animateRows]="true" 
+                  [pagination]="true" 
+                  [paginationPageSize]="15"
+                  [suppressRowClickSelection]="true"
+                  [localeText]="localeText"
+                  (paginationChanged)="paginationChangeMethod($event)"
+                  > 
+              </ag-grid-angular>
+              
+          </div>
+          </div>
+          <div class="col mt-3 mb-3 p-0">
+            <div class="col API-Grid-Section dottedBorder" *ngIf="viewParameterSectionEnabled else withoutDataView">
+              <div class="row col mt-2">
+                <label class="m-0">{{'apiPersonalization.filterParametersLbl' | translate}}</label>
+              </div>
+              <div class="row col mb-3">
+                <sub class="text-muted fontSmall">{{'apiPersonalization.filterParametersSubtitleForAPILbl' | translate}}</sub>
+              </div>
+              <div class="row col mb-4 p-0">
+                <div class="col-3 mb-2 p-0">
+                  <app-merge-tag-copy></app-merge-tag-copy>
+                </div>
+              </div>      
+              <div class="row col" *ngFor="let item of inputParamSelected | keyvalue let i=index">
+                <div class="col-6 p-0 mb-3">
+                  <div class="col p-0">
+                    <label class="mediumFont m-0">{{item.key}}</label>
+                    <input type="text" id="updateParams" class="form-control mediumFont shadow-none col-12 mt-1" [(ngModel)]="item.value" (change)="updateParamsInputs(item.key,$event);" (blur)="updateParamsInputs(item.key,$event);" >
+                  </div>
+                </div>
+              </div>
+            </div>
+            <ng-template #withoutDataView>
+              <div class="row col displayAreaView">
+                 <label class="mediumFont labelMiddle">{{'apiPersonalization.selectAPITableToDefineFiltersLbl' | translate}}</label>
+              </div>
+            </ng-template>
+
+            <div class="select-items-section mt-2" *ngIf="isMergedTagOffersDrawerOpen && multiArrayPath">
+              <div class="slider-container">
+                  <div class="slider-value">{{'offerComponent.selectedItemTemplateLbl' | translate}} {{ sliderValue }}</div>
+                  <div class="slider-section">
+                      <span>1</span>
+                      <input
+                      type="range"
+                      [min]="1"
+                      [max]="noofRecoConfig"
+                      [(ngModel)]="sliderValue"
+                      (ngModelChange)="selectMaxProductSlider($event)"
+                      class="slider"
+                      />
+                      <span>{{ noofRecoConfig }}</span>
+                  </div>
+                  
+                  <div class="controls">
+                      <i class="fas fa-play fas fa-play fa-rotate-180" (click)="prevItem()"></i>
+                      <i class="fas fa-play fas fa-play" (click)="nextItem()"></i>
+                  </div>
+              </div>
+            </div>  
+          </div>
+        </div>
+      
+        
+    </div>
+    <ng-template #chooseLayoutPage>
+      <app-choose-layout-template [createSavedObj]="createSavedObj" [modelNameSelectedForLayoutPg]="modelNameSelectedForLayoutPg" [blockNameLoadedFor]="blockNameLoadedFor" (dynamicContentObj)="collectDataFromLayoutTemplate($event);"></app-choose-layout-template>
+    </ng-template> 
+  </div>
+</div>
+
+

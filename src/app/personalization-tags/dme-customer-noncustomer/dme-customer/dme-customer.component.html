@@ -1,0 +1,143 @@
+<div class="modal-container recommendationConatiner">
+    <div class="loaderMask" *ngIf="showLoader">
+        <div class="spinner-border text-dark" role="status">
+            <span class="visually-hidden d-none">{{'recommendationComponent.loadinglbl' | translate}}</span>
+        </div>
+    </div>
+    <div class="col-12 mainContainer p-0">
+        <!-- <div class="reco-section">
+            <div class="d-flex">                
+                <div class="col-12 d-flex justify-content-end p-0 align-items-center">
+                    <div><button type="button" class="btn buttonCss shadow-none m-0 mr-1" id="cancelBtn" (click)="onClose()">{{'cancel' | translate}}</button></div>
+                    <div>
+                        <button type="button" id="doneBtn" *ngIf="navigatorActiveStage2"  (click)="insertDmeRow()" [ngClass]="{'disabled': navigateToDesignPageEnable }"
+                        class="btn buttonPrimaryCss shadow-none m-0">{{'designEditor.doneBtn' | translate}}</button>
+                    </div>
+                </div>
+            </div>
+            <hr class="separator"/>
+        </div> -->
+
+
+
+        <div class="row reco-section m-0">
+            <div class="col-3 d-flex flex-column p-0">
+              <div class="title" *ngIf="navigatorActiveStage1 else layoutTitle">{{'customerNonCustomerDMEComponents.selectCustomerDMELbl' | translate}}</div>
+              <ng-template #layoutTitle>
+                <div class="title">{{'recommendationComponent.selectLayout' | translate}}</div>
+              </ng-template>
+              <div class="subTitle" *ngIf="navigatorActiveStage1 else layoutSubTitle">                
+                <div class="row col pl-2">
+                  <ul class="nav tabsLiStyle">
+                      <li *ngFor="let x of singleMultiCheckEnable">
+                          <input type="radio" class="mr-2 cursor-pointer" [(value)]="x.singleVal" id="{{x.id}}" [checked]="x.checked" (click)="singleMultiCheckMethod($event);">
+                          <label for="{{x.id}}" class="smallLabel m-0 cursor-pointer">{{x.name}}</label>
+                      </li>
+                  </ul>
+                </div>
+              
+              </div>
+              <ng-template #layoutSubTitle>
+                <!-- <div class="subTitle text-truncate defaultPointer" title="Select layout to be included in email template">{{'apiPersonalization.selectLayoutToBeIncludedEmailTemplateLbl' | translate}}</div> -->
+              </ng-template>
+            </div>
+              <!-- <div class="col-4 d-flex flex-column p-0 headerLabls" *ngIf="productContentDialogId == 'reco-rule'">
+                  <div class="title">{{'recommendationComponent.productRecommendationlbl' | translate}}</div>
+                  <div class="subTitle">{{'recommendationComponent.chooseTemplateToAddInEmailLbl' | translate}}</div>
+              </div> -->
+              <div class="col-6 flex-column p-0">
+                  <!-- <div class="title">{{'DMEComponentLabels.selectDMElbl' | translate}}</div>
+                  <div class="subTitle">{{'DMEComponentLabels.subTitleChooseMgsLbl' | translate}}</div> -->
+                  <div class="row col p-0 justify-content-center mt-3" id="navigatorCntext" *ngIf="multiArrayPath">
+                      <div class="text-left mr-5 p-0" id="navOne">
+                          <span class="numberInCircle blue" *ngIf="navigatorActiveStage1" [ngClass]="navigatorActiveStage1 ? 'blue':'grey'">1</span>
+                          <div class="circle" *ngIf="checkmarkEnable1">
+                              <div class="checkmark"></div> 
+                          </div>
+                          <label class="fontSmall navi-placemt-1">{{'DMEComponentLabels.selectDMElbl' | translate}} </label>
+                      </div>
+                      <div class="text-left mr-5 p-0" id="navTwo">
+                          <span class="numberInCircle grey" *ngIf="(!navigatorActiveStage2 && !checkmarkEnable2) else highlightBlue">2</span>
+                          <ng-template #highlightBlue>
+                              <span class="numberInCircle" *ngIf="(navigatorActiveStage2 && !checkmarkEnable2)" [ngClass]="navigatorActiveStage2 ? 'blue':'grey'">2</span>  
+                          </ng-template>
+                          <div class="circle" *ngIf="checkmarkEnable2">
+                              <div class="checkmark"></div> 
+                          </div>                           
+                          <label class="fontSmall navi-advds-2">{{'recommendationComponent.selectLayout' | translate}}</label>
+                      </div>                       
+                     
+                  </div>
+              </div>
+              <div class="row col-3 justify-content-end p-0 m-0">
+                <button type="button" class="btn buttonCss shadow-none m-0 mr-1 heigt35" *ngIf="multiArrayPath && checkmarkEnable1" id="backBtn" (click)="backToGridPage($event)"><i class="far fa-arrow-left"></i> {{ 'backLbl' | translate }}</button>
+                  <button type="button" class="btn buttonCss shadow-none m-0 mr-1 heigt35" id="cancelBtn" (click)="onClose()">{{ 'cancel' | translate }}</button>
+                  <button type="button" class="btn buttonPrimaryCss shadow-none m-0 mr-1 heigt35" *ngIf="multiArrayPath && !checkmarkEnable1" [disabled]="!viewParameterSectionEnabled" id="nextBtn" (click)="redirectToLayoutPage($event)">{{ 'nextLbl' | translate }} <i class="far fa-arrow-right"></i></button>
+                  <button type="button" id="doneBtn" *ngIf="multiArrayPath && checkmarkEnable1" [disabled]="isPublishedPersonalization" (click)="insertDmeCustomerRow()" class="btn buttonPrimaryCss shadow-none m-0 heigt35">
+                    {{ 'done' | translate }}
+                  </button>
+                  <button type="button" id="doneBtn" *ngIf="!multiArrayPath" (click)="insertDmeCustomerRow()" [disabled]="!viewParameterSectionEnabled" class="btn buttonPrimaryCss shadow-none m-0 heigt35">
+                    {{ 'done' | translate }}
+                  </button>
+              </div>
+      </div>
+      <hr *ngIf="navigatorActiveStage2" class="m-0"/>
+        <div class="" id="recoSelectionSection" *ngIf="!navigatorActiveStage2 && !checkmarkEnable1, else chooseLayoutPage">
+            <div class="recoListContainer mt-2 p-2">
+                <!-- Recommendation offer Table data -->
+                <div class="outerWrapTable col p-0">
+                    <div class="row col justify-content-end">
+                        <div class="col-2 mb-2 d-none">
+                            <div class="col p-0">
+                                <label class="mediumFont">{{'DMEOffersComponent.contextTypeLbl' | translate}}</label>
+                                <select class="form-control shadow-none col-12 mediumFont recoDropdownStyle" 
+                                     (disabled)="contextTypedropDown">
+                                    <option value="-1" selected>{{'DMEOffersComponent.customerDefinedModelLbl' | translate}}</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-2 p-0 mb-2 d-none">
+                            <div class="col p-0">
+                                <label class="mediumFont">{{'recommendationComponent.entityTypeLbl' | translate}}</label>
+                                <select class="form-control mediumFont shadow-none col-12 recoDropdownStyle" 
+                                    >
+                                    <option value="-1" selected>{{'journeySetUp.all' | translate}}</option>                                    
+                                </select>
+                            </div>
+                        </div>                        
+                        <div class="row col-2 p-0 mb-2 ">
+                            <div class="col p-0">
+                                <input class="form-control mediumFont shadow-none col-12 ml-3" placeholder="{{'DMEOffersComponent.searchByModelNameLbl' | translate}}" (keyup)="searchByModelName($event);">
+                            </div>
+                        </div>
+                    </div>
+                    <ag-grid-angular 
+                    #myAgGrid
+                        style="width: 100%; height: calc(100vh - 275px)" 
+                        class="ag-theme-alpine"
+                        [rowData]="modelDataListsArry" 
+                        [columnDefs]="columnHeadersRuleReco"
+                        [defaultColDef]="defaultColDef"
+                        [rowSelection]="rowSelection"
+                        [getRowId]="getRowId"
+                        [animateRows]="true" 
+                        [pagination]="true" 
+                        [paginationPageSize]="10"
+                        [suppressRowClickSelection]="true"
+                        [localeText]="localeText" 
+                        [suppressScrollOnNewData] = "true"  
+                        (paginationChanged)="paginationChangeMethod($event)"
+                        >                        
+                    </ag-grid-angular>
+                    
+                </div>
+                
+            </div>
+        </div>
+        <ng-template #chooseLayoutPage>
+            <app-choose-layout-template [blockNameLoadedFor]="blockNameLoadedFor" [modelNameSelectedForLayoutPg]="modelNameSelectedForLayoutPg" [createSavedObj]="createSavedObj" (dynamicContentObj)="collectDataFromLayoutTemplate($event);"></app-choose-layout-template>
+        </ng-template>
+    </div>
+    
+</div>
+

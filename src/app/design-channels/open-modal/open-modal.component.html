@@ -1,0 +1,39 @@
+<div class="modal-header">
+	<h2 class="modal-title ml-auto pl-5" id="exampleModalLabel">
+		<span *ngIf="isAddonProduct">Products List</span>
+    <span *ngIf="!isAddonProduct">Offers List</span>
+  </h2>
+  <button type="button" class="close pull-right" (mousedown)="onClose()" aria-label="Close">
+  <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<div class="modal-body custom-modal-body">
+ <!-- <iframe width="100%" src="{{iframeUrlPath}}">{{iframeContent}}</iframe> -->
+ <h5 *ngIf="isAddonProduct">Select Product list</h5>
+ <h5 *ngIf="!isAddonProduct">Select Offer list</h5>
+ <div class="col-12 p-0" *ngIf="isAddonProduct">
+ <ul class="list-unstyled" >
+  <li class="media mb-5 mt-2" *ngFor="let products of productDataJson"  id="{{products.uid}}">
+    <input type="checkbox" class="mr-2" id="check_{{products.uid}}" ngChecked="productSelected" (click)="checkStatus($event, products.uid)">
+    <img src="{{products.imgsrc}}" class="mr-3" style="border-radius:15px;" alt="..." width="64px" height="64px">
+    <div class="media-body">
+      <h6  class="mt-0 mb-1">{{products.title}}</h6>
+      {{products.content}}
+      </div>
+  </li> 
+</ul>
+</div>
+<div class="p-0 row" *ngIf="!isAddonProduct">
+  <div class="col mb-3" *ngFor="let imgItem of productDataJson">
+    <img src="{{imgItem.src}}" alt="{{imgItem.alt}}" class="img-thumbnail" id="{{imgItem.mid}}" (click)="insertImagePath(imgItem);">
+  </div>
+
+</div>
+</div>
+<div class="modal-footer d-flex justify-content-right">
+  <button type="submit" class="btn btn-primary buttonStyle shadow-none" *ngIf="isAddonProduct" (click)="insertProducts($event);">Done</button>
+  <button type="button" class="btn btn-outline-primary buttonStyle shadow-none" (mousedown)="onClose()">close</button>
+</div>
+
+
+

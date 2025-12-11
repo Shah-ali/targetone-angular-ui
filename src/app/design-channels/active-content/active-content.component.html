@@ -1,0 +1,97 @@
+<ng-container *ngIf="!isLoading">
+  <ng-container [ngTemplateOutlet]="currentTemplate"></ng-container>
+</ng-container>
+
+<!-- Dashboard Template -->
+<ng-template #ptagDashboard>
+  <div *ngIf="!isLoading">
+    <div class="ac-dashboard-header">
+      <img class="img1" src="assets/images/ac-logo-1.svg" alt="PTAG Icon" />
+      <img
+        src="assets/images/ac-logo-2.svg"
+        alt="PTAG Details Header"
+        class="img2"
+      />
+    </div>
+    <div class="dashboard-container">
+      <!-- Top Bar: Tabs -->
+      <div class="row">
+        <div class="col-6 tab-header">
+          <button [class.active]="activeTab === 'active'" (click)="switchTab('active')">
+            {{ "activeContentAddons.DASHBOARD.ACTIVE" | translate }}
+          </button>
+          <button [class.active]="activeTab === 'favourite'" (click)="switchTab('favourite')">
+            {{ "activeContentAddons.DASHBOARD.FAVORITES" | translate }}
+          </button>
+        </div>
+        <div class="col-6 toolbar">
+          <!-- <button class="sort-button" (click)="toggleSort()">
+              <i 
+                class="fas text-right caretPositionRight sort-arrow"
+                [ngClass]="sortAsc ? 'fa-caret-up' : 'fa-caret-down'">
+             </i>
+            {{ "activeContentAddons.DASHBOARD.SORT_BY" | translate }}</button> -->
+          <div id="searchContainer">
+            <i class="far fa-search pointer"></i>
+             <input
+            type="text"
+            placeholder="{{ 'activeContentAddons.DASHBOARD.SEARCH_PLACEHOLDER' | translate }}"
+            [(ngModel)]="searchText"
+            (input)="filterPtags()" />
+          </div>
+         
+        </div>
+      </div>
+
+      <!-- Filter Bar -->
+
+      <div class="card-grid-container">
+        <!-- PTag Cards Container -->
+        <div class="card-grid">
+          <ng-container *ngFor="let ptag of filteredPTags">
+            <label class="ptag-card">
+              <div class="radio-wrapper">
+                <input
+                  type="radio"
+                  name="tagSelector"
+                  [value]="ptag.tagId"
+                  [checked]="selectedTagId === ptag.tagId"
+                  (change)="onTagSelect(ptag.tagId)" />
+              </div>
+              <div class="image-container">
+                <img
+                  *ngIf="ptag.previewImgUrl"
+                  [src]="ptag.previewImgUrl"
+                  alt="{{ ptag.tagName }}"
+                  (error)="onImageError($event)" />
+                
+              </div>
+
+              <div class="tagName mt-2 truncateTextPname linkColor">{{ ptag.tagName }}</div>
+              <p class="tagDate">{{ ptag.activationDate | date : "dd MMMM yyyy" }}</p>
+            </label>
+          </ng-container>
+        </div>
+      </div>
+
+      <div class="modal-footer d-flex justify-content-right">
+        <button type="button" class="btn buttonCss shadow-none m-0 mr-1" id="closeBtn" (click)="onClose()">
+          {{ "close" | translate }}
+        </button>
+        <button class="btn buttonPrimaryCss shadow-none m-0" (click)="onViewDetails()">
+          {{ "NEXT" | translate }}
+        </button>
+      </div>
+      <!-- <button type="button" class="btn buttonCss shadow-none m-0 mr-1" id="closeBtn" (click)="onClose()">
+            {{ 'close' | translate }}
+        </button>
+        <button class="view-details-button" (click)="onViewDetails()">
+             {{ 'NEXT' | translate}}
+        </button>            -->
+    </div>
+  </div>
+</ng-template>
+<!-- Details Template -->
+<ng-template #ptagDetails>
+  <app-ptag-details (backToDashboard)="showDashboard()"></app-ptag-details>
+</ng-template>

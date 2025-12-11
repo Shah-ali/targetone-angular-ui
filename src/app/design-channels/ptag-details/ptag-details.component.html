@@ -1,0 +1,126 @@
+<div style="background-color: #f0f0f0;">
+  <div class="ac-dashboard-header">
+    <img class="img1" src="assets/images/ac-logo-1.svg" alt="PTAG Icon" />
+    <img
+      src="assets/images/ac-logo-2.svg"
+      alt="PTAG Details Header"
+      class="img2"
+    />
+  </div>
+  <div class="back-bar" (click)="goBack()">
+    <span class="arrow">&#8592;</span>
+    <span class="label"
+      ><strong>{{
+        "activeContentAddons.PTAG_DETAILS.BACK_LABEL" | translate
+      }}</strong></span
+    >
+    <span class="divider">|</span>
+    <span class="tag-name">{{ tagName }}</span>
+  </div>
+  <div class="ptag-details-container">
+    <div class="left-panel">
+      <div class="simulation-section">
+        <span class="paramsText">{{ "activeContentAddons.PTAG_DETAILS.PARAMS_SUBTEXT" | translate }}</span>
+        <!-- Simulate Button -->
+        <div class="simulate-btn-container">
+          <button
+            type="button"
+            (click)="onSimulate()"
+            class="btn buttonPrimaryCss shadow-none m-0"
+          >
+            {{ "activeContentAddons.PTAG_DETAILS.SIMULATE" | translate }}
+          </button>
+        </div>
+      </div>
+      <div class="tag-param-container">
+        <div *ngFor="let param of tagParams" class="param-group">
+          <label>{{ param.name }}</label>
+          <input
+            type="text"
+            [(ngModel)]="tagParamMap[param.name]"
+            [placeholder]="
+              'activeContentAddons.PTAG_DETAILS.PLACEHOLDER' | translate
+            "
+            name="{{ param.name }}"
+          />
+        </div>
+      </div>      
+    </div>
+
+    <div class="right-panel">
+      <div class="tabs">
+         <button
+          [class.active]="selectedTab === 'fragment'"
+          (click)="switchTab('fragment')"
+        >
+          {{ "activeContentAddons.PTAG_DETAILS.TAB_FRAGMENT" | translate }}
+        </button>
+        
+        <button
+          [class.active]="selectedTab === 'full'"
+          (click)="switchTab('full')"
+        >
+          {{ "activeContentAddons.PTAG_DETAILS.TAB_FULL_IMAGE" | translate }}
+        </button>       
+      </div>
+
+      <!-- Right Panel Preview Area -->
+      <div
+        #previewArea
+        id="preview-area"
+        width="100%"
+        height="500px"
+        class="preview-area"
+      >
+        <!-- Full Image Container -->
+        <div
+          [ngClass]="{ hide: selectedTab !== 'full' }"
+          class="full-image-container"
+        >
+          <div *ngIf="isLoading && fullImageSimulateUrl" class="spinner"></div>
+          <img
+            *ngIf="fullImageSimulateUrl"
+            [src]="fullImageSimulateUrl"
+            alt="Full Image Preview"
+            (load)="onImageLoad()"
+            (error)="onImageError()"
+            [hidden]="isLoading"
+          />
+        </div>
+
+        <!-- Fragment Iframe Container -->
+        <div class="fragment-container">
+          <div
+            *ngIf="isFragmentLoading && selectedTab == 'fragment'"
+            class="spinner"
+          ></div>
+          <div
+            [ngClass]="{ hide: selectedTab !== 'fragment' }"
+            class="fragment-iframe-container"
+          ></div>
+        </div>
+      </div>
+
+      <div class="modal-footer d-flex justify-content-right">
+        <button
+          type="button"
+          class="btn buttonCss shadow-none m-0 mr-1"
+          id="closeBtn"
+          (click)="onClose()"
+        >
+          {{ "close" | translate }}
+        </button>
+        <button
+          class="btn buttonPrimaryCss shadow-none m-0"
+          (click)="onInsert()"
+        >
+          +
+          {{
+            "activeContentAddons.PTAG_DETAILS.INSERT"
+              | translate : undefined : "Insert"
+          }}
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

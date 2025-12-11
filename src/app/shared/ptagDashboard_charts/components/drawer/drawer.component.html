@@ -1,0 +1,24 @@
+<!-- drawer.component.html -->
+<div class="drawer" [class.open]="isDrawerOpen">
+  <div class="drawer-header">
+    <div class="col p-0">
+      <h5 class="drawer-title" id="drawer-basic-title">{{'header.personalisationTags.filterByCampaignlbl' | translate}}</h5>
+      <p class="sub-title ellipseTextFilterCampaign smallLabel">{{'header.personalisationTags.filterByCampaignDesclbl' | translate}}</p>
+    </div>
+    <!-- <button class="close-btn" (click)="closeDrawer()">&times;</button> -->
+  </div>
+  <div class="drawer-body py-4 vh-100">
+    <div class="custom-multi-select mb-3">
+      <app-multi-select-dropdown [list]="dropdownData" (shareCheckedList)="shareCheckedList($event)" (applyCompaignsFilter)="applyCompaignsFilter($event)"
+        (shareIndividualCheckedList)="shareIndividualCheckedList($event)">
+      </app-multi-select-dropdown>
+    </div>
+    <div class="d-flex h-75"> <!-- button-height class removed -->
+      <div class="d-flex align-self-end ml-auto gap-2">
+        <button type="button" class="btn btn-outline-primary" (click)="closeDrawer()">{{'cancel' | translate}}</button>
+        <button type="button" class="btn btn-primary" (click)="applyFilter()">{{'apply' | translate}}</button>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="drawer-shadow" [class.show]="isDrawerOpen"></div>

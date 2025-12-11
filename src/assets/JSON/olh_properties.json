@@ -1,0 +1,23 @@
+{
+  "cshids": {
+    "journey": "setting_up_journeys",
+    "design-page": "designing_channels_journey",
+    "email-templates": "designing_channels_journey",
+    "bee-editor": "designing_channels_journey",
+    "trigger-analytics": "designing_channels_journey",
+    "final-setup": "reviewing_journey",
+    "template-library": "overview_templates",
+    "personalizedTag-editor": "creating_personalization_tags",
+    "saved-personalized-tags": "personalization_tags",
+    "show-api-integration": "API_Based_Personalization",
+    "savedPersonalizedTagsCopy":"copying_active_content",
+    "savedPersonalizedTagsEdit":"editing_active_content",
+    "advance-image-content":"advanced_image_active_content",
+    "advance-text-content":"advanced_text_active_content",
+    "fusionJsHelpContent":"Fusion_JS_Interface",
+    "AC-performance-summary":"active_content_performance_summary",
+    "AC-performance": "active_content_performance",
+    "defining_outfit_style": "defining_outfit_style"
+  }
+
+}

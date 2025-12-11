@@ -1,0 +1,250 @@
+<app-channels (loadFreshTemplate)="loadFreshChannel($event)" (loadSavedTemplate)="loadSavedChannel($event)" *ngIf="!isTemplateLibraryMode"></app-channels>
+<div class="outterwrapper">
+    <div class="row col p-1 m-0 pl-3">
+      <div class="col pt-2 pl-0">        
+        <label class="top-d-heading mt-2 pt-1">{{'designEditor.emailEditor.emailTemplatelbl' | translate}}</label>
+      </div>
+      <div class="col text-right pt-2 pr-0 mr-0" *ngIf="!isTemplateLibraryMode else newTemplateS3">
+          <ng-template #changeTemplate>            
+            <button type="button" class="btn buttonCss shadow-none mr-2" (click)="backToTemplateView();" [disabled]="promoExecutedOrRunning"><span >{{'designEditor.emailEditor.changeTemplatelbl' | translate}}</span></button>
+        </ng-template>
+          <ng-template #editTemplate><button class="btn successOutline shadow-none mr-3" routerLink="/bee-editor" (click)="editTemplateSelected();" [disabled]="promoExecutedOrRunning">{{'designEditor.emailEditor.editTemplatelbl' | translate}}</button></ng-template>
+        <button type="button" *ngIf="!isPreview; else changeTemplate" class="btn buttonCss shadow-none mr-2" (click)="openPreviewModal();" [disabled]="promoExecutedOrRunning"><span >{{'designEditor.emailEditor.chosenAsAtemplatelbl' | translate}}</span></button>
+        <button type="button" class="btn successOutline shadow-none mr-3" routerLink="/bee-editor" (click)="editTemplateSelected();" [disabled]="promoExecutedOrRunning" *ngIf="!isPayload; else editTemplate;">{{'designEditor.emailEditor.proceedBtn' | translate}}</button>
+      </div>
+      <ng-template #newTemplateS3>       
+        <button type="button" *ngIf="!isPreview else editTemplateS3" class="btn buttonCss shadow-none mr-2 mt-3" routerLink="/bee-editor" (click)="getEmptyTemplateJson();"> <i class="far fa-plus fa-sm"></i> {{'designEditor.emailEditor.createTemplateBtn' | translate}}</button>
+      </ng-template>
+      <ng-template #editTemplateS3>        
+        <button type="button" class="btn buttonCss shadow-none mr-2 mt-3" routerLink="/bee-editor" (click)="editTemplateSelected();">{{'designEditor.emailEditor.editTemplatelbl' | translate}}</button>
+      </ng-template>
+    </div>
+ 
+ <div class="w-100"> </div> 
+ <div class="row p-2 ml-1 mr-1 mb-1" *ngIf="!isPreview else previewTemplate">
+     <div class="col-9 mr-1 w-100 template-area pt-4">
+         <div class="row pl-2 pr-3" *ngIf="isTemplateLibraryMode">
+             <div class="col text-left">                 
+                 <h4 class="showingCoutLabel">{{'designEditor.emailEditor.showinglbl' | translate}} {{collectionSize}} {{'designEditor.emailEditor.templateslbl' | translate}}</h4>
+             </div>
+             <div class="col text-right">
+                 <i class="fas fa-list-ul mr-3 pointer" [ngClass]="activeLayoutView == 0 ? 'blueColor': ''" (click)="layoutView(0)"></i>
+                 <i class="fas fa-th-large pointer " [ngClass]="activeLayoutView == 1 ? 'blueColor': ''" (click)="layoutView(1)"></i>
+                </div>
+         </div>
+        <div class="row mr-2 ml-2">
+            <div class="col p-0">
+            <div class="row searchSection mr-0">
+                <div class="col-8 pt-1">                   
+                    <div class="sortBy"><span>{{'designEditor.emailEditor.sortbylbl' | translate}}</span>
+                        <span *ngIf="latest else oldest" class="parameter pointer" (click)="sortingTypeMethod(false)">{{'designEditor.emailEditor.latestlbl' | translate}}</span>
+                        <ng-template #oldest>                            
+                            <span class="parameter pointer" (click)="sortingTypeMethod(true);">{{'designEditor.emailEditor.oldestlbl' | translate}}</span>
+                        </ng-template>
+                    </div>
+                </div>
+                <div class="col p-0 pt-2 mr-3">
+                    <div class="input-group searchBox">
+                        <input type="text" id="searchTempalteByName" autocomplete="off" class="form-control shadow-none"
+                        placeholder="{{'designEditor.emailEditor.searchTemplates' | translate}}" (keyup)="searchTemplate($event)"/>
+                        <div class="input-group-append">
+                            <i class="fa fa-search input-group-text pointer"></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="text-right p-0 mt-2" *ngIf="isTemplateLibraryMode && !gridView">                   
+                    <button type="button" class="btn buttonCss shadow-none btnDanger offset-R-7" *ngIf="!isDefaultStorageBEE" [disabled]="isDeleteEnable" (click)="deleteMySaveTemplateS3();">{{'designEditor.emailEditor.deleteBtn' | translate}}</button>
+                </div>
+            </div>
+         </div>
+            <div class="w-100"></div>
+         <ul class="tab-list pl-0" *ngIf="!isTemplateLibraryMode">
+            <li class="pl-0 pb-1 pr-0" [ngClass]="isPreTemplate ? 'active': ''"  (click)="switchLink($event);isTemplateType=0;">              
+              <button class="pl-0 pr-0" value="0">{{'designEditor.emailEditor.prebuiltTemplateslbl' | translate}}</button>
+            </li>
+            <li [ngClass]="!isPreTemplate ? 'active': ''" *ngIf="!isDefaultStorageBEE" class="pb-1" value="1" (click)="switchLink($event);isTemplateType=1;">              
+              <button class="" value="1"> {{'designEditor.emailEditor.mytemplateslbl' | translate}}</button>
+            </li>
+          </ul>
+         <div class="pl-0 pr-2 w-100" *ngIf="!isTemplateEditMode">
+            <div class="row" *ngIf="gridView else listView">
+                <div class="col-3 relative pointer" *ngFor="let item of loadTemplates; let i = index" id="column-{{item.uuid}}" (mouseover)="getThumbnailView(item.thumbnail_large,item.thumbnail);" (click)="getThumbnailId(item.thumbnail_large,item.thumbnail,item.uuid,i); tempId = item.uuid; selectedItem = i;">
+                    <div class="card m-1 p-1 mb-3 col thumbnailHover" [ngClass]="selectedItem == i? 'active' : '' " id="{{item.uuid}}" [attr.data-thumnail]="item.thumbnail_large" style="height: 250px;">
+                        <div class="d-none" [attr.data-tags]="">{{item.tags}}</div>
+                        <div class="imgIcon mt-2">
+                            <img src="{{item.thumbnail}}" class="card-img-top" alt="...">             
+                        </div>                    
+                        <div class="card-body"></div>
+                        <h5 class="card-title font-small text-center smallLabel">                            
+                            <p class="m-0 p-0 smallLabel" *ngIf="!isDefaultStorageBEE else s3Title">
+                                <span>{{item.uuid}}</span></p>
+                            <p class="text-center m-0 p-0">                               
+                                <span class="text-decoration-none veiwDescList blueColor defaultPointer" ngbPopover="{{item.description}}" triggers="mouseenter:mouseleave">{{'designEditor.emailEditor.viewDescriptionlbl' | translate}}</span>
+                            </p>
+                            <ng-template #s3Title>
+                                <span>{{item.title}}</span>
+                            </ng-template>
+                        </h5>
+                        
+
+                    </div>  
+                    <div class="overlayPopup d-none" *ngIf="isTemplateLibraryMode" [ngClass]="selectedItem == i? 'd-flex' : 'd-none'">
+                        <i class="far fa-pen mr-2 pr-2 blueColor pointer" (click)="getThumbnailId(item.thumbnail_large,item.thumbnail,item.uuid,i); tempId = item.uuid; selectedItem = i; openPreviewModal();"></i>
+                       <i class="far fa-trash-alt redColor pointer" (click)="deleteMySaveTemplateS3(item.uuid)"></i>
+                    </div>                                  
+                </div>   
+            </div>
+            <ng-template #listView>
+                <table class="table table-striped customTableStyle" >
+                    <thead>
+                    <tr>
+                      <th scope="col" class="">
+                        <input type="checkbox" class="mr-3" id="temp_checkMultiple" (click)="multiDeleteTemplate($event,paginateData);">                                          
+                          {{'designEditor.emailEditor.templateNamelbl' | translate}}                         
+                      </th>                      
+                      <th scope="col">{{'designEditor.emailEditor.createdBylbl' | translate}}</th>
+                      <th scope="col">{{'designEditor.emailEditor.lastUsedOnlbl' | translate}}</th>
+                      <th scope="col">{{'designEditor.emailEditor.modifiedOnlbl' | translate}}</th>
+                      <th scope="col">{{'designEditor.emailEditor.actionslbl' | translate}}</th>
+                    </tr>
+                    </thead>
+                    <tbody class="scrollTable">
+                    <tr *ngFor="let item of paginateData; let i = index;" (mouseover)="getThumbnailView(item.thumbnail_large,item.thumbnail);" >
+                      <td scope="row">
+                          <p class="mediumLabel mb-0">
+                          <input type="checkbox" id="temp_{{ item.uuid}}" name="{{item.uuid}}" [checked]="isMultidelete ? true : false" class="mr-3" (click)="deleteTemplateS3(item.uuid,$event)">
+                          <label class="mb-0 smallLabel">{{ item.title}}</label></p>                 
+                          <span class="text-decoration-none veiwDesc blueColor defaultPointer" container="body" ngbPopover="{{item.description}}" triggers="mouseenter:mouseleave">{{'designEditor.emailEditor.viewDescriptionlbl' | translate}}</span>
+                          
+                      </td>
+                      <td>
+                        {{ item.userName }}
+                      </td>
+                      <td>{{ item.lastUsedOn}}</td>
+                      <td>{{ item.modifiedDate }}</td>
+                      <td class="text-center">
+                        <i class="fad fa-pen mr-4 pr-2 blueColor pointer" (click)="getThumbnailId(item.thumbnail_large,item.thumbnail,item.uuid,i); tempId = item.uuid; selectedItem = i; openPreviewModal();"></i>
+                          <!-- <label class="smallLabel blueColor pr-2 mr-2 pointer" (click)="getThumbnailId(item.thumbnail_large,item.thumbnail,item.uuid,i); tempId = item.uuid; selectedItem = i; openPreviewModal()">Edit</label> -->
+                      </td>
+                    </tr>
+                    </tbody>
+                  </table>
+                  <div class="d-flex justify-content-between p-2 float-right">
+                    
+                    <label class="mr-2 mt-2">{{'designEditor.emailEditor.showinglbl' | translate}} {{page}} - {{pageSize}} {{'designEditor.emailEditor.oflbl' | translate}} {{collectionSize}}</label>
+                    <ngb-pagination [collectionSize]="collectionSize" [pageSize]="pageSize" [maxSize]="5" [rotate]="true" [(page)]="page" (pageChange)="getPaginateData();" [boundaryLinks]="true" aria-label="Default pagination" class="d-flex justify-content-end pagination-rounded-flat pagination-success"></ngb-pagination>
+                  </div>
+            </ng-template>   
+        </div>
+        
+        </div>
+    </div>
+     <div class="col preview-area">
+        <div class="row pl-3 pr-3">
+            <div class="col mt-4">                
+                <img class="mx-auto img-fluid rounded"  src="{{defaultPreview}}" width="100%" height="100%">
+            </div>
+        </div>
+     </div>    
+ </div>
+
+
+ 
+</div><!-- End -->
+
+
+<ng-template #previewTemplate>    
+    <div class="col-12 mt-2 mr-1 actual-preview mx-auto">
+        <app-failsafe (updatePreviewObj)='loadSavedChannel($event)' *ngIf="!isTemplateLibraryMode"></app-failsafe>
+    <div class="row">
+        <div class="col tempreviwe-name p-1 pl-3 mt-1">
+            <span *ngIf="!isTemplateLibraryMode">{{'designEditor.emailEditor.templatePreviewlbl' | translate}} {{'websiteCartAbandonmentLbl' | translate}}</span>
+            <button type="button" class="btn-close close pull-right" aria-label="Close" (click)="backToTemplateView();">
+                <span aria-hidden="true" class="visually-hidden">&times;</span>
+              </button>
+        </div>               
+      </div>
+        <div class="row">
+            <div class="col p-0 mt-2">
+                <ul class="inline-tab pl-2">
+                    <li class="inline" [ngClass]="!isMobileView ? 'active' : ''" (click)="getDeviceView('Desktop')"><i class="fa fa-desktop"></i>&nbsp;{{'designEditor.emailEditor.desktoplbl' | translate}}</li>
+                    <li class="inline" [ngClass]="isMobileView ? 'active' : ''" (click)="getDeviceView('mobile')"><i class="fa fa-mobile"></i>&nbsp;{{'designEditor.emailEditor.mobilelbl' | translate}}</li>
+                </ul>                
+            </div>
+        </div>  
+        <!-- isMobileView = false = deskTop view -->
+        <!-- isMobileView = true = Mobile view -->
+        <!-- isplayload = true = saved but not finalize -->
+        <!-- isplayload = false = editmode -->
+        <!-- Desktop view -->
+        <div class="mx-auto text-center" *ngIf="!isMobileView ? 'col-6' : 'col-3' "> 
+            <div class="row" *ngIf="!isMobileView && isPayload">
+                <div class="col bg-light text-dark border p-1 ml-3 mr-3 mb-1 payload" *ngIf="_object.keys(payloadSavingJson).length > 0;">
+                    <div class="col text-left" >
+                        <label><b>{{'designEditor.emailEditor.fromlbl' | translate}}</b> <span class="ml-3 font-light"> {{vendorDesc}}</span></label>                    
+                    </div>
+                    <div class="col text-left">
+                   
+                    <label><b>{{'designEditor.emailEditor.subjectlbl' | translate}}</b> <span class="ml-3 font-light" [innerHTML]="subject | sanitizeHtml"></span></label>
+                    </div>
+                    <div class="col text-left">
+                        
+                        <label><b>{{'designEditor.emailEditor.preheaderlbl' | translate}} </b><span class="ml-3 font-light" [innerHTML]="preHeader | sanitizeHtml"></span></label>
+                    </div>                    
+                </div>            
+            </div> 
+        </div>           
+        <div class="row">
+            <div class="mx-auto text-center" [ngClass]="!isMobileView ? 'col-8' : 'col-3' ">  
+                <div class="row row-justify" *ngIf="isMobileView && isPayload">
+                    <div class="col-12 bg-light text-dark border p-1 ml-3 mr-3 mb-1 payload" *ngIf="_object.keys(payloadSavingJson).length > 0;">
+                        <div class="col text-left" >
+                            <label><b>{{'designEditor.emailEditor.fromlbl' | translate}}</b> <span class="ml-3 font-light"> {{vendorDesc}}</span></label>                    
+                        </div>
+                        <div class="col text-left">
+                        <label><b>{{'designEditor.emailEditor.subjectlbl' | translate}}</b> <span class="ml-3 font-light m-view-subject" [innerHTML]="subject | sanitizeHtml"></span></label>
+                        </div>
+                        <div class="col text-left">
+                            <label><b>{{'designEditor.emailEditor.preheaderlbl' | translate}} </b><span class="ml-3 font-light m-view-subject" [innerHTML]="preHeader | sanitizeHtml"></span></label>
+                        </div>                    
+                    </div>            
+                </div>
+                <ng-container *ngIf="isTemplateEditMode else imgThumbnail">
+                    <div class="row row-justify"><iframe class="" [ngClass]="!isMobileView ? '' : 'mobileView'" id="thumbnailContent" allowfullscreen>
+                    </iframe></div>                   
+                </ng-container>                                
+                <ng-template #imgThumbnail>
+                    <ng-container *ngIf="!isMobileView else imgThumbnailMobile">
+                        <img class="mx-auto img-fluid rounded" src="{{imgThumbnailView}}" width="100%" height="100%">
+                    </ng-container>                    
+                </ng-template>
+                <ng-template #imgThumbnailMobile>
+                    <img class="mx-auto img-fluid rounded" src="{{imgThumbnailMobileView}}" width="100%" height="100%">
+                </ng-template>
+            </div>
+            <ng-template #mobile>
+                <div class="mobileV">
+                    <div class="col-3 mx-auto text-center overflow-auto mt-5 fitOnMobile">   
+                        <!-- Mobile view -->
+                        <div class="row mt-1" *ngIf="isMobileView && isPayload">
+                            <div class="col bg-light text-dark border p-1 ml-3 mr-3 mb-1" *ngIf="_object.keys(payloadSavingJson).length > 0">
+                                <div class="col text-left">
+                                    <label><b>{{'designEditor.emailEditor.fromlbl' | translate}}</b> <span class="ml-2 font-light"> {{vendorDesc}}</span></label>                    
+                                </div>
+                                <div class="col text-left">
+                                  <label><b>{{'designEditor.emailEditor.subjectlbl' | translate}}</b> <span class="ml-2 font-light"> {{subject}}</span></label>
+                                 </div>
+                                 <div class="col text-left">
+                                    <label><b>{{'designEditor.emailEditor.preheaderlbl' | translate}} </b><span class="ml-2 font-light"> {{preHeader}}</span></label>
+                                 </div>                    
+                            </div>
+                        </div>        
+                                      
+                        <img class="mx-auto img-fluid rounded"  src="{{imgThumbnailMobileView}}" width="100%" height="100%">
+                    </div>
+                 </div>
+            </ng-template>
+          
+        </div>
+    </div>
+</ng-template>

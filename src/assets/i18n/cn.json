@@ -1,0 +1,28 @@
+{
+    "en": "English",
+    "currentTheme": "ltr",
+    "chinese": "中国人",
+    "title": "Real-time CDP",
+    "cancel": "Cancel",
+    "close": "Close",
+    "continue": "Continue",
+    "change": "Change",
+    "save": "Save",
+    "app": "App",
+    "or": "Or",
+    "in": "in",
+    "more": "More",
+    "showLess": "Show Less",
+    "buttonLabels": {
+
+    },
+    "journeySetUp": {
+        "journeyName": "旅程名称"
+    },
+    "workbench": {
+        
+    },
+    "designPage": {
+        
+    }
+}

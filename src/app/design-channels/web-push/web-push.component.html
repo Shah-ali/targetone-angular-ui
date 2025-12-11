@@ -1,0 +1,332 @@
+<app-channels></app-channels>
+<div class="col-12 webPushContainer">
+    <div class="col-12 p-0 text-right mb-3">
+        <button class="btn buttonStyle buttonCssStyle shadow-none" (click)="saveWebPush()"
+        [disabled]="promoExecutedOrRunning" [ngStyle]="promoExecutedOrRunning ? {'cursor':'default'} : {'cursor':'pointer'}">{{'save' | translate}}</button>
+    </div>
+    <div class="innerContainer d-flex col-12 p-0">
+        
+        <div class="notificationInputs mr-3">
+            <div class="webPushDetails">
+                <div class="col-12 p-0 d-flex">
+                    <div class="col-6 title p-0">{{'webPushComponent.specifyWebPushDetails' | translate}}</div>
+                    <div class="col-6 p-0 text-right" *ngIf="webTextCollapsed">
+                        <button class="btn buttonStyle buttonCssStyle shadow-none" (click)="webTextCollapsed = false">
+                            {{'designEditor.editBtn' | translate}}
+                        </button>
+                    </div>
+                </div>
+                <div class="innerSection mt-2" [ngStyle]="webTextCollapsed ? {'display':'none'} : {'display':'block'}">
+                    <div class="webTitle">
+                        <div><label class="titleStyle">{{'designEditor.mobilePushComponent.title' | translate}}</label></div>
+                        <div class="titleDiv position-relative">
+                            <div [attr.contenteditable]="true" class="webTitleStyle" 
+                                id="{{'web_title_' + currentSplitId}}" name="webTitle"
+                                (keyup)="getCaretIndex($event, 'title','webTitleStyle');" 
+                                (click)="getCaretIndex($event, 'title','webTitleStyle');"
+                                ngDefaultControl isNative="true" perLine="7" showPreview="false"
+                                spellcheck="false" (paste)="getCaretIndex($event, 'title','webTitleStyle');" 
+                                (keydown.Tab)="getCaretIndex($event, 'title','webTitleStyle');">
+                            </div>
+                            <emoji-mart class="emoji-mart-webPush" [custom]="customEmojis" *ngIf="webTitleEmoji"
+                                (emojiSelect)="addEmojiItem($event, 'title')" title="{{'i18nObject.pickyourEmojiTooltip' | translate}}" [showPreview]="false" 
+                                [enableSearch]="false" [enableFrequentEmojiSort]="true" [showSingleCategory]="true" 
+                                [include]="['custom']" emoji="point_up" [i18n]="i18nObject" [emojiTooltip]="false">
+                            </emoji-mart>
+
+                            <div class="d-inline iconContainer">
+                                <i class="far fa-grin" (click)="webTitleEmoji = !webTitleEmoji"></i>
+                                <span class="fal fa-plus" (click)="openOfferSliderPopup($event, 'title','webTitleStyle');"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="webMessage mt-2">
+                        <div><label class="titleStyle">{{'designEditor.mobilePushComponent.message' | translate}}</label></div>
+                        <div class="msgDiv position-relative">
+                            <div [attr.contenteditable]="true" class="webMsgStyle" 
+                                id="{{'web_message_' + currentSplitId}}" name="webMessage"
+                                (keyup)="getCaretIndex($event, 'message','webMsgStyle');" 
+                                (click)="getCaretIndex($event, 'message','webMsgStyle');"
+                                ngDefaultControl isNative="true" perLine="7" showPreview="false"
+                                spellcheck="false" (paste)="getCaretIndex($event, 'message','webMsgStyle');" 
+                                (keydown.Tab)="getCaretIndex($event, 'message','webMsgStyle');">
+                            </div>
+                            <emoji-mart class="emoji-mart-webPush emojiPosition" [custom]="customEmojis" *ngIf="webMsgEmoji"
+                                (emojiSelect)="addEmojiItem($event, 'message')" title="{{'i18nObject.pickyourEmojiTooltip' | translate}}" [showPreview]="false" 
+                                [enableSearch]="false" [enableFrequentEmojiSort]="true" [showSingleCategory]="true" 
+                                [include]="['custom']" emoji="point_up" [i18n]="i18nObject" [emojiTooltip]="false">
+                            </emoji-mart>
+
+                            <div class="d-inline iconContainer">
+                                <i class="far fa-grin" (click)="webMsgEmoji = !webMsgEmoji"></i>
+                                <span class="fal fa-plus" (click)="openOfferSliderPopup($event, 'title','webMsgStyle');"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 p-0 mt-2">
+                        <div><label class="titleStyle">{{'webPushComponent.iconLbl' | translate}}</label></div>
+                        <div><input type="text" class="shadow-none" [(ngModel)]="iconUrl"/></div>
+                        <div class="textInfo">{{'webPushComponent.sizeIconValidationFormat' | translate}}</div>
+                    </div>
+                    <div class="col-12 p-0 mt-2">
+                        <div><label class="titleStyle">{{'webPushComponent.calltoactionlbl' | translate}}</label></div>
+                        <div><input type="text" class="shadow-none" [(ngModel)]="callToAction"/></div>
+                        <div class="textInfo">{{'webPushComponent.specifytheURLlbl' | translate}}</div>
+                    </div>
+                    <div class="col-12 p-0 text-right mt-3" *ngIf="!webTextCollapsed">
+                        <button class="btn buttonStyle buttonCssStyle shadow-none" (click)="webTextCollapsed = true">
+                            {{'designEditor.doneBtn' | translate}}
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="buttonsSection mt-3">
+                <div>
+                    <div class="toggleButton d-inline-block p-0">
+                        <label class="switch">
+                            <input type="checkbox" id="wp_buttons"
+                            (click)="showButtonSection()" [checked]="webPushButtonSection === true">
+                            <span class="slider round"></span>
+                        </label>
+                    </div>
+                    <div class="title p-0 d-inline-block ml-3">{{'webPushComponent.buttonslbl' | translate}}</div>
+                </div>
+                <div class="buttonContainer" *ngIf="webPushButtonSection">
+                    <div class="col-12 p-0 mt-2">
+                        <div class="col-12 title p-0">{{'webPushComponent.button1lbl' | translate}}</div>
+                        <div class="col-12 p-0 d-flex mt-1">
+                            <div class="col-5 p-0">
+                                <div><label class="titleStyle">{{'designEditor.mobilePushComponent.title' | translate}}</label></div>
+                                <div><input type="text" [(ngModel)]="buttonOne" maxlength="10"/></div>
+                            </div>
+                            <div class="col-5 p-0">
+                                <div><label class="titleStyle">{{'webPushComponent.linklbl' | translate}}</label></div>
+                                <div><input type="text" [(ngModel)]="btnLinkOne"/></div>
+                            </div>
+                            <div class="col-2 p-0" *ngIf="!showSecondButton">
+                                <button class="buttonStyle shadow-none btnPosition" (click)="showSecondButton = true">
+                                    <i class="far fa-plus"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 p-0 mt-2" *ngIf="showSecondButton">
+                        <div class="col-12 title p-0">{{'webPushComponent.button2lbl' | translate}} </div>
+                        <div class="col-12 p-0 d-flex mt-1">
+                            <div class="col-5 p-0">
+                                <div><label class="titleStyle">{{'designEditor.mobilePushComponent.title' | translate}}</label></div>
+                                <div><input type="text" [(ngModel)]="buttonTwo" maxlength="10"/></div>
+                            </div>
+                            <div class="col-5 p-0">
+                                <div><label class="titleStyle">{{'webPushComponent.linklbl' | translate}}</label></div>
+                                <div><input type="text" [(ngModel)]="btnLinkTwo"/></div>
+                            </div>
+                            <div class="col-2 p-0">
+                                <button class="buttonStyle shadow-none btnPosition iconColor" 
+                                    (click)="showSecondButton = false; buttonTwo = ''; btnLinkTwo = ''">
+                                    <i class="far fa-trash-alt"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="richNotificationSection mt-3">
+                <div>
+                    <div class="toggleButton d-inline-block p-0">
+                        <label class="switch">
+                            <input type="checkbox" id="wp_richNotification"
+                            (click)="showRichNotification()" [checked]="webPushRichNotification === true">
+                            <span class="slider round"></span>
+                        </label>
+                    </div>
+                    <div class="title p-0 d-inline-block ml-3">{{'webPushComponent.richnotificationLbl' | translate}}</div>
+                </div>
+                <div class="richInnerContainer" *ngIf="webPushRichNotification">
+                    <div class="col-12 p-0 mt-2">
+                        <div><label class="titleStyle">{{'designEditor.mobilePushComponent.imageUrl' | translate}}</label></div>
+                        <div><input type="text" class="shadow-none" [(ngModel)]="imageUrl"/></div>
+                        <div class="textInfo">{{'designEditor.mobilePushComponent.urlInfo' | translate}}</div>
+                    </div>
+                </div>
+                <div class="col-12 p-0 mt-3">
+                    <input type="checkbox" class="outline-none" [(ngModel)]="autoHide" checked="autoHide = true"/>
+                    <span class="textInfo ml-2">{{'webPushComponent.notificationLblinfo' | translate}}</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Notification Preview starts here -->
+        <div class="notificationPreview">
+            <div class="col-12 text-center title p-0">{{'webPushComponent.notificationPreviewlbl' | translate}}</div>
+            <div class="chrome_windows_10 chromeBackground position-relative" *ngIf="browserSelected === browserList[0]">
+                <div class="innerDiv">
+                    <div *ngIf="webPushRichNotification && imageUrl !== '' && webPushExpanded"><img [attr.src]="imageUrl" class="rnImage"/></div>
+                    <div class="d-flex col-12 p-0">
+                        <div class="col-3 p-0" *ngIf="iconUrl !== ''"><img [attr.src]="iconUrl" class="iconImage"/></div>
+                        <div class="col-9 p-0" [ngClass]="{'col-12': iconUrl === ''}">
+                            <div class="previewTitle" [innerHTML]="webPushTitle || titleGoeshere" title="{{webPushTitle}}"></div>
+                            <div class="previewMsg" [innerHTML]="webPushMessage || messageGoesHere" title="{{webPushMessage}}"></div>
+                            <div class="placeholderTxt mt-1"><span>{{'webPushComponent.siteurllbl' | translate}}</span></div>
+                        </div>
+                    </div>
+                    <div class="d-flex col-12 p-0 mb-2 mt-2" *ngIf="webPushButtonSection && webPushExpanded">
+                        <div class="col-6 p-0" [ngClass]="{'col-12': showSecondButton === false}">
+                            <span class="previewBtn" [ngStyle]="showSecondButton ? {'width': '96%'} : {'width': '100%'}">{{buttonOne || 'webPushComponent.button1lbl' | translate}}</span>
+                        </div>
+                        <div class="col-6 p-0 text-right" *ngIf="showSecondButton">
+                            <span class="previewBtn">{{buttonTwo || 'webPushComponent.button2lbl' | translate}}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="chrome_windows chromeBackground position-relative" *ngIf="browserSelected === browserList[1]">
+                <div class="innerDiv">
+                    <div class="col-12 p-0 topStaticIcons text-right" *ngIf="webPushRichNotification && webPushExpanded">
+                        <i class="fas fa-cog fa-xs"></i>
+                        <i class="far fa-times fa-sm ml-2"></i>
+                    </div>
+                    <div *ngIf="webPushRichNotification && imageUrl !== '' && webPushExpanded"><img [attr.src]="imageUrl" class="rnImage"/></div>
+                    <div class="d-flex col-12 p-0 mb-1">
+                        <div class="col-3 p-0" *ngIf="iconUrl !== ''"><img [attr.src]="iconUrl" class="iconImage"/></div>
+                        <div class="col-7 p-0" 
+                        [ngClass]="{'col-12': (webPushRichNotification && iconUrl === '' && webPushExpanded), 
+                                    'col-9': (webPushRichNotification && iconUrl !== '' && webPushExpanded),
+                                    'col-10': (webPushCollapsed && iconUrl === '')}">
+                            <div class="previewTitle" [innerHTML]="webPushTitle || 'Title goes here'" title="{{webPushTitle}}"></div>
+                            <div class="previewMsg" [innerHTML]="webPushMessage || 'Message goes here'" title="{{webPushMessage}}"></div>
+                            <div class="placeholderTxt mt-1"><span>{{'webPushComponent.siteurllbl' | translate}}</span></div>
+                        </div>
+                        <div class="col-2 p-0 staticIcons position-relative" *ngIf="!webPushExpanded || !webPushRichNotification">
+                            <div class="position-absolute iconPosition">
+                                <i class="fas fa-cog fa-xs"></i>
+                                <i class="far fa-times fa-sm ml-2"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="d-flex col-12 p-0 mb-1 mt-1" *ngIf="webPushButtonSection && webPushExpanded">
+                        <div class="col-6 p-0" [ngClass]="{'col-12': showSecondButton === false}">
+                            <span class="previewBtn" [ngStyle]="showSecondButton ? {'width': '96%'} : {'width': '100%'}">{{buttonOne || 'webPushComponent.button1lbl' | translate}}</span>
+                        </div>
+                        <div class="col-6 p-0 text-right" *ngIf="showSecondButton">
+                            <span class="previewBtn">{{buttonTwo || 'webPushComponent.button2lbl' | translate}}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="chrome_mac chromeBackground position-relative" *ngIf="browserSelected === browserList[2]">
+                <div class="innerDiv">
+                    <div class="d-flex col-12 p-0">
+                        <div class="col-2 chromeIcon"><img src="../../../assets/images/chrome_icon.png"/></div>
+                        <div class="col-5 p-0 mt-2" [ngClass]="{'col-7': iconUrl === ''}">
+                            <div class="previewTitle" [innerHTML]="webPushTitle || 'webPushComponent.titlePlaceholder' | translate" title="{{webPushTitle}}"></div>
+                            <div class="previewMsg" [innerHTML]="webPushMessage || 'webPushComponent.messagePlaceholder' | translate" title="{{webPushMessage}}"></div>
+                            <div class="placeholderTxt mt-1"><span>{{'webPushComponent.siteurllbl' | translate}}</span></div>
+                        </div>
+                        <div class="col-2 p-0" *ngIf="iconUrl !== ''">
+                            <img [attr.src]="iconUrl" class="iconImage"/>
+                        </div>
+                        <div class="staticButtons col-3 d-flex p-0">
+                            <div class=""><span>{{'close' | translate}}</span></div>
+                            <div class=""><span>{{'settings' | translate}}</span></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="firefox_windows firefoxBackground position-relative" *ngIf="browserSelected === browserList[3]">
+                <div class="innerDiv">
+                    <div class="col-12 p-0 d-flex align-items-center">
+                        <div class="previewTitle col-11 p-0" [innerHTML]="webPushTitle || 'webPushComponent.titlePlaceholder' | translate" title="{{webPushTitle}}"></div>
+                        <div class="col-1 p-0 text-right"><i class="fa fa-times iconStyle fa-xs"></i></div>
+                    </div>
+                    <div class="d-flex col-12 p-0">
+                        <div class="col-3 p-0" *ngIf="iconUrl !== ''"><img [attr.src]="iconUrl" class="iconImage"/></div>
+                        <div class="col-9 p-0" [ngClass]="{'col-12': iconUrl === ''}">
+                            <div class="previewMsg" [innerHTML]="webPushMessage || 'webPushComponent.messagePlaceholder' | translate" title="{{webPushMessage}}"></div>
+                            <div class="placeholderTxt mt-1"><span>{{'webPushComponent.siteurllbl' | translate}}</span></div>
+                        </div>
+                    </div>
+                    <div class="position-relative"><i class="fas fa-cog fa-xs cogStyle"></i></div>
+                </div>
+            </div>
+            <div class="firefox_mac firefoxBackground position-relative" *ngIf="browserSelected === browserList[4]">
+                <div class="innerDiv">
+                    <div class="d-flex col-12 p-0">
+                        <div class="col-2 chromeIcon"><img src="../../../assets/images/firefox_icon.png"/></div>
+                        <div class="col-5 p-0 mt-2" [ngClass]="{'col-7': iconUrl === ''}">
+                            <div class="previewTitle" [innerHTML]="webPushTitle || 'webPushComponent.titlePlaceholder' | translate" title="{{webPushTitle}}"></div>
+                            <div class="previewMsg" [innerHTML]="webPushMessage || 'webPushComponent.messagePlaceholder' | translate" title="{{webPushMessage}}"></div>
+                            <div class="placeholderTxt mt-1"><span>{{'webPushComponent.siteurllbl' | translate}}</span></div>
+                        </div>
+                        <div class="col-2 p-0" *ngIf="iconUrl !== ''">
+                            <img [attr.src]="iconUrl" class="iconImage"/>
+                        </div>
+                        <div class="staticButtons col-3 d-flex p-0">
+                            <div class=""><span>{{'close' | translate}}</span></div>
+                            <div class=""><span>{{'settings' | translate}}</span></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="chrome_android" *ngIf="browserSelected === browserList[5]">
+                <div class="innerDiv">
+                    <div class="smartphone">
+                        <div class="content">
+                            <div class="col-12 p-0 iconPlacement">
+                                <img src="../../../assets/images/chrome_icon.png"/>
+                                <span class="chromeTxt">{{'chromelbl' | translate}}</span>
+                            </div>
+                            <div *ngIf="webPushRichNotification && imageUrl !== '' && webPushExpanded"><img [attr.src]="imageUrl" class="rnImage"/></div>
+                            <div class="d-flex col-12 p-0">
+                                <div class="col-3 p-0 mr-1" *ngIf="iconUrl !== ''"><img [attr.src]="iconUrl" class="iconImage"/></div>
+                                <div class="col-9 p-0" [ngClass]="{'col-12': iconUrl === ''}">
+                                    <div class="previewTitle" [innerHTML]="webPushTitle || 'webPushComponent.titlePlaceholder' | translate" title="{{webPushTitle}}"></div>
+                                    <div class="previewMsg" [innerHTML]="webPushMessage || 'webPushComponent.messagePlaceholder' | translate" title="{{webPushMessage}}"></div>
+                                </div>
+                            </div>
+                            <div class="col-12 p-0 text-right staticText">
+                                <span>{{'webPushComponent.stopNotificationlbl' | translate}}</span>
+                                <span class="ml-3">{{'webPushComponent.keepShowingLbl' | translate}}</span>
+                            </div>
+                            <div class="d-flex col-12 p-0 mb-2 mt-1" *ngIf="webPushButtonSection && webPushExpanded">
+                                <div class="col-6 p-0" [ngClass]="{'col-12': showSecondButton === false}">
+                                    <span class="previewBtn" [ngStyle]="showSecondButton ? {'width': '96%'} : {'width': '100%'}">{{buttonOne || 'webPushComponent.button1lbl' | translate}}</span>
+                                </div>
+                                <div class="col-6 p-0 text-right" *ngIf="showSecondButton">
+                                    <span class="previewBtn">{{buttonTwo || 'webPushComponent.button2lbl' | translate}}</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-12 p-0 text-center mt-4 expNCollapse" 
+                *ngIf="browserSelected === browserList[0] || browserSelected === browserList[1] || browserSelected === browserList[5]">
+                <div class="d-inline mr-3">
+                    <input type="radio" class="mr-2" [checked]="webPushCollapsed"
+                    (click)="webPushExpanded = false; webPushCollapsed = true"/>
+                    <span>{{'designEditor.mobilePushComponent.collapsed' | translate}}</span>
+                </div>
+                <div class="d-inline">
+                    <input type="radio" class="mr-2" [checked]="webPushExpanded"
+                    (click)="webPushCollapsed = false; webPushExpanded = true"/>
+                    <span>{{'designEditor.mobilePushComponent.expanded' | translate}}</span>
+                </div>
+            </div>
+            <div class="col-12 p-0 text-center mt-3">
+                <div class="d-inline col-3 p-0"><span class="textSize mr-2">{{'browserlbl' | translate}}:</span></div>
+                <select class="shadow-none browserListSelection col-9 p-0" [(ngModel)]="browserSelected">
+                    <option *ngFor="let item of browserList" [value]="item">{{ item }}</option>
+                </select>
+            </div>
+        </div>
+    </div>
+<!-- Offer Drawer Section -->
+<div class="customeOffers relative" *ngIf="offerDrawerSectionEnable" [ngClass]="offerDrawerSectionEnable ? 'slideIN':'slideOUT'">
+    <app-offers-drawer [dataFromParent]="modalRef" (onCloseOfferPopup)="onCloseOfferDrawer();" (offersAppendToInput)="finalOffersSelected($event);"></app-offers-drawer>
+</div>
+<!-- <div class="backdrop_offerSlider" *ngIf="backropOffersEnable"></div> -->
+

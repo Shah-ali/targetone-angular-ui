@@ -1,0 +1,112 @@
+<div class="modal-header">
+    <h5 class="modal-title col-6 align-items-left">
+      <span class="largeLable" id="configureMapsTitle">{{ 'stackedBarPlugin.configurestackedBar' | translate }}</span>
+    </h5>
+</div>
+<div class="modal-body d-flex">
+  <!-- Left Section -->
+  <div class="left-section">
+    <div id="sizeRangeCtr">
+      <input
+        id="sizeRange"
+        type="range"
+        class="custom-range"
+        [value]="selectedIndex"
+        min="0"
+        max="2"
+        step="1"
+        (input)="updateSizeRange($event)"
+      />
+      <div class="slider-labels d-flex justify-content-between px-1">
+        <span>S</span>
+        <span>M</span>
+        <span>L</span>
+      </div>
+    </div>
+
+    <!-- Rounded Corners -->
+    <div class="form-group custom-control custom-checkbox mt-3">
+      <input type="checkbox" class="custom-control-input" id="roundedCorners" [(ngModel)]="roundedCorners" />
+      <label class="custom-control-label smallLabel bold" for="roundedCorners">{{ 'stackedBarPlugin.roundedcorners' | translate }}</label>
+    </div>
+
+    <!-- Max Value and MergeTag -->
+    <div class="form-group d-flex justify-content-between mt-3">
+      <div class="">
+        <label class="smallLabel bold">{{ 'stackedBarPlugin.maxValue' | translate }}<span class="required-asterisk">*</span></label>
+        <div class="max-value">
+          <input type="text" class="form-control" [(ngModel)]="maxValue" />
+          <div class="mergetagCompoent">
+            <app-merge-tag-copy></app-merge-tag-copy>
+          </div>
+        </div>        
+      </div>
+    </div>
+
+    <!-- Current Value -->
+    <div class="form-group">
+      <label class="smallLabel bold">{{ 'stackedBarPlugin.currentValue' | translate }}<span class="required-asterisk">*</span></label>
+      <input type="text" class="form-control" [(ngModel)]="currentValue" />
+    </div>
+
+    <!-- Enable Labels & Interval Scale Checkbox -->
+    <div class="form-group custom-control custom-checkbox mt-3">
+      <input type="checkbox" class="custom-control-input" id="enableLabels" [(ngModel)]="enableIntervals" />
+      <label class="custom-control-label smallLabel bold" for="enableLabels">{{ 'stackedBarPlugin.enableLabelsIntervalScale' | translate }}</label>
+    </div>
+
+    <!-- No of Intervals Input (Shown only if checkbox is checked) -->
+    <div class="form-group mt-3" *ngIf="enableIntervals">
+      <label class="smallLabel bold">{{ 'stackedBarPlugin.noOfIntervals' | translate }}</label>
+      <input type="text" class="form-control" [(ngModel)]="intervals" />
+    </div>
+    <!-- Colors -->
+    <div class="form-group d-flex mt-4">
+      <div class="backgroungClr">
+        <label class="smallLabel bold">{{ 'stackedBarPlugin.backgroundColour' | translate }}</label><br />
+        <input type="color" [(ngModel)]="bgColor" />
+      </div>
+      <div class="filledClr">
+        <label class="smallLabel bold">{{ 'stackedBarPlugin.filledColour' | translate }}</label><br />
+        <input type="color" [(ngModel)]="fillColor" />
+      </div>
+    </div>
+  </div>
+
+    <!-- Vertical Separator -->
+    <div class="separator"></div>
+
+  <!-- Right Section (Preview) -->
+  <div class="preview-box d-flex align-items-center justify-content-center">
+    <div class="progress-container">
+      <div id="progress-bar-wrapper"  #progressWrapper
+       class="progress-bar-wrapper"
+        [ngStyle]="{
+        height: sizeHeights[selectedSize] || '15px'
+         }"
+        [ngClass]="{ 'rounded-pill': roundedCorners }">
+        <div
+          class="progress-filled"
+          [ngStyle]="{
+            width: (currentValue / maxValue) * 100 + '%',
+            backgroundColor: fillColor
+          }"
+        ></div>
+        <div
+          class="progress-background"
+          [ngStyle]="{
+            backgroundColor: bgColor
+          }"
+        ></div>
+      </div>     
+    </div>
+  </div>
+</div>
+<div class="modal-footer d-flex justify-content-right">
+  <button type="button" class="btn buttonCss shadow-none m-0 mr-1" id="closeBtn" (click)="onClose()">
+    {{ 'close' | translate }}
+  </button>
+  <button type="submit" class="btn buttonPrimaryCss shadow-none m-0"  (click)="insertData()">
+    {{ 'done' | translate }}
+  </button>
+</div>

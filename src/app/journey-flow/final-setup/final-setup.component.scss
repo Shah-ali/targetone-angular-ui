@@ -1,0 +1,65 @@
+@import '../../../custom-style.scss';
+.buttonCss {
+  @include secondaryBttn;
+}
+.buttonPrimaryCss {
+  @include primaryBttn;
+}
+.finalSetupConatiner {
+    border-radius: 10px;
+    .activateSimulate {
+        top: -77px;
+        right: 69px;
+    }
+	.timeZoneGtmtext{
+		position: absolute;
+		z-index: 99;
+		top: 12px;
+		right: -70px;
+		font-size: 13px;
+		font-weight: 500;
+    }
+    .setupDetails {
+        background: #fff;
+        border-radius: 5px;
+        padding: 30px;
+        margin-top: 10px; 
+        div {
+            margin-bottom: 10px;
+        }
+        .inputTags {
+            border: 1px solid #ccc;
+            margin-left: 15px;
+            width: 48%;
+            min-height: 70px;
+            border: 1px solid #E9E9E9; 
+            border-radius: 8px;
+            span {
+                margin-left: 10px;
+                font-size: 12px; 
+                padding: 5px; 
+                border-radius: 3px;
+                color: #fff;
+                .fa-times {
+                    cursor: pointer;
+                }
+            }
+            #journey-tags {
+                display: inline-block;
+                border: none;
+                border-radius: 0;
+                border-bottom: 1px solid #E9E9E9;
+                font-weight: 100;
+                padding-left: 0;
+                margin-left: 10px;
+                width: 110px;
+            }
+        }
+        .fa-calendar-alt {
+            top: 12px;
+            right: 25px;
+            color: #ccc;
+            cursor: pointer;
+        }
+    }
+}

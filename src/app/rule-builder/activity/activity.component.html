@@ -1,0 +1,48 @@
+<div class="ruleSummaryDetails">
+  <h2>List of activity rules</h2>
+  <div class="alignButton">
+    <button type="button" (click)="createRuleBuilder()" class="btn buttonCss shadow-none m-0" id="proceedBtn">+ Create activity rule</button>
+  </div>
+</div>
+
+<div style="height: calc(100vh - 160px)">
+  <ag-grid-angular
+    style="width: 100%; height: 100%"
+    [headerHeight]="36"
+    class="ag-theme-alpine"
+    [rowData]="rowData"
+    [getRowClass]="getRowClass"
+    [defaultColDef]="defaultColDef"
+    (firstDataRendered)="onFirstDataRendered($event)"
+    [columnDefs]="columnDefs"
+    [tooltipMouseTrack]="true"
+    [paginationAutoPageSize]="true"
+    [pagination]="true"
+    [localeText]="localeText"
+    (cellClicked)="openActionDetailsMenu($event)">
+  </ag-grid-angular>
+</div>
+
+<div id="actionDetailsCtr" class="actionDetailsCtr hide">
+  <div class="detailsMenuItem">
+    <span class="menuItemDesc">Activate</span>
+  </div>
+  <div class="detailsMenuItem">
+    <span class="menuItemDesc">Edit</span>
+  </div>
+  <div class="detailsMenuItem">
+    <span class="menuItemDesc">Delete</span>
+  </div>
+  <div class="detailsMenuItem">
+    <span class="menuItemDesc">Extend</span>
+  </div>
+</div>
+
+<div id="dataSetDetailsCtr" class="dataSetDetailsCtr hide">
+  <div class="detailsMenuItem" style="opacity: 0.5; cursor: default">
+    <span class="menuItemDesc">ttttt</span>
+  </div>
+  <div class="detailsMenuItem">
+    <span class="menuItemDesc">aaaaa</span>
+  </div>
+</div>

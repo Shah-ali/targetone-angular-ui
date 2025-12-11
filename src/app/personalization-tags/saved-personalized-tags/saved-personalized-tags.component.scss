@@ -1,0 +1,362 @@
+@import '../../../custom-style.scss';
+.buttonCss {
+  @include secondaryBttn;
+  line-height: 1.5;
+}
+.buleBtn {
+  background-color: #3366ff;
+  color: #fff;
+}
+.buttonPrimaryCss {
+  @include primaryBttn;
+}
+.responsiveIcon {
+  max-width: 100%;
+  width: 9%;
+}
+.personalization-tags-section {
+  .searchSection {
+    .fa-search {
+      position: absolute;
+      top: 26%;
+      left: 8px;
+    }
+    .barIcon {
+      background-image: url(../../../assets/pTagDash_JSON/icon/icon_bar.svg);
+      background-size: 12px;
+      background-position: 5px center;
+      background-repeat: no-repeat;
+      padding-left: 22px;
+    }
+    .searchPTagsBtn {
+      padding-left: 30px;
+      font-size: 12px;
+    }
+  }
+  .gridListBtn {
+    padding: 10px;
+    max-width: 98%;
+
+    .btn {
+      font-weight: 400;
+      padding: 0.375rem 0.75rem;
+      font-size: 12px;
+      line-height: 1.5;
+      border-radius: 0.25rem;
+      margin-right: 10px;
+    }
+  }
+
+  .truncateTextPname {
+    max-width: 250px;
+    cursor: pointer;
+    white-space: nowrap; /* Ensure text stays on one line */
+    overflow: hidden; /* Hide overflowed text */
+    text-overflow: ellipsis; /* Show '...' when text overflows */
+    display: block; /* Ensures it behaves properly */
+    text-align: left;
+  }
+  .savedTagBlock {
+    width: 98%;
+    /* height: calc(100vh - 204px); */
+    background: #fff;
+    flex-wrap: wrap;
+    overflow-y: auto;
+
+    .card {
+      width: 18%;
+      padding: 10px 15px;
+      margin: 9px;
+      background: #fff;
+      border-radius: 3px;
+      border: 1px solid #cdcdcd;
+      border-radius: 10px;
+      .tagIcon {
+        background-image: url(../../../assets/pTagDash_JSON/icon/icon_tag.svg);
+        background-size: 12px;
+        background-position: 3px 8px;
+        background-repeat: no-repeat;
+        padding-left: 22px;
+      }
+      .barIcon {
+        background-image: url(../../../assets/pTagDash_JSON/icon/icon_bar.svg);
+        background-size: 12px;
+        background-position: 5px center;
+        background-repeat: no-repeat;
+        padding-left: 22px;
+      }
+      .createdByIcon {
+        background-image: url(../../../assets/pTagDash_JSON/icon/created_by.svg);
+        background-size: 15px;
+        background-position: 2px center;
+        background-repeat: no-repeat;
+        padding-left: 22px;
+      }
+      .campaignIcon {
+        background-image: url(../../../assets/pTagDash_JSON/icon/icon_campaign.svg);
+        background-size: 12px;
+        background-position: 5px center;
+        background-repeat: no-repeat;
+        padding-left: 22px;
+      }
+      .viewPtagIcon {
+        background-image: url(../../../assets/pTagDash_JSON/icon/view_ptag.svg);
+        background-position: 5px center;
+        background-repeat: no-repeat;
+        padding-left: 22px;
+      }
+      .deletePtagIcon {
+        background-image: url(../../../assets/pTagDash_JSON/icon/delete_ptag.svg);
+        background-position: 5px center;
+        background-repeat: no-repeat;
+        padding-left: 22px;
+      }
+      .truncateTextCampaignAssoct {
+        display: inline-flex;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        width: 111px;
+        cursor: pointer;
+      }
+      .mttnIcons {
+        text-align: right;
+        cursor: pointer;
+
+        .fa-star {
+          color: #c29a2b;
+
+          &:hover {
+            transform: scale(1.5);
+          }
+        }
+      }
+
+      .tag-thumbnail {
+        height: 206px;
+        img {
+          max-width: 100%;
+          max-height: 100%;
+          object-fit: contain;
+        }
+      }
+      .tagName {
+        font-size: 14px;
+        color: #000;
+        font-weight: bold;
+        text-align: left;
+      }
+
+      .viewTags {
+        text-align: left;
+
+        label {
+          font-size: 12px;
+          color: #0f83ff;
+          cursor: pointer;
+        }
+
+        &.disabled {
+          pointer-events: none;
+          opacity: 0.5;
+        }
+      }
+
+      .toggleEnableDisable {
+        text-align: left;
+        color: #026fe9;
+        display: flex;
+        justify-content: center;
+
+        .publishedOn {
+          cursor: pointer;
+        }
+
+        div:last-child {
+          text-align: right;
+          span {
+            font-size: 10px;
+            padding: 4px 8px;
+            font-weight: 600;
+
+            &.published {
+              color: #026fe9;
+              background-color: #ecf5ff;
+            }
+
+            &.draft {
+              color: #db880e;
+              background-color: #fff6e7;
+            }
+          }
+        }
+      }
+
+      .createByAndDate {
+        h5 {
+          font-size: 14px;
+          font-weight: 500;
+          color: #333;
+          padding: 0;
+        }
+
+        span {
+          font-size: 11px;
+          color: #333;
+          opacity: 0.7;
+        }
+      }
+
+      .pTagDashCardBttn {
+        button {
+          width: 100%;
+        }
+        .deleteBttnCss {
+          border: 1px solid #f4312a;
+          color: #f4312a;
+        }
+      }
+      // Custom Dropdown
+      .dropdownngb-style {
+        > div {
+          min-width: 100px;
+        }
+        .mediumFont {
+          font-size: 0.75rem;
+          font-weight: 500;
+        }
+        .custom-dropdown {
+          &.dropdown-toggle {
+            &::after {
+              display: none;
+            }
+
+            color: #000;
+          }
+        }
+      }
+    }
+  }
+
+  // Skeleton Loader
+  .tag-thumbnail {
+    position: relative;
+    width: 100%;
+    height: 80px; /* Adjust based on your design */
+    background: linear-gradient(90deg, #f5f5f5 25%, #efefef 50%, #f5f5f5 75%);
+    background-size: 200% 100%;
+    animation: skeleton-loading 1.5s infinite linear;
+    overflow: hidden;
+    border-radius: 5px; /* Optional: Add rounded corners */
+  }
+
+  @keyframes skeleton-loading {
+    0% {
+      background-position: 200% 0;
+    }
+    100% {
+      background-position: -200% 0;
+    }
+  }
+
+  /* Remove the skeleton background when the image loads */
+  .tag-thumbnail:has(img.loaded) {
+    background: none;
+  }
+
+  .tag-thumbnail img {
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    transition: opacity 0.3s ease-in-out;
+  }
+
+  .tag-thumbnail img.loaded {
+    opacity: 1;
+  }
+}
+
+.tagURLSection {
+  hr {
+    color: #6f6f6f;
+  }
+  > div {
+    display: flex;
+    font-size: 14px;
+    font-weight: 500;
+    padding: 10px 0;
+    border-bottom: 1px solid #eee;
+    align-items: center;
+    word-break: break-all;
+
+    &:last-child {
+      border: none;
+    }
+
+    span i {
+      cursor: pointer;
+    }
+  }
+}
+
+.infoMsgCopyPtag {
+  background-color: #ecf5ff;
+  border: 1px solid #80b7f4;
+  color: #666666;
+  font-size: 11px;
+  font-weight: 500;
+  border-left-width: 4px;
+  padding: 1.8%;
+  width: 98%;
+  text-align: left;
+}
+.warningMsgEditActive {
+  background-color: #fff6e7;
+  border: 1px solid #ffc54e;
+  color: #666666;
+  font-size: 11px;
+  font-weight: 500;
+  border-left-width: 4px;
+  padding: 1.8%;
+  width: 98%;
+  text-align: left;
+}
+.warnColor {
+  color: #ffc54e;
+}
+.infoColor {
+  color: #80b7f4;
+}
+.contentMsgStyle {
+  padding: 0.2% 2%;
+}
+.wordbreakLabel {
+  word-break: break-all;
+  text-align: left;
+  padding: 5px;
+}
+
+.actionMenusPopup {list-style: none;}
+.actionMenusPopup li{
+  list-style: none;
+  padding: 20px 20px 0px 20px;
+  text-align: left;
+  cursor: pointer;
+}
+.actionMenusPopup{
+    position: absolute;
+    width: 200px;
+    height: auto;
+    background: #FFFFFF;
+    border: 1px solid #D9D9D9;
+    box-sizing: border-box;
+    box-shadow: 0px 6px 18px rgba(0, 0, 0, 0.06);
+    border-radius: 10px;
+    right:0px;
+    top:36px;
+    z-index: 9999;
+    //display: block;
+    padding-bottom: 20px;
+    padding-left: 0;
+    font-size: 14px;
+}

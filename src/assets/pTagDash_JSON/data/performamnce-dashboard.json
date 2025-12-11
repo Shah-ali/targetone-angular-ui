@@ -1,0 +1,1098 @@
+{
+  "tagId": "unique_tag_identifier",
+  "tagName": "Tag Name",
+  "tagType": "Analytics/Marketing/Custom",
+  "tagDescription": "Description of the tag",
+  "data": [
+    {
+      "timestamp": "2023-10-20T08:30:00.000Z",
+      "device": "Android",
+      "location": "Europe",
+      "clicks": 45,
+      "opens": 18,
+      "impressions": 420,
+      "ctr": "9.58",
+      "campaign": "Campaign A"
+    },
+    {
+      "timestamp": "2023-10-20T09:45:00.000Z",
+      "device": "IPad",
+      "location": "Europe",
+      "clicks": 55,
+      "opens": 24,
+      "impressions": 480,
+      "ctr": "10.21",
+      "campaign": "Campaign B"
+    },
+    {
+      "timestamp": "2023-10-20T11:00:00.000Z",
+      "device": "IPhone",
+      "location": "Europe",
+      "clicks": 65,
+      "opens": 28,
+      "impressions": 540,
+      "ctr": "10.72",
+      "campaign": "Campaign C"
+    },
+    {
+      "timestamp": "2023-10-20T13:15:00.000Z",
+      "device": "Desktop",
+      "location": "Asia",
+      "clicks": 75,
+      "opens": 33,
+      "impressions": 600,
+      "ctr": "11.43",
+      "campaign": "Campaign A"
+    },
+    {
+      "timestamp": "2023-10-20T15:30:00.000Z",
+      "device": "Android",
+      "location": "Asia",
+      "clicks": 85,
+      "opens": 38,
+      "impressions": 660,
+      "ctr": "12.16",
+      "campaign": "Campaign B"
+    },
+    {
+      "timestamp": "2023-10-20T17:45:00.000Z",
+      "device": "IPad",
+      "location": "Asia",
+      "clicks": 95,
+      "opens": 43,
+      "impressions": 720,
+      "ctr": "12.78",
+      "campaign": "Campaign C"
+    },
+    {
+      "timestamp": "2023-10-20T20:00:00.000Z",
+      "device": "IPhone",
+      "location": "Asia",
+      "clicks": 105,
+      "opens": 48,
+      "impressions": 780,
+      "ctr": "13.32",
+      "campaign": "Campaign A"
+    },
+    {
+      "timestamp": "2023-09-20T08:30:00.000Z",
+      "device": "Android",
+      "location": "Europe",
+      "clicks": 40,
+      "opens": 15,
+      "impressions": 380,
+      "ctr": "10.53",
+      "campaign": "Campaign A"
+    },
+    {
+      "timestamp": "2023-09-20T09:45:00.000Z",
+      "device": "IPad",
+      "location": "Europe",
+      "clicks": 50,
+      "opens": 20,
+      "impressions": 440,
+      "ctr": "11.36",
+      "campaign": "Campaign B"
+    },
+    {
+      "timestamp": "2023-09-20T11:00:00.000Z",
+      "device": "IPhone",
+      "location": "Europe",
+      "clicks": 60,
+      "opens": 25,
+      "impressions": 500,
+      "ctr": "12.00",
+      "campaign": "Campaign C"
+    },
+    {
+      "timestamp": "2023-09-20T13:15:00.000Z",
+      "device": "Desktop",
+      "location": "Asia",
+      "clicks": 70,
+      "opens": 30,
+      "impressions": 560,
+      "ctr": "12.50",
+      "campaign": "Campaign A"
+    },
+    {
+      "timestamp": "2023-09-20T15:30:00.000Z",
+      "device": "Android",
+      "location": "Asia",
+      "clicks": 80,
+      "opens": 35,
+      "impressions": 620,
+      "ctr": "12.90",
+      "campaign": "Campaign B"
+    },
+    {
+      "timestamp": "2023-09-20T17:45:00.000Z",
+      "device": "IPad",
+      "location": "Asia",
+      "clicks": 90,
+      "opens": 40,
+      "impressions": 680,
+      "ctr": "13.23",
+      "campaign": "Campaign C"
+    },
+    {
+      "timestamp": "2023-09-20T20:00:00.000Z",
+      "device": "IPhone",
+      "location": "Asia",
+      "clicks": 100,
+      "opens": 45,
+      "impressions": 740,
+      "ctr": "13.51",
+      "campaign": "Campaign A"
+    },
+    {
+      "timestamp": "2023-11-07T08:30:00.000Z",
+      "device": "Android",
+      "location": "Europe",
+      "clicks": 50,
+      "opens": 20,
+      "impressions": 500,
+      "ctr": "10.00",
+      "campaign": "Campaign A"
+    },
+    {
+      "timestamp": "2023-11-07T09:45:00.000Z",
+      "device": "IPad",
+      "location": "Europe",
+      "clicks": 60,
+      "opens": 25,
+      "impressions": 550,
+      "ctr": "10.91",
+      "campaign": "Campaign B"
+    },
+    {
+      "timestamp": "2023-11-07T11:00:00.000Z",
+      "device": "IPhone",
+      "location": "Europe",
+      "clicks": 70,
+      "opens": 30,
+      "impressions": 600,
+      "ctr": "11.67",
+      "campaign": "Campaign C"
+    },
+    {
+      "timestamp": "2023-11-07T13:15:00.000Z",
+      "device": "Desktop",
+      "location": "Asia",
+      "clicks": 80,
+      "opens": 35,
+      "impressions": 650,
+      "ctr": "12.31",
+      "campaign": "Campaign A"
+    },
+    {
+      "timestamp": "2023-11-07T15:30:00.000Z",
+      "device": "Android",
+      "location": "Asia",
+      "clicks": 90,
+      "opens": 40,
+      "impressions": 700,
+      "ctr": "13.33",
+      "campaign": "Campaign B"
+    },
+    {
+      "timestamp": "2023-11-07T17:45:00.000Z",
+      "device": "IPad",
+      "location": "Asia",
+      "clicks": 100,
+      "opens": 45,
+      "impressions": 750,
+      "ctr": "14.00",
+      "campaign": "Campaign C"
+    },
+    {
+      "timestamp": "2023-11-07T20:00:00.000Z",
+      "device": "IPhone",
+      "location": "Asia",
+      "clicks": 110,
+      "opens": 50,
+      "impressions": 800,
+      "ctr": "14.44",
+      "campaign": "Campaign A"
+    },
+    {
+      "timestamp": "2023-04-04T21:15:17.828Z",
+      "device": "Android",
+      "location": "Europe",
+      "clicks": 135,
+      "opens": 30,
+      "impressions": 1325,
+      "ctr": "10.19",
+      "campaign": "Campaign B"
+    },
+    {
+      "timestamp": "2023-04-04T21:15:17.828Z",
+      "device": "IPad",
+      "location": "Europe",
+      "clicks": 135,
+      "opens": 30,
+      "impressions": 1325,
+      "ctr": "10.19",
+      "campaign": "Campaign B"
+    },
+    {
+      "timestamp": "2023-04-04T21:15:17.828Z",
+      "device": "IPhone",
+      "location": "Europe",
+      "clicks": 135,
+      "opens": 30,
+      "impressions": 1325,
+      "ctr": "10.19",
+      "campaign": "Campaign B"
+    },
+    {
+      "timestamp": "2023-04-21T21:15:17.828Z",
+      "device": "Desktop",
+      "location": "Europe",
+      "clicks": 135,
+      "opens": 30,
+      "impressions": 1325,
+      "ctr": "10.19",
+      "campaign": "Campaign B"
+    },
+    {
+      "timestamp": "2023-04-21T21:15:17.828Z",
+      "device": "Android",
+      "location": "Europe",
+      "clicks": 135,
+      "opens": 30,
+      "impressions": 1325,
+      "ctr": "10.19",
+      "campaign": "Campaign B"
+    },
+    {
+      "timestamp": "2023-10-19T21:32:11.706Z",
+      "device": "Desktop",
+      "location": "Asia",
+      "clicks": 74,
+      "opens": 49,
+      "impressions": 1237,
+      "ctr": "5.98",
+      "campaign": "Campaign B"
+    },
+    {
+      "timestamp": "2023-11-17T04:18:23.698Z",
+      "device": "Android",
+      "location": "North America",
+      "clicks": 160,
+      "opens": 43,
+      "impressions": 1084,
+      "ctr": "14.76",
+      "campaign": "Campaign A"
+    },
+    {
+      "timestamp": "2023-07-23T04:43:36.930Z",
+      "device": "Android",
+      "location": "Asia",
+      "clicks": 157,
+      "opens": 38,
+      "impressions": 539,
+      "ctr": "29.13",
+      "campaign": "Campaign C"
+    },
+    {
+      "timestamp": "2023-11-07T18:46:05.794Z",
+      "device": "Android",
+      "location": "Asia",
+      "clicks": 156,
+      "opens": 70,
+      "impressions": 1482,
+      "ctr": "10.53",
+      "campaign": "Campaign B"
+    },
+    {
+      "timestamp": "2023-07-22T01:35:34.635Z",
+      "device": "Android",
+      "location": "Europe",
+      "clicks": 160,
+      "opens": 51,
+      "impressions": 618,
+      "ctr": "25.89",
+      "campaign": "Campaign A"
+    },
+    {
+      "timestamp": "2023-06-25T17:46:20.380Z",
+      "device": "Android",
+      "location": "North America",
+      "clicks": 166,
+      "opens": 70,
+      "impressions": 732,
+      "ctr": "22.68",
+      "campaign": "Campaign A"
+    },
+    {
+      "timestamp": "2023-08-02T16:53:28.223Z",
+      "device": "Android",
+      "location": "North America",
+      "clicks": 103,
+      "opens": 25,
+      "impressions": 550,
+      "ctr": "18.73",
+      "campaign": "Campaign C"
+    },
+    {
+      "timestamp": "2023-06-27T11:23:07.978Z",
+      "device": "Android",
+      "location": "Europe",
+      "clicks": 137,
+      "opens": 24,
+      "impressions": 798,
+      "ctr": "17.17",
+      "campaign": "Campaign B"
+    },
+    {
+      "timestamp": "2023-07-28T03:56:22.905Z",
+      "device": "Desktop",
+      "location": "Asia",
+      "clicks": 112,
+      "opens": 26,
+      "impressions": 1258,
+      "ctr": "8.90",
+      "campaign": "Campaign A"
+    },
+    {
+      "timestamp": "2023-02-23T18:42:57.423Z",
+      "device": "Desktop",
+      "location": "Asia",
+      "clicks": 65,
+      "opens": 78,
+      "impressions": 790,
+      "ctr": "8.23",
+      "campaign": "Campaign A"
+    },
+    {
+      "timestamp": "2023-01-25T10:20:56.388Z",
+      "device": "Android",
+      "location": "Europe",
+      "clicks": 141,
+      "opens": 45,
+      "impressions": 543,
+      "ctr": "25.97",
+      "campaign": "Campaign C"
+    },
+    {
+      "timestamp": "2023-08-22T00:16:42.609Z",
+      "device": "Android",
+      "location": "North America",
+      "clicks": 175,
+      "opens": 77,
+      "impressions": 1221,
+      "ctr": "14.33",
+      "campaign": "Campaign C"
+    },
+    {
+      "timestamp": "2023-02-26T08:46:52.773Z",
+      "device": "Android",
+      "location": "Asia",
+      "clicks": 156,
+      "opens": 35,
+      "impressions": 746,
+      "ctr": "20.91",
+      "campaign": "Campaign C"
+    },
+    {
+      "timestamp": "2023-07-03T16:35:32.915Z",
+      "device": "Desktop",
+      "location": "Asia",
+      "clicks": 109,
+      "opens": 46,
+      "impressions": 508,
+      "ctr": "21.46",
+      "campaign": "Campaign B"
+    },
+    {
+      "timestamp": "2023-10-10T17:01:49.131Z",
+      "device": "Android",
+      "location": "Asia",
+      "clicks": 63,
+      "opens": 28,
+      "impressions": 850,
+      "ctr": "7.41",
+      "campaign": "Campaign B"
+    },
+    {
+      "timestamp": "2023-08-19T10:32:30.192Z",
+      "device": "Android",
+      "location": "Europe",
+      "clicks": 75,
+      "opens": 24,
+      "impressions": 972,
+      "ctr": "7.72",
+      "campaign": "Campaign B"
+    },
+    {
+      "timestamp": "2023-08-12T06:02:12.722Z",
+      "device": "Android",
+      "location": "North America",
+      "clicks": 134,
+      "opens": 49,
+      "impressions": 1146,
+      "ctr": "11.69",
+      "campaign": "Campaign A"
+    },
+    {
+      "timestamp": "2023-01-12T03:24:44.820Z",
+      "device": "Desktop",
+      "location": "Europe",
+      "clicks": 163,
+      "opens": 72,
+      "impressions": 670,
+      "ctr": "24.33",
+      "campaign": "Campaign A"
+    },
+    {
+      "timestamp": "2023-06-24T03:59:50.119Z",
+      "device": "Desktop",
+      "location": "North America",
+      "clicks": 126,
+      "opens": 34,
+      "impressions": 744,
+      "ctr": "16.94",
+      "campaign": "Campaign C"
+    },
+    {
+      "timestamp": "2023-07-12T03:39:57.014Z",
+      "device": "Android",
+      "location": "Europe",
+      "clicks": 130,
+      "opens": 64,
+      "impressions": 1296,
+      "ctr": "10.03",
+      "campaign": "Campaign B"
+    },
+    {
+      "timestamp": "2023-04-30T18:25:04.047Z",
+      "device": "Desktop",
+      "location": "Europe",
+      "clicks": 73,
+      "opens": 79,
+      "impressions": 1353,
+      "ctr": "5.40",
+      "campaign": "Campaign A"
+    },
+    {
+      "timestamp": "2023-10-12T02:25:40.730Z",
+      "device": "Android",
+      "location": "North America",
+      "clicks": 189,
+      "opens": 53,
+      "impressions": 1380,
+      "ctr": "13.70",
+      "campaign": "Campaign B"
+    },
+    {
+      "timestamp": "2023-10-02T03:47:10.707Z",
+      "device": "Android",
+      "location": "Asia",
+      "clicks": 147,
+      "opens": 75,
+      "impressions": 1259,
+      "ctr": "11.68",
+      "campaign": "Campaign A"
+    },
+    {
+      "timestamp": "2023-06-20T13:33:22.249Z",
+      "device": "Desktop",
+      "location": "Europe",
+      "clicks": 107,
+      "opens": 65,
+      "impressions": 1136,
+      "ctr": "9.42",
+      "campaign": "Campaign A"
+    },
+    {
+      "timestamp": "2023-10-16T15:32:53.908Z",
+      "device": "Android",
+      "location": "Europe",
+      "clicks": 138,
+      "opens": 33,
+      "impressions": 1109,
+      "ctr": "12.44",
+      "campaign": "Campaign C"
+    },
+    {
+      "timestamp": "2023-04-13T14:31:36.885Z",
+      "device": "Desktop",
+      "location": "Europe",
+      "clicks": 108,
+      "opens": 72,
+      "impressions": 899,
+      "ctr": "12.01",
+      "campaign": "Campaign B"
+    },
+    {
+      "timestamp": "2023-08-04T15:19:26.704Z",
+      "device": "Android",
+      "location": "North America",
+      "clicks": 99,
+      "opens": 74,
+      "impressions": 1163,
+      "ctr": "8.51",
+      "campaign": "Campaign C"
+    },
+    {
+      "timestamp": "2023-01-14T09:56:59.658Z",
+      "device": "Android",
+      "location": "Europe",
+      "clicks": 145,
+      "opens": 46,
+      "impressions": 993,
+      "ctr": "14.60",
+      "campaign": "Campaign B"
+    },
+    {
+      "timestamp": "2023-07-17T00:54:07.407Z",
+      "device": "Desktop",
+      "location": "Europe",
+      "clicks": 50,
+      "opens": 65,
+      "impressions": 1240,
+      "ctr": "4.03",
+      "campaign": "Campaign C"
+    },
+    {
+      "timestamp": "2023-02-21T17:48:26.471Z",
+      "device": "Desktop",
+      "location": "Asia",
+      "clicks": 193,
+      "opens": 77,
+      "impressions": 580,
+      "ctr": "33.28",
+      "campaign": "Campaign B"
+    },
+    {
+      "timestamp": "2023-11-23T16:20:58.099Z",
+      "device": "Android",
+      "location": "Asia",
+      "clicks": 72,
+      "opens": 22,
+      "impressions": 812,
+      "ctr": "8.87",
+      "campaign": "Campaign B"
+    },
+    {
+      "timestamp": "2023-11-16T01:39:06.227Z",
+      "device": "Desktop",
+      "location": "Europe",
+      "clicks": 155,
+      "opens": 66,
+      "impressions": 1089,
+      "ctr": "14.23",
+      "campaign": "Campaign C"
+    },
+    {
+      "timestamp": "2023-07-02T07:54:26.787Z",
+      "device": "Desktop",
+      "location": "North America",
+      "clicks": 55,
+      "opens": 40,
+      "impressions": 653,
+      "ctr": "8.42",
+      "campaign": "Campaign B"
+    },
+    {
+      "timestamp": "2023-04-09T01:35:27.499Z",
+      "device": "Android",
+      "location": "Europe",
+      "clicks": 80,
+      "opens": 53,
+      "impressions": 1126,
+      "ctr": "7.10",
+      "campaign": "Campaign A"
+    },
+    {
+      "timestamp": "2023-04-20T09:50:19.601Z",
+      "device": "Desktop",
+      "location": "Asia",
+      "clicks": 86,
+      "opens": 50,
+      "impressions": 848,
+      "ctr": "10.14",
+      "campaign": "Campaign C"
+    },
+    {
+      "timestamp": "2023-10-09T18:26:06.854Z",
+      "device": "Android",
+      "location": "Europe",
+      "clicks": 171,
+      "opens": 74,
+      "impressions": 791,
+      "ctr": "21.62",
+      "campaign": "Campaign B"
+    },
+    {
+      "timestamp": "2023-08-16T15:42:13.913Z",
+      "device": "Android",
+      "location": "Asia",
+      "clicks": 196,
+      "opens": 32,
+      "impressions": 500,
+      "ctr": "39.20",
+      "campaign": "Campaign A"
+    },
+    {
+      "timestamp": "2023-04-22T14:28:41.777Z",
+      "device": "Android",
+      "location": "North America",
+      "clicks": 184,
+      "opens": 37,
+      "impressions": 1082,
+      "ctr": "17.01",
+      "campaign": "Campaign C"
+    },
+    {
+      "timestamp": "2023-06-18T03:31:00.655Z",
+      "device": "Android",
+      "location": "Asia",
+      "clicks": 157,
+      "opens": 58,
+      "impressions": 1259,
+      "ctr": "12.47",
+      "campaign": "Campaign C"
+    },
+    {
+      "timestamp": "2023-12-01T12:21:51.905Z",
+      "device": "Android",
+      "location": "Asia",
+      "clicks": 102,
+      "opens": 67,
+      "impressions": 844,
+      "ctr": "12.09",
+      "campaign": "Campaign C"
+    },
+    {
+      "timestamp": "2023-07-03T02:38:40.796Z",
+      "device": "Android",
+      "location": "Europe",
+      "clicks": 164,
+      "opens": 36,
+      "impressions": 709,
+      "ctr": "23.13",
+      "campaign": "Campaign B"
+    },
+    {
+      "timestamp": "2023-11-05T10:38:13.533Z",
+      "device": "Android",
+      "location": "Asia",
+      "clicks": 108,
+      "opens": 71,
+      "impressions": 996,
+      "ctr": "10.84",
+      "campaign": "Campaign A"
+    },
+    {
+      "timestamp": "2023-08-21T12:19:43.297Z",
+      "device": "Desktop",
+      "location": "Asia",
+      "clicks": 57,
+      "opens": 63,
+      "impressions": 1482,
+      "ctr": "3.85",
+      "campaign": "Campaign A"
+    },
+    {
+      "timestamp": "2023-06-14T14:47:28.353Z",
+      "device": "Android",
+      "location": "Europe",
+      "clicks": 177,
+      "opens": 48,
+      "impressions": 1009,
+      "ctr": "17.54",
+      "campaign": "Campaign B"
+    },
+    {
+      "timestamp": "2023-02-08T03:04:46.419Z",
+      "device": "Android",
+      "location": "Europe",
+      "clicks": 137,
+      "opens": 28,
+      "impressions": 689,
+      "ctr": "19.88",
+      "campaign": "Campaign B"
+    },
+    {
+      "timestamp": "2023-08-12T01:05:59.498Z",
+      "device": "Android",
+      "location": "Europe",
+      "clicks": 97,
+      "opens": 43,
+      "impressions": 1135,
+      "ctr": "8.55",
+      "campaign": "Campaign B"
+    },
+    {
+      "timestamp": "2023-07-14T02:20:19.604Z",
+      "device": "Android",
+      "location": "Asia",
+      "clicks": 74,
+      "opens": 33,
+      "impressions": 1102,
+      "ctr": "6.72",
+      "campaign": "Campaign C"
+    },
+    {
+      "timestamp": "2023-03-08T05:48:12.486Z",
+      "device": "Android",
+      "location": "North America",
+      "clicks": 88,
+      "opens": 65,
+      "impressions": 942,
+      "ctr": "9.34",
+      "campaign": "Campaign C"
+    },
+    {
+      "timestamp": "2023-03-28T22:44:04.983Z",
+      "device": "Android",
+      "location": "North America",
+      "clicks": 197,
+      "opens": 64,
+      "impressions": 1330,
+      "ctr": "14.81",
+      "campaign": "Campaign C"
+    },
+    {
+      "timestamp": "2023-02-10T23:15:24.868Z",
+      "device": "Android",
+      "location": "Asia",
+      "clicks": 72,
+      "opens": 21,
+      "impressions": 862,
+      "ctr": "8.35",
+      "campaign": "Campaign A"
+    },
+    {
+      "timestamp": "2023-05-02T19:38:02.927Z",
+      "device": "Android",
+      "location": "Asia",
+      "clicks": 136,
+      "opens": 62,
+      "impressions": 922,
+      "ctr": "14.75",
+      "campaign": "Campaign A"
+    },
+    {
+      "timestamp": "2023-02-06T00:33:32.778Z",
+      "device": "Android",
+      "location": "Asia",
+      "clicks": 60,
+      "opens": 52,
+      "impressions": 659,
+      "ctr": "9.10",
+      "campaign": "Campaign C"
+    },
+    {
+      "timestamp": "2023-09-27T05:02:47.591Z",
+      "device": "Android",
+      "location": "North America",
+      "clicks": 150,
+      "opens": 58,
+      "impressions": 896,
+      "ctr": "16.74",
+      "campaign": "Campaign C"
+    },
+    {
+      "timestamp": "2023-03-08T09:56:37.408Z",
+      "device": "Android",
+      "location": "Asia",
+      "clicks": 101,
+      "opens": 58,
+      "impressions": 683,
+      "ctr": "14.79",
+      "campaign": "Campaign B"
+    },
+    {
+      "timestamp": "2023-12-15T17:15:13.581Z",
+      "device": "Desktop",
+      "location": "Europe",
+      "clicks": 123,
+      "opens": 79,
+      "impressions": 1476,
+      "ctr": "8.33",
+      "campaign": "Campaign B"
+    },
+    {
+      "timestamp": "2023-08-19T06:25:04.620Z",
+      "device": "Android",
+      "location": "Asia",
+      "clicks": 57,
+      "opens": 52,
+      "impressions": 1408,
+      "ctr": "4.05",
+      "campaign": "Campaign C"
+    },
+    {
+      "timestamp": "2023-09-07T01:17:39.009Z",
+      "device": "Android",
+      "location": "North America",
+      "clicks": 173,
+      "opens": 40,
+      "impressions": 603,
+      "ctr": "28.69",
+      "campaign": "Campaign C"
+    },
+    {
+      "timestamp": "2023-11-13T17:24:30.633Z",
+      "device": "Desktop",
+      "location": "Europe",
+      "clicks": 127,
+      "opens": 38,
+      "impressions": 556,
+      "ctr": "22.84",
+      "campaign": "Campaign B"
+    },
+    {
+      "timestamp": "2023-04-26T20:38:25.857Z",
+      "device": "Android",
+      "location": "North America",
+      "clicks": 124,
+      "opens": 20,
+      "impressions": 764,
+      "ctr": "16.23",
+      "campaign": "Campaign A"
+    },
+    {
+      "timestamp": "2023-09-25T21:30:20.356Z",
+      "device": "Android",
+      "location": "Europe",
+      "clicks": 141,
+      "opens": 68,
+      "impressions": 1394,
+      "ctr": "10.11",
+      "campaign": "Campaign C"
+    },
+    {
+      "timestamp": "2023-06-04T19:17:26.849Z",
+      "device": "Android",
+      "location": "Asia",
+      "clicks": 99,
+      "opens": 47,
+      "impressions": 979,
+      "ctr": "10.11",
+      "campaign": "Campaign A"
+    },
+    {
+      "timestamp": "2023-09-17T17:10:40.176Z",
+      "device": "Android",
+      "location": "Europe",
+      "clicks": 167,
+      "opens": 71,
+      "impressions": 1405,
+      "ctr": "11.89",
+      "campaign": "Campaign C"
+    },
+    {
+      "timestamp": "2023-04-05T09:07:22.874Z",
+      "device": "Android",
+      "location": "Asia",
+      "clicks": 156,
+      "opens": 54,
+      "impressions": 559,
+      "ctr": "27.91",
+      "campaign": "Campaign A"
+    },
+    {
+      "timestamp": "2023-04-23T09:11:48.857Z",
+      "device": "Desktop",
+      "location": "Europe",
+      "clicks": 69,
+      "opens": 63,
+      "impressions": 1395,
+      "ctr": "4.95",
+      "campaign": "Campaign C"
+    },
+    {
+      "timestamp": "2023-10-06T22:58:41.467Z",
+      "device": "Android",
+      "location": "Asia",
+      "clicks": 54,
+      "opens": 38,
+      "impressions": 1164,
+      "ctr": "4.64",
+      "campaign": "Campaign A"
+    },
+    {
+      "timestamp": "2023-08-13T06:21:46.371Z",
+      "device": "Android",
+      "location": "Asia",
+      "clicks": 91,
+      "opens": 78,
+      "impressions": 784,
+      "ctr": "11.61",
+      "campaign": "Campaign C"
+    },
+    {
+      "timestamp": "2023-12-30T03:31:04.648Z",
+      "device": "Android",
+      "location": "Asia",
+      "clicks": 153,
+      "opens": 45,
+      "impressions": 908,
+      "ctr": "16.85",
+      "campaign": "Campaign B"
+    },
+    {
+      "timestamp": "2023-07-01T18:27:02.713Z",
+      "device": "Desktop",
+      "location": "Europe",
+      "clicks": 65,
+      "opens": 29,
+      "impressions": 1258,
+      "ctr": "5.17",
+      "campaign": "Campaign B"
+    },
+    {
+      "timestamp": "2023-03-15T07:32:56.833Z",
+      "device": "Desktop",
+      "location": "Europe",
+      "clicks": 133,
+      "opens": 34,
+      "impressions": 943,
+      "ctr": "14.10",
+      "campaign": "Campaign C"
+    },
+    {
+      "timestamp": "2023-09-05T03:46:02.256Z",
+      "device": "Android",
+      "location": "Europe",
+      "clicks": 56,
+      "opens": 36,
+      "impressions": 1382,
+      "ctr": "4.05",
+      "campaign": "Campaign C"
+    },
+    {
+      "timestamp": "2023-09-30T11:28:14.422Z",
+      "device": "Android",
+      "location": "Asia",
+      "clicks": 200,
+      "opens": 45,
+      "impressions": 1344,
+      "ctr": "14.88",
+      "campaign": "Campaign C"
+    },
+    {
+      "timestamp": "2023-01-25T08:19:34.736Z",
+      "device": "Android",
+      "location": "North America",
+      "clicks": 72,
+      "opens": 45,
+      "impressions": 712,
+      "ctr": "10.11",
+      "campaign": "Campaign B"
+    },
+    {
+      "timestamp": "2023-05-27T07:06:41.448Z",
+      "device": "Desktop",
+      "location": "Europe",
+      "clicks": 163,
+      "opens": 77,
+      "impressions": 586,
+      "ctr": "27.82",
+      "campaign": "Campaign A"
+    },
+    {
+      "timestamp": "2023-03-25T04:42:08.729Z",
+      "device": "Android",
+      "location": "Europe",
+      "clicks": 56,
+      "opens": 55,
+      "impressions": 976,
+      "ctr": "5.74",
+      "campaign": "Campaign C"
+    },
+    {
+      "timestamp": "2023-12-30T23:13:27.873Z",
+      "device": "Android",
+      "location": "North America",
+      "clicks": 113,
+      "opens": 80,
+      "impressions": 1222,
+      "ctr": "9.25",
+      "campaign": "Campaign B"
+    },
+    {
+      "timestamp": "2023-05-31T15:19:59.871Z",
+      "device": "Android",
+      "location": "North America",
+      "clicks": 71,
+      "opens": 46,
+      "impressions": 905,
+      "ctr": "7.85",
+      "campaign": "Campaign A"
+    },
+    {
+      "timestamp": "2023-09-03T00:48:04.177Z",
+      "device": "Android",
+      "location": "Asia",
+      "clicks": 82,
+      "opens": 74,
+      "impressions": 523,
+      "ctr": "15.68",
+      "campaign": "Campaign A"
+    },
+    {
+      "timestamp": "2023-09-13T09:39:24.783Z",
+      "device": "Android",
+      "location": "North America",
+      "clicks": 102,
+      "opens": 30,
+      "impressions": 1373,
+      "ctr": "7.43",
+      "campaign": "Campaign A"
+    },
+    {
+      "timestamp": "2023-11-17T22:11:54.706Z",
+      "device": "Android",
+      "location": "North America",
+      "clicks": 117,
+      "opens": 37,
+      "impressions": 551,
+      "ctr": "21.23",
+      "campaign": "Campaign C"
+    },
+    {
+      "timestamp": "2023-02-07T06:29:11.092Z",
+      "device": "Android",
+      "location": "Europe",
+      "clicks": 180,
+      "opens": 77,
+      "impressions": 1035,
+      "ctr": "17.39",
+      "campaign": "Campaign A"
+    },
+    {
+      "timestamp": "2023-11-06T22:40:24.194Z",
+      "device": "Android",
+      "location": "North America",
+      "clicks": 152,
+      "opens": 72,
+      "impressions": 1045,
+      "ctr": "14.55",
+      "campaign": "Campaign B"
+    },
+    {
+      "timestamp": "2023-04-07T22:48:41.941Z",
+      "device": "Desktop",
+      "location": "Europe",
+      "clicks": 174,
+      "opens": 44,
+      "impressions": 529,
+      "ctr": "32.89",
+      "campaign": "Campaign A"
+    },
+    {
+      "timestamp": "2023-10-11T14:06:38.924Z",
+      "device": "Desktop",
+      "location": "Asia",
+      "clicks": 79,
+      "opens": 24,
+      "impressions": 1419,
+      "ctr": "5.57",
+      "campaign": "Campaign A"
+    }
+  ]
+}

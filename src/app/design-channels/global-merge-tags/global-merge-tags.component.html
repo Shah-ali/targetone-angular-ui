@@ -1,0 +1,177 @@
+<div class="modal-header">
+  <span>{{ 'designEditor.beeEditorComponent.globalMergeTagsHeader' | translate }}</span>
+</div>
+
+<div class="modal-body">
+  <div class="rowConfiguration row mx-2">
+    <div class="row col-12 mergeTagExt-section">
+      <div class="col-6 col-md-4 mergeTag-section mr-2">
+        <div class="allTags">
+          <ul>
+            <ng-container *ngFor="let item of mergeTagExtJSON; let first = first">
+                <li
+                  class="row m-0 rootLabel"
+                  [ngClass]="{ rowSelected: first }"
+                  *ngIf="item.child == null"
+                  (click)="selectItem($event, item)"
+                >
+                  <div class="col col-10 px-2">
+                    <img class="mergeTagsIcons" src="./assets/images/merge-tags-ext/{{ item.icon }}" />
+                    <span>{{ item.name }}</span>
+                  </div>
+                  <div class="section-2 col col-2 m-0 text-right">
+                    <i class="fas fa-caret-right"></i>
+                  </div>
+                </li>
+
+                <li class="row m-0 parentDiv" *ngIf="item.child != null">
+                  <div class="col">
+                    <div class="row cpDiv">
+                      <div class="col col-7 px-2">
+                        <img class="mergeTagsIcons" src="./assets/images/merge-tags-ext/{{ item.icon }}" />
+                        <span>{{ item.name }}</span>
+                      </div>
+                      <div class="col col-5 m-0 text-right">
+                        <button class="btn buttonCss shadow-none m-0 mr-1" (click)="openAddMergeTag(item.type)">
+                          + {{ "designEditor.mergeTagExtensions.add" | translate }}
+                        </button>
+                      </div>
+                    </div>
+                    <div class="row childDiv">
+                      <ul class="col col-12 px-2">
+
+                        <ng-container *ngFor="let cItem of selectExtObj">
+                          <li class="row m-0" *ngIf="item.type == cItem.ctype" (click)="selectItem($event, cItem)">
+                            <div class="col col-8 px-2">
+                              <img class="mergeTagsIcons" src="./assets/images/merge-tags-ext/{{ cItem.icon }}" />
+                              <span>{{ cItem.name }}</span>
+                            </div>
+                            <div class="section-2 col col-2 m-0 p-0 text-right">
+                              <i
+                                class="fal fa-pencil-alt fa-sm mr-2"
+                                title="{{ 'designEditor.mergeTagExtensions.edit' | translate }}"
+                                (click)="editExtMergeTag(item.type, cItem.name)"
+                              ></i>
+                              <i
+                                class="far fa-trash fa-sm mr-2"
+                                title="{{ 'designEditor.mergeTagExtensions.delete' | translate }}"
+                                (click)="deleteExtMergeTag(cItem.name)"
+                              ></i>
+                            </div>
+                            <div class="section-2 col col-2 m-0 text-right">
+                              <i class="fas fa-caret-right"></i>
+                            </div>
+                          </li>
+                        </ng-container>
+                      </ul>
+                    </div>
+                  </div>
+                </li>
+            </ng-container>
+          </ul>
+          <!-- overlay of add tag section -->
+          <div class="addTagSection m-0 p-4" [hidden]="hiddenAddTagSection">
+            <div class="row">
+              <div class="col">
+                <div class="row heading">
+                  <div class="col col-7 px-2" *ngIf="modelTypeSelected != 'api'">
+                    {{ "designEditor.mergeTagExtensions.add" | translate }} {{ modelTypeSelected}}
+                  </div>
+                  <div class="col col-7 px-2" *ngIf="modelTypeSelected == 'api'">
+                    {{ "designEditor.mergeTagExtensions.add" | translate }} {{ modelTypeSelected | uppercase}}
+                  </div>
+                  <div class="col col-5 m-0 text-right"><i class="fal fa-times fa-lg" (click)="closeMergeTagExt()"></i></div>
+                </div>
+
+                <div class="row">
+                  <div class="col col-12 px-2 mt-1">
+                    <div class="mergeTagExt-dropdown">
+                      <div class="search-input-box" (click)="openExtDropdown()">
+                        <input
+                          type="text"
+                          class="form-control shadow-none"
+                          placeholder="{{'searchLbl' | translate}}"
+                          [(ngModel)]="selectedExtValue"
+                          (input)="filterExtOptions($event)"
+                        />
+                        <i class="far" [class.fa-angle-down]="!showExtDropdown" [class.fa-angle-up]="showExtDropdown"></i>
+                      </div>
+                      <ul *ngIf="showExtDropdown">
+                        <ng-container *ngFor="let childObj of filteredExtOptions">
+                          <li (click)="selectExtOption(childObj.name)">
+                            <span>{{ childObj.name }}</span>
+                            <span *ngIf="childObj.type == 'api' && !childObj.isMultiObjOutput" class="singleObject">{{
+                              "designEditor.mergeTagExtensions.single" | translate
+                            }}</span>
+                            <span *ngIf="childObj.type == 'api' && childObj.isMultiObjOutput" class="multiObject">{{
+                              "designEditor.mergeTagExtensions.multi" | translate
+                            }}</span>
+                          </li>
+                        </ng-container>
+                      </ul>
+                    </div>
+                  </div>
+                  <hr *ngIf="!isModelDME" />
+                </div>
+
+                <div class="api-input-fields-section" *ngIf="!isModelDME && !hiddenInputSection">
+                  <div class="row inputSection" *ngFor="let inputObj of childInputs">
+                    <div class="col col-12 mt-3">
+                      <label class="m-0">{{ inputObj.name }}</label>
+                    </div>
+                    <div class="col col-12">
+                      <input type="text" [(ngModel)]="inputObj.value" name="{{ inputObj.name }}" value="{{ inputObj.value }}" />
+                    </div>
+                  </div>
+                </div>
+                <div class="row buttonSection">
+                  <hr *ngIf="!isModelDME" />
+                  <button class="btn buttonCss shadow-none m-0 mr-1" *ngIf="!editMergeTagBttn" (click)="addExtMergeTags()">
+                    {{ "designEditor.mergeTagExtensions.add" | translate }}
+                  </button>
+                  <button class="btn buttonCss shadow-none m-0 mr-1" *ngIf="editMergeTagBttn" (click)="addExtMergeTags()">
+                    {{ "designEditor.mergeTagExtensions.edit" | translate }}
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col m-0 mergeTag-inputs">
+        <h4>{{ selectedItem?.name }}</h4>
+        <div class="table-section-xy">
+          <table class="table">
+            <thead class="thead-dark">
+              <tr>
+                <th scope="col">{{ "designEditor.mergeTagExtensions.fieldName" | translate }}</th>
+                <th scope="col">{{ "designEditor.mergeTagExtensions.mergeTag" | translate }}</th>
+                <th scope="col" class="text-center">{{ "designEditor.mergeTagExtensions.action" | translate }}</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let item of selectedTableData">
+                <td>{{ item.name }}</td>
+                <td>{{ item.value }}</td>
+                <td class="text-center">
+                  <i
+                    class="far fa-copy align-text-top"
+                    #t1="ngbTooltip"
+                    triggers="manual"
+                    ngbTooltip="{{'copiedLbl' | translate}}"
+                    (click)="copyToPaste(t1, item.value)"
+                  ></i>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="modal-footer d-flex justify-content-right m-3">
+  <button type="button" class="btn buttonCss shadow-none m-0 mr-1" (mousedown)="onClose()">
+    {{ 'designEditor.cancelBtn' | translate }}
+  </button>
+</div>

@@ -1,0 +1,59 @@
+<div class="col p-0">
+  <ul class="col p-0 nav tabsLiStyle tabsNoSpace">
+    <li class="" *ngFor="let x of tabsNameArry" [ngClass]="selectedActiveLi == x.id ? 'active':''" (click)="selectActiveTab(x.id,$event)" id="{{x.id}}">{{x.value}}</li>
+  </ul>
+</div>
+  <div class="col p-0 p-3" *ngIf="productLayoutTabEnable; else editorTab">
+    <div class="col-4 example-container pl-0">
+      <p class="fontSizeH4">{{"recommendationComponent.productAttributeHeadingLabel" | translate}}</p>
+           <div class="example-box col-12 prodAttrStyle mb-2" *ngFor="let item of productAttArryObj | keyvalue">
+            <div class="col-11 p-0">
+              <p class="" id="{{ item.key }}" draggable="true"
+             (dragstart)="dragpoint($event)">{{ item.value }}</p>
+            </div>
+            <div class="col-1 p-0">
+              <i class="fas fa-grip-vertical fa-sm"></i>
+            </div>
+            
+          </div>
+        
+    </div>
+    
+    <div class="col-8 example-container">
+    
+        <ngx-codemirror #designLayoutStructure
+            [(ngModel)]="htmlTagDesign"
+            [options]="{
+              lineNumbers: true,
+              theme: 'paraiso-light',
+              mode: 'markdown'
+            }"
+          >
+        <div class="previewDrapDrop droppedArea"
+             (drop)="droppoint($event)"
+             (dragover)="allowDropOption($event)">
+        </div>
+        </ngx-codemirror>
+        
+      <!-- </div> -->
+    </div>
+  </div>
+ <ng-template #editorTab>
+  <!-- <div class="col p-3" *ngIf="editorTabEnable; else previewTab">
+    <jqxEditor  #editorReference [width]="getWidth()" [height]="400">
+     
+  </jqxEditor>
+  </div>
+  <ng-template #previewTab>
+    
+  </ng-template> -->
+  <div class="col p-3 row">
+    <div class="productPreview mb-4" style="border: 1px solid #eee;padding: 5px;font-size:.7rem;" [innerHTML]="htmlDesignStructure" *ngFor="let item of previewCounter">
+    </div>
+  </div>
+ </ng-template>
+ 
+
+ 
+ 
+  <!-- <angular-editor [(ngModel)]="htmlContent" [config]="config"></angular-editor> -->

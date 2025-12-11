@@ -1,0 +1,202 @@
+.inAppLayoutContainer {
+    background: #F0F2F7;
+    padding: 15px;
+    height: calc(100vh - 120px);
+    overflow: auto;
+    .titleHeadtext{
+        font-size: 14px;
+    }
+    .disableElemts{
+        pointer-events: none;
+        cursor: not-allowed;
+        color: #b3b3b3;
+    }
+    .buttonStyle {
+        outline: none;
+        height: 40px;
+        border: 1px solid #026FE9;
+        border-radius: 7px;
+        font-size: 14px;
+        color: #026FE9;
+        background: #fff;
+        cursor: pointer;
+        padding: 0 16px;
+    }
+    .inappActionListEnable{
+        position: absolute;
+        top:-30px;
+        right:0;
+        z-index: 99;
+        
+    }
+    .innerContainer {
+        .marginTop30 {margin-top: 30px;}
+        .verticalTopText{vertical-align: text-top;}
+        .backgroundWhite{background-color: #FFF;}
+        .verticalMiddle{vertical-align: middle;}
+        .tempLayoutSection{
+            background-color: #FFF;
+            height: calc(100vh - 90px);
+            overflow-x: hidden;
+            overflow-y: auto;
+        }
+        #inapp-section, #backGround-section, #text-section, #image-section, #button-section{
+            background-color: #FBFBFB;
+            width: 100%;
+            border-radius: 10px;
+            margin-left: -15px;
+            .disabledPlusBtn{
+                pointer-events: none;
+                cursor: not-allowed;
+                color: rgb(179, 179, 179);
+            }
+            .mrgoffsetleft{margin-left: -7px;}
+            .title{
+                font-weight: normal !important;
+            }
+            #layout-section ul li img{
+                max-width: 100%;
+                width: 100px;
+            }
+            #layout-section ul li{
+                margin-right: 1rem;
+            }
+            .colorPickBck{
+                position: absolute;
+                top: 10px;
+                right: 8px;
+              }
+              .backGrdColrbox{
+                position: absolute;
+                top: 6px;
+                left: 10px;
+                height: 23px;
+                width: 23px;
+                border-radius: 3px;
+              }
+              .lineHeightCustom{
+                line-height: 35px;;
+              }
+        }
+        #animationSection{
+            background-color: #F5F5F5;
+            padding: 1rem;
+            border-bottom-right-radius: 5px;
+        }
+        .panelColor{
+            background-color: #FBFBFB;
+        }
+        .timerChk {
+            margin:0 0 0 29px;
+        }
+        .selectLayoutcss{
+            width:100px;
+            margin:0 auto;
+            text-overflow: ellipsis;
+            white-space  : nowrap;
+            overflow     : hidden;
+        }
+        .ellipseTextInapp{
+            width:95px;
+            margin:0 auto;
+            text-overflow: ellipsis;
+            white-space  : nowrap;
+            overflow     : hidden;
+        }
+        .smallFont{
+            font-size: .69rem;
+        }
+        .notificationInputs {
+            background: #fff;
+            border: 1px solid #E6E6E6;
+            border-radius: 10px;
+            width: 68%;
+            padding: 15px;
+        }
+        #text-section{
+            .fontAlignmentControls li{
+                margin-right: 10px;
+            }
+            .fontAlignmentControls li.active{
+                border-bottom:2px solid #026FE9;
+            }
+            .fontAlignmentControls li select{
+                outline: none;
+                border-radius: 0;
+            }
+            .emoji-mart, .emoji-mart-inapp {
+                position: absolute;
+                z-index: 99;
+                top: 40px;
+                right: 0;
+            }
+            .emojiPosition {
+                top: 55px;
+            }
+            .titleDiv, .msgDiv {
+                border: 1px solid #CCCCCC;
+                border-radius: 8px;
+                height: 75px;
+                background: #fff;
+                .title, .subtitle, .message {
+                    margin-top: 7px;
+                    outline: none;
+                    width: 86%;
+                    left: 10px;
+                    position: absolute;
+                    font-size: 13px;
+                    height: 65px;
+                    overflow: scroll;
+                    border: 0;
+                }
+               
+                .iconContainer {
+                    position: absolute;
+                    right: 0;
+                }
+                .fa-grin, .fa-plus {
+                    padding: 29px 15px;
+                    border-left: 1px solid #ccc;
+                    cursor: pointer;
+                }
+                .disabledPlusBtn{
+                    pointer-events: none;
+                    cursor: not-allowed;
+                    color: rgb(179, 179, 179);
+                }
+            }
+          
+        
+        .isFontAlign span, .isFontDecor span{padding-right:10px; margin-right:10px; display: inline-block;border:1px solid #eee;padding:5px;font-size: 13px;}
+        .isFontColot .fontColorIcon{display: inline;border:1px solid #eee;width: 24px;height: 25px;z-index:999;display:inline;border-radius: 0px !important;}
+        .fontBoldIcon, .fontItalicIcon, .fontUnderlineIcon, .leftAlignIcon, .centerAlignIcon, .rightAlignIcon, .justifyAlignIcon{height: 24px;width: 25px;}
+        .isFontColot,.isFontDecor, .isFontAlign{top:3x;position: relative;}
+        .isFontAlign span.active, .isFontDecor span.active, .isFontColor span.colorpicker.active{border-bottom: 2px solid #026FE9;}
+        }
+    }
+    .notificationPreview {
+        background: #fff;
+        width: 31%;
+        padding: 25px 0;
+        border-radius: 10px;
+        .previewHeading {
+            font-size: 14px;
+            font-weight: 600;
+        }
+        input[type="radio"] {
+            outline: none;
+        }
+        .smartphone {
+            position: relative;
+            width: 270px;
+            height: 480px;
+            margin: auto;
+            // border: 16px #C1C1C1 solid;
+            // border-top-width: 60px;
+            // border-bottom-width: 60px;
+           // border-radius: 36px;
+            
+       
+        }
+    }
+}

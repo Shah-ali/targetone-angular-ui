@@ -1,0 +1,30 @@
+@import '../../../custom-style.scss';
+.buttonCss {
+  @include secondaryBttn;
+}
+
+.buttonPrimaryCss {
+  @include primaryBttn;
+}
+#configureMapsTitle{
+  font-size: 0.9rem;
+  font-weight: bold;
+}
+.mergetagCompoent{
+  display: flex;
+  justify-content: flex-end;
+  /* align-self: flex-end; */
+  padding: 1rem 1rem 0 0;
+}
+.modal-body{
+  padding: 0 0 1rem 1rem;
+}
+.modal-body>div{
+  padding-right: 0;
+}
+.flexDisplay{
+    display: flex;
+}
+.form-control{
+    margin: 5px;
+}

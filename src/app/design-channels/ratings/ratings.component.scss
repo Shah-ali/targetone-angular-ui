@@ -1,0 +1,231 @@
+@import '../../../custom-style.scss';
+
+.buttonCss {
+  @include secondaryBttn;
+}
+
+.buttonPrimaryCss {
+  @include primaryBttn;
+}
+.ratings-modal {
+.modal-body {
+  width: 100%;
+  max-width: 90vw;
+  display: flex;
+  gap: 10px; /* space between left and right */
+  padding: 20px;
+  padding: 20px;
+}
+}
+
+.maxStarsSection {
+  padding: 10px 20px;
+  border-right: 1px solid #000;
+
+  .star-settings {
+    display: flex;
+    align-items: center;
+
+    .fa-minus-circle,
+    .fa-plus-circle {
+      cursor: pointer;
+    }
+
+    .disabledPlusMinusBtn {
+      pointer-events: none;
+      cursor: not-allowed;
+      color: rgb(179, 179, 179);
+    }
+  }
+}
+
+.smallLabel {
+  font-size: 12px;
+  font-weight: 500;
+  margin-bottom: 0;
+  white-space: nowrap;
+  text-align: left;
+  margin-left: 0;
+  padding-left: 0;
+}
+.conditionSection {
+  margin-left: -8px; 
+
+  .condition-label {
+    margin-left: 0 !important;
+    padding-left: 0 !important;
+    font-size: 12px;
+    font-weight: 500;
+    text-align: left;
+    white-space: nowrap;
+  }
+
+  input[type='number'] {
+    max-width: 90px;
+    height: 30px;
+    margin-left: 5px;
+    appearance: textfield;
+    border: 1px solid #ccc; 
+    background-color: white;
+    font-weight: 400;
+   
+    &:focus {
+      outline: none;
+      border-color: #80bdff; 
+      box-shadow: none;
+    }
+
+    &::-webkit-inner-spin-button,
+    &::-webkit-outer-spin-button {
+      -webkit-appearance: none;
+      margin: 0;
+    }
+  }
+}
+
+.ratingValueSection {
+  margin-bottom: 1rem;
+
+  .rating-input {
+    height: 32px;
+    font-size: 13px;
+    padding: 4px 10px;
+    max-width: 180px;
+    }
+
+    input.rating-input {
+      height: 38px;
+      max-width: 280px;
+      flex: 0 1 auto;
+    }
+  
+    app-merge-tag-copy {
+      flex: 0 0 auto;
+      display: inline-block;
+      white-space: nowrap;
+    }
+  }
+.stars-display-section {
+  display: flex;
+  flex-direction: column;
+  padding-left: 12px;
+  margin-top: 4px;
+}
+  i {
+    font-size: 20px;
+  }
+
+.compact-range {
+  width: 150px;
+}
+
+.toggleEnableDisable {
+  margin-right: 0.5rem;
+}
+
+
+.condtionSpace {
+  span {
+    font-size: 12px;
+    font-weight: 500;
+    margin-bottom: 4px;
+    margin-top: 1rem;
+  }
+
+  .radio {
+    display: flex;
+    align-items: center;
+    gap: 23px;
+    flex-wrap: wrap;
+    margin-left: 3px;
+  }
+
+  label {
+    font-size: 12px;
+    color: #333;
+    font-weight: 400;
+    display: flex;
+    align-items: center;
+    white-space: nowrap;
+    margin: 4px 0 !important;
+    padding: 0 !important;
+    gap: 2px;
+  }
+
+  input[type='radio'] {
+    width: 15px;
+    height: 15px;
+    margin-right: 2px;
+  }
+
+  .horizontal-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10rem;
+  }
+
+  .rotate-down {
+    transition: transform 0.3s ease;
+    transform: rotate(180deg);
+  }
+
+  .fal.fa-chevron-down {
+    transition: transform 0.3s ease;
+  }
+}
+
+.add-ratings-section {
+  position: relative;
+  max-height: none;
+  overflow: visible;
+
+  .add-ratings-scroll-container {
+    max-height: none;
+    overflow: visible;
+    padding-right: 0;
+  }
+
+  .form-group {
+    position: relative;
+    z-index: 1;
+    max-width: 260px;
+
+    label.smallLabel {
+      font-size: 12px;
+      font-weight: 500;
+      margin-bottom: 48px;
+    }
+  }
+
+  select.form-control {
+    max-width: 270px;
+    height: 32px;
+    font-size: 13px;
+    padding: 4px 10px;
+    z-index: 2;
+    position: relative;
+  }
+
+  .rating-number-input {
+    max-width: 260px;
+    height: 32px;
+    font-size: 13px;
+    padding: 4px 10px;
+  }
+
+  .treeViewDropdownStyle .dropdown {
+    width: 100% !important;
+  }
+}
+.rating-label {
+  margin-right: 8px; 
+}
+.rating-value-input {
+  flex: 0 0 250px !important;  /* Fixes flex shrink */
+  max-width: 182px !important;
+  width: 500px !important;
+  height: 36px !important;
+  font-size: 13px;
+  padding: 6px 10px;
+}

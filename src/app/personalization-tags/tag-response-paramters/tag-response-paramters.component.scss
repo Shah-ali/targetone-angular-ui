@@ -1,0 +1,23 @@
+@import '../../../custom-style.scss';
+.buttonCss {
+  @include secondaryBttn;
+}
+
+.buttonPrimaryCss {
+  @include primaryBttn;
+}
+.smallFont{
+  font-size: 0.7rem;
+}
+.tagParamsArea {
+  width: 100%;
+  height: 100%;
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+
+.tagParamsArea {
+  .keyValueAddArea {
+    max-height: calc(100vh - 300px);
+  }
+}

@@ -1,0 +1,30 @@
+<div class="row p-0 whiteBg" style="padding-left: 12px !important;">  
+    <div class="p-1">
+      <label class="font-small">{{designForChannels}} </label>
+    </div>
+    <div class="p-1">
+      <ul class="tab-list">
+        <li class="pb-1 mr-2" *ngFor="let chObj of channelObj; let i = index" [ngClass]="setActive == i? 'active' : ''"  (click)="loadNewChannel(chObj,i);">
+            <i class="far fa-envelope" *ngIf="chObj.channelType === CHANNEL_INFO_HTML.CHANNEL_TYPE.EMAIL"></i>
+            <i class="fa fa-mobile-android-alt" *ngIf="chObj.channelType === CHANNEL_INFO_HTML.CHANNEL_TYPE.PUSH_NOTIFICATION"></i>
+            <i class="fa fa-mobile-android-alt" *ngIf="chObj.channelType === CHANNEL_INFO_HTML.CHANNEL_TYPE.INAPP_NOTIFICATION"></i>
+            <i class="far fa-paper-plane" *ngIf="chObj.channelType === CHANNEL_INFO_HTML.CHANNEL_TYPE.DM_CHANNEL && chObj.dmType == '3'"></i>
+            <i class="far fa-paper-plane" *ngIf="chObj.channelType === CHANNEL_INFO_HTML.CHANNEL_TYPE.DM_CHANNEL && chObj.dmType == '1'"></i>
+            <i class="far fa-paper-plane" *ngIf="chObj.channelType === CHANNEL_INFO_HTML.CHANNEL_TYPE.DM_CHANNEL && chObj.dmType == '2'"></i>
+            <i class="fal fa-comment-alt-dots" *ngIf="chObj.channelType === CHANNEL_INFO_HTML.CHANNEL_TYPE.SMS_CHANNEL"></i>
+            <i class="fab fa-facebook" *ngIf="chObj.channelType === CHANNEL_INFO_HTML.CHANNEL_TYPE.FACEBOOK_CHANNEL"></i>
+            <i class="fal fa-desktop" *ngIf="chObj.channelType === CHANNEL_INFO_HTML.CHANNEL_TYPE.WEB_PUSH"></i>
+            <i class="fal fa-code" *ngIf="chObj.channelType === CHANNEL_INFO_HTML.CHANNEL_TYPE.API_CHANNEL"></i>
+            <i class="fab fa-whatsapp" *ngIf="chObj.channelType === CHANNEL_INFO_HTML.CHANNEL_TYPE.WHATS_APP_CHANNEL"></i>
+            <span class="ml-1">{{chObj.channelName}}</span>
+        </li>
+       
+      </ul>
+    </div>
+    <div class="col float-right">
+      <button class="btn buttonCss shadow-none mr-2 floatFinalizeBtn" *ngIf="!isTemplateLibraryMode" [disabled]="!isPayload || ispromoExecutedOrRunning" (click)="finalizeChannels();"> <span class="mr-1"> {{'designEditor.channels.finalizeBtnlabel' | translate}} </span> <i class="fas fa-chevron-right"></i></button>
+    </div>
+    
+</div>
+
+

@@ -1,0 +1,36 @@
+.modalBodyStyle{
+    height: 515px;
+    padding: 1.5rem 2.5rem 2.5rem 2.5rem;
+}
+.thumbnail{
+    padding: 5px;
+    margin-right: 10px;
+    text-align: center;
+}
+#previewOnClient_Content, #spamTest_Content, #sapmDescriptionArea{
+    padding: 20px;
+    border: 2px solid #eee;
+    margin: 20px 20px 35px auto;    
+    overflow-x: hidden;
+    overflow-y: auto;
+}
+#previewOnClient_Content{
+ height: 340px;
+}
+#spamTest_Content, #sapmDescriptionArea{
+    height: 390px;
+}
+.spamTemp {
+    box-shadow: 1px 3px 6px 0px #ccc;    
+}
+.spamRed{
+    border-top: 2px solid red;
+}
+.cancelSapmDesc{
+    float:right;
+    position:absolute;
+    top:8px;
+    right:25px;
+    z-index:999;
+    cursor:pointer;
+}

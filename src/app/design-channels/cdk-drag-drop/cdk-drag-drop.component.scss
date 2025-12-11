@@ -1,0 +1,90 @@
+
+.example-container {
+    display: inline-block;
+    vertical-align: top;
+    overflow-x:hidden;
+    overflow-y: auto;
+    height:calc(100vh - 317px);
+    .itemDescription{
+      font-size: 12px;
+    }    
+    .dropbox {
+      width: 350px;
+      height: 40px;
+      padding: 15px;
+      border: 1px solid #292828;
+  }
+  .productPreview img{
+    max-width: 100%;
+    width: 8rem;
+    height: 8rem;
+    margin: 0.8rem;
+  }
+  .productPreview  div, .productPreview  p, .productPreview  h1,.productPreview  h2,
+  .productPreview  h3,.productPreview  h4,.productPreview  h5,.productPreview span{
+    margin: .3rem;
+    padding: .2rem;
+  }
+  }
+  
+  .example-list {
+    border: solid 1px #ccc;
+    min-height: 60px;
+    background: white;
+    border-radius: 4px;
+    overflow: hidden;
+    display: block;
+  }
+  .previewDrapDrop{
+    max-width: 100%;
+    border:1px solid #eee;
+    padding:10px;
+    height: calc(100vh - 317px);
+    overflow-x: hidden;
+    overflow-y: auto;
+  }
+  .example-box {
+    // padding: 20px 20px;
+    // border-bottom: solid 1px #ccc;
+    color: rgba(0, 0, 0, 0.87);
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    box-sizing: border-box;
+    cursor: move;
+    background: white;
+    font-size: 14px;
+  }
+  .droppedArea{
+    padding: 20px 20px;
+    color: rgba(0, 0, 0, 0.87);
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    box-sizing: border-box;
+    cursor: move;
+    background: white;
+    font-size: 14px;
+    margin: 0 auto;
+  }
+  .backarea{
+    background: #FFFFFF;
+    border: 1px solid #DCDCDC;
+    border-radius: 10px;    
+    padding:20px;
+  }
+  .backAreaDiv{
+    background: #FDFDF8;
+    border: 1px dashed #000000;
+    border-radius: 10px;
+  }
+  .prodAttrStyle{
+    background: #fff;
+    border: 1px solid #ddd;
+    padding: 6px;
+  }
+  
+  
+  

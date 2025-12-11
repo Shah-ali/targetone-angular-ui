@@ -1,0 +1,124 @@
+<div class="outterWrapper personalization-tags-section">
+    <div class="row m-0">
+        <div class="col p-0">
+            <div class="row searchSection mr-0 pt-3 pb-3">
+                <div class="col-6">
+                    <div class="col ml-4">
+                        <ul class="nav tabsLiStyle tabsNoSpace mb-2">
+                            <li class="" (click)="switchTextTab(0);" [ngClass]="apiTabActive === 0? 'active':''">{{'journeySetUp.all' | translate}}</li>
+                            <li (click)="switchTextTab(1);" [ngClass]="apiTabActive === 1? 'active':''">{{'apiPersonalization.activeLbl' | translate}}</li>
+                            <li (click)="switchTextTab(2);" [ngClass]="apiTabActive === 2? 'active':''">{{'apiPersonalization.inactiveLbl' | translate}}</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-6">
+                    <div class="row col justify-content-end">
+                        <div class="col-2 p-0 mr-3 mt-2">
+                            <label class="mediumLabel p-0 m-0 row justify-content-end pointer blueColor" *ngIf="!sortByLatest" (click)="sortByLatestMethod(1);">{{'designEditor.emailEditor.latestlbl' | translate}} <i class="fas fa-sort-up fa-lg mt-2 ml-3"></i></label>
+                            <label class="mediumLabel p-0 m-0 row justify-content-end pointer blueColor" *ngIf="sortByLatest" (click)="sortByLatestMethod(0);">{{'designEditor.emailEditor.oldestlbl' | translate}} <i class="fas fa-sort-down fa-lg ml-3"></i></label>
+                        </div>
+                        <div class="col-4 p-0 mr-3">
+                          <i class="far fa-search pointer"></i>
+                          <input
+                            type="text"
+                            id="searchPTagsBtn"
+                            class="form-control shadow-none searchPTagsBtn"
+                            placeholder="{{'searchLbl' | translate}}"
+                            (keyup)="searchPTags($event)"
+                            autocomplete="off" />
+                        </div>
+                            <button
+                              type="button"
+                              class="btn buttonCss shadow-none m-0"
+                              (click)="createApiBasedPersonalization(false,-1)">
+                              <i class="far fa-plus mr-1 smallLabel"></i> {{'apiPersonalization.createAPIIntegrationLbl' | translate}}
+                            </button>
+                    </div>
+                    
+                    
+                </div>                
+              </div>
+        </div>
+    </div>
+    <div class="row ml-3 mr-3 text-center">
+            <div class="col savedTagBlock pt-3 d-flex">
+                <!-- <label class="mt-2">Personalized tag will load here.</label> -->
+            
+                <div class="card" *ngFor="let item of filteredObjList" id="card_{{ item.apiKey }}">
+                    <div class="row p-0 m-0 mb-3">
+                        <div class="col-8 pl-0">
+                            <div class="col p-0 text-left">
+                                <label class="mediumLabel">{{ item.apiName }}</label>
+                            </div>
+                        </div>
+                        <div class="row col justify-content-end">
+                            <div class="mttnIcons col p-0">
+                                <i class="fal fa-pencil-alt fa-sm mr-2" *ngIf="item.active == '1'" (click)="createApiBasedPersonalization(true,item.apiKey)" ngbTooltip="{{'apiPersonalization.editAPIIintegrationTooltip' | translate}}" tooltipClass="ngbTooltipStyle"></i>
+                                <i class="fal fa-eye fa-sm" *ngIf="item.active == '3'"></i>
+                            </div>
+                            <div class="toggleEnableDisable col-3 p-0"  [ngClass]="item.active == '1'? 'toggleEnable' : 'toggleDisable'">
+                                <div class="toggleButton">
+                                    <label class="switch ml-1" ngbTooltip="{{'apiPersonalization.activateDeactivateAPIintegrationTooltip' | translate}}" tooltipClass="ngbTooltipStyle">
+                                        <input type="checkbox" class="enableImageCk" id="" [checked]="item.active == '1'" (click)="activeInActiveAPICallMethod(item.apiKey,item.active,$event, item.apiName);">
+                                        <span class="slider round"></span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row p-0 m-0 mb-2">
+                        <div class="col p-0">
+                            <textarea class="form-control xSmallLable apiBasedUrl" *ngIf="item.apiType != '2'" placeholder="{{'apiPersonalization.urlAppearsHereLbl' | translate}}">{{item.requestUrl}}</textarea>
+                            <ng-container *ngIf="item.apiType == '2'">
+                                    <div class="form-control xSmallLable apiBasedScriptJS"> 
+                                        <div class='col p-0'>
+                                            <div class='col p-0'>
+                                            <b>Script name: </b> 
+                                             <label class="xSmallLable text-muted m-0"> {{item.scriptName}}
+                                            </label>
+                                            
+                                            </div>
+                                            <div class='col p-0'>
+                                            <b>Script description: </b> 
+                                             <label class="xSmallLable text-muted m-0"> {{item.scriptDesc}}
+                                            </label>
+                                            
+                                            </div>
+                                          </div>                                       
+                                    </div>
+                            </ng-container>
+                            
+                        </div>
+                    </div>
+                    <div class="statusBar row">
+                        <div class="multi-object-info col mr-2 ml-3" *ngIf="item.multiObject != 'false'">{{'apiPersonalization.multiObjectLbl' | translate}}</div>
+                        <div class="single-object-info col mr-2 ml-3" *ngIf="item.multiObject == 'false'">{{'apiPersonalization.singleObjectLbl' | translate}}</div>
+                        <div class="purpleColor col-3" *ngIf="item.apiType == '1'">{{'apiPersonalization.RESTAPILbl' | translate}}</div>
+                        <div class="orangeColor col-3" *ngIf="item.apiType == '2'">{{'fusionJSComponent.fusionJSAPILbl' | translate}}</div>
+                        <div class="create-by-style col" [ngbPopover]="popoverContent" [autoClose]="false" triggers="mouseenter:mouseleave" #p1="ngbPopover" (mouseenter)="openCreateByPopover(p1, item)">
+                            <i class="createdByIcon"></i>
+                            <span>{{'apiPersonalization.ViewCreatedDetailsLbl' | translate}}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+    </div>
+    
+</div>
+
+<ng-template >
+    <app-create-api-integration #newApiIntegration></app-create-api-integration>
+</ng-template>
+
+<ng-template #popoverContent>
+    <div class="createByAndDate">
+      <div>
+        <h5 class="m-0 p-0">{{'personalizationTagsComponent.createdByPopoverLbl' | translate}}</h5>
+        <span>{{this.apiCreatedBy}}</span>
+      </div>
+      <div class="mt-3">
+        <h5 class="m-0 p-0">{{'personalizationTagsComponent.createdDatePopoverLbl' | translate}}</h5>
+        <span>{{this.apiCreatedDate}}</span>
+      </div>
+    </div>
+</ng-template>

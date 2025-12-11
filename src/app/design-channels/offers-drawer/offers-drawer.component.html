@@ -1,0 +1,274 @@
+<div class="col-12">
+<div class="row col-12 p-0 headerTitle">
+    <h5 class="col titleAddOffers p-0 mb-0 pl-3" *ngIf="isMergeTagEnable">{{'designEditor.offerDrawerComponent.mergeTagInjectionLbl' | translate}}</h5>
+    <h5 class="col titleAddOffers p-0 mb-0 pl-3" *ngIf="!isMergeTagEnable">{{'designEditor.offerDrawerComponent.mergeTagInjectionLbl' | translate}}</h5>
+    <i class="col-1 fas fa-times fa-sm text-right closeAlign" (click)="onClose();"></i>
+</div> 
+<div class="row col-12 p-0 pl-3 topTabs">
+    <ul class="col p-0 nav tabsLiStyle tabsNoSpace">
+        <li class="" (click)="switchOffersTab(0);" [ngClass]="tabActive === 0? 'active':''" *ngIf="isTabMergeTagEnable">{{'designEditor.offerDrawerComponent.mergeTagslbl' | translate}}</li>
+        <li class="" (click)="switchOffersTab(1);" [ngClass]="tabActive === 1? 'active':''" *ngIf="isTabOffersEnable">{{'designEditor.offerDrawerComponent.Offers' | translate}}</li>
+        <li class="" (click)="switchOffersTab(2);" [ngClass]="tabActive === 2? 'active':''" *ngIf="isTabRecoOffersEnable">{{'designEditor.offerDrawerComponent.recommendations' | translate}}</li>
+    </ul>    
+</div>
+<div class="col p-0" *ngIf="isOfferSectionEnabled; else mergeTagSection">
+    <div class="row searchOffers mt-2 mb-2 ml-0 centerPos" id="searchOffersPanel">
+        <i class="far fa-search fa-sm pt-1"></i>            
+            <input class="search col" placeholder="{{'designEditor.offerDrawerComponent.searchOfferlbl' | translate}}" (ngModel)="searchByoffers" (keydown.enter)="searchByUserInput($event);">
+    </div>
+
+    <div class="modal-body offersContentArea p-0 row col m-0" #checkedMainOffers>
+    <div class="row col-12 cardWrapper" *ngIf="!waitTillOffersLoad; else loadingDiv">
+        <div class="sliderBackDrop" *ngIf="sliderBlockContent"></div>
+        <div class="card p-0 col-12"  *ngFor="let item of offersDataJson; let i = index;" id="card_{{item.dbKey}}" [ngClass]="selectedIndex == i ? 'focusIn' : ''">
+            <div class="card-header">
+            {{item.offerTitle}}
+            </div>
+            <div class="card-body">
+                <h5 class="cardname">
+                    {{item.offerTitle}}
+                </h5>
+                <label class="cardDesc">
+                    {{item.offerDesc}}
+                </label>
+            </div>
+            <hr/>
+            <div class="card-body">
+                <p class="card-text">{{'designEditor.offerDrawerComponent.codelbl' | translate}}<span>{{item.offerCode || '--'}}</span></p>
+                <p class="card-text">{{'designEditor.offerDrawerComponent.endDatelbl' | translate}} {{item.offerEndDate | date : "dd/MM/y"}}</p>
+                <p class="card-text">{{'designEditor.offerDrawerComponent.noofSelectAttributeslbl' | translate}} <span class="countAttr mr-1" id="attrCount_{{item.dbKey}}"> 0 </span> 
+                <label class="attrsArea pointer m-0" (click)="getOffersAttributes(item,i);" *ngIf="isViewEditEnabled"> <span class="view">{{'designEditor.viewlbl' | translate}}</span>/<span class="edit">{{'designEditor.editBtn' | translate}}</span></label></p>
+            </div>
+            <hr/>
+            
+            <div class="col mt-4 mb-2" *ngIf="isAttributeListId == item.dbKey" [ngClass]="isAttributeListEnable ? 'd-block' : 'd-none'" >
+                <h5 class="attrTitleName">
+                    {{'designEditor.offerDrawerComponent.attributeslbl' | translate}}
+                    <i class="far fa-times float-right mt-1" (click)="closeAttrPanel(item.dbKey);"></i>
+                </h5>
+                
+                <div class="row searchOffers mb-3 centerPos ml-0" id="searchAttributesPanel">
+                    <i class="far fa-search fa-sm pt-1"></i>
+                    <input class="search col" placeholder="{{'designEditor.offerDrawerComponent.searchOfferlbl' | translate}}" (keydown.enter)="searchAttrByInputVal($event);">
+                </div>
+                <div class="row col-12 centerPos p-0 attrsOverFlow">
+                    <ul class="nav" #attributesOffers>
+                        <li class="col-6 p-0 liListOffers" *ngFor="let list of offerAttributesList; let i = index" [attr.name]="list"> 
+                           <!--  <input type="checkbox"  class="checkBoxStyle mr-2" id="check_{{list}}" (click)="checkedAttrs(list,item,$event);"> -->
+                            <i
+                            class="far fa-copy mr-2"
+                            #t30="ngbTooltip"
+                            triggers="manual"
+                            ngbTooltip="{{'productRecoAdvanceComponent.copiedTextFromMergeTagLbl' | translate}}"
+                            (click)="copyToPasteOffers(t30, item, false, list)"
+                            *ngIf="mergeTagEnabled"
+                            placement="right"
+                            ></i>
+                            <label for="check_{{list}}" class="offerAttrlabel">{{list}}</label> 
+                        </li>     
+                    </ul>           
+                </div>
+
+                <h5 class="attrTitleName">{{'designEditor.offerDrawerComponent.couponslbl' | translate}}</h5>
+                    <div class="row col-12 centerPos p-0">
+                        <ul class="nav" #attrbutesCoupons>
+                            <li class="col-8 p-0 liListOffers"  *ngFor="let clist of couponAttributesList; let i = index" [attr.name]="clist"> 
+                                <!-- <input type="checkbox" class="checkBoxStyle mr-2" id="check_{{clist}}" (change)="checkedAttrs(clist,item,$event);"> -->
+                                <i
+                                class="far fa-copy mr-2"
+                                #t31="ngbTooltip"
+                                triggers="manual"
+                                ngbTooltip="{{'productRecoAdvanceComponent.copiedTextFromMergeTagLbl' | translate}}"
+                                (click)="copyToPasteOffers(t31, item, false, clist)"
+                                *ngIf="mergeTagEnabled"
+                                placement="right"
+                                ></i>
+                                <label for="check_{{clist}}" class="offerAttrlabel">{{clist}}</label> 
+                            </li>     
+                        </ul>           
+                    </div>
+                <hr/>
+            </div>    
+
+            <div class="card-body row col-12" *ngIf="this.dmTypeVal == '3'">            
+                <label class="cardSelectoffer mt-1 pl-3">
+                    {{'designEditor.offerDrawerComponent.selectOfferlbl' | translate}}
+                </label>
+                <div class="toggleButton mt-1 pl-0" [attr.data-toggleBtn]="item.dbKey">
+                    <label class="switch">
+                        <input type="checkbox" id="check_{{item.dbKey}}" (change)="onSelectOfferMethod($event,item.dbKey,i);">
+                        <span class="slider round"></span>
+                    </label>
+                </div>
+                <div class="col p-0 text-right" *ngIf="isAttributeListId == item.dbKey" [ngClass]="isAttributeListEnable ? 'd-block' : 'd-none'">
+                    <button type="button" class="btn btn-outline-primary btn-sm mrgtop-5"  (click)="getSelectedAttrObj(item);">{{'designEditor.doneBtn' | translate}}</button>
+                </div>
+            </div>
+            </div>
+        
+            <div class="centerPos" *ngIf="noOfferFound">
+                <label class="mediumLable lighterColor">{{'designEditor.offerDrawerComponent.noOffersFoundlbl' | translate}}</label>
+            </div>
+           
+        </div>
+        <ng-template #loadingDiv>
+            <div class="loadingOfferswait">
+                <h6>{{'designEditor.offerDrawerComponent.loadingPleaseWaitlbl' | translate}}</h6>
+            </div>
+        </ng-template>
+    </div>
+</div>
+<ng-template #mergeTagSection>
+    <div class="row p-0 mergeTagTab mt-3" *ngIf="!isOfferRecoEnabled; else offerRecoSection">
+        <app-merge-tag-injection [dataFromParent]="modalRef" *ngIf="mergeTagInjectionObj"  [jsonData]="mergeTagInjectionObj"></app-merge-tag-injection>
+    </div>
+
+    <ng-template #offerRecoSection>
+        <div class="row p-0 mergeTagTab" #recoSectionElemts>
+            <div class="col-12 mt-3 mb-3">
+                <select class="form-control templateDropdown" (change)="loadRecoOffersMethod($event);">
+                    <option value="-1">{{'journeySetUp.all' | translate}}</option>
+                    <option *ngFor="let x of recommendationObj" value="{{x.key}}">{{x.name}}</option>
+                </select>
+            </div>
+            <div class="col offersContentArea">
+            <div class="row col cardWrapper recoCard" *ngIf="!waitTillOffersLoad; else loadingDiv">
+                <div class="sliderBackDrop" *ngIf="sliderBlockContent"></div>
+                <div class="card p-3 col-12 cardBuleBorder"  *ngFor="let item of showRecoOffers; let i = index" id="card_{{item.key}}" [ngClass]="selectedRecoIndex == i ? 'focusIn' : ''">
+                    <div class="row card-body p-0 mb-3" id="{{item.key}}">
+                        <div class="toggleButton mt-1 pl-0  col-1 p-0" [attr.name]="item.key">
+                            <label class="switch verticalMiddle">
+                                <input type="checkbox" id="toggleBtn_{{item.key}}"  (click)="selectRecoOffersMethod($event,item);">
+                                <span class="slider round"></span>
+                            </label>
+                        </div>
+                        <div class="cardSelectoffer mt-1 pl-3 col">
+                            <label class="xSmallLable font-bold">{{item.name}}</label>
+                        </div>                        
+                    </div>
+                    <hr/>
+                    <div class="row pl-3 pr-3">
+                        <div  class="col p-0">
+                            <div class="card-body mb-2">
+                                <label class="xSmallLable fontWeight600">{{'designEditor.offerDrawerComponent.inclusionsLbl' | translate}}</label>
+                            </div>
+                        </div>
+                        <div  class="col p-0">
+                            <div class="card-body mb-2">
+                                <label class="xSmallLable fontWeight600">{{'designEditor.offerDrawerComponent.exclusionsLbl' | translate}}</label>
+                            </div>
+                        </div>
+                        <hr/>
+                    </div>
+                    
+                    <div class="row pl-3 pr-3">
+                        <div class="card-body">
+                            <label class="xSmallLable fontWeight600">{{'designEditor.offerDrawerComponent.boostRecommendationsLbl' | translate}}</label>
+                        </div>
+                        <hr/>
+                    </div>                    
+                    <div class="row pl-3 pr-3">
+                        <div class="card-body">
+                            <div  class="col p-0">
+                                <label class="xSmallLable control-label text-muted">{{'designEditor.offerDrawerComponent.noofRecommendationsLbl' | translate}}</label>
+                            </div>
+                            <div class="row col p-0">
+                                <div  class="col-6 mr-2">
+                                    <select class="form-control xSmallLabel inputStyle noofReco_{{item.key}}" id="noofReco_{{item.key}}" [disabled]="isRecoDropdownEnabled[item.key] === undefined" (change)="getNoofRecoMethod($event,item,i);">
+                                        <option value="-1">{{'designEditor.selectlbl' | translate}}</option>
+                                        <option value="{{opt}}" *ngFor="let opt of noofRecoPreFilled">{{opt}}</option>
+                                    </select>
+                                </div>  
+                                <div class="col p-0" *ngIf="isRecoDropdownEnabled[item.key] !== undefined" [ngClass]="isShowAttributeLinkEnabled ? 'd-block':'d-none'">
+                                    <label class="attrsArea pointer m-0">  
+                                        <span class="view show_{{item.key}}" (click)="showHideRecoTabs($event,item.key,i);"> {{showhideLabel}} </span>
+                                        <!-- <span class="view hide_{{item.key}}"   (click)="showHideRecoTabs(0,item.key);">Hide</span> -->
+                                    </label> 
+                                </div> 
+                            </div>                       
+                            <!-- <input type="text" class="col-9 p-2 inputStyle noofRecoInput" id="noofReco_{{item.key}}" (keyup)="getNoofRecoMethod($event);"> -->
+                        </div>
+                    </div>                   
+                    <div class="col p-0" *ngIf="isAttributeListIdReco == item.key" [ngClass]="recoAttributeSection ? 'd-block' : 'd-none'">
+                        <div class="card-body mb-2" *ngIf="isAttributeListIdReco == item.key" [ngClass]="isAttributeListEnableReco ? 'd-block' : 'd-none'">
+                            <ul class="col p-0 nav tabsLiStyle tabsNoSpace">
+                                <li [ngClass]="recoTabIndex === k+1? 'active':''" *ngFor="let x of recoTabs; let k = index"  value="{{k}}" (click)="getRecoRuleAttributes(item.key,k+1,i);">Reco {{k+1}}</li>
+                            </ul>
+                            <!-- <p class="xSmallLable">No of selected attributes:
+                                <label class="attrsArea pointer m-0" (click)="getRecoRuleAttributes(item,i);"> <span class="view">{{'designEditor.viewlbl' | translate}}</span>/<span class="edit">{{'designEditor.editBtn' | translate}}</span></label> 
+                            </p> -->
+                        </div>
+                        <div class="col" *ngIf="isAttributeListIdReco == item.key" [ngClass]="isAttributeListEnableReco ? 'd-block' : 'd-none'" >
+                            <h5 class="attrTitleName">
+                                {{'designEditor.offerDrawerComponent.attributeslbl' | translate}}
+                                <label class="float-right mt-1 view"><span class="redColor xSmallLable">{{'designEditor.offerDrawerComponent.clearCurrentLbl' | translate}}</span> | <span class="redColor xSmallLable">{{'designEditor.offerDrawerComponent.clearAllLbl' | translate}}</span></label>
+                                <!-- <i class="far fa-times float-right mt-1" (click)="closeRecoAttrPanel(item.key);"></i> -->
+                            </h5>
+                            
+                            <div class="row searchOffers mb-3 centerPos ml-0" id="searchAttributesPanel">
+                                <i class="far fa-search fa-sm pt-1"></i>
+                                <input class="search col" placeholder="{{'designEditor.offerDrawerComponent.searchOfferlbl' | translate}}" [(ngModel)]="searchInputreco" (keydown.enter)="searchAttrByInputValReco($event,item.key);">
+                            </div>
+                            <div class="row col-12 centerPos p-0 attrsOverFlow">
+                                <ul class="nav col-12" #attributesOffers>
+                                    <li class="col-3 p-0 liListOffers" *ngFor="let list of recoRuleAttributesList; let i = index" [attr.name]="list"> 
+                                        <!-- <input type="checkbox"  class="checkBoxStyle mr-2 check_{{list}}" id="check_{{list}}" (click)="checkedRecoAttrs(list,item,$event);"> -->
+                                        <i
+                                        class="far fa-copy mr-2"
+                                        #t30="ngbTooltip"
+                                        triggers="manual"
+                                        ngbTooltip="{{'productRecoAdvanceComponent.copiedTextFromMergeTagLbl' | translate}}"
+                                        (click)="copyToPasteReco(t30, item, false, list)"
+                                        *ngIf="mergeTagEnabled"
+                                        placement="right"></i>
+                                        <label for="check_{{list}}" class="offerAttrlabel">{{list}}</label> 
+                                    </li>     
+                                </ul>           
+                            </div>
+            
+                            <h5 class="attrTitleName">{{'designEditor.offerDrawerComponent.couponslbl' | translate}}</h5>
+                                <div class="row col-12 centerPos p-0">
+                                    <ul class="nav col-12" #attrbutesCoupons>
+                                        <li class="col-5 p-0 liListOffers"  *ngFor="let clist of recoRuleCouponAttributesList; let i = index" [attr.name]="clist"> 
+                                            <!-- <input type="checkbox" class="checkBoxStyle mr-2 check_{{clist}}" id="check_{{clist}}" (change)="checkedRecoAttrs(clist,item,$event);"> -->
+                                            <i
+                                            class="far fa-copy mr-2"
+                                            #t30="ngbTooltip"
+                                            triggers="manual"
+                                            ngbTooltip="{{'productRecoAdvanceComponent.copiedTextFromMergeTagLbl' | translate}}"
+                                            (click)="copyToPasteReco(t30, item, false, clist)"
+                                            *ngIf="mergeTagEnabled"
+                                            placement="right"></i>
+                                            <label for="check_{{clist}}" class="offerAttrlabel">{{clist}}</label> 
+                                        </li>     
+                                    </ul>           
+                                </div>
+                            <hr/>
+                        </div> 
+                    </div>
+                      
+                </div>
+                <div class="loadingOfferswait" *ngIf="isDataNofound">
+                    <h6>{{'designEditor.offerDrawerComponent.dataNotFoundLbl' | translate}}</h6>
+                </div>
+            </div>
+            <ng-template #loadingDiv>
+                <div class="loadingOfferswait">
+                    <h6>{{'designEditor.offerDrawerComponent.loadingPleaseWaitlbl' | translate}}</h6>
+                </div>
+            </ng-template>
+        </div>
+            
+        </div>        
+    </ng-template>
+</ng-template>
+</div><!-- end -->
+<div class="row col-12 mt-1 pr-0 done-btn mb-1" *ngIf="mergeTagEnabled && this.dmTypeVal == '3'">
+    <button class="btn btn-outline-primary btn-sm col-12 offerBtn" *ngIf="isOfferSectionEnabled; else mergeTagSave" [disabled]="ObjectValues(getcheckedAttrObj).length === 0 || !offerAttributeCount" (click)="getFinalOffers()">{{'designEditor.doneBtn' | translate}}</button>
+    <ng-template #mergeTagSave>
+        <button class="btn btn-outline-primary btn-sm col-12 mergeBtn" *ngIf="isMergeTagEnable; else recoOffers" [disabled]="collectPropertArryByValue.length === 0" (click)="getFinalMergeTags()">{{'designEditor.doneBtn' | translate}}</button>
+    <ng-template #recoOffers>
+        <button class="btn btn-outline-primary btn-sm col-12 RecoBtn" [disabled]="ObjectValues(getSelectedRecoOffers).length === 0" (click)="getRecommendationSelectedOffer();">{{'designEditor.doneBtn' | translate}}</button>
+    </ng-template>
+    </ng-template>
+</div>

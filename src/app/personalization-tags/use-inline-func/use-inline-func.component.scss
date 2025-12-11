@@ -1,0 +1,75 @@
+@import '../../../custom-style.scss';
+.buttonCss {
+  @include secondaryBttn;
+}
+
+.buttonPrimaryCss {
+  @include primaryBttn;
+}
+
+.func-container {
+  .help-section {
+    border: 1px solid #80b7f4;
+    background-color: #ecf5ff;
+
+    .info {
+      border-left: 2px solid #67a9f2;
+      margin-left: 5px;
+      > i {
+        color: #1b7deb;
+        font-size: 17px;
+      }
+    }
+
+    .closeHelp {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      > i {
+        color: #8c8c8c;
+      }
+    }
+
+    .help-content {
+      span {
+        font-size: 14px;
+        font-weight: 600;
+      }
+
+      ul {
+        padding: 0 10px;
+        li {
+          font-size: 12px;
+        }
+      }
+    }
+  }
+
+  .input-section {
+    .input-field {
+      label {
+        font-size: 14px;
+        color: #666666;
+      }
+    }
+  }
+
+  .view-script-section {
+    label {
+      font-size: 14px;
+      color: #000000;
+    }
+
+    textarea {
+      font-size: 13px;
+      color: #c478ff !important;
+      background: #fff !important;
+    }
+  }
+}
+
+.error-message {
+  color: red;
+  font-size: 12px;
+  margin-top: 5px;
+}

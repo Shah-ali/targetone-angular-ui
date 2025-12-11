@@ -1,0 +1,85 @@
+$primary-color: #ff7e5f;
+
+.slider-container {
+  display: inline-block;
+  position: relative;
+  width: 100%;
+
+  .slider-value {
+    font-size: 12px;
+    font-weight: 600;
+    margin: 5px 0 10px 0;
+    text-align: center;
+  }
+
+  .slider-section {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    span {
+      margin: 0 10px;
+      font-size: 14px;
+    }
+  }
+
+  .slider {
+    width: 50%;
+    height: 3px;
+    background: #000;
+    outline: none;
+    -webkit-appearance: none;
+    appearance: none;
+    cursor: pointer;
+    transition: background 0.4s ease;
+
+    &:hover {
+      background: linear-gradient(to right, #ff5722, #ff9800);
+    }
+
+    &:active {
+      background: linear-gradient(to right, #ff1744, #ff6d00);
+    }
+
+    &::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      background: #000;
+      border: none;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+      cursor: pointer;
+      transition: background 0.3s, transform 0.2s;
+    }
+
+    &::-webkit-slider-thumb:hover {
+      background: #000;
+      transform: scale(1.2);
+    }
+
+    &::-moz-range-thumb {
+      width: 20px;
+      height: 20px;
+      background: blue;
+      border-radius: 50%;
+      cursor: pointer;
+    }
+  }
+
+  input[type='range']:focus ~ .slider-value {
+    color: #ff5722;
+  }
+
+  .controls {
+    margin-top: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 200px;
+
+    > i {
+      cursor: pointer;
+    }
+  }
+}

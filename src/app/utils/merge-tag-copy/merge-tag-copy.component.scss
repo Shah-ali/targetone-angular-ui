@@ -1,0 +1,19 @@
+.smallFont{
+    font-size: .69rem;
+}
+.mediumFont{
+    font-size: .75rem;
+}
+
+.floatingDivCopied{
+    position: absolute;
+    top: 3px;
+    left: 220px;
+    width: 70px;
+    height: 27px;
+    background-color: #5b5454;
+    color: #FFF;
+    padding: 5px 10px;
+    border-radius: 5px;
+    z-index: 9999;
+}

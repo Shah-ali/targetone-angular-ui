@@ -1,0 +1,120 @@
+@import "/src/custom-style.scss";
+.buttonCss {
+  @include secondaryBttn;
+}
+
+.buttonPrimaryCss {
+  @include primaryBttn;
+}
+
+.grpContent {
+  display: flex;
+  border: 1px solid #ccc;
+  margin: 5px 15px;
+
+  .floating-custom-blocks {
+    position: fixed;
+    top: 165px;
+    right: 289px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    z-index: 1000;
+    background: #e6cbcb;
+    padding: 5px;
+  }
+
+  .block-icon {
+    width: 40px;
+    height: 40px;
+    background: white;
+    border: 1px solid #ccc;
+    cursor: grab;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .grpSection {
+    width: 100%;
+  }
+
+  .sidebarLeft {
+    position: relative;
+
+    &:hover {
+      .sidebar__expand-handle {
+        opacity: 1 !important;
+        transition: all 0.5s !important;
+      }
+    }
+
+    .dataLayerSection {
+      width: 100%;
+      padding: 5px;
+    }
+
+    .toggleArrow {
+      background-color: #4cb9ea !important;
+      width: 30px;
+      height: 30px;
+      position: absolute;
+      top: 120px;
+      z-index: 999;
+      border-radius: 19px;
+      text-align: center;
+
+      &.sidebar__expand-handle {
+        opacity: 0;
+        right: -18px;
+        transition: right 0.5s ease-in-out;
+      }
+
+      &.sidebar__collapse-handle {
+        transform: rotate(0.51turn);
+        right: -16px !important;
+        transition: right 0.5s ease-in-out !important;
+      }
+
+      i {
+        color: #fff;
+      }
+    }
+  }
+}
+
+.grpTopContainer {
+  .bluebar {
+    display: flex;
+    align-items: center;
+    background-color: #f4f9ff;
+    text-align: left;
+    padding: 5px 0;
+
+    .fa-long-arrow-alt-right {
+      color: #8c8c8c;
+      font-weight: 400;
+      vertical-align: middle;
+    }
+    span {
+      font-size: 14px;
+    }
+    .separator {
+      font-size: 23px;
+      color: #8c8c8c;
+      font-weight: 100;
+    }
+  }
+
+  .sizeSection {
+    select {
+      margin-left: 5px;
+    }
+  }
+
+  .bttnSection {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+  }
+}

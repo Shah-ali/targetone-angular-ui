@@ -1,0 +1,342 @@
+@import '../../../custom-style.scss';
+.custom-success-btn{
+    border:1px solid #04e66ada;
+    color: #04e66ada;
+}
+
+
+.template-area {
+  padding: 20px 15px;
+}
+
+.template-area, .preview-area, .actual-preview{
+    border-radius: 4px;
+    background-color: #fff;
+    overflow-x: hidden;
+    overflow-y: auto;
+    height: calc(100vh - 104px);
+    width: 98%;
+}
+.imgIcon{    
+    height: 250px;
+    width: 100%;
+    object-fit: cover;
+    object-position: 0px 0px;
+    overflow: hidden;
+}
+.btnCustomColor{
+    background-color:#1fab84;
+    border-color: #1fab84;
+}
+.thumbnailHover{border-radius: 1.5rem;}
+.thumbnailHover:hover, .thumbnailHover.active, .thumbnailHover:focus{
+    border-bottom-width: .4rem;
+    border-top-width: 2px;
+    border-left-width: 2px;
+    border-right-width: 2px;
+    border-style: solid;
+    border-color: #3366FF;
+}
+::ng-deep .custom-popup{
+    max-width: initial !important;
+    max-height: 625px !important;
+    overflow-y: auto;
+    margin: 0;
+    margin-top: 10px;
+    overflow-x: hidden;
+}
+.mobileV{
+    background-image: url('../../../assets/images/mobile.png');
+    background-repeat: no-repeat;
+    width: 100%;
+    max-height: 100%;
+    background-position: center;
+    position: relative;
+    background-position-y: top;
+    min-height: 525px;
+}
+.fitOnMobile{
+    height: 465px;
+}
+.tab-list{
+    list-style: none;
+    padding-bottom: 10px;
+
+  li {
+    display: inline;
+    padding: 8px;
+    cursor: pointer;
+    font-size: 12px;
+    color: #3366FF;
+
+    &.active {
+      border-bottom: 2px solid #3366FF;
+
+      button {
+        color: #3366FF;
+      }
+    }
+
+    button:hover{
+      color:#3366FF;
+    }
+
+    .disable {
+      cursor: default;
+      border-bottom: none;
+    }
+  }
+
+  button{
+    border:none;
+    background: none;
+  }
+}
+.bd-custom{
+  border-bottom: 1px solid #BFC1C8;
+  border-top: 1px solid #BFC1C8;
+}
+.tempreviwe-name{
+    background-color: #FBFCF0;
+    @include titleLabel;
+    color: #000;
+
+    button {
+      font-size: 1.5rem;
+    }
+}
+.font-small{
+    font-size: $btnfontsize;
+  }
+  .inline-tab{
+    list-style: none;     
+  }
+.inline-tab li{
+  display: inline;
+  padding:11px 8px;
+  cursor: pointer;
+  font-size: 11px;
+  color: #000;
+}
+.inline-tab li.active{
+  color: #0091FF;
+}
+  .searchSection {
+      align-items: center;
+      width:100%;
+      margin-bottom: 15px;
+      
+      .sortBy {
+          span {
+              font-size: 14px;
+          }
+          .parameter {
+              color: #3366FF;
+              margin-left: 5px;
+          }
+      }
+      .searchBox {
+          justify-content: end;
+          align-items: center;
+          border-bottom: 1px solid #ccc;
+          #searchTempalteByName {
+              border: none;
+              background: transparent;
+              flex: 1;
+              padding: 0;
+              height: 30px;
+              &::placeholder {
+                  color: #999;
+                  font-weight: lighter;
+              }
+          }
+          .fa-search {
+              border: none;
+              background: transparent;
+              padding: 0;
+              color: #aaa;
+          }
+      }
+  }
+  .buttonCss{
+    @include secondaryBttn;
+  }
+  
+.successOutline{
+  @include buttonStyle1($button:#0da73b);   
+}
+.paddL10{
+  padding-left: 10px;
+}
+.font-light{
+  font-weight: $fontweightlight;
+}
+.pointer{
+  cursor: pointer;
+}
+#thumbnailContent{
+  border:none;
+  overflow: hidden !important;
+  height: calc(100vh - 243px);
+  width: 100%;
+}
+#thumbnailContent html body table{
+  width:600px !important;
+}
+.mobileView{
+  width: 320px !important;
+}
+
+
+
+
+.ChannelAnalyticsCtr{  
+  position: relative;
+  background-color: #F0F2F7;
+
+   .top-d-heading {
+     font-size: .8rem;
+     font-weight: 400;
+     margin-bottom: 0;
+   }
+
+   button {
+     font-size: 0.75rem;
+     font-weight: normal;
+   }
+   .actual-preview{
+     padding: 0;
+     background-color: #F0F2F7;
+   }
+}
+#analyticsWrapper{
+    display: flex;
+    flex-direction: row;
+    background-color: #F0F2F7;
+    
+}
+#conversationFunnelInfo{
+    margin-top: 10px;
+   
+}
+
+#clickPerformanceChart,
+#clickAndOpenRateChart{
+   margin-top: 15px;
+   
+}
+#channelAnalytics{
+    padding-left: 15px;
+}
+#wrapperSeperator{
+  margin: 0px !important;
+}
+.emailContent{
+    display: flex;
+    flex-direction: column;
+    width: 60%;
+    .mapLabel{
+      padding-left: 10px;
+    }
+    .payload{
+      margin-right: calc(1rem - 2px)!important;
+      margin-left:0px !important;
+      padding-left: 20px !important;
+    }
+}
+#thumbnailContent{
+    min-height: 4000px;
+}
+#heatMapContainer{
+  width: 50%;
+  height:4000px;
+  position: absolute;
+}
+.mapLabel{
+  text-align: left;
+  line-height: 50px;
+  height: 50px;
+  margin-top: 15px;
+  background-color: #FFF;
+  font-size: 14px;
+  color: #666F80;
+  font-weight: bold
+}
+#channelAnalytics{
+    .mapLabel,
+   .analyticsLabel,
+    #funnelChart,
+    #clickAndOpenRateChartLegend{
+      padding-left:20px;
+  }
+} 
+.chart{
+  background-color: #FFF;
+  width: 600px;
+  height:400px;
+}
+#conversationFunnelInfo,
+#clickPerformanceInfo,
+#clickAndOpenRate{
+  background-color: #FFF;
+}
+#conversationFunnelInfo .analyticsLabel{
+  font-style: normal;
+  font-weight: 500;
+  font-size: 0.875rem;
+  line-height: 20px;
+  color: #999;
+  display: inline-block;
+  width: 90%;
+  margin-top : 10px ;
+}
+#clickAndOpenRateChartLegend{
+  padding-bottom: 20px;
+}
+#clickRateCircle,
+#openRateCircle,
+#morningCircle,
+#noonCircle,
+#eveningCircle{
+  display:inline-block;
+  margin-right:5px;
+  border-radius:20px;
+  width:20px;
+  height:20px; 
+}
+#clickRateCircle{
+  background-color:#F9AF8D;
+  margin-left:15px ;
+}
+#openRateCircle{
+  background-color:#F8B3D3; 
+}
+.legendLabel{    
+    font-size: 14px;
+    color: #666F80;
+    font-weight: bold; 
+    vertical-align: top; 
+}
+#morningCircle{
+  background-color:#03BD5B;
+}
+#noonCircle{
+  background-color:#50E3C2;
+  margin-left: 15px;
+}
+#eveningCircle{
+  background-color:#F5A623;
+  margin-left: 15px;
+}
+#deliveredCount{
+  color:#7D99B6;
+}
+#openCount{
+  color:#7BD47A;
+}
+#clickCount{
+  color:#49B0D9;
+}
+#totalPurchase{
+  color:#F8A850;
+}

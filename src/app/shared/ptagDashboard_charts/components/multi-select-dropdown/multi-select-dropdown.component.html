@@ -1,0 +1,45 @@
+<div class="custom-multi-select" (mouseleave)="showDropDown = false">
+    <label>{{'header.personalisationTags.selectCampaignsLbl' | translate}}</label>
+    <button class="drop-toggle form-control d-flex" (click)="toggleDropDown()">
+      <div class="mr-auto">
+        <span *ngIf="checkedList.length <= 0">{{'select' | translate}}</span>
+        <span *ngIf="checkedList.length > 0">{{'header.personalisationTags.noOfCampaignsSelected' | translate:{ value1: checkedList.length } }}</span>
+      </div>
+      <div>
+        <i class="fa fa-angle-down"></i>
+      </div>
+    </button>
+    <div class="dropdown p-3 rounded" *ngIf="showDropDown">
+      <div class="options-container">
+        <input
+          type="text"
+          class="form-control mb-3 search-field"
+          placeholder="{{'header.personalisationTags.searchCampaignsPlaceholder' | translate}}"
+          [(ngModel)]="searchCompaign"
+          (input)="applySearchCompaign()"
+        />
+        <div class="options-list" #optionsList>
+            <label class="custom-control custom-checkbox">
+                <input
+                  type="checkbox"
+                  class="custom-control-input"
+                  [(ngModel)]="selectAllChecked"
+                  (change)="selectAllCampaigns()"
+                />
+                <span class="custom-control-label">{{'header.personalisationTags.allCampaignsLbl' | translate}}</span>
+              </label>
+          <label class="custom-control custom-checkbox" *ngFor="let a of list">
+            <input
+              type="checkbox"
+              class="custom-control-input"
+              [(ngModel)]="a.checked"
+              (change)="getSelectedValue(a.checked, a.name, a.id)"
+            />
+            <span class="custom-control-label">{{a.name}}</span>
+          </label>
+     
+        </div>
+      </div>
+    </div>
+  </div>
+  

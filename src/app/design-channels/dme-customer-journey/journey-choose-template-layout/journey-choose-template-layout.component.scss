@@ -1,0 +1,308 @@
+@import "../../../../custom-style.scss";
+.pointer{
+    cursor:pointer;
+}
+.minheightauto{
+    min-height: auto !important;
+}
+.ellipseText{
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}  
+.reco-section {
+    background-color: #fff;
+    padding: 15px;
+}
+.smallFont{
+    font-size: .69rem;
+}
+.mediumFont{
+    font-size: .75rem;
+}
+.numberInCircle{     
+    border-radius: 0.8em;
+    -moz-border-radius: 0.8em;
+    -webkit-border-radius: 0.8em;
+    display: inline-block;
+    font-weight: normal;
+    line-height: 1.6em;
+    margin-right: 15px;
+    text-align: center;
+    width: 1.6em; 
+}
+.blue{
+color:#FFF;
+background: #026FE9;
+border:1px solid #026FE9;
+}
+.grey{
+color:#666666;
+background: #FFF;
+border:1px solid #BFBFBF;
+}
+$primary: #28A54D;
+$checkmarkColor: white;
+$size: 30px;
+$checkmarkFat: 3px;
+.circle {
+position: relative;
+background: $primary;
+border-radius: 50%;
+width: $size;
+height: $size;
+margin-right: 10px;
+display: inline-block;
+vertical-align: top;
+top: -3px;
+}
+.whiteBg{
+    background-color: #fff;
+}
+.checkmark {
+position: absolute;
+transform: rotate(45deg) translate(-50%, -50%);
+left: 35%;
+top: 45%;
+height: calc($size/3);
+width: calc($size/6);
+border-bottom: $checkmarkFat solid $checkmarkColor;
+border-right: $checkmarkFat solid $checkmarkColor;
+}
+
+#recoEditSection {
+    height: calc(100vh - 182px);
+    overflow-y: auto;
+    #noofRecoSelect{
+        background: #F2F2F2;
+        border-radius: 10px;
+        padding:10px;
+        text-align: center;
+
+        li {
+            display: inline-block;
+            border: 2px solid #eee;
+            list-style: none;
+            border-radius: 5px;
+            text-align: center;
+            font-size: 0.8rem;
+            padding: 3px 10px;
+            cursor: pointer;
+
+            &.active {
+                background-color: #fff;
+                border: 2px solid #007BFF;
+            }
+
+            &:hover {
+                background-color: #fff;
+                border: 2px solid #007BFF;
+            }
+        }
+    }
+
+    .innerContainer {
+        height: 100%;
+        .bordertop{border-top: 1px solid #ccc;}
+        
+        .leftSection {
+            max-width: 32%;
+            background: #F0F2F6;
+            .text {
+                font-weight: 600;
+                font-size: 12px;
+            }
+            .divStyle {
+                border-bottom: 1px solid #ccc;
+                padding: 10px 15px 5px 15px;
+            }
+            .recoRule {
+                background: #fff;
+                .selectedReco {
+                    padding: 6% 6%;
+                    background: #F4F9FF;
+                    border: 1px solid #4E9AF0;
+                    box-sizing: border-box;
+                    box-shadow: 0px 2px 4px 1px rgba(78, 154, 240, 0.2);
+                    border-radius: 7px;
+                    .title {
+                        font-size: 1rem;
+                        color: #333;
+                    }
+                    .heading {
+                        color: #666;
+                        font-size: 10px;
+                        font-weight: 700;
+                        line-height: 30px;
+                    }
+                    .content {
+                        font-size: 13px;
+                        font-weight: 600;
+                        white-space: nowrap;
+                        overflow: hidden;
+                        text-overflow: ellipsis;
+                        padding-right: 5px;
+                    }
+                }
+            }
+            .recoLayout {
+                background-color: #fff;
+                .disabledLayoutArea{
+                    opacity: 0.4;
+                    pointer-events: none;
+                }
+                .layoutConatiner {
+                    img {
+                        width: 169px;
+                        background: #FFFFFF;
+                        border: 1px solid rgba(0, 0, 0, 0.1);
+                        box-sizing: border-box;
+                        border-radius: 5px;
+                        cursor: pointer;
+                        &.selected {
+                            border: 2px solid #007BFF;
+                        }
+                    }
+                    
+                }
+            }
+            .recoSettings {
+                background-color: #fff;
+                .headText {
+                    color: #333;
+                    font-size: 0.9rem;
+                    font-weight: 500;
+                }
+                .inputStyle {
+                    width: 281px;
+                    height: 40px;
+                    background: #FFFFFF;
+                    border: 1px solid #C2C9D1;
+                    box-sizing: border-box;
+                    border-radius: 7px;
+                    padding-left: 15px;
+                    margin-top: 5px;
+                }
+            }
+        }
+        .recoPreview {
+            height: 100%;
+            .sliderWithCount{
+                position: relative;
+                .box {
+                    width: 150px;
+                    height: 75px;
+                    background-color: black;
+                    color: #fff;
+                    padding: 20px;
+                    position: absolute;
+                    margin: 40px;
+                    float: left;
+                    border-radius:10px;
+                  }
+                  .box.arrow-bottom:after {
+                    content: " ";
+                    position: absolute;
+                    left:40%;
+                    bottom: -15px;
+                    border-top: 15px solid black;
+                    border-right: 15px solid transparent;
+                    border-left: 15px solid transparent;
+                    border-bottom: none;
+                  }
+                
+                .progressbarSliderBase{
+                    background-color: #026FE9;
+                    border-radius: 10px;
+                    width: 200px;
+                    height: 10px;
+                }
+            }
+            
+            background: #fff;
+            .previewHeader {
+                font-size: 12px;
+                font-weight: 500;
+            }
+
+            .productParent {
+                text-align: center;
+                width: 780px;
+                margin: 0 auto;
+            }
+            .productPreview {
+                display: inline-block;
+                padding: 15px;    
+                height: 164px;
+                background: #FFFFFF;
+                border-radius: 5px;
+                box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 1px 3px 1px;
+                -webkit-box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 1px 3px 1px;
+                -moz-box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 1px 3px 1px;
+                .itemDetails {
+                    .itemTitle {
+                        color: #333;
+                        font-size: 1rem;
+                        font-weight: 700;
+                        white-space: nowrap;
+                        overflow: hidden;
+                        text-overflow: ellipsis;
+                    }
+                    .itemDescription {
+                        color: #333;
+                        font-weight: 400;
+                        font-size: 12px;
+                        line-height: 22px;
+                    }
+                }
+            }
+            .layout2 {
+                height: 295px;
+                max-width: 178px;
+                margin-right: 15px;
+                &:last-child {
+                    margin-right: 0;
+                }
+                &:nth-child(4) {
+                    margin-right: 0;
+                }
+            }
+            .reverseLayout:nth-child(even) {
+                .reverseContent {
+                    flex-direction: row-reverse;
+                }
+                .itemTitle, .itemDescription {
+                    text-align: right;
+                }   
+            }
+            .layout4 {
+                margin: 0 auto;
+                .productPreview {
+                    display: inline-block;
+                    height: 295px;
+                }
+            }
+        }
+    }
+}
+
+.freeStyleLayoutUserInfoCtr{
+    position: relative;
+   
+    .freeStyleLayoutUserInfo{
+        position: absolute;
+        top: 49%;
+        width: 100%;
+        text-align: center;
+        font-weight: 600;
+        font-size: 12px;
+    }
+}
+.layout-selection label{
+    font-weight: 600;
+    font-size: 12px;
+    padding: 10px;
+}
+.layout-selection input[type="radio"] {
+    margin-right: 5px;;
+}

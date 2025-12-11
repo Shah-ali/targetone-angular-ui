@@ -1,0 +1,33 @@
+@import '../../../custom-style.scss';
+.buttonCss {
+  @include secondaryBttn;
+}
+.smallFont{
+  font-size: .70rem;
+  font-weight: 500;
+}
+.mediumFont{
+  font-size: .75rem;
+  font-weight: 500;
+}
+.positionRtCorner{
+  position: absolute;
+  right:-28px;
+  top:29px;
+  z-index: 999;
+}
+#keyValueAddArea{
+  // height: calc(100vh - 520px);
+  // width: 100%;
+  // overflow-x: hidden;
+  // overflow-y: auto;
+  padding-bottom: 14px;
+}
+
+  .valignText{
+    vertical-align: text-bottom;
+  }
+  .textWrap{
+    text-wrap: balance;
+    word-break: break-all;
+  }

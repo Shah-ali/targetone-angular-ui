@@ -1,0 +1,335 @@
+<div class="outterWrapper personalization-tags-section">
+  <div class="row m-0">
+    <div class="col p-0">
+      <div class="row searchSection m-0 pt-3 pb-3">
+        <div class="col-4">
+          <div class="row col p-0 justify-content-left m-0">
+            <ul class="nav tabsLiStyle tabsNoSpace mb-3">
+                <li class="ptag-step-1" (click)="switchTextTab(1);" [ngClass]="tabActive === 1? 'active':''">{{'apiPersonalization.activeLbl' | translate}}</li>
+                <li class="ptag-step-5" (click)="switchTextTab(5);" [ngClass]="tabActive === 5? 'active':''">{{'apiPersonalization.qaTabLbl' | translate}}</li>
+                <li class="ptag-step-2" (click)="switchTextTab(2);" [ngClass]="tabActive === 2? 'active':''">{{'personalizationTagsComponent.draftLbl' | translate}}</li>
+                <li class="ptag-step-3" (click)="switchTextTab(3);" [ngClass]="tabActive === 3? 'active':''">{{'apiPersonalization.inactiveLbl' | translate}}</li>
+                <li class="ptag-step-4" (click)="switchTextTab(4);" [ngClass]="tabActive === 4? 'active':''">{{'apiPersonalization.favoriteLbl' | translate}}</li>
+                
+            </ul>
+          </div>
+        </div>
+        <div class="col">
+          <div class="row justify-content-end">
+            <div class="col-3 p-0 mr-2 ptag-step-5">
+              <i class="far fa-search pointer"></i>
+              <input
+                type="text"
+                id="searchPTagsBtn"
+                class="form-control shadow-none searchPTagsBtn"
+                placeholder="{{'designEditor.beeEditorComponent.searchsTagslbl' | translate}}"
+                (keyup)="searchPTags($event)"
+                autocomplete="off" />
+            </div>
+            <div class="text-right p-0 mr-2 mt-1">
+              <button
+                type="button"
+                id="ptag-step-6"
+                class="btn buttonCss shadow-none"
+                (click)="viewSummarizedPerformance();">
+                <i class="barIcon mr-2"></i> {{'apiPersonalization.viewSummarisedPerformanceLbl' | translate}}
+              </button>
+            </div>
+            <div class="text-right p-0 mr-2 mt-1">
+              <button
+                *ngIf="!isGrapesJsFeatureEnabled"
+                type="button"
+                id="ptag-step-7"
+                class="btn buttonCss shadow-none"
+                (click)="createPersonalizationTagMethod(false)">
+                <i class="far fa-plus mr-2"></i> {{'personalizationTagsComponent.createPersonalizationTagLbl' | translate}}
+              </button>
+
+              <button
+                *ngIf="isGrapesJsFeatureEnabled"
+                type="button"
+                id="ptag-step-7"
+                data-bs-toggle="dropdown"
+                aria-expanded="false"
+                class="btn buttonCss shadow-none actionMenuBtn"
+                (click)="toggleActionPopup()">
+                <i class="far fa-plus mr-2"></i> {{'personalizationTagsComponent.createPersonalizationTagLbl' | translate}}
+              </button>
+              <ul class="actionMenusPopup" *ngIf="showActionListpopup">
+                <li (click)="createPersonalizationTagMethod(false)">For Email</li>
+                <li (click)="activeContentForWhatsApp()">For WhatsApp</li>
+                <li>For Push Notification</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+       
+      </div>
+    </div>
+  </div>
+  <div class="row justify-content-end whiteBg gridListBtn ml-3 mr-3">
+    <button type="button" class="btn btn-outline-primary active" (click)="switchListGridViewMethod('grid');" title="{{'personalizationTagsComponent.gridView' | translate}}">
+      <i class="far fa-th-large"></i>
+    </button>
+    <button type="button" class="btn btn-outline-secondary" (click)="switchListGridViewMethod('list');" title="{{'personalizationTagsComponent.listView' | translate}}">
+      <i class="far fa-list"></i>
+    </button>
+   
+  </div>
+  <div class="row ml-3 mr-3 text-center">
+    <div class="col savedTagBlock pt-3 d-flex">
+      <!-- <label class="mt-2">Personalized tag will load here.</label> -->
+      
+      <div class="card ptag-step-8" *ngFor="let item of tempPTags" >
+        <div class="mttnIcons">
+          <!-- <i
+            class="fal fa-pencil-alt fa-sm"
+            *ngIf="item.status == 'draft'"
+            (click)="editTagPersonalizationMethod(item.tagId, item.tagName, false)"></i>
+          <i
+            class="fal fa-eye fa-sm"
+            *ngIf="item.status == 'active'"
+            (click)="editTagPersonalizationMethod(item.tagId, item.tagName, true)"></i>
+          <i class="far fa-star ml-1" [ngClass]="item.favourite == 1 ? 'fas' : 'far'" (click)="favTagPersonalization(item.tagId, item.favourite, item.tagName)"></i> -->
+          <i class="fas fa-star ml-1" *ngIf="item.favourite == '1'" (click)="favTagPersonalization(item.tagId, item.favourite, item.tagName)" ngbTooltip="{{'apiPersonalization.removeFromFavoritesLbl' | translate}}" tooltipClass="ngbTooltipStyle"></i>
+          <i class="far fa-star ml-1" *ngIf="item.favourite == '0'" (click)="favTagPersonalization(item.tagId, item.favourite, item.tagName)" ngbTooltip="{{'apiPersonalization.makefavoriteLbl' | translate}}" tooltipClass="ngbTooltipStyle"></i>
+          <ng-container *ngIf="(item.status == 'draft' && item.activeEdit == 1 && item.activeEditDraftName === null)">
+            <img class="pl-2 responsiveIcon" src="./assets/images/editFileIcon.svg" title="{{'personalizationTagsComponent.activeEditLbl' | translate}}">
+          </ng-container>
+          <ng-container *ngIf="item.status == 'active' || item.status == 'publishToQA'">
+            <!-- <i class="far fa-info-circle ml-2" *ngIf="item.activeEdit == 1" placement="bottom" [ngbPopover]="popoverInfoContent" [autoClose]="false" triggers="mouseenter:mouseleave" #p2="ngbPopover" (mouseenter)="ngbPopoverShowHide(p2,item.tagId);"></i> -->
+            <i
+              *ngIf="item.activeEdit == 1 && item.status != 'publishToQA'"
+              class="far fa-info-circle ml-2"
+              tooltipClass="ngbTooltipStyle3"
+              placement="right"
+              ngbTooltip="{{'personalizationTagsComponent.copyInfoForActiveContentLbl' | translate}}"
+            ></i>
+            <div ngbDropdown placement="bottom-right" class="d-inline-block ml-2 dropdownngb-style">
+              <i class="custom-dropdown far fa-ellipsis-v" id="dropdownBasic1" ngbDropdownToggle (click)="onCheckOptionEditDisabled(item);"></i>
+              <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
+                <ng-container *ngFor="let x of actionBtnObj">
+                  <button
+                    *ngIf="item.savedType != 'QA' || (item.savedType == 'QA' && x.id != 'edit')  "
+                    ngbDropdownItem
+                    class="truncateTextPnameDrpdn"
+                    [title]="x.name"
+                    [disabled]="activeEditAlreadyPresent === item.tagId && x.name === disableForEditOnly"
+                    (click)="onActionMethod(pTagTemplate, x.name, item)">
+                    <label class="mediumFont" [class.disabled]="x.disabled">
+                      <i class="far {{ x.icon }} mr-2"></i>
+                      {{ x.name }}
+                    </label>
+                  </button>
+                </ng-container>
+                </div>
+            </div>
+          </ng-container>
+           
+        </div>
+        
+        <div class="tag-thumbnail mt-2">
+          <img src="{{ item.previewImgUrl }}" 
+               onload="this.classList.add('loaded')" 
+               onerror="this.src='./assets/images/personalization-default.svg'; this.classList.add('loaded');" />
+        </div>
+
+        <div class="row">
+          <div class=" col-10 tagName mt-2 truncateTextPname linkColor" title="{{ item.tagName }}" (click)="editTagPersonalizationMethod(item.tagId, item.tagName, item)">{{ item.tagName }}</div>
+          <div class="col-2 p-0 toggleEnableDisable" *ngIf="item.status == 'active' || item.status == 'inactive'">
+            <div class="mt-2">
+              <i
+                [ngbTooltip]="(item.status == 'active' ? 'personalizationTagsComponent.deactivateTagTooltip' : 'personalizationTagsComponent.activateTagTooltip') | translate"
+                tooltipClass="ngbTooltipStyle"
+                class="far fa-lg publishedOn"
+                [attr.cid]="item.status"
+                [ngClass]="item.status == 'active' ? 'fa-toggle-on' : 'fa-toggle-off'"
+                (click)="activatePTag($event, item.tagId, item.tagName)"></i>
+            </div>   
+          </div>
+        </div>
+
+        <div class="viewTags mt-2" (click)="openPTagsModal(pTagTemplate, item.tagId,false)">
+          <i class="tagIcon"></i>
+          <label class="m-0 mediumFont">{{'personalizationTagsComponent.viewTagsLbl' | translate}}</label>
+        </div>
+        
+        <div class="row">
+          <!-- <div class="viewTags mt-2 col-8 d-none">
+            <i class="campaignIcon"></i>
+            <label class="m-0 mediumFont truncateTextCampaignAssoct" title="View 6 associated campaigns">View 6 associated campaigns</label>
+          </div> -->
+          <div class="viewTags mt-2 col-12" (click)="loadGraphViewMethod(item.tagId, item.tagName);" *ngIf="item.status == 'active' || item.status == 'inactive'">
+            <i class="barIcon"></i>
+            <label class="m-0 mediumFont truncateTextCampaignAssoct">{{'apiPersonalization.viewPerformanceLbl' | translate}}</label>
+          </div>
+          <!-- <div class="col-4 toggleEnableDisable" *ngIf="item.status == 'active' || item.status == 'inactive'">
+            <div class="col-6 mt-2">
+              <i
+                [ngbTooltip]="(item.status == 'active' ? 'personalizationTagsComponent.deactivateTagTooltip' : 'personalizationTagsComponent.activateTagTooltip') | translate"
+                tooltipClass="ngbTooltipStyle"
+                class="far fa-lg publishedOn"
+                [attr.cid]="item.status"
+                [ngClass]="item.status == 'active' ? 'fa-toggle-on' : 'fa-toggle-off'"
+                (click)="activatePTag($event, item.tagId, item.tagName)"></i>
+            </div>   
+          </div> -->
+        </div>
+        <div class="row">
+          <div class="viewTags mt-2 col" [ngbPopover]="popoverContent" [autoClose]="false" triggers="mouseenter:mouseleave" #p1="ngbPopover" (mouseenter)="openCreateByPopover(p1, item)">
+            <i class="createdByIcon"></i>
+            <label class="m-0 mediumFont">{{'personalizationTagsComponent.ViewCreatedDetailsLbl' | translate}}</label>
+          </div>
+        </div>
+        <div class="row mt-2" *ngIf="item.status == 'active' || item.status == 'draft' || item.status == 'publishToQA'">
+          <div class="col-12 pTagDashCardBttn">
+            <button
+              type="button"
+              class="btn buttonCss shadow-none"
+              (click)="editTagPersonalizationMethod(item.tagId, item.tagName, item)">
+              <i class="viewPtagIcon mr-2"></i>
+              <span *ngIf="item.status == 'active' || item.status == 'publishToQA'">{{'personalizationTagsComponent.viewBttnLbl' | translate}}</span>
+              <span *ngIf="item.status == 'draft'">{{'personalizationTagsComponent.viewDraftBttnLbl' | translate}}</span>
+            </button>
+          </div>
+        </div>
+        <div class="row mt-2" *ngIf="item.status == 'draft'">
+          <div class="col-12 pTagDashCardBttn">
+            <button
+              type="button"
+              class="btn buttonCss deleteBttnCss shadow-none"
+              (click)="deletePTag(item.tagId)">
+              <i class="deletePtagIcon mr-2"></i> {{'personalizationTagsComponent.deleteBttnLbl' | translate}}
+            </button>
+          </div>
+        </div>
+        <!-- <div class="row toggleEnableDisable">
+          <div class="col text-left mt-2" *ngIf="item.active == 3 || item.active == 4">
+            <span class="published">{{'personalizationTagsComponent.publishedLbl' | translate}}</span>
+          </div>
+          <div class="col text-left mt-2" *ngIf="item.active == 1">
+            <span class="draft">{{'personalizationTagsComponent.draftLbl' | translate}}</span>
+          </div>
+        </div> -->
+        
+        
+      </div>
+    </div>
+    
+  </div>
+  <!-- <div class="row mt-3">
+    <div class="col-auto ml-auto">
+      <ngb-pagination [collectionSize]="tempPTags.length" [(page)]="currentPage" [pageSize]="10"
+        aria-label="Pagination" (pageChange)="onPageChange($event)"></ngb-pagination>
+    </div>
+  </div> -->
+</div>
+
+<ng-template #pTagTemplate>
+  <div class="modal-header">
+    <h5 class="col-10 p-0" *ngIf="showViewTagPopupEnabled">{{'finalize.attachTags' | translate}}</h5>
+    <h5 class="col-10 p-0" *ngIf="showEditPopupEnabled">{{'personalizationTagsComponent.editActiveContentLbl' | translate}}</h5>
+    <h5 class="col-10 p-0" *ngIf="showCopyPopupEnabled">{{'personalizationTagsComponent.copyActiveContentLbl' | translate}}</h5>
+    <div class="col-2 text-right">
+      <i class="far fa-question-circle mr-2" *ngIf="showCopyPopupEnabled" (click)="helpOLH('savedPersonalizedTagsCopy')"></i>
+      <i class="far fa-question-circle mr-2" *ngIf="showEditPopupEnabled" (click)="helpOLH('savedPersonalizedTagsEdit')"></i>
+      <i class="fa fa-times cursor-pointer iconPosition" (click)="closePTagModel()"></i>
+    </div>
+  </div>
+  <div class="modal-body">
+    <div class="tagURLSection" *ngIf="showViewTagPopupEnabled">
+      <div *ngIf="viewPtags == null || viewPtags == undefined">{{'personalizationTagsComponent.noTagAttachedToPersonalizationtagsLbl' | translate}}</div>
+      <div *ngFor="let item of viewPtags | keyvalue">
+        <!-- <div class="mr-3">&lt;{{ item.key }}&gt;</div> -->
+        <div class="mr-3">{{ item.value }}</div>
+        <span
+          ><i
+            class="far fa-copy align-text-top"
+            #t1="ngbTooltip"
+            triggers="manual" 
+            ngbTooltip="{{'copiedLbl' | translate}}"
+            title="{{'copy' | translate}}"
+            (click)="copyToPaste(t1, item.value)"></i
+        ></span>
+      </div>
+    </div>
+
+    <!-- Edit contenet Here -->
+    <div class="row col m-0" *ngIf="showEditPopupEnabled">
+      <div class="col warningMsgEditActive m-0">
+        <div class="row m-0 p-0">
+        <div class="col pl-0">
+          <i class="far fa-exclamation-triangle fa-lg warnColor mr-2"></i>
+           <label class="mediumFont">{{'personalizationTagsComponent.warningLbl' | translate}}</label>
+        </div>
+        <!-- <div class="col text-right">
+            <i class="fal fa-times pointer" ></i>
+        </div>  -->
+      </div>  
+        <div class="col contentMsgStyle" [innerHTML]="warningEditMessageLbl"></div>       
+    </div>
+    </div>
+
+    <!-- copy contenet Here -->
+    <div class="row col m-0" *ngIf="showCopyPopupEnabled">
+      <div class="col infoMsgCopyPtag m-0">
+        <div class="row m-0 p-0">
+        <div class="col pl-0">
+          <i class="far fa-info-circle fa-lg infoColor mr-2"></i>
+           <label class="mediumFont">{{'personalizationTagsComponent.informationLbl' | translate}}</label>
+        </div>
+        <!-- <div class="col text-right">
+            <i class="fal fa-times pointer" ></i>
+        </div>  -->
+      </div>  
+        <div class="col contentMsgStyle" [innerHTML]="warningCopyMessageLbl"></div>       
+    </div>
+    </div>
+
+  </div>
+  <div class="modal-footer">
+    <ng-container *ngIf="showViewTagPopupEnabled">
+      <button type="button" class="btn buttonCss shadow-none m-0 mr-2" id="closeBtn" (click)="closePTagModel()">
+        {{'cancel' | translate}}
+      </button>
+    </ng-container>
+    <ng-container *ngIf="showEditPopupEnabled">
+      <button type="button" class="btn buttonCss shadow-none m-0 mr-2" id="closeBtn" (click)="closePTagModel()">
+        {{'cancel' | translate}}
+      </button>
+      <button type="button" class="btn buttonCss buttonPrimaryCss shadow-none m-0 mr-3" id="closeBtn" (click)="confirmEditMethod()">
+        {{'confirm' | translate}}
+      </button>
+    </ng-container>
+    <ng-container *ngIf="showCopyPopupEnabled">
+      <button type="button" class="btn buttonCss shadow-none m-0 mr-2" id="closeBtn" (click)="closePTagModel()">
+        {{'cancel' | translate}}
+      </button>
+      <button type="button" class="btn buttonCss buttonPrimaryCss shadow-none m-0 mr-3" id="closeBtn" (click)="confirmCopyMethod()">
+        {{'confirm' | translate}}
+      </button>
+    </ng-container>
+  </div>
+</ng-template>
+
+<ng-template #popoverContent>
+  <div class="createByAndDate">
+    <div>
+      <h5 class="m-0 p-0">{{'personalizationTagsComponent.createdByPopoverLbl' | translate}}</h5>
+      <span>{{this.pTagCreatedBy}}</span>
+    </div>
+    <div class="mt-3">
+      <h5 class="m-0 p-0">{{'personalizationTagsComponent.createdDatePopoverLbl' | translate}}</h5>
+      <span>{{this.pTagCreatedDate}}</span>
+    </div>
+    <!-- <div class="mt-3" *ngIf="(this.pTagActivationDate != '' && pTagActivationDate !=undefined)">
+      <h5 class="m-0 p-0">{{'personalizationTagsComponent.activationDatePopoverLbl' | translate}}</h5>
+      <span>{{this.pTagActivationDate}}</span>
+    </div> -->
+  </div>
+</ng-template>
+<ng-template #popoverInfoContent>
+  <div class="row col wordbreakLabel">
+    {{'personalizationTagsComponent.copyInfoForActiveContentLbl' | translate}}
+  </div>
+</ng-template>

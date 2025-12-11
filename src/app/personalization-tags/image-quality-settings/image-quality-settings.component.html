@@ -1,0 +1,81 @@
+<div class="modal-header">
+    <h6 class="m-0">{{'designEditor.mergeTagExtensions.imageSettings' | translate}}</h6>
+    <!-- <button type="button" class="close" (mousedown)="onClose()" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button> -->
+</div>
+<div class="modal-body">
+    <div class="imageSettings-section">
+        <div class="row p-0 m-0">
+          <div class="col">            
+            <div calss="col p-0" *ngFor="let mainobj of imageTypeObj">
+              <div class="row col-6 mr-2 imageType">
+                <div class="col-5 p-0">
+                  <label for="imageType" class="innerLabel smallLabel mt-2">{{ 'designEditor.displayConditions.imageTypeLbl' | translate }}</label>
+                </div>
+                <div class="col-5 p-0">
+                  <select
+                  id="border-style"
+                  class="form-control smallLabel" 
+                  [(ngModel)]="imageSettingsObj.imageType"
+                  (change)="selectImageTypeMethod($event,true);"                   
+                  >
+                  <option value="{{ext.value}}" *ngFor="let ext of mainobj.imageTypeOptions">
+                    {{ext.label}}
+                  </option>
+                  
+                </select>
+                </div>           
+                
+              </div>
+              <div class="row col-6 mr-2 mt-3 borderType">
+                <div class="col-5 p-0">
+                  <label for="imageSize" class="innerLabel smallLabel mt-2">{{ 'designEditor.displayConditions.imageDepthLbl' | translate }}</label>
+                </div>
+                <div class="col-5 p-0">
+                  <input *ngIf="!readyonlydepthEnable"
+                  id="imageSize"
+                  class="form-control smallLabel pl-3"
+                  type="number" maxlength="3"                   
+                  min="80"
+                  max="100"
+                  [(ngModel)]="imageSettingsObj.imageQuality"
+                  (change)="imageQualityValUpdateMethod($event);"
+                   />
+                   <input *ngIf="readyonlydepthEnable"
+                  id="imageSize"
+                  class="form-control smallLabel pl-3"
+                  type="number" maxlength="3"
+                  min="100"                
+                  max="100"
+                  [(ngModel)]="imageSettingsObj.imageQuality"
+                  (change)="imageQualityValUpdateMethod($event);"
+                  readonly
+                   />                      
+                </div>
+                <div class="col-1 mt-2">
+                  %
+                </div>           
+                
+              </div>
+              
+            </div>
+          </div>
+        </div>
+    
+        <div class="col mt-5">
+          <p class="smallLabel m-0 mb-2">{{'designEditor.displayConditions.imageDepthInputLbl' | translate}}</p>
+          <p class="smallLabel m-0 mb-2 text-muted">{{'designEditor.displayConditions.imageMinimumMaximumValueLbl' | translate}}</p>
+          <p class="smallLabel m-0 mb-2 text-muted">{{'designEditor.displayConditions.higherValueindicatesimageQualityLbl' | translate}}</p>
+        </div>
+    </div>
+
+</div>
+<div class="modal-footer d-flex justify-content-right">    
+    <button type="button" class="btn buttonCss shadow-none m-0 mr-1" id="closeBtn" (click)="onClose()">{{'close' | translate}}</button>
+    <button type="submit" class="btn buttonPrimaryCss shadow-none m-0" (click)="saveImageQaulityObjMethod();">{{'done' | translate}}</button>
+</div>
+
+
+
+

@@ -1,0 +1,113 @@
+[
+  {
+    "id": 1,
+    "icon": "customers.svg",
+    "name": "Customer",
+    "type": "Customer",
+    "child": [],
+    "fields": [
+      {
+        "name": "field customer 1",
+        "value": "tag1 customer"
+      },
+      {
+        "name": "field customer 2",
+        "value": "tag2 customer"
+      }
+    ]
+  },
+  {
+    "id": 2,
+    "icon": "tag-params.svg",
+    "name": "TagParam",
+    "type": "TagParam",
+    "child": [],
+    "fields": [
+      {
+        "name": "field nTagParam 1",
+        "value": "tag1 TagParam"
+      },
+      {
+        "name": "field TagParam 2",
+        "value": "tag2 TagParam"
+      }
+    ]
+  },
+  {
+    "id": 3,
+    "icon": "dme.svg",
+    "name": "DME",
+    "type": "DME",
+    "fields": [],
+    "child": [
+      {
+        "cid": "11",
+        "icon": "dme.svg",
+        "name": "demo_dme",
+        "type": "DME",
+        "fields": [
+          {
+            "name": "Model.demo_dme.col1",
+            "value": "Model.demo_dme.col1"
+          },
+          {
+            "name": "Model.demo_dme.col2",
+            "value": "Model.demo_dme.col2"
+          }
+        ],
+        "inputs": []
+      },
+      {
+        "cid": "12",
+        "icon": "dme.svg",
+        "name": "dme31May",
+        "type": "DME",
+        "fields": [
+          {
+            "name": "Model.dme31May.email_address",
+            "value": "Model.dme31May.email_address"
+          },
+          {
+            "name": "Model.dme31May.phone_number",
+            "value": "Model.dme31May.phone_number"
+          },
+          {
+            "name": "Model.dme31May.first_name",
+            "value": "Model.dme31May.first_name"
+          },
+          {
+            "name": "Model.dme31May.last_name",
+            "value": "Model.dme31May.last_name"
+          }
+        ],
+        "inputs": []
+      },
+      {
+        "cid": "13",
+        "icon": "dme.svg",
+        "name": "demo_dme_02",
+        "type": "DME",
+        "fields": [
+          {
+            "name": "Model.demo_dme_02.product_id",
+            "value": "Model.demo_dme_02.product_id"
+          },
+          {
+            "name": "Model.demo_dme_02.product_name",
+            "value": "Model.demo_dme_02.product_name"
+          }
+        ],
+        "inputs": []
+      }
+    ]
+  },
+  {
+    "id": 4,
+    "icon": "api.svg",
+    "name": "API",
+    "type": "API",
+    "fields": [],
+    "child": [],
+    "inputs": []
+  }
+]

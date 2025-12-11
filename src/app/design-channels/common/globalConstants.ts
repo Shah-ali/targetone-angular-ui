@@ -1,0 +1,66 @@
+export class GlobalConstants {
+    public static beeConfig: any;
+    public static beeTest: any;
+    public static resolveFlag: boolean;
+    public static saveRowsObj: any;
+    public static isAddOnProductList: boolean;
+    public static isSavedEmails: boolean = false;
+    public static isManageSaveRows: boolean = false;
+    public static urlPath: string = "";
+    public static isPreBuildTemp: boolean;
+    public static templateKey: number;
+    public static promoKey: number;
+    public static promoCommKey: number;
+    public static isEditMode:boolean = false;
+    public static isPreviewMode:boolean = false;
+    public static payLoadSavedObjAllChannels: any;
+    public static channelObj: any;
+    public static vendorObj: any;
+    public static promotionSplitHelper: any = [];
+    public static varArgs: any = [];
+    public static finalizeChannelsObj: any = [];
+    public static setActiveTab: any = 0; // defualt first tab active
+    public static isFailsafe:boolean = false;
+    public static isFromSubjectRedirect:boolean = false;
+    public static isCouponEnable: boolean = false;
+    public static rrWidgetCount: number = 1;
+    public static actionsPreviewEnable = false;
+    public static mobilePushEditMode: boolean = false;
+    public static insertionPoint:any;
+    public static webPushEditMode: boolean = false;
+    public static inAppEditMode: boolean = false;
+    public static selectedDmeModels: any = [];
+    public static selectedDmeGroup: any = [];
+    public static selectedApiModels: any = [];
+    public static dmeMergeTags: any = {};
+    public static isOpenGlobalTags:boolean = false;
+    public static isOpenGlobalMTags:boolean = false;
+    public static isOpenDisplayCondition:boolean = false;
+    public static isOpenTextImageAddon:boolean = false;
+    public static productMergeTags: any = [];
+    public static savedDynamicContent: any;
+    public static savedDynamicConditions: any = {};
+    public static savedDynamicExt: any = {};
+    public static selectedrowModelName: any = "";
+    public static selectedrowModelData: any = "";
+    public static selectedPTags: any = [];
+    public static selectedApiPTags: any = [];
+    public static browseProdActiveEnable:boolean = false;
+    public static parentComponentName:string = '';
+    public static selectedRowId:string = '';
+    public static globalImageData: any = {};
+    public static globalAdvTextData: any = {};
+    public static isRowEditModeEnable:boolean = false;
+    public static globalEditableRowData: any = "";
+    public static globalEditableRowDisplayCond: any = "";
+    public static existingRowLabels: any = {};
+    public static ensembleAiEnabled:boolean = false;
+    public static editorType:number = 1;
+
+   // public static templateObjload: any;
+    // public static addOnModal:any =  OpenModalComponent;
+    // public static saveRowsModal: any = SaveUserRowsComponent;
+    // public static reject:any;
+    // public static args:any;
+    
+}

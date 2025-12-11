@@ -1,0 +1,54 @@
+@import '../../../custom-style.scss';
+.buttonCss {
+  @include secondaryBttn;
+}
+
+.buttonPrimaryCss {
+  @include primaryBttn;
+}
+
+.tab-list{
+    list-style: none;     
+  }
+.tab-list li{
+  display: inline;
+  padding:11px 8px;
+  cursor: pointer;
+  font-size: 0.8rem;
+  color: #3366FF;
+}
+ .tab-list li.active{
+  border-bottom: 2px solid #3366FF;
+  color:#0c8eff;
+}
+.tab-list li button:hover{
+    color:#3366FF;
+}
+.tab-list li.disabled{
+  cursor: default;
+  border-bottom: none;
+}
+.tab-list button{
+  border:none;
+  background: none;
+}
+.font-small{
+    @include titleLabel;
+  }
+  .bd-custom{
+    border-bottom: 1px solid #BFC1C8;
+    border-top: 1px solid #BFC1C8;
+    height: 43px;
+  }
+  .buttonCss{
+    @include buttonStyle1;
+  }
+.pointer{
+  @include handTool;
+}
+.disabledLi {
+  pointer-events:none; //This makes it not clickable
+  opacity:0.6;         //This grays it out to look disabled
+  color: #000 !important;
+  cursor: default !important;
+}

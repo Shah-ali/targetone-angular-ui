@@ -1,0 +1,117 @@
+<div class="col pr-0 m-0" #productFilterContentArea id="keyValueAddArea">
+    <div class="row col keyValueBlock mt-2" *ngFor="let item of keyValueArray">     
+      <div class="row col-4 align-items-left p-0 mr-1">
+        <div class="col p-0">
+          <label class="smallFont">{{'productFilterComponent.fieldInputLbl' | translate}}</label>
+          <select
+            class="form-control index_{{ item.id }} typeSelectList smallFont text-truncate"
+            id="rowId_{{ item.id }}"
+            (change)="selectFieldsMethod($event,item.id,'field')" [(ngModel)]="item.fieldVal" title="{{fieldValueOnTitle}}">
+            <option value="-1" selected>{{'designEditor.selectlbl' | translate}}</option>
+            <!-- <ng-container > -->
+              <!-- <option  *ngIf="list == 'dotLine'" disabled>----------------</option> -->
+              <!-- <option  *ngIf="list != 'dotLine'" [value]="list">{{list}}</option> -->
+              <option *ngFor="let list of fieldsOptionDataObj" value="{{list.name}}">{{list.name}}</option>
+            <!-- </ng-container> -->
+            
+          </select>
+        </div>
+        
+      </div>
+      <div class="col-3 p-0 mr-1">
+        <label class="smallFont">{{'productFilterComponent.operatorInputLbl' | translate}}</label>
+        <select
+          class="form-control index_{{ item.id }} delimSelectList_{{ item.id }} smallFont text-truncate"
+          id="rowId_{{ item.id }}"
+          (change)="onChangeMultiValueString($event, item.id,'operator')" [(ngModel)]="item.operatorVal">
+          <option value="-1">{{'designEditor.selectlbl' | translate}}</option>
+          <ng-container *ngFor="let opt of item.options">
+            <option *ngFor="let x of opt | keyvalue" value="{{x.value}}">{{x.key}}</option>
+          </ng-container>
+          
+          <!-- String Operators -->
+									<!-- <option value="-1" selected>{{'designEditor.selectlbl' | translate}}</option>
+									<option value="=">Equal</option>
+									<option value="!=">Not Equal</option>
+									<option value="like">Like</option>
+									<option value="starts with">Starts With</option>
+									<option value="ends with">Ends With</option>
+									<option value="between">Between</option> -->
+
+									<!-- Numeric Operators -->
+									<!-- <option value="=">Equal</option>
+									<option value="!=">Not Equal</option>
+									<option value=">">Greater Than</option>
+									<option value="<">Less Than</option>
+									<option value=">=">Greater Than or Equal</option>
+									<option value="<=">Less Than or Equal</option> -->
+        </select>
+      </div>
+      <div class="col-5 align-items-left p-0">
+        <!-- <input class="form-control mt-1 mb-1" [(ngModel)]="item.key" /> -->
+        <label class="smallFont">{{'productFilterComponent.valueSelectLbl' | translate}}</label>
+        <ng-select #ngSelectEachElementRef
+            [items]="columnHeaderObjArry[uuidForSelect]"
+            [multiple]="true"
+            bindLabel="name"
+            labelForId="{{item.id}}"
+            [selectableGroup]="false"
+            [closeOnSelect]="true"
+            bindValue=""
+            [attr.data-uuid]="item.id"            
+            [attr.data-fieldName] = item.fieldVal
+            [(ngModel)]="item.multiSelectVal"       
+            class="relative smallFont {{item.id}}"            
+            (click)="filterDataMethod($event,item.fieldVal)"
+            (keyup)="searchFieldsDataListMethod($event,item.fieldVal,uuidForSelect);"
+            (change)="getSelectedMultiValueMethod($event,item);"
+            name="columnHeaderObjArry[uuidForSelect]"
+            [addTag]="addCustomUser"
+            [clearOnBackspace]="true"
+            [markFirst]="true"
+            title="{{item.multiSelectVal}}"
+            addTagText="{{'addNewItemLbl' | translate}}"
+            notFoundText="{{'noItemsFoundNgSelect' | translate}}"            
+            
+            >
+            <!-- <ng-template ng-optgroup-tmp let-item="item" let-item$="item$" let-index="index">
+                <input id="item-{{index}}" type="checkbox" [ngModel]="item$.selected"/> {{item.gender | uppercase}}
+            </ng-template> -->
+            <ng-template ng-label-tmp let-item="item" let-clear="clear">
+              <span class="textWrap">{{item}}</span>
+              <span (click)="clear(item); $event.stopPropagation()" class="pointer"> <b class="ml-2">&times;</b> </span>
+          </ng-template>
+            <ng-template ng-option-tmp let-item="item" let-item$="item$" let-index="index">
+                <ng-container *ngIf="disabledInputCheckEnable">
+                  <input id="item-{{index}}" class="valignText" type="checkbox" [ngModel]="item$.selected" disabled [attr.data-uuid]="uuidForSelect"/>
+                  <span  class="smallFont m-0 pl-1" [attr.data-uuid]="uuidForSelect" >{{item}}</span>
+                </ng-container>
+                <ng-container *ngIf="!disabledInputCheckEnable">
+                  <input id="item-{{index}}" class="valignText" type="checkbox" [ngModel]="item$.selected" [attr.data-uuid]="uuidForSelect"/>
+                  <span  class="smallFont m-0 pl-1" [attr.data-uuid]="uuidForSelect">{{item}}</span>
+                </ng-container>
+            </ng-template>
+        </ng-select>
+
+        <i
+          class="fal fa-minus-circle fa-lg linkColor ml-3 mt-3 pointer text-muted positionRtCorner"
+          (click)="removeKeyValue(item,uuidForSelect)"
+          *ngIf="!item.add && !minusIconHideFlag" id="{{item.id}}"></i>
+      </div>
+      <!-- <div class="col-1 p-0 align-items-left">
+        <i class="far fa-plus-circusele fa-lg linkColor ml-3 mt-3 pointer" *ngIf="item.add"></i>
+        
+      </div> -->
+    </div>
+    
+  </div>
+  <div class="row col-12 p-0 mt-3">
+    <button
+      type="button"
+      class="btn buttonCss shadow-none mr-0 mb-2 sm"
+      (click)="addNewKeyValue($event)"
+      [disabled]="addAnotherDisable" 
+      id="{{uuidForSelect}}">
+      <i class="far fa-plus"></i> {{ 'beeEditorGlobalComponent.addAnotherLbl' | translate }}
+    </button>
+  </div>

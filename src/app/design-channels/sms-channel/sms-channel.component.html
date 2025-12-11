@@ -1,0 +1,119 @@
+<app-channels></app-channels>
+<div class="col-12 smsLayoutContainer">
+    <div class="row col-12 p-0 m-0  mb-3 relative">
+        <h6 class="col p-0 pl-1 m-0 mt-3 titleHeadtext"></h6>
+        <button class="btn buttonStyle buttonCssStyle shadow-none mr-3" (click)="openOfferSliderPopup($event, 'smsInput');">{{'designEditor.beeEditorComponent.globalMergeTaglbl2' | translate}}</button>
+        <button class="btn buttonStyle buttonCssStyle shadow-none mr-3" (click)="openTestSMSModal(testSMSModel)">{{'designEditor.testSMSComponent.testSMSlbl' | translate}}</button>
+        <button class="btn buttonStyle buttonCssStyle shadow-none p-0" (click)="finalSaveMethod();">{{'save' | translate}}</button>
+        
+            <div class="col-1 d-none inappActionListEnable">
+                <select class="smallLabel">
+                  <option value="-1">{{'designEditor.emailEditor.actionslbl' | translate}}</option>
+                  <!-- <option>Test {{channelObj.channelName}}</option> -->
+                </select>
+            </div>
+        
+    </div>
+    <div class="row innerContainer col-12 p-0 m-0">
+        <div class="col-8 m-0 tempLayoutSection mr-3 ">
+            <div class="row col p-0 pt-2 heading">
+                <div class="col mt-1 p-0">
+                    <h6 class="col"><label class="smallLable">{{'designEditor.testSMSComponent.SMSLbl' | translate}}</label></h6>
+                </div>
+            </div>
+            <div class="row col saveasTemplate liteBckgrd m-0 pl-4 pr-4">
+                <div class="col-4 p-0">
+                    <p class="m-0 p-0"><label class="smallLable text-muted">{{'dmColumnarCompontent.templateLbl' | translate}}</label></p>
+                    <p class=""> 
+                        <select class="col-8 p-0 xSmallLabel inputStyle text-muted" #columnarTemplateElement (change)="getSelectedSmsTemplateData($event);">
+                            <option value="-1">{{'dmColumnarCompontent.selectTemplateLbl' | translate}}</option>
+                            <option *ngFor="let x of smsTemplates" value="{{x.dbKey}}">{{x.templateName}}</option>
+                        </select>
+                    </p>
+                </div>
+                <div class="col p-0 mt-2 text-right">
+                    <button class="btn buttonStyle buttonCssStyle shadow-none p-0 mt-2" (click)="openPopupForSaveAsTemplate();" [disabled]="selectedSMSTemplate == '-1'">{{'designEditor.failsafePage.saveastemplatebtn' | translate}}</button>
+                </div>
+                <div class="col-8 p-3 saveAsTemplatePopup" *ngIf="isSaveAsTemplateEnable">
+                    <div class="row col outerWrap mt-4 m-0">
+                        <label class="col-2 p-0 verticalMiddle">{{'dmColumnarCompontent.nameLbl' | translate}}: </label>
+                        <input class="col form-control inputStyle" placeholder="{{'dmColumnarCompontent.templateNameLbl' | translate}}" [(ngModel)]="templateNameEntered">
+                    </div>
+                    <div class="row col justify-content-end p-0 ">
+                        <div class="col-12 text-right p-0 mt-5">
+                            <button class="btn buttonStyle buttonCssStyle shadow-none p-0 smallLabel inputStyle mr-2 mt-2 blueColor" type="button" (click)="callSaveAsTemplate();">{{'save' | translate}}</button> 
+                            <label class="btn buttonStyle buttonCssStyle shadow-none p-0 smallLabel inputStyle m-0 mt-2" (click)="closeSaveAsTemplatePopup();">{{'cancel' | translate}}</label>
+                        </div>                         
+                    </div>
+                </div>                
+            </div>
+            <div class="row col-6 p-0 mt-3">
+                <div class="col">
+                    <input type="checkbox" class="verticalMiddle mr-1" id="unicodeInputCheck" [checked]="smsUnicodeEnabledCheck" (click)="smsUniCodeEnableMethod($event);">
+                    <label for="unicodeInputCheck" class="smallLabel color333">{{'designEditor.testSMSComponent.blockUnicodeSMSLbl' | translate}}</label>
+                    <i class="fal fa-info-circle ml-2"></i>
+                </div>
+                <div class="col">
+                    <input type="checkbox" class="verticalMiddle mr-1" id="multilineInputCheck" [checked]="smsMultiSplitFlgCheck" (click)="smsMultiSplitEnableMethod($event);">
+                    <label for="multilineInputCheck" class="smallLabel color333">{{'designEditor.testSMSComponent.blockMtilineSMSLbl' | translate}}</label>
+                    <i class="fal fa-info-circle ml-2"></i>
+                </div>
+            </div>
+            <div class="row p-0 col">
+                <div class="col mt-3">
+                    <label class="smallLabel">{{'designEditor.testSMSComponent.SMSLbl' | translate}}</label>
+                    <div class="position-relative col smsInputTabContent" #smsInputContent [ngClass]="selectedSMSTemplate == '-1' ? 'disabledPlusBtn disableBckg':''">
+                        <div [attr.contenteditable]="true" class="smsInputVal editable radiusStyle" 
+                            id="smsInput" name="smsInput" (keyup)="getCaretIndex($event,'smsInput');" (click)="getCaretIndex($event,'smsInput');"
+                            spellcheck="false" (paste)="getCaretIndex($event,'smsInput');" (keydown.Tab)="getCaretIndex($event,'smsInput');"                               
+                            ngDefaultControl isNative="true" perLine="7" showPreview="false" >
+                        </div>
+                        <emoji-mart class="emoji-mart-sms" [custom]="customEmojis" *ngIf="emojisToggle" title="{{'i18nObject.pickyourEmojiTooltip' | translate}}" [showPreview]="false" 
+                        (emojiSelect)="addEmojiItem($event, 'title')" [enableSearch]="false" [enableFrequentEmojiSort]="true" [showSingleCategory]="true" 
+                            [include]="['custom']" emoji="point_up" [i18n]="i18nObject" [emojiTooltip]="false">
+                        </emoji-mart>
+
+                       <!--  <div class="d-inline iconContainer">
+                            <i class="far fa-grin" (click)="emojisToggle = !emojisToggle"></i>
+                            <span class="fal fa-plus" id="" [ngClass]="enablePlusBtn ? '' : 'disabledPlusBtn'" (click)="openOfferSliderPopup($event, 'smsInput');"></span>
+                        </div> -->
+                        
+                    </div>
+                </div>
+            </div>
+            <div class="row col totalCountCharacter justify-content-end">
+                <div class="col-3">
+                    <span class="verticalMiddle smallLabel text-muted">{{'designEditor.testSMSComponent.totalCharactersLbl' | translate}}: </span>
+                    <span class="totalCount smallLabel">{{totalCharacterCountVal}}</span>
+                </div>
+            </div>  
+            <div class="row col mt-4 p-0 mt-2">
+                <div class="col-6">
+                    <p class="m-0 p-0"><label class="smallLabel text-muted">{{'designEditor.testSMSComponent.dmainShortURLLbl' | translate}}</label></p>
+                    <p class=""> 
+                        <input class="inputStyle form-control text-muted" placeholder="{{'designEditor.testSMSComponent.URLAppearsHereLbl' | translate}}" [disabled]="isShortUrlEnabled" [(ngModel)]="shortUrlDomain">
+                    </p>
+                </div>
+            </div>
+
+        </div>
+        <!-- Right side Panel Notification Preview starts here -->
+        <div class="notificationPreview col">
+            <div class="previewHeading text-center">{{'designEditor.mobilePushComponent.notificationPreview' | translate}}</div>  
+            <div class="androidPreview mt-3">
+                <div class="smartphone p-3 smallLabel" #previewHtmlElement [innerHTML]="previewSMSText">
+                    <!--Html Preview Will render here-->
+                    
+                </div>
+            </div>          
+        </div>
+    </div>
+</div>
+<div class="customeOffers relative" *ngIf="offerDrawerSectionEnable" [ngClass]="offerDrawerSectionEnable ? 'slideIN':'slideOUT'">
+    <app-offers-drawer [dataFromParent]="modalRef" (onCloseOfferPopup)="onCloseOfferDrawer();" (offersAppendToInput)="finalOffersSelected($event);"></app-offers-drawer>
+</div>
+<!-- <div class="backdrop_offerSlider" *ngIf="backropOffersEnable"></div> -->
+
+<ng-template #testSMSModel>
+    <app-test-email [dataFromParent]="modalRef"></app-test-email>
+</ng-template>

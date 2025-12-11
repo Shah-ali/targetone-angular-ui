@@ -1,0 +1,88 @@
+<div class="dataLayerSection">
+  <span
+    >Merge Tag
+    <button class="btn buttonCss shadow-none m-0">Add DME</button>
+    &nbsp;<button class="btn buttonCss shadow-none m-0" (click)="addAPIDataLayer()">Add API</button>
+    &nbsp;<button class="btn buttonCss shadow-none m-0" (click)="addTagParams()">Add Tag</button>
+  </span>
+</div>
+
+<div class="tree-view">
+  <ul class="tree-list">
+    <ng-container *ngFor="let node of treeData">
+      <ng-container *ngTemplateOutlet="renderNode; context: { $implicit: node, level: 0 }"></ng-container>
+    </ng-container>
+  </ul>
+</div>
+
+<ng-template #renderNode let-node let-level="level">
+  <li class="tree-node">
+    <div class="node-content">
+      <!-- Type Icons -->
+      <ng-container [ngSwitch]="node.objType">
+        <span class="typeIcon" *ngSwitchCase="'single'"><i class="fal fa-cube"></i></span>
+        <span class="typeIcon" *ngSwitchCase="'multi'">
+          <i class="fas fa-atom" style="font-size: 18px"></i>
+        </span>
+      </ng-container>
+
+      <!-- Expand/Collapse Icons -->
+      <span *ngIf="node.input" class="expand-icon" (click)="toggleChildren(node)">
+        <i *ngIf="!node.expanded" class="far fa-plus-square"></i>
+        <i *ngIf="node.expanded" class="fal fa-minus-square"></i>
+      </span>
+
+      <!-- Node Type Icons -->
+      <ng-container [ngSwitch]="node.type">
+        <span class="typeIcon" *ngSwitchCase="'tag_parameter'"><i class="fas fa-hashtag"></i></span>
+        <span class="typeIcon" *ngSwitchCase="'device_parameter'"><i class="fal fa-mobile"></i></span>
+        <span class="typeIcon" *ngSwitchCase="'dme'"><i class="fal fa-database"></i></span>
+        <span class="typeIcon" *ngSwitchCase="'api'"><i class="fal fa-bezier-curve"></i></span>
+      </ng-container>
+
+      <!-- Node Name -->
+      <span class="node-name">
+        {{ node.input === undefined ? "-" : "" }} {{ node.name }}
+        <span class="node-count" *ngIf="node.count > 0">{{ "[1..." + node.count + "]" }} </span></span
+      >
+
+      <!-- Action Menu -->
+      <div class="actions">
+        <span class="three-dots" (click)="showActions(node, $event)" *ngIf="node.metadata?.type == 'parentLabel'"
+          ><i class="fas fa-bars"></i
+        ></span>
+        <span class="three-dots" (click)="showActions(node, $event)" *ngIf="node.metadata?.type == 'childLabel'"
+          >...</span
+        >
+        <div
+          class="action-menu"
+          *ngIf="node.showActions"
+          [style.top.px]="menuPosition.top"
+          [style.left.px]="menuPosition.left"
+          (mouseleave)="hideActions(node)"
+        >
+          <button *ngIf="node.metadata?.addDME" (click)="performAction(node, 'addDME')">Add DME</button>
+          <button *ngIf="node.metadata?.addAPI" (click)="performAction(node, 'addAPI')">Add API</button>
+          <button *ngIf="node.metadata?.edit" (click)="performAction(node, 'Edit')">Edit</button>
+          <button *ngIf="node.metadata?.fallback" (click)="performAction(node, 'Fall back')">Fall back</button>
+          <button *ngIf="node.metadata?.transform" (click)="performAction(node, 'Transform')">Transform</button>
+          <button *ngIf="node.metadata?.delete" (click)="performAction(node, 'Delete')">Delete</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Child Nodes -->
+    <ul
+      *ngIf="node.input && node.expanded"
+      class="tree-list"
+      [ngClass]="{ input: level === 0, grandchildren: level > 0 }"
+    >
+      <ng-container *ngFor="let child of node.input">
+        <ng-container *ngTemplateOutlet="renderNode; context: { $implicit: child, level: level + 1 }"></ng-container>
+      </ng-container>
+      <ng-container *ngFor="let child of node.childEntity">
+        <ng-container *ngTemplateOutlet="renderNode; context: { $implicit: child, level: level + 1 }"></ng-container>
+      </ng-container>
+    </ul>
+  </li>
+</ng-template>

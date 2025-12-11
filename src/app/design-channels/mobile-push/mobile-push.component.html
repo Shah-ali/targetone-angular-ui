@@ -1,0 +1,471 @@
+<app-channels></app-channels>
+<div class="col-12 mobilePushContainer" (click)="checkElement($event)">
+    <div class="col-12 p-0 text-right mb-3">
+        <button class="btn buttonStyle buttonCssStyle shadow-none mr-3" (click)="openOfferSliderPopup($event, 'title','mobileTitleStyle');">{{'designEditor.beeEditorComponent.globalMergeTaglbl2' | translate}}</button>
+        <button class="btn buttonStyle buttonCssStyle shadow-none mr-3" (click)="openTestPushModal(testPushNotifyModel)">{{'designEditor.mobilePushComponent.testPushNotifyLbl' | translate}}</button>
+        <button class="btn buttonStyle buttonCssStyle shadow-none" (click)="saveMobilePush()" 
+        [disabled]="promoExecutedOrRunning" [ngStyle]="promoExecutedOrRunning ? {'cursor':'default'} : {'cursor':'pointer'}">{{'save' | translate}}</button>
+    </div>
+    <div class="innerContainer d-flex col-12 p-0">
+        <div class="notificationInputs mr-3">
+            <div class="androidIosTabs">
+                <div class="d-inline-block androidTab cursor-pointer" [ngClass]="{'active': selectedMobileTab === 'android'}"
+                    (click)="switchMobileTabs('android')"><span>{{'designEditor.mobilePushComponent.android' | translate}}</span>
+                </div>
+                <div class="d-inline-block iosTab cursor-pointer" [ngClass]="{'active': selectedMobileTab === 'ios'}"
+                    (click)="switchMobileTabs('ios')"><span>{{'designEditor.mobilePushComponent.ios' | translate}}</span>
+                </div>
+            </div>
+
+            <!-- Android Notification -->
+            <div class="androidInputSection mt-4" *ngIf="selectedMobileTab === 'android'">
+                <div class="textNotificationSection">
+                    <div class="col-12 p-0 d-flex">
+                        <div class="col-6 title p-0">{{'designEditor.mobilePushComponent.textNotification' | translate}}</div>
+                        <div class="col-6 p-0 text-right" *ngIf="androidTextCollapsed">
+                            <button class="btn buttonStyle buttonCssStyle shadow-none" (click)="androidTextCollapsed = false">{{'designEditor.editBtn' | translate}}</button>
+                        </div>
+                    </div>
+                    <div class="innerSection mt-2" [ngStyle]="androidTextCollapsed ? {'display':'none'} : {'display':'block'}">
+                        <div class="mobileTitle">
+                            <div><label class="titleStyle">{{'designEditor.mobilePushComponent.title' | translate}}</label></div>
+                            <div class="titleDiv position-relative">
+                                <div [attr.contenteditable]="true" class="mobileTitleStyle editable" 
+                                    id="{{'android_title_' + currentSplitId}}" name="androidTitle"
+                                    (keyup)="getCaretIndex($event, 'title','mobileTitleStyle');" (click)="getCaretIndex($event, 'title','mobileTitleStyle');addOffersBtnEnableTitle = true;"
+                                    ngDefaultControl isNative="true" perLine="7" showPreview="false"
+                                    spellcheck="false" (paste)="getCaretIndex($event, 'title','mobileTitleStyle');addOffersBtnEnableTitle = true;" (keydown.Tab)="getCaretIndex($event, 'message','mobileTitleStyle');addOffersBtnEnableTitle = true;">
+                                </div>
+                                <emoji-mart class="emoji-mart-mobilePush" [custom]="customEmojis" *ngIf="androidTitleEmoji"
+                                    (emojiSelect)="addEmojiItem($event, 'title')" title="{{'i18nObject.pickyourEmojiTooltip' | translate}}" [showPreview]="false" 
+                                    [enableSearch]="false" [enableFrequentEmojiSort]="true" [showSingleCategory]="true" 
+                                    [include]="['custom']" emoji="point_up" [i18n]="i18nObject" [emojiTooltip]="false">
+                                </emoji-mart>
+
+                                <div class="d-inline iconContainer">
+                                    <i class="far fa-grin" (click)="androidTitleEmoji = !androidTitleEmoji"></i>
+                                    <!-- <span class="fal fa-plus" id="{{'android_title_' + currentSplitId}}" [ngClass]="addOffersBtnEnableTitle ? '' : 'disabledPlusBtn'" (focus)="addOffersBtnEnableTitle = false;" (click)="openOfferSliderPopup($event, 'title','mobileTitleStyle');"></span> -->
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mobileMessage mt-2">
+                            <div><label class="titleStyle">{{'designEditor.mobilePushComponent.message' | translate}}</label></div>
+                            <div class="msgDiv position-relative">
+                                <div [attr.contenteditable]="true" class="mobileMsgStyle editable"
+                                    id="{{'android_message_' + currentSplitId}}" name="androidMessage"
+                                    (keyup)="getCaretIndex($event, 'message','mobileMsgStyle');" (click)="getCaretIndex($event, 'message','mobileMsgStyle');addOffersBtnEnableMsg = true;"
+                                    ngDefaultControl isNative="true" perLine="7" showPreview="false"
+                                    spellcheck="false" (paste)="getCaretIndex($event, 'message','mobileMsgStyle');addOffersBtnEnableMsg = true;" (keydown.Tab)="getCaretIndex($event, 'message','mobileMsgStyle');addOffersBtnEnableMsg = true;">
+                                </div>
+                                <emoji-mart class="emoji-mart-mobilePush emojiPosition" [custom]="customEmojis" *ngIf="androidMsgEmoji"
+                                    (emojiSelect)="addEmojiItem($event, 'message')" title="{{'i18nObject.pickyourEmojiTooltip' | translate}}" [showPreview]="false" 
+                                    [enableSearch]="false" [enableFrequentEmojiSort]="true" [showSingleCategory]="true" 
+                                    [include]="['custom']" emoji="point_up" [i18n]="i18nObject" [emojiTooltip]="false">
+                                </emoji-mart>
+
+                                <div class="d-inline iconContainer">
+                                    <i class="far fa-grin" (click)="androidMsgEmoji = !androidMsgEmoji"></i>
+                                    <!-- <span class="fal fa-plus" id="{{'android_message_' + currentSplitId}}" [ngClass]="addOffersBtnEnableMsg ? '' : 'disabledPlusBtn'" (focus)="addOffersBtnEnableMsg = false;" (click)="openOfferSliderPopup($event, 'message','mobileMsgStyle');"></span> -->
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 p-0 text-right mt-3" *ngIf="!androidTextCollapsed">
+                            <button class="btn buttonStyle buttonCssStyle shadow-none" (click)="androidTextCollapsed = true">{{'designEditor.doneBtn' | translate}}</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Android Rich Notification -->
+                <div class="richNotificationSection mt-3">
+                    <div>
+                        <div class="col-2 title p-0 d-inline-block">{{'designEditor.mobilePushComponent.richNotification' | translate}}</div>
+                        <div class="toggleButton col-10 d-inline-block p-0">
+                            <label class="switch">
+                                <input type="checkbox" id="{{selectedMobileTab + 'RichToggle'}}" 
+                                (click)="showRichNotification()" [checked]="androidRichNotification === true">
+                                <span class="slider round"></span>
+                            </label>
+                        </div>
+                    </div>
+                    <div class="richInnerContainer" *ngIf="androidRichNotification">
+                        <div class="mediaOptions d-flex mt-3">
+                            <div class="col-3 p-0">
+                                <input type="radio" [checked]="androidSelectedMedia === 'single'" (click)="selectMedia('single', $event)"/>
+                                <span class="header">{{'designEditor.mobilePushComponent.singleMedia' | translate}}</span>
+                            </div>
+                            <div class="col-3 p-0">
+                                <input type="radio" [checked]="androidSelectedMedia === 'carousel'" (click)="selectMedia('carousel', $event)"/>
+                                <span class="header">{{'designEditor.mobilePushComponent.imageCarousel' | translate}}</span>
+                            </div>
+                        </div>
+                        <div class="singleMedia" *ngIf="androidSelectedMedia === 'single'">
+                            <div class="col-12 p-0 mt-3">
+                                <div><label class="titleStyle">{{'designEditor.mobilePushComponent.imageUrl' | translate}}</label></div>
+                                <div><input type="text" class="shadow-none" [(ngModel)]="imageUrl"/></div>
+                                <div class="textInfo">{{'designEditor.mobilePushComponent.urlInfo' | translate}}</div>
+                            </div>
+                            <div class="col-12 p-0 mt-3">
+                                <div><label class="titleStyle">{{'designEditor.mobilePushComponent.iconUrl' | translate}}</label></div>
+                                <div><input type="text" class="shadow-none" [(ngModel)]="iconUrl"/></div>
+                                <div class="textInfo">{{'designEditor.mobilePushComponent.urlInfo' | translate}}</div>
+                            </div>
+                        </div>
+
+                        <div class="imageCarousel" *ngIf="androidSelectedMedia === 'carousel'">
+                            <div class="landscapePortrait mt-3">
+                                <div class="d-inline-block landscapeTab cursor-pointer" [ngClass]="{'active': androidOrientation === 'landscape'}"
+                                    (click)="switchLandPort('landscape')"><span>{{'designEditor.mobilePushComponent.landscape' | translate}}</span>
+                                </div>
+                                <div class="d-inline-block portraitTab cursor-pointer" [ngClass]="{'active': androidOrientation === 'portrait'}"
+                                    (click)="switchLandPort('portrait')"><span>{{'designEditor.mobilePushComponent.portrait' | translate}}</span>
+                                </div>
+                            </div>
+                            <div class="sliderSection mt-3">
+                                <div class="sliderTitles">
+                                    <div class="sliderConatiner d-inline-block">
+                                        <div class="d-inline-block slideStyle position-relative" 
+                                            *ngFor="let item of androidSliderItems"
+                                            [ngClass]="{'active': androidSlideSelected === item.slide}"
+                                            (click)="selectSlide(item.slide)">
+                                            <span class="cursor-pointer">{{item.slide}}</span>
+                                            <i class="fa fa-times-circle iconStyle" (click)="removeSlides()"
+                                                *ngIf="androidSliderItems.length > 2 && androidSlideSelected === item.slide && 
+                                                androidSlideSelected !== slide1label && androidSlideSelected !== slide2label">
+                                            </i>
+                                        </div>
+                                    </div>
+                                    <div class="d-inline-block addSlideBtn ml-3 cursor-pointer" *ngIf="androidSliderItems.length !== 5"
+                                        (click)="addSlides()">
+                                        <i class="fa fa-plus mr-2"></i>
+                                        <span>{{'designEditor.mobilePushComponent.addSlide' | translate}}</span>
+                                    </div>
+                                </div>
+                                <div class="sliderDetails">
+                                    <div class="slides" *ngFor="let item of androidSliderItems"
+                                        [ngClass]="{'show': androidSlideSelected === item.slide}">
+                                        <div class="col-12 p-0 mt-3">
+                                            <div><label class="titleStyle">{{'designEditor.mobilePushComponent.imageUrl' | translate}}</label></div>
+                                            <div><input type="text" class="shadow-none" [(ngModel)]="item.img_url"/></div>
+                                            <div class="textInfo">{{'designEditor.mobilePushComponent.urlInfo' | translate}}</div>
+                                        </div>
+                                        <div class="col-12 p-0 mt-3">
+                                            <div><label class="titleStyle">{{'designEditor.mobilePushComponent.caption' | translate}}</label></div>
+                                            <div><input type="text" class="shadow-none" [(ngModel)]="item.caption"/></div>
+                                        </div>
+                                        <div class="col-12 p-0 mt-3">
+                                            <div><label class="titleStyle">{{'designEditor.mobilePushComponent.subcaption' | translate}}</label></div>
+                                            <div><input type="text" class="shadow-none" [(ngModel)]="item.subcaption"/></div>
+                                        </div>
+                                        <div class="col-12 p-0 mt-3">
+                                            <div><label class="titleStyle">{{'designEditor.mobilePushComponent.deepLinkUrl' | translate}}</label></div>
+                                            <div><input type="text" class="shadow-none" [(ngModel)]="item.link"/></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-12 p-0 mt-4">
+                            <div class="col-12 title p-0 d-inline-block">{{'designEditor.mobilePushComponent.notificationPriority' | translate}}</div>
+                            <div class="d-flex mt-3">
+                                <div class="col-2 p-0">
+                                    <input type="radio" [checked]="selectedPriority === 'default'" (click)="selectPriority('default')"/>
+                                    <span class="header">{{'designEditor.mobilePushComponent.default' | translate}}</span>
+                                </div>
+                                <div class="col-2 p-0">
+                                    <input type="radio" [checked]="selectedPriority === 'high'" (click)="selectPriority('high')"/>
+                                    <span class="header">{{'designEditor.mobilePushComponent.high' | translate}}</span>
+                                </div>
+                                <div class="col-2 p-0">
+                                    <input type="radio" [checked]="selectedPriority === 'normal'" (click)="selectPriority('normal')"/>
+                                    <span class="header">{{'designEditor.mobilePushComponent.normal' | translate}}</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- iOS Notification -->
+            <div class="iosInputSection mt-4" *ngIf="selectedMobileTab === 'ios'">
+                <div class="textNotificationSection">
+                    <div class="col-12 p-0 d-flex">
+                        <div class="col-6 title p-0">{{'designEditor.mobilePushComponent.textNotification' | translate}}</div>
+                        <div class="col-6 p-0 text-right" *ngIf="iosTextCollapsed">
+                            <button class="btn buttonStyle buttonCssStyle shadow-none" (click)="iosTextCollapsed = false">{{'designEditor.editBtn' | translate}}</button>
+                        </div>
+                    </div>
+                    
+                    <div class="innerSection mt-2" [ngStyle]="iosTextCollapsed ? {'display':'none'} : {'display':'block'}">
+                        <div class="mobileTitle">
+                            <div><label class="titleStyle">{{'designEditor.mobilePushComponent.title' | translate}}</label></div>
+                            <div class="titleDiv position-relative">
+                                <div [attr.contenteditable]="true" class="mobileTitleStyle" 
+                                    id="{{'ios_title_' + currentSplitId}}" name="iosTitle"
+                                    (keyup)="getCaretIndex($event, 'title','mobileTitleStyle');" (click)="getCaretIndex($event, 'title','mobileTitleStyle');addOffersBtnEnableTitle = true;"
+                                    ngDefaultControl isNative="true" perLine="7" showPreview="false"
+                                    spellcheck="false" (paste)="getCaretIndex($event, 'title','mobileTitleStyle');addOffersBtnEnableTitle = true;" (keydown.Tab)="getCaretIndex($event, 'title','mobileTitleStyle');addOffersBtnEnableTitle = true;">
+                                </div>
+                                <emoji-mart class="emoji-mart-mobilePush" [custom]="customEmojis" *ngIf="iosTitleEmoji"
+                                    (emojiSelect)="addEmojiItem($event, 'title')" title="{{'i18nObject.pickyourEmojiTooltip' | translate}}" [showPreview]="false" 
+                                    [enableSearch]="false" [enableFrequentEmojiSort]="true" [showSingleCategory]="true" 
+                                    [include]="['custom']" emoji="point_up" [i18n]="i18nObject" [emojiTooltip]="false">
+                                </emoji-mart>
+
+                                <div class="d-inline iconContainer">
+                                    <i class="far fa-grin" (click)="iosTitleEmoji = !iosTitleEmoji"></i>
+                                    <!-- <i class="fal fa-plus" [ngClass]="addOffersBtnEnableTitle ? '' : 'disabledPlusBtn'" (focus)="addOffersBtnEnableTitle = false;" (click)="openOfferSliderPopup($event, 'title','mobileTitleStyle');"></i> -->
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mobileMessage mt-2">
+                            <div><label class="titleStyle">{{'designEditor.mobilePushComponent.message' | translate}}</label></div>
+                            <div class="msgDiv position-relative">
+                                <div [attr.contenteditable]="true" class="mobileMsgStyle"
+                                    id="{{'ios_message_' + currentSplitId}}" name="iosMessage"
+                                    (keyup)="getCaretIndex($event, 'message','mobileMsgStyle');" (click)="getCaretIndex($event, 'message','mobileMsgStyle');addOffersBtnEnableMsg = true;"
+                                    ngDefaultControl isNative="true" perLine="7" showPreview="false"
+                                    spellcheck="false" (paste)="getCaretIndex($event, 'message','mobileMsgStyle');addOffersBtnEnableMsg = true;" (keydown.Tab)="getCaretIndex($event, 'message','mobileMsgStyle');addOffersBtnEnableMsg = true;">
+                                </div>
+                                <emoji-mart class="emoji-mart-mobilePush emojiPosition" [custom]="customEmojis" *ngIf="iosMsgEmoji"
+                                    (emojiSelect)="addEmojiItem($event, 'message')" title="{{'i18nObject.pickyourEmojiTooltip' | translate}}" [showPreview]="false" 
+                                    [enableSearch]="false" [enableFrequentEmojiSort]="true" [showSingleCategory]="true" 
+                                    [include]="['custom']" emoji="point_up" [i18n]="i18nObject" [emojiTooltip]="false">
+                                </emoji-mart>
+
+                                <div class="d-inline iconContainer">
+                                    <i class="far fa-grin" (click)="iosMsgEmoji = !iosMsgEmoji"></i>
+                                    <!-- <span class="fal fa-plus" [ngClass]="addOffersBtnEnableMsg ? '' : 'disabledPlusBtn'" (focus)="addOffersBtnEnableMsg = false;" (click)="openOfferSliderPopup($event, 'message','mobileMsgStyle');"></span> -->
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 p-0 text-right mt-3" *ngIf="!iosTextCollapsed">
+                            <button class="btn buttonStyle buttonCssStyle shadow-none" (click)="iosTextCollapsed = true">{{'designEditor.doneBtn' | translate}}</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- iOS Rich Notification -->
+                <div class="richNotificationSection mt-3">
+                    <div>
+                        <div class="col-2 title p-0 d-inline-block">{{'designEditor.mobilePushComponent.richNotification' | translate}}</div>
+                        <div class="toggleButton col-10 d-inline-block p-0">
+                            <label class="switch">
+                                <input type="checkbox" id="{{selectedMobileTab + 'RichToggle'}}" 
+                                (click)="showRichNotification()" [checked]="iosRichNotification === true">
+                                <span class="slider round"></span>
+                            </label>
+                        </div>
+                    </div>
+                    <div class="richInnerContainer" *ngIf="iosRichNotification">
+                        <div class="mediaOptions d-flex mt-3">
+                            <div class="col-3 p-0">
+                                <input type="radio" [checked]="iosSelectedMedia === 'single'" (click)="selectMedia('single', $event)"/>
+                                <span class="header">{{'designEditor.mobilePushComponent.singleMedia' | translate}}</span>
+                            </div>
+                            <div class="col-3 p-0">
+                                <input type="radio" [checked]="iosSelectedMedia === 'carousel'" (click)="selectMedia('carousel', $event)"/>
+                                <span class="header">{{'designEditor.mobilePushComponent.imageCarousel' | translate}}</span>
+                            </div>
+                        </div>
+                        <div class="singleMedia" *ngIf="iosSelectedMedia === 'single'">
+                            <div class="col-12 p-0 mt-3">
+                                <div><label class="titleStyle">{{'designEditor.mobilePushComponent.mediaUrl' | translate}}</label></div>
+                                <div><input type="text" class="shadow-none" [(ngModel)]="mediaUrl"/></div>
+                                <div class="textInfo">{{'designEditor.mobilePushComponent.mediaInfo' | translate}}</div>
+                            </div>
+                            <div class="col-12 p-0 mt-3">
+                                <div><label class="titleStyle">{{'designEditor.mobilePushComponent.badgeCount' | translate}}</label></div>
+                                <div><input type="number" class="shadow-none" [(ngModel)]="badgeCount"/></div>
+                            </div>
+                        </div>
+
+                        <div class="imageCarousel" *ngIf="iosSelectedMedia === 'carousel'">
+                            <div class="landscapePortrait mt-3">
+                                <div class="d-inline-block landscapeTab cursor-pointer" [ngClass]="{'active': iosOrientation === 'landscape'}"
+                                    (click)="switchLandPort('landscape')"><span>{{'designEditor.mobilePushComponent.landscape' | translate}}</span>
+                                </div>
+                                <div class="d-inline-block portraitTab cursor-pointer" [ngClass]="{'active': iosOrientation === 'portrait'}"
+                                    (click)="switchLandPort('portrait')"><span>{{'designEditor.mobilePushComponent.portrait' | translate}}</span>
+                                </div>
+                            </div>
+                            <div class="sliderSection mt-3">
+                                <div class="sliderTitles">
+                                    <div class="sliderConatiner d-inline-block">
+                                        <div class="d-inline-block slideStyle position-relative" 
+                                            *ngFor="let item of iosSliderItems"
+                                            [ngClass]="{'active': iosSlideSelected === item.slide}"
+                                            (click)="selectSlide(item.slide)">
+                                            <span class="cursor-pointer">{{item.slide}}</span>
+                                            <i class="fa fa-times-circle iconStyle" (click)="removeSlides()"
+                                                *ngIf="iosSliderItems.length > 2 && iosSlideSelected === item.slide && 
+                                                iosSlideSelected !== slide1label && iosSlideSelected !== slide1label">
+                                            </i>
+                                        </div>
+                                    </div>
+                                    <div class="d-inline-block addSlideBtn ml-3 cursor-pointer" *ngIf="iosSliderItems.length !== 5"
+                                        (click)="addSlides()">
+                                        <i class="fa fa-plus mr-2"></i>
+                                        <span>{{'designEditor.mobilePushComponent.addSlide' | translate}}</span>
+                                    </div>
+                                </div>
+                                <div class="sliderDetails">
+                                    <div class="slides" *ngFor="let item of iosSliderItems"
+                                        [ngClass]="{'show': iosSlideSelected === item.slide}">
+                                        <div class="col-12 p-0 mt-3">
+                                            <div><label class="titleStyle">{{'designEditor.mobilePushComponent.imageUrl' | translate}}</label></div>
+                                            <div><input type="text" class="shadow-none" [(ngModel)]="item.img_url"/></div>
+                                            <div class="textInfo">{{'designEditor.mobilePushComponent.urlInfo' | translate}}</div>
+                                        </div>
+                                        <div class="col-12 p-0 mt-3">
+                                            <div><label class="titleStyle">{{'designEditor.mobilePushComponent.caption' | translate}}</label></div>
+                                            <div><input type="text" class="shadow-none" [(ngModel)]="item.caption"/></div>
+                                        </div>
+                                        <div class="col-12 p-0 mt-3">
+                                            <div><label class="titleStyle">{{'designEditor.mobilePushComponent.subcaption' | translate}}</label></div>
+                                            <div><input type="text" class="shadow-none" [(ngModel)]="item.subcaption"/></div>
+                                        </div>
+                                        <div class="col-12 p-0 mt-3">
+                                            <div><label class="titleStyle">{{'designEditor.mobilePushComponent.deepLinkUrl' | translate}}</label></div>
+                                            <div><input type="text" class="shadow-none" [(ngModel)]="item.link"/></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Key value pair implementation starts here -->
+            <div class="keyValuePair mt-3">
+                <div class="col-12 title p-0">{{'designEditor.mobilePushComponent.keyValuePair' | translate}}</div>
+                <div class="col-12 p-0 d-flex mt-1" *ngFor="let item of keyValueArray">
+                    <div class="col-5 p-0">
+                        <div><label class="titleStyle">{{'designEditor.mobilePushComponent.key' | translate}}</label></div>
+                        <div><input type="text" [(ngModel)]="item.key"/></div>
+                    </div>
+                    <div class="col-5 p-0">
+                        <div><label class="titleStyle">{{'designEditor.mobilePushComponent.value' | translate}}</label></div>
+                        <div><input type="text" [(ngModel)]="item.value"/></div>
+                    </div>
+                    <div class="col-1 p-0">
+                        <button class="buttonStyle shadow-none btnPosition" (click)="addNewKeyValue(item)" *ngIf="item.add">
+                            <i class="far fa-plus"></i>
+                        </button>
+                        <button class="buttonStyle shadow-none btnPosition iconColor" (click)="removeKeyValue(item)" *ngIf="!item.add">
+                            <i class="far fa-trash-alt"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Notification Preview starts here -->
+        <div class="notificationPreview">
+            <div class="previewHeading text-center">{{'designEditor.mobilePushComponent.notificationPreview' | translate}}</div>
+
+            <!-- Android Preview -->
+            <div class="androidPreview mt-3" *ngIf="selectedMobileTab === 'android'">
+                <div class="smartphone">
+                    <div class="content" [ngStyle]="(androidCollapsed) ? {'height': '54px', 'overflow': 'hidden'} : {}">
+                        <div class="d-flex">
+                            <div class="col-10 p-0" *ngIf="!androidRichNotification || androidSelectedMedia === 'single' || androidCollapsed">
+                                <div class="androidPreviewTitle" title="{{androidTitle}}" [innerHtml]="androidTitle || 'designEditor.mobilePushComponent.titlePlaceholder' | translate"></div>
+                                <div class="androidPreviewMsg mt-1" title="{{androidMessage}}" [innerHtml]="androidMessage || 'designEditor.mobilePushComponent.messagePlaceholder' | translate"></div>
+                            </div>
+                            <div class="col-2 iconDiv p-0" *ngIf="androidRichNotification && androidSelectedMedia === 'single'">
+                                <img [attr.src]="iconUrl"/>
+                            </div>
+                        </div>
+                        <div class="imageDiv mt-2" *ngIf="androidRichNotification && androidSelectedMedia === 'single'">
+                            <img [attr.src]="imageUrl"/>
+                        </div>
+
+                        <div class="imageCarousel mt-2" *ngIf="androidRichNotification && androidSelectedMedia === 'carousel'">
+                            <div class="slideContent" *ngFor="let item of androidSliderItems" [ngClass]="{'active': androidSlideSelected === item.slide}">
+                                <div class="text">{{item.caption || 'designEditor.mobilePushComponent.captionHere' | translate}}</div>
+                                <div class="text">{{item.subcaption || 'designEditor.mobilePushComponent.subcaptionHere' | translate}}</div>
+                            </div>
+                            <div class="mt-2 position-relative">
+                                <div class="sliderImg" *ngFor="let item of androidSliderItems" [ngClass]="{'active': androidSlideSelected === item.slide}">
+                                    <img [attr.src]="item.img_url" [ngClass]="{'portMode': androidOrientation === 'portrait'}"/>
+                                </div>
+                                <div class="nextNPrev d-flex justify-content-between">
+                                    <div (click)="moveSlide('prev')" class="iconHolder"><i class="fa fa-chevron-left cursor-pointer"></i></div>
+                                    <div (click)="moveSlide('next')" class="iconHolder"><i class="fa fa-chevron-right cursor-pointer"></i></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-12 p-0 text-center mt-4 expNCollapse">
+                    <div class="d-inline mr-3">
+                        <input type="radio" class="mr-2" [checked]="androidCollapsed" 
+                        (click)="switchExpandAndCollapse('android', 'collapsed')"/>
+                        <span>{{'designEditor.mobilePushComponent.collapsed' | translate}}</span>
+                    </div>
+                    <div class="d-inline">
+                        <input type="radio" class="mr-2" [checked]="androidExpanded"
+                        (click)="switchExpandAndCollapse('android', 'expanded')"/>
+                        <span>{{'designEditor.mobilePushComponent.expanded' | translate}}</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- iOS Preview -->
+            <div class="iosPreview mt-3" *ngIf="selectedMobileTab === 'ios'">
+                <div class="smartphone">
+                    <div class="content" [ngStyle]="(iosCollapsed) ? {'height': '54px', 'overflow': 'hidden'} : {}">
+                        <div class="mediaDiv mb-2" *ngIf="iosRichNotification && iosSelectedMedia === 'single' && !iosCollapsed">
+                            <img [attr.src]="mediaUrl"/>
+                        </div>
+
+                        <div class="imageCarousel" *ngIf="iosRichNotification && iosSelectedMedia === 'carousel' && iosExpanded">
+                            <div class="mt-2 position-relative">
+                                <div class="sliderImg" *ngFor="let item of iosSliderItems" [ngClass]="{'active': iosSlideSelected === item.slide}">
+                                    <img [attr.src]="item.img_url" [ngClass]="{'portMode': iosOrientation === 'portrait'}"/>
+                                </div>
+                                <div class="nextNPrev d-flex justify-content-between">
+                                    <div (click)="moveSlide('prev')" class="iconHolder"><i class="fa fa-chevron-left cursor-pointer"></i></div>
+                                    <div (click)="moveSlide('next')" class="iconHolder"><i class="fa fa-chevron-right cursor-pointer"></i></div>
+                                </div>
+                            </div>
+                            <div class="slideContent mt-2" *ngFor="let item of iosSliderItems" [ngClass]="{'active': iosSlideSelected === item.slide}">
+                                <div class="text">{{item.caption || 'designEditor.mobilePushComponent.captionHere' | translate}}</div>
+                                <div class="text">{{item.subcaption || 'designEditor.mobilePushComponent.subcaptionHere' | translate}}</div>
+                            </div>
+                        </div>
+                        
+                        <div *ngIf="!iosRichNotification || iosSelectedMedia === 'single' || iosCollapsed">
+                            <div class="androidPreviewTitle" [innerHtml]="iosTitle || 'designEditor.mobilePushComponent.titlePlaceholder' | translate"></div>
+                            <div class="androidPreviewMsg mt-1" [innerHtml]="iosMessage || 'designEditor.mobilePushComponent.messagePlaceholder' | translate"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-12 p-0 text-center mt-4 expNCollapse">
+                    <div class="d-inline mr-3">
+                        <input type="radio" class="mr-2" [checked]="iosCollapsed" 
+                        (click)="switchExpandAndCollapse('ios', 'collapsed')"/>
+                        <span>{{'designEditor.mobilePushComponent.collapsed' | translate}}</span>
+                    </div>
+                    <div class="d-inline">
+                        <input type="radio" class="mr-2" [checked]="iosExpanded" 
+                        (click)="switchExpandAndCollapse('ios', 'expanded')"/>
+                        <span>{{'designEditor.mobilePushComponent.expanded' | translate}}</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div><!--End-->
+<div class="customeOffers relative" *ngIf="offerDrawerSectionEnable" [ngClass]="offerDrawerSectionEnable ? 'slideIN':'slideOUT'">
+    <app-offers-drawer [dataFromParent]="modalRef" (onCloseOfferPopup)="onCloseOfferDrawer();" (offersAppendToInput)="finalOffersSelected($event);"></app-offers-drawer>
+</div>
+<ng-template #testPushNotifyModel>
+    <app-test-email [dataFromParent]="modalRef" [pushNotifyObj]="pushPayloadObj"></app-test-email>
+</ng-template>
+<!-- <div class="backdrop_offerSlider" *ngIf="backropOffersEnable"></div> -->
+

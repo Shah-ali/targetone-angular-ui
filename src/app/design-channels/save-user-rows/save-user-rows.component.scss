@@ -1,0 +1,16 @@
+@import '../../../custom-style.scss';
+.buttonCss {
+  @include secondaryBttn;
+}
+.buttonPrimaryCss {
+  @include primaryBttn;
+}
+
+.font-small {
+  @include titleLabel;
+}
+.borderinput {
+  @include borderColor(#b5e4ff);
+  border-radius: 2px;
+  padding: 0.5rem;
+}

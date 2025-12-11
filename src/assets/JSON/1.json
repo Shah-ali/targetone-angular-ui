@@ -1,0 +1,15 @@
+{
+  "status": true,
+  "uiDatetimeFormat": "dd-MMM-yyyy HH:mm",
+  "specialCharacterAllowedGlobal": [
+    "_"
+  ],
+  "userPageVisits": [
+    "onboarding-tour",
+    "upload-data",
+    "schema-details"
+  ],
+  "uiDateFormat": "dd/MM/YYYY",
+  "userName": "Shahnawaz Ali",
+  "userLanguage": "en"
+}

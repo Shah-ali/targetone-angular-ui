@@ -1,0 +1,110 @@
+.atwho-view {
+    position:absolute;
+    top: 0;
+    left: 0;
+    display: none;
+    margin-top: 18px;
+    background: white;
+    color: black;
+    border: 1px solid #DDD;
+    border-radius: 6px;
+    min-width: 210px;
+    z-index: 11110 !important;
+    font-size: 12px;
+  }
+
+  .atwho-view .atwho-header {
+    padding: 5px;
+    margin: 5px;
+    cursor: pointer;
+    border-bottom: solid 1px #eaeff1;
+    color: #6f8092;
+    font-size: 11px;
+    font-weight: bold;
+  }
+
+  .atwho-inserted {
+    background: #428EE5;
+    color: #fff;
+    padding: 4px 10px;
+    border-radius: 10px;
+    margin: 2px 5px;
+    font-size: 12px;
+    display: inline-block;
+
+    em {
+      font-style: normal;
+    }
+  }
+
+  .subjectDiv, .preHeaderDiv {
+    line-height: 32px;
+    .atwho-inserted, .subjectOfferInserted, .preHeaderOfferInserted {
+      display: inline;
+      padding: 6px 10px;
+      margin: 0 5px;
+    }
+  }
+
+  .subjectOfferInserted, .preHeaderOfferInserted {
+      background: #428EE5;
+      color: #fff;
+      padding: 4px 10px;
+      border-radius: 10px;
+      margin: 2px 5px;
+      font-size: 12px;
+      display: inline-block;
+  }
+
+  .atwho-view .atwho-header .small {
+    color: #6f8092;
+    float: right;
+    padding-top: 2px;
+    margin-right: -5px;
+    font-size: 12px;
+    font-weight: normal;
+  }
+
+  .atwho-view .atwho-header:hover {
+    cursor: default;
+  }
+
+  .atwho-view .cur {
+    background: #eee;
+    color: #000;
+  }
+  .atwho-view .cur small {
+    color: white;
+  }
+  .atwho-view strong {
+    color: #3366FF;
+  }
+  .atwho-view .cur strong {
+    color: white;
+    font:bold;
+  }
+  .atwho-view ul {
+    /* width: 100px; */
+    list-style:none;
+    padding:0;
+    margin:auto;
+    max-height: 200px;
+    overflow-y: auto;
+  }
+  .atwho-view ul li {
+    display: block;
+    padding: 8px 10px;
+    border-bottom: 1px solid #ddd;
+    cursor: pointer;
+  /* border-top: 1px solid #C8C8C8; */
+  }
+
+  .atwho-view ul li:first-child {
+    background-color: #eee;
+  }
+
+  .atwho-view small {
+    font-size: smaller;
+    color: #777;
+    font-weight: normal;
+  }

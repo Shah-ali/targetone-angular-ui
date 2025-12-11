@@ -1,0 +1,109 @@
+@import "../../../custom-style.scss";
+.buttonCss {
+  @include secondaryBttn;
+}
+
+
+  * {
+    margin: 0px;
+    padding: 0px;
+  } 
+  .backColor{
+    background-color: #F0F2F7;
+
+    .customClass, .accord-heading{
+      background-color: #F8FCFF !important;
+        border: 1px solid #f8fcff;
+    }
+    .accord-content{
+      background-color: #fff;
+    }
+    .font-small{
+      font-size: 0.66rem;
+    }
+    .labelMedium{
+      font-size: 0.8rem;
+      color:#0091FF;
+      cursor: pointer;
+    }
+    sub{
+      @include subTitleLabel(100,0.8rem);
+    }
+    .font-8rem{
+      @include subTitleLabel(500,0.8rem);
+    }
+    .subjectline{
+      @include titleLabel(#000,1rem,500);
+    }
+    .lable-size-1{
+      @include titleLabel(#666F80,0.8rem,100);
+    }
+    .lable-size-1:focus{
+        color: #495057;
+        background-color: #fff;
+        border-color: #80bdff;
+        outline: 0;
+        box-shadow: 0 0 0 0.2rem rgb(0 123 255 / 25%);
+    }
+   .borderinput{
+     @include borderColor(#0091FF);
+     border-radius:2px;
+     padding: 0.2rem 0.5rem;
+   }
+
+   .subjectDiv, .preHeaderDiv {
+      display: inline-block;
+      align-items: center;
+      width: 100%;
+      overflow: hidden;
+      padding-right: 129px;
+   }
+
+   .emoji-mart, .emoji-mart-subject{
+    position: absolute;
+    z-index: 99;
+    top: 40px;
+    right: 0;
+    }
+    .emojiIcon{
+      position: absolute;
+      top:13px;
+      right:10px;
+    }
+
+    .add-tags-subject {
+      position: absolute;
+      top: 4px;
+      right: 36px;
+    }
+  }
+  .relative{
+    position: relative;
+  }
+  .trashIcon-Align{
+    top: 36px;
+    position: relative;
+    left: 10px;
+  }
+
+ .subjectDiv, .preHeaderDiv {
+   font-size: 14px;
+  }
+
+  .mergeTagsCode {
+    display: none;
+  }
+
+  .subjectOfferInserted, .preHeaderOfferInserted, .subjectDiv span, .preHeaderDiv span {
+    background: #428EE5;
+    color: #fff;
+    padding: 6px 10px;
+    border-radius: 10px;
+    margin: 0 5px;
+    font-size: 12px;
+  }
+
+ 
+ 
+ 
+

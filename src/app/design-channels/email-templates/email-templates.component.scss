@@ -1,0 +1,308 @@
+@import '../../../custom-style.scss';
+.custom-success-btn{
+    border:1px solid #04e66ada;
+    color: #04e66ada;
+}
+.outterwrapper{
+    background-color: #f4f4f4;
+    position: relative;
+    //top: 10px;
+
+    .top-d-heading {
+      font-size: .8rem;
+      font-weight: 400;
+      margin-bottom: 0;
+    }
+
+    button {
+      font-size: 0.75rem;
+      font-weight: normal;
+      padding-left: 15px !important;
+      padding-right: 15px !important;
+    }
+}
+
+.template-area {
+  padding: 20px 15px;
+}
+
+.template-area, .preview-area, .actual-preview{
+    border-radius: 4px;
+    background-color: #fff;
+    overflow-x: hidden;
+    overflow-y: auto;
+    width: 98%;
+}
+.imgIcon{    
+    height: 250px;
+    width: 100%;
+    object-fit: cover;
+    object-position: 0px 0px;
+    overflow: hidden;
+}
+.btnCustomColor{
+    background-color:#1fab84;
+    border-color: #1fab84;
+}
+.thumbnailHover{border-radius: 1.5rem;}
+.thumbnailHover:hover, .thumbnailHover.active, .thumbnailHover:focus{
+    border-bottom-width: .4rem;
+    border-top-width: 2px;
+    border-left-width: 2px;
+    border-right-width: 2px;
+    border-style: solid;
+    border-color: #3366FF;
+}
+::ng-deep .custom-popup{
+    max-width: initial !important;
+    max-height: 625px !important;
+    overflow-y: auto;
+    margin: 0;
+    margin-top: 10px;
+    overflow-x: hidden;
+}
+.mobileV{
+    background-image: url('../../../assets/images/mobile.png');
+    background-repeat: no-repeat;
+    width: 100%;
+    max-height: 100%;
+    background-position: center;
+    position: relative;
+    background-position-y: top;
+    min-height: 525px;
+}
+.fitOnMobile{
+    height: 465px;
+}
+.tab-list{
+    list-style: none;
+    padding-bottom: 10px;
+
+  li {
+    display: inline;
+    padding: 8px;
+    cursor: pointer;
+    font-size: 12px;
+    color: #3366FF;
+
+    &.active {
+      border-bottom: 2px solid #3366FF;
+
+      button {
+        color: #3366FF;
+      }
+    }
+
+    button:hover{
+      color:#3366FF;
+    }
+
+    .disable {
+      cursor: default;
+      border-bottom: none;
+    }
+  }
+
+  button{
+    border:none;
+    background: none;
+  }
+}
+.bd-custom{
+  border-bottom: 1px solid #BFC1C8;
+  border-top: 1px solid #BFC1C8;
+}
+.tempreviwe-name{
+    background-color: #FBFCF0;
+    @include titleLabel;
+    color: #000;
+
+    button {
+      font-size: 1.5rem;
+    }
+}
+.font-small{
+    font-size: $btnfontsize;
+  }
+  .inline-tab{
+    list-style: none;     
+  }
+.inline-tab li{
+  display: inline;
+  padding:11px 8px;
+  cursor: pointer;
+  font-size: 11px;
+  color: #000;
+}
+.inline-tab li.active{
+  color: #0091FF;
+}
+  .searchSection {
+      align-items: center;
+      width:100%;
+      margin-bottom: 15px;
+      
+      .sortBy {
+          span {
+              font-size: 14px;
+          }
+          .parameter {
+              color: #3366FF;
+              margin-left: 5px;
+          }
+      }
+      .searchBox {
+          justify-content: end;
+          align-items: center;
+          border-bottom: 1px solid #ccc;
+          #searchTempalteByName {
+              border: none;
+              background: transparent;
+              flex: 1;
+              padding: 0;
+              height: 30px;
+              &::placeholder {
+                  color: #999;
+                  font-weight: lighter;
+              }
+          }
+          .fa-search {
+              border: none;
+              background: transparent;
+              padding: 0;
+              color: #aaa;
+          }
+      }
+  }
+  .buttonCss{
+    @include secondaryBttn;
+  }
+  
+.successOutline{
+  @include buttonStyle1($button:#0da73b);   
+}
+.paddL10{
+  padding-left: 10px;
+}
+.font-light{
+  font-weight: $fontweightlight;
+}
+.pointer{
+  cursor: pointer;
+}
+#thumbnailContent{
+  border:none;
+  overflow: hidden !important;
+  height: calc(100vh - 337px);
+  width: 100%;
+}
+#thumbnailContent html body table{
+  width:600px !important;
+}
+.row-justify {
+  justify-content: center;
+}
+
+.scrollTable{
+  height: 300px;
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+.overlayPopup{
+  position: absolute;
+    border: 1px solid #c7c5c5;
+    padding: 7px 10px 7px 10px;
+    top: -11px;
+    right: -11px;
+    background-color: #f4f4f4;
+    border-radius: 12px;
+    // width: 45px;
+    // height: 33px;
+}
+.relative{
+  position: relative;
+}
+.blueColor{
+  color:#3366FF;
+}
+.redColor{
+  color:red;
+}
+.customTableStyle{
+  border:1px solid #848485;
+  font-size: 0.9rem;
+  background-color: #fdfdf5;
+}
+.customTableStyle th{
+  background-color: #dfe1e6;
+  font-size:0.80rem;
+  border-radius: 0;
+  font-weight: 500;
+  padding: .8rem;
+}
+.customTableStyle thead tr, .customTableStyle tbody tr{
+  border:1px solid #ccc;
+  font-size: 0.75rem;
+  background-color: #fff;  
+}
+.smallLabel{
+  font-size: 0.75rem;
+}
+.mediumLable{
+  font-size: 0.8rem;
+}
+.showingCoutLabel{
+  font-size: 1rem;
+  color: #b2b7bf;
+  font-weight: 600;
+}
+.btnDanger{
+  color: #FF0000;
+  border: 1px solid #FF0000;  
+}
+.offset-R-7{
+  margin-right:-7px;
+}
+.buleBtn{
+  background-color: #3366FF;
+  color: #FFF;
+}
+.redConfirmBorder{
+  @include buttonStyle1;
+  border: 1px solid red;
+}
+.normalBorder{
+  @include buttonStyle1;
+}
+.swal-button {
+  padding: 7px 19px;
+  border-radius: 2px;
+  background-color: #4962B3;
+  font-size: 12px;
+  border: 1px solid #3e549a;
+  text-shadow: 0px -1px 0px rgba(0, 0, 0, 0.3);
+}
+.veiwDesc{
+  font-size: .65rem;
+  margin-left: 1.7rem;
+}
+.veiwDescList{
+  font-size: .65rem;
+}
+.tdHeight{
+  height: 2rem;
+}
+:host ::ng-deep .popover {
+  font-size: 12px;
+  padding: 5px;
+  z-index: 999;
+  text-align: justify;
+}
+
+.m-view-subject {
+  display: contents;
+}
+.action-section-lists{
+  float:right;
+  
+}

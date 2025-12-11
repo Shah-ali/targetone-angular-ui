@@ -1,0 +1,28 @@
+<div class="modal-header">
+  <h5 class="modal-title pl-2" id="exampleModalLabel">
+    <span>{{ 'savedRow.saveRows' | translate }}</span>
+  </h5>
+  <button type="button" class="close pull-right mr-0" (mousedown)="onClose()" aria-label="Close">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<div class="modal-body pl-4 pr-4 pb-3">
+  <!-- <iframe width="100%" src="{{iframeUrlPath}}">{{iframeContent}}</iframe> -->
+  <div class="col-12 p-0">
+    <input
+      class="form-control font-small borderinput"
+      name="saveRowName"
+      [(ngModel)]="savedRowName"
+      autocomplete="off"
+      placeholder="{{ 'savedRow.writeRowName' | translate }}"
+    />
+  </div>
+</div>
+<div class="modal-footer d-flex justify-content-right pb-3 pt-3 pr-4">
+  <button type="button" class="btn buttonCss shadow-none m-0 mr-1" (mousedown)="onClose()">
+    {{ 'cancel' | translate }}
+  </button>
+  <button type="submit" class="btn buttonPrimaryCss shadow-none m-0" (click)="getSaveRows($event)">
+    {{ 'save' | translate }}
+  </button>
+</div>

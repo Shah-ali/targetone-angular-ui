@@ -1,0 +1,146 @@
+.smsLayoutContainer {
+    background: #F0F2F7;
+    padding: 15px;
+    height: calc(100vh - 120px);
+    overflow: auto;
+
+}
+.innerContainer{
+    .marginTop30 {margin-top: 30px;}
+    .verticalTopText{vertical-align: text-top;}
+    .backgroundWhite{background-color: #FFF;}
+    .verticalMiddle{vertical-align: middle;}
+    .backgCol{background-color:#FBFBFB;}
+    .blueColor{color: #fff !important;
+        background: #026FE9 !important;}
+    .disabledPlusBtn{
+        pointer-events: none;
+        cursor: not-allowed;
+        color: rgb(179, 179, 179);
+    }
+    .disableBckg{background: #efefef !important;}
+    .mr-15{margin-right: -15px;}
+    .tempLayoutSection{
+        background-color: #FFF;
+        height: calc(100vh - 90px);
+        overflow-x: hidden;
+        overflow-y: auto;
+        .liteBckgrd{
+            background: #FBFBFB;
+            border-radius: 10px;
+            padding: 15px;
+        }
+        .scrollTable{
+            height: 300px;
+            overflow-x: hidden;
+            overflow-y: auto;
+          }
+          .customTableStyle{
+            border:1px solid #848485;
+            font-size: 0.9rem;
+            background-color: #fdfdf5;
+          }
+          .customTableStyle th{
+            background-color: #dfe1e6;
+            font-size:0.80rem;
+            border-radius: 0;
+            font-weight: 500;
+            padding: .8rem;
+          }
+          .customTableStyle thead tr, .customTableStyle tbody tr{
+            border:1px solid #ccc;
+            font-size: 0.75rem;
+            background-color: #fff;  
+          }
+        .columnHeaderText{
+            height: 70px;
+        }
+        .radiusStyle{
+            border-radius: 8px;
+            border-color: #026FE9;    
+        }
+        .smsInputTabContent {
+            border: 1px solid #026FE9;
+            border-radius: 8px;
+            height: 114px;
+            background: #fff;
+            .smsInputVal {
+                margin-top: 7px;
+                outline: none;
+                width: 89%;
+                left: 10px;
+                position: absolute;
+                font-size: 13px;
+                height: 105px;
+                overflow: auto;
+                border: 0;
+            }
+           
+            .iconContainer {
+                position: absolute;
+                right: 0;
+            }
+            .fa-grin, .fa-plus {
+                padding: 48px 15px;
+                border-left: 1px solid #ccc;
+                cursor: pointer;
+            }
+            .emoji-mart, .emoji-mart-inapp {
+                position: absolute;
+                z-index: 99;
+                top: 40px;
+                right: 0;
+            }
+            .emoji-mart-sms{
+                position: absolute;
+                z-index: 99;
+                top: 66px;
+                right: 0;
+            }
+            .emojiPosition {
+                top: 55px;
+            }
+            .disabledPlusBtn{
+                pointer-events: none;
+                cursor: not-allowed;
+                color: rgb(179, 179, 179);
+            }
+        }        
+        .saveAsTemplatePopup{
+            position: absolute;
+            width: 70%;
+            height: 185px;
+            z-index: 999;
+            left: 26%;
+            top: 55%;
+            border-radius: 10px;
+            border: 1px solid #ccc;
+            background-color: #FFFFFF;
+        }
+    }
+}
+.notificationPreview {
+    background: #fff;
+    width: 31%;
+    padding: 25px 0;
+    border-radius: 10px;
+    .previewHeading {
+        font-size: 14px;
+        font-weight: 600;
+    }
+    input[type="radio"] {
+        outline: none;
+    }
+    .smartphone {
+        position: relative;
+        width: 270px;
+        height: 480px;
+        margin: auto;
+        border: 16px #C1C1C1 solid;
+        border-top-width: 60px;
+        border-bottom-width: 60px;
+        border-radius: 36px;
+        word-break: break-all;
+   
+    }
+}

@@ -1,0 +1,111 @@
+@import '../../../custom-style.scss';
+.buttonCss {
+  @include secondaryBttn;
+}
+
+.buttonPrimaryCss {
+  @include primaryBttn;
+}
+.modal-content {
+  width: 100%;
+  max-width: 90vw; /* or 100vw if you want edge to edge */
+}
+.modal-body {
+  display: flex;
+  gap: 10px; /* space between left and right */
+  padding: 20px;
+  padding: 20px;
+  width: 100%;
+}
+
+.left-section {
+  flex: 1;
+}
+
+.preview-box {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.progress-container {
+  width: 100%;
+  max-width: 400px;
+  padding: 20px;
+  min-width: 300px;
+}
+
+.progress-bar-wrapper {
+  position: relative;
+  height: 20px;
+  width: 100%;
+  overflow: hidden;
+  background-color: #D9D9D9;
+}
+
+.progress-filled {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  z-index: 2;
+  border-radius: inherit;
+}
+
+.progress-background {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  z-index: 1;
+  border-radius: inherit;
+}
+
+.progress-labels span {
+  font-size: 0.8rem;
+  color: #333;
+}
+
+.slider-labels {
+  font-size: 0.9rem;
+  color: #444;
+  width: 70%;
+}
+
+.noOfCardsStyle {
+  font-size: 10px;
+  color: #838383;
+}
+.max-value {
+  display: flex;
+  flex-direction: row; /* Ensures label and input are stacked vertically */
+  flex: 1;
+}
+
+.mergetagCompoent {
+  display: flex;
+  align-items: center; /* Aligns the merge tag component with the input */
+  max-width: 200px; /* Adjust if necessary */
+}
+.form-control{
+  width: 140px;
+}
+.filledClr{
+  margin-left: 15px;
+}
+.separator{
+  width: 0.2px;
+  background-color: #000;
+  margin: 5px 0px 5px 15px;
+}
+.custom-range{
+  width:70%
+}
+.required-asterisk {
+  color: red;
+  margin-left: 2px;
+  font-weight: bold;
+  vertical-align: text-top;
+}

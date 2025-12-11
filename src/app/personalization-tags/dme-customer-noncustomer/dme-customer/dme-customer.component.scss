@@ -1,0 +1,577 @@
+//@import url('../../design-channels/cdk-drag-drop/cdk-drag-drop.component.scss');
+@import '../../../../custom-style.scss';
+.buttonCss {
+  @include secondaryBttn;
+}
+.buttonPrimaryCss {
+  @include primaryBttn;
+}
+.heigt35{
+    height: 35px;
+  }
+  .labelMiddle{
+    margin:0 auto;
+  }
+.recommendationConatiner {
+    .pointer{
+        cursor:pointer;
+    }
+    .minheightauto{
+        min-height: auto !important;
+    }
+    .ellipseText{
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }  
+    .numberInCircle{     
+            border-radius: 0.8em;
+            -moz-border-radius: 0.8em;
+            -webkit-border-radius: 0.8em;
+            display: inline-block;
+            font-weight: normal;
+            line-height: 1.6em;
+            margin-right: 15px;
+            text-align: center;
+            width: 1.6em; 
+    }
+    .blue{
+        color:#FFF;
+        background: #026FE9;
+        border:1px solid #026FE9;
+        border-radius: 15px;
+    }
+    .grey{
+        color:#666666;
+        background: #FFF;
+        border:1px solid #BFBFBF;
+    }
+    $primary: #28A54D;
+$checkmarkColor: white;
+$size: 30px;
+$checkmarkFat: 3px;
+.circle {
+  position: relative;
+  background: $primary;
+  border-radius: 50%;
+  width: $size;
+  height: $size;
+  margin-right: 10px;
+  display: inline-block;
+  vertical-align: top;
+  top: -3px;
+}
+
+.checkmark {
+  position: absolute;
+  transform: rotate(45deg) translate(-50%, -50%);
+  left: 35%;
+  top: 45%;
+  height: calc($size/3);
+  width: calc($size/6);
+  border-bottom: $checkmarkFat solid $checkmarkColor;
+  border-right: $checkmarkFat solid $checkmarkColor;
+}
+    .scrollViewTemp{
+        overflow-x:hidden;
+        overflow-y:auto;
+        height:calc(100vh - 245px);
+    }
+    .reco-section {
+        background-color: #fff;
+        padding: 7px;
+    }
+    .smallFont{
+        font-size: .69rem;
+    }
+    .mediumFont{
+        font-size: .75rem;
+    }
+    padding: 15px;
+    min-height: calc(100vh - 56px);
+    overflow: auto;
+    background-color: #F0F2F6;
+    .mainContainer {
+        .noofplacements{
+            font-size: 11px;
+            margin-right: 10px;
+            color: #B1B1B1;
+        }
+        .countPlacement{
+            color: #736D6D;
+        }
+        .cardSection {
+        width: 200px;
+        height: 70px;
+        padding: 7px 15px;
+        border: 1px solid #E6E6E6;
+        border-radius: 1px;
+        font-size: 12px;
+        margin-right: 15px;
+        cursor: pointer;
+        position: relative;
+        display: inline-block;
+        margin-bottom: 10px;
+        background-color: #FFF;
+    }
+    .cardSection.active {
+        border: 3px solid #026FE9;
+    }
+    .arrowSelectedPointer{
+    	color: #026FE9;
+	    position: absolute;
+	    left: 50%;
+	    bottom: -11px;
+    }
+
+        padding: 15px;
+        .title {
+            font-size: 1rem;
+            color: #232323;
+        }
+        .subTitle {
+            font-size: 0.75rem;
+            color: #949494;
+        }
+        .separator {
+            margin: 10px 0;
+        }
+        /* #cancelBtn {
+            font-size: 0.9rem;
+            border: 0;
+            background: 0;
+            margin-right: 10px;
+        } */
+        #doneBtn {
+            &.disabled {
+                pointer-events: none;
+                opacity: 0.5;
+            }
+        }
+        .searchNCreateReco {
+            margin-top: 35px;
+            .searchReco {
+                .iconPosition {
+                    position: absolute;
+                    top: 12px;
+                    left: 15px;
+                    z-index: 1;
+                    color: #666;
+                }
+                #searchInput {
+                    border: 1px solid #ccc;
+                    border-radius: 5px;
+                    padding: 9px;
+                    width: 98%;
+                    position: relative;
+                    padding-left: 40px;
+                    box-shadow: none;
+                    &:focus-visible {
+                        box-shadow: none;
+                        border: 0;
+                    }
+                }
+            }
+            .recoTypeStyle {
+                position: relative;
+                top: -23px;
+                .text {
+                    font-size: 0.8rem;;
+                    color: #666;
+                }
+            }
+            .recoDropdownStyle {
+                width: 100%;
+                height: 40px;
+                padding: 9px;
+                background: #FFFFFF;
+                border: 1px solid #D9D9D9;
+                box-sizing: border-box;
+                border-radius: 7px;
+                font-size: 0.8rem;;
+                color: #333;
+                text-align: left;
+            }
+            .createRecoBtn {
+                width: 95%;
+                padding: 9px;
+                background: #026FE9;
+                border-radius: 7px;
+                font-size: 0.8rem;;
+                color: #fff;
+                margin-left: 15px;
+                border: 0;
+            }
+        }
+        .recentList {
+            .text {
+                font-size: 0.8rem;;
+                color: #666;
+            }
+            .iconColor {
+                color: #026FE9;
+                font-size: 0.8rem;;
+            }
+            .refreshList {
+                font-size: 0.8rem;;
+                color: #026FE9;
+                text-transform: uppercase;
+            }
+        }
+        .recoListContainer {
+            background: #fff;
+            padding: 15px;
+            border-radius: 10px;
+            .scrollTable{
+                height: 241px;
+                overflow-x: hidden;
+                overflow-y: auto;
+              }
+              .customTableStyle{
+                // border:1px solid #848485;
+                font-size: 0.9rem;
+                background-color: #fdfdf5;
+                width: 100%;
+              }
+              .customTableStyle th{
+                background-color: #F1F1F1;
+                font-size:0.80rem;
+                border-radius: 0;
+                font-weight: 500;
+                padding: .8rem;
+                color: #666666;
+              }
+              .customTableStyle thead tr, .customTableStyle tbody tr{
+                //border:1px solid #ccc;
+                font-size: 0.75rem;
+                background-color: #fff;  
+              }
+              .customTableStyle tbody td{
+                vertical-align: top;
+                padding: 15px;
+              }
+            .columnHeaderText{
+                height: 70px;
+            }
+            .radiusStyle{
+                border-radius: 8px;
+                border-color: #026FE9;    
+            }
+            .recoListDiv {
+                background: #FFFFFF;
+                border: 1px solid #D9D9D9;
+                box-sizing: border-box;
+                border-radius: 7px;
+                padding: 15px;
+                .recoTitle {
+                    font-size: 1rem;
+                    color: #333;
+                    font-weight: 600;
+                }
+                .recoTypeSelection {
+                    font-weight: 500;
+                    font-size: 0.8rem;
+                    text-align: center;
+                    letter-spacing: 0.5px;
+                    text-transform: uppercase;
+                    color: #026FE9;
+                    background: #ECF5FF;
+                    border-radius: 4px;
+                    padding: 4px 10px;
+                }
+                .dataSeparator {
+                    border-left: 1px solid #D9D9D9;
+                    padding-left: 10px;
+                }
+                .recoHeading {
+                    font-size: 0.9rem;
+                    color: #666;
+                    font-weight: 600;
+                    margin-bottom: 5px;
+                }
+                .recoData {
+                    font-size: 12px;
+                    font-weight: 600;
+                    color: #232323;
+                    white-space: nowrap;
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+                    padding-right: 5px;
+                }
+            }
+            .noResultFound {
+                background-color: #fff;
+                height: 330px;
+                .text {
+                    color: #666;
+                    font-size: 1rem;
+                    font-weight: 600;
+                }
+                .reset {
+                    color: #026FE9;
+                    font-size: 1rem;
+                    font-weight: 400;
+                }
+            }
+            .table-striped>.rowStripe:nth-child(odd), 
+            .table-striped>.rowStripe:nth-child(odd) {
+                background-color: #FFFFFF; 
+            }
+            .table-striped>.rowStripe:nth-child(even), 
+            .table-striped>.rowStripe:nth-child(even) {
+                background-color: #FAFAFA; 
+            }
+        }
+    }
+    #recoEditSection {
+        height: calc(100vh - 182px);
+        overflow-y: auto;
+        #entityTypeArea{
+            list-style: none;
+        }
+        #entityTypeArea li{
+            display: inline-block;
+            margin-right: 10px;
+        }
+        #noofRecoSelect{
+            background: #F2F2F2;
+            border-radius: 10px;
+            padding:10px;
+            text-align: center;
+
+            li {
+                display: inline-block;
+                border: 2px solid #eee;
+                list-style: none;
+                border-radius: 5px;
+                text-align: center;
+                font-size: 0.8rem;
+                padding: 3px 10px;
+                cursor: pointer;
+
+                &.active {
+                    background-color: #fff;
+                    border: 2px solid #007BFF;
+                }
+
+                &:hover {
+                    background-color: #fff;
+                    border: 2px solid #007BFF;
+                }
+            }
+        }
+        .innerContainer {
+            .bordertop{border-top: 1px solid #ccc;}
+            
+            .leftSection {
+                max-width: 32%;
+                background: #F0F2F6;
+                .text {
+                    font-weight: 600;
+                    font-size: 12px;
+                }
+                .divStyle {
+                    border-bottom: 1px solid #ccc;
+                    padding: 10px 15px 5px 15px;
+                }
+                .recoRule {
+                    background: #fff;
+                    .selectedReco {
+                        padding: 6% 6%;
+                        background: #F4F9FF;
+                        border: 1px solid #4E9AF0;
+                        box-sizing: border-box;
+                        box-shadow: 0px 2px 4px 1px rgba(78, 154, 240, 0.2);
+                        border-radius: 7px;
+                        .title {
+                            font-size: 1rem;
+                            color: #333;
+                        }
+                        .heading {
+                            color: #666;
+                            font-size: 10px;
+                            font-weight: 700;
+                            line-height: 30px;
+                        }
+                        .content {
+                            font-size: 13px;
+                            font-weight: 600;
+                            white-space: nowrap;
+                            overflow: hidden;
+                            text-overflow: ellipsis;
+                            padding-right: 5px;
+                        }
+                    }
+                }
+                .recoLayout {
+                    background-color: #fff;
+                    .disabledLayoutArea{
+                        opacity: 0.4;
+                        pointer-events: none;
+                    }
+                    .layoutConatiner {
+                        img {
+                            width: 169px;
+                            background: #FFFFFF;
+                            border: 1px solid rgba(0, 0, 0, 0.1);
+                            box-sizing: border-box;
+                            border-radius: 5px;
+                            cursor: pointer;
+                            &.selected {
+                                border: 2px solid #007BFF;
+                            }
+                        }
+                        
+                    }
+                }
+                .recoSettings {
+                    background-color: #fff;
+                    .headText {
+                        color: #333;
+                        font-size: 0.9rem;
+                        font-weight: 500;
+                    }
+                    .inputStyle {
+                        width: 281px;
+                        height: 40px;
+                        background: #FFFFFF;
+                        border: 1px solid #C2C9D1;
+                        box-sizing: border-box;
+                        border-radius: 7px;
+                        padding-left: 15px;
+                        margin-top: 5px;
+                    }
+                }
+            }
+            .recoPreview {
+                .sliderWithCount{
+                    position: relative;
+                    .box {
+                        width: 150px;
+                        height: 75px;
+                        background-color: black;
+                        color: #fff;
+                        padding: 20px;
+                        position: absolute;
+                        margin: 40px;
+                        float: left;
+                        border-radius:10px;
+                      }
+                      .box.arrow-bottom:after {
+                        content: " ";
+                        position: absolute;
+                        left:40%;
+                        bottom: -15px;
+                        border-top: 15px solid black;
+                        border-right: 15px solid transparent;
+                        border-left: 15px solid transparent;
+                        border-bottom: none;
+                      }
+                    
+                    .progressbarSliderBase{
+                        background-color: #026FE9;
+                        border-radius: 10px;
+                        width: 200px;
+                        height: 10px;
+                    }
+                }
+                
+                background: #fff;
+                .previewHeader {
+                    font-size: 12px;
+                    font-weight: 500;
+                }
+
+                .productParent {
+                    text-align: center;
+                    width: 780px;
+                    margin: 0 auto;
+                }
+                .productPreview {
+                    display: inline-block;
+                    padding: 15px;    
+                    height: 164px;
+                    background: #FFFFFF;
+                    border-radius: 5px;
+                    box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 1px 3px 1px;
+                    -webkit-box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 1px 3px 1px;
+                    -moz-box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 1px 3px 1px;
+                    .itemDetails {
+                        .itemTitle {
+                            color: #333;
+                            font-size: 1rem;
+                            font-weight: 700;
+                            white-space: nowrap;
+                            overflow: hidden;
+                            text-overflow: ellipsis;
+                        }
+                        .itemDescription {
+                            color: #333;
+                            font-weight: 400;
+                            font-size: 12px;
+                            line-height: 22px;
+                        }
+                    }
+                }
+                .layout2 {
+                    height: 295px;
+                    max-width: 180px;
+                    margin-right: 15px;
+                    &:last-child {
+                        margin-right: 0;
+                    }
+                    &:nth-child(4) {
+                        margin-right: 0;
+                    }
+                }
+                .reverseLayout:nth-child(even) {
+                    .reverseContent {
+                        flex-direction: row-reverse;
+                    }
+                    .itemTitle, .itemDescription {
+                        text-align: right;
+                    }   
+                }
+                .layout4 {
+                    margin: 0 auto;
+                    .productPreview {
+                        display: inline-block;
+                        height: 295px;
+                    }
+                }
+            }
+        }
+    }
+    .loaderMask{
+        position: absolute;
+        height: 100vh;
+        width: 100%;
+        z-index: 1;
+        background-color: rgb(238, 238, 238);
+        display: flex;
+        align-items: center; 
+        justify-content: center; 
+        font-size: 24px;
+        opacity: 30%;
+        overflow: hidden;
+        z-index: 10;
+    }
+
+    .innerContentMargin {
+        margin: 0 15px;
+        .selectionRuleType{
+            background: #FFFFFF;
+            height: calc(100vh - 315px);
+        }
+        .newSelectionrule{
+            border: 1px dashed #000000;
+            margin: 7% auto;
+            padding: 5% 13%;   
+        }
+        
+    }
+}
+
+.recommendationCards {
+    display: none;
+}

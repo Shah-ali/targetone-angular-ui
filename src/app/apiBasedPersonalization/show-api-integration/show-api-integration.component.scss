@@ -1,0 +1,191 @@
+@import '../../../custom-style.scss';
+.buttonCss {
+  @include secondaryBttn;
+}
+.buttonPrimaryCss {
+  @include primaryBttn;
+}
+.buleBtn {
+  background-color: #3366ff;
+  color: #fff;
+}
+.searchSection {
+  .fa-search {
+    position: absolute;
+    top: 31%;
+    left: 8px;
+  }
+.blueColor{
+  color:#026fe9;
+}
+  .searchPTagsBtn {
+    padding-left: 30px;
+  }
+}
+
+.createByAndDate {
+  h5 {
+    font-size: 14px;
+    font-weight: 500;
+    color: #333;
+    padding: 0;
+  }
+  
+  span {
+    font-size: 11px;
+    color: #333;
+    opacity: 0.7;
+  }
+}
+
+.savedTagBlock {
+    width: 100%;
+    height: 100%;
+    // background: #fff;
+    flex-wrap: wrap;
+    overflow-y: auto;
+
+    .card {
+        width: 31%;
+        padding: 10px 15px;
+        margin: 1%;
+        background: #fff;
+        border-radius: 3px;
+        height: auto;
+        border: 1px solid #ddd;
+        border-radius: 10px;
+
+      .mttnIcons {
+        text-align: right;
+        cursor: pointer;
+      }
+      .apiBasedUrl{
+        border: 1px dotted #C5C776;
+        background: #FFFFF6;
+        width: 100%;
+        height: 77px;
+        overflow-x: hidden;
+        overflow-y: auto;       
+      }
+      .apiBasedScriptJS{
+        border: 1px dotted #C5C776;
+        background: #FFFFF6;
+        width: 100%;
+        height: 77px;
+        overflow-x: hidden;
+        overflow-y: auto;
+        text-align: left;
+      }
+      .tag-thumbnail {
+        img {
+          width: 100%;
+        }
+      }
+      .tagName {
+        font-size: 14px;
+        color: #000;
+        font-weight: bold;
+        text-align: left;
+      }
+
+      .viewTags {
+        text-align: left;
+
+        label {
+          font-size: 12px;
+          color: #0f83ff;
+          cursor: pointer;
+        }
+      }
+      .toggleEnable{
+        text-align: left;
+        color: #026fe9;
+       }
+       .toggleDisable{
+        text-align: left;
+        color: #ddd;
+       }
+      .toggleEnableDisable {       
+
+        .publishedOn {
+          cursor: pointer;
+        }
+
+        div:last-child {
+          text-align: right;
+          span {
+            font-size: 10px;
+            padding: 4px 8px;
+            font-weight: 600;
+
+            &.published {
+              color: #026fe9;
+              background-color: #ecf5ff;
+            }
+
+            &.draft {
+              color: #db880e;
+              background-color: #fff6e7;
+            }
+          }
+        }
+      }
+
+      .statusBar {
+        // display: flex;
+        // justify-content: space-between;
+        align-items: center;
+
+        .single-object-info {
+          // text-transform: uppercase;
+          font-size: 11px;
+          font-weight: 600;
+          color: #28A54D;
+          background-color: #ECFFEC;
+          padding: 5px;
+          cursor: default;
+        }
+
+        .multi-object-info {
+          // text-transform: uppercase;
+          font-size: 11px;
+          font-weight: 600;
+          color: #026FE9;
+          background-color: #ECF5FF;
+          padding: 5px;
+          cursor: default;
+        }
+        .purpleColor{
+          background-color:#F8F0FF ;
+          color: #946CD4;
+          // text-transform: uppercase;
+          font-size: 11px;
+          font-weight: 600;          
+          padding: 5px;
+          cursor: default;
+        }
+        .orangeColor{
+          background-color: #FFF6E7;
+          color: #DB880E;
+          // text-transform: uppercase;
+          font-size: 11px;
+          font-weight: 600;          
+          padding: 5px;
+          cursor: default;
+        }
+        .create-by-style {
+          color: #026FE9;
+          font-size: 12px;
+          font-weight: 500;
+        }
+
+        .createdByIcon{
+          background-image: url(../../../assets/pTagDash_JSON/icon/created_by.svg);
+          background-size: 15px;
+          background-position: 2px center;
+          background-repeat: no-repeat;
+          padding-left: 22px;
+        }
+      }
+    }
+  }

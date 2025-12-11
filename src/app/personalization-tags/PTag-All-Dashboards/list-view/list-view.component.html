@@ -1,0 +1,302 @@
+<div class="ptags-wrapper container-fluid">
+    <!-- Tab section -->
+    <div class="row justify-content-center">
+      <div class="col-auto d-flex mr-auto">
+        <ul ngbNav #nav="ngbNav" [(activeId)]="activeTab" class="nav-tabs custom-tabs">
+          <li *ngFor="let tab of tabs" [ngbNavItem]="tab.id">
+            <a ngbNavLink (click)="tabChange($event)">{{ tab.label }}</a>
+            <ng-template ngbNavContent>
+              <div class="ptags-content">
+                <div class="view-option row justify-content-end">
+                  <div class="col-auto d-flex gap-2">
+                    <!-- <button *ngIf="tab.filterByCampaign && !filterApplied" (click)="openDrawer($event)" type="button"
+                      class="btn btn-outline-primary">
+                      <i class="bi bi-funnel"></i> Filter by campaign
+                    </button>
+                    <button *ngIf="filterApplied" (click)="clearCompaignFilter($event)" type="button"
+                      class="btn btn-outline-primary">
+                      <span>
+                      <span class="active" style="padding-right: 10px;">Clear Filter</span>
+                      <span class="active" style ="border-left: 1px solid #007bff;height: fit-content;padding-right: 10px;"></span> 
+                      <i class="bi bi-funnel active"></i>
+                      </span>
+                    </button> -->
+                    <button *ngIf="tab.grid" type="button" class="btn btn-outline-secondary" (click)="switchListGridViewMethod('grid');" title="{{'personalizationTagsComponent.gridView' | translate}}">
+                      <i class="far fa-th-large"></i>
+                    </button>
+                    <button *ngIf="tab.listTask" type="button" class="btn btn-outline-primary active" (click)="switchListGridViewMethod('list');" title="{{'personalizationTagsComponent.listView' | translate}}">
+                      <i class="far fa-list"></i>
+                    </button>
+                    
+                  </div>
+                </div>
+                <!-- Content for each tab -->
+                <!-- <label class="fav-msg-style" *ngIf="tab.label == ('apiPersonalization.favoriteLbl' | translate)"><span>*</span>&nbsp;{{'pTagListView.favMsgNote' | translate}}</label> -->
+                <div class="table-responsive1 custom-table mt-3" style="height: 80vh; overflow-y: visible;" #tableContainer>
+                  <!-- ... Table content ... -->
+                  <table class="table table-sm table-hover custom-table ">
+                    <thead>
+                      <tr>
+                        <th scope="col">{{'apiPersonalization.favoriteLbl'| translate}}
+                          <!-- <i class="fad" [ngClass]="{'fa-sort-up': sortDirection === 'asc', 'fa-sort-down': sortDirection === 'desc'}"></i> -->
+                        </th>
+                        <th scope="col" (click)="sortData('tagName')">{{'pTagListView.tagNameLbl' | translate}}
+                          <i *ngIf="sortColumn === 'tagName'" class="fad ml-1" [ngClass]="{'fa-sort-up': sortDirection === 'asc', 'fa-sort-down': sortDirection === 'desc'}"></i>
+                        </th>
+                        <th scope="col" *ngIf="isColumnVisible('activationDate')" (click)="sortData('activationDate')">
+                          <span class="d-flex gap-2">{{'pTagListView.activationDate'|translate}}
+                              <i *ngIf="sortColumn === 'activationDate'" class="fad" [ngClass]="{'fa-sort-up': sortDirection === 'asc', 'fa-sort-down': sortDirection === 'desc'}"></i>
+                          </span>
+                      </th>
+                        
+                        <th scope="col" *ngIf="isColumnVisible('deactivationDate')" (click)="sortData('deactivationDate')">
+                          <span class="d-flex gap-2"> {{'pTagListView.deactivationDate'|translate}}
+                            <i *ngIf="sortColumn === 'deactivationDate'" class="fad ml-1" [ngClass]="{'fa-sort-up': sortDirection === 'asc', 'fa-sort-down': sortDirection === 'desc'}"></i>
+                          </span>
+                        </th>
+                        <th scope="col" *ngIf="isColumnVisible('creationDate')" (click)="sortData('creationDate')">
+                          <span class="d-flex gap-2">{{'journeySetUp.createdOn'|translate}}
+                            <i *ngIf="sortColumn === 'creationDate'" class="fad ml-1" [ngClass]="{'fa-sort-up': sortDirection === 'asc', 'fa-sort-down': sortDirection === 'desc'}"></i>
+                          </span>
+                        </th>
+
+                        <th scope="col" *ngIf="isColumnVisible('status')">
+                          <span class="d-flex gap-2">{{'pTagListView.status'|translate}}
+                          </span>
+                        </th>
+                     
+                        <!-- <th style="text-align: center;" scope="col" *ngIf="isColumnVisible('associatedCampaigns')" (click)="sortData('associatedCampaigns')">Associated campaigns
+                        <i *ngIf="sortColumn === 'associatedCampaigns'" class="bi" [ngClass]="{'fad fa-sort-up': sortDirection === 'asc', 'fad fa-sort-down': sortDirection === 'desc'}"></i>
+                        </th> -->
+                        <th>&nbsp;</th><th>&nbsp;</th><th>&nbsp;</th><th>&nbsp;</th><th>&nbsp;</th>
+                        <th scope="col">{{'apiPersonalization.actionApiLbl'|translate}}</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+  
+                      <tr 
+                        *ngFor="let tag of tagsData | slice:(currentPage-1)*itemsPerPage:currentPage*itemsPerPage">
+
+                        <td scope="row">
+                          <!-- <i class="far fa-star ml-1" [ngClass]="tag.favourite cx== '1' ? 'fas' : 'far'" (click)="favTagPersonalization(tag.tagId, tag.favourite)" title="Make favorite"></i> -->
+                          <i class="fas fa-star ml-1" *ngIf="tag.favourite == '1'" (click)="favTagPersonalization(tag.tagId, tag.favourite)" title="{{'pTagListView.removefromfavoritesMsgLbl' | translate}}"></i>
+                          <i class="far fa-star ml-1" *ngIf="tag.favourite == '0'" (click)="favTagPersonalization(tag.tagId, tag.favourite)" title="{{'pTagListView.makefavoriteMsgLbl' | translate}}"></i>
+                          <ng-container *ngIf="(tag.status == 'draft' && tag.activeEdit == 1 && tag.activeEditDraftName === null)">
+                            <img class="pl-2 responsiveIcon" src="./assets/images/editFileIcon.svg" title="{{'personalizationTagsComponent.activeEditLbl' | translate}}">
+                          </ng-container>
+                          <!-- <i class="far fa-info-circle ml-2" *ngIf="tag.activeEdit == 1 && tag.status == 'active'" placement="bottom" [ngbPopover]="popoverInfoContent" [autoClose]="false" triggers="mouseenter:mouseleave" #p2="ngbPopover" (mouseenter)="ngbPopoverShowHide(p2,tag.tagId);"></i> -->
+                          <i
+                            *ngIf="tag.activeEdit == 1 && tag.status == 'active'"
+                            class="far fa-info-circle ml-2"
+                            tooltipClass="ngbTooltipStyle3"
+                            placement="right"
+                            ngbTooltip="{{'personalizationTagsComponent.copyInfoForActiveContentLbl' | translate}}"
+                          ></i>
+                        </td>
+                        <td scope="row">
+                          <label class="ellipseTextLabel m-0 align-items-middle linkColor truncateTextPname" (click)="handleActionClick('viewActiveContent',tag.tagId,tag.favourite,pTagTemplate)" title="{{ tag.tagName }}">
+                          {{ tag.tagName }}                          
+                        </label></td>
+                        <td *ngIf="isColumnVisible('activationDate')" title="{{ tag?.activationDate }}">{{ tag?.activationDate }}</td>                     
+                        <td *ngIf="isColumnVisible('deactivationDate')" title="{{ tag?.deactivationDate }}">{{ tag?.deactivationDate }}</td>
+                        <td *ngIf="isColumnVisible('creationDate')" title="{{ tag?.creationDate }}">{{ tag?.creationDate }}</td>
+                        <td *ngIf="isColumnVisible('status')" title="{{ tag?.status }}">{{ tag?.status }}</td>
+  
+                        <!-- <td *ngIf="isColumnVisible('associatedCampaigns')" style="text-align: center;">
+                          <a type="button" class="btn-link triggers" [ngbPopover]="popoverContent" [popoverTitle]="popTitle"
+                            [autoClose]="false" triggers="manual" #p="ngbPopover" (click)="openPopover(tag)">
+                            {{ tag?.associatedCampaigns?.length || 0 }}
+                          </a>
+  
+                        </td> -->
+                        <td> &nbsp;</td>  <td> &nbsp;</td><td> &nbsp;</td><td> &nbsp;</td> <td> &nbsp;</td>
+                        <td>
+                          <div class="row ml-3">
+                            <div class="col">
+                              <div ngbDropdown placement="bottom-left" class="d-inline-block">
+                                <a type="button" class="custom-dropdown" id="dropdownBasic1" ngbDropdownToggle>
+                                    <i class="far fa-ellipsis-v"></i>
+                                </a>
+                                <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
+                                  <button *ngFor="let action of getActiveTabActions(tag)" ngbDropdownItem 
+                                    (click)="handleActionClick(action,tag.tagId,tag.favourite,pTagTemplate)" class="truncateTextPnameDrpdn" title="{{ action }}" [disabled]="(activeEditAlreadyPresent == tag.tagId && action == disableForEditOnly)">
+                                    <!-- <i *ngIf="action == this.deleteIcon" class="far fa-trash"></i> 
+                                    <i *ngIf="action == disableForEditOnly" class="far fa-pencil"></i>&nbsp; -->
+                                    {{ action }}
+                                  </button>
+                                  </div>
+                              </div>
+                            </div>
+                          </div>
+                        </td>
+                        
+                      </tr>
+                      
+                    </tbody>
+                  </table>
+                  
+                </div>
+                <div class="row mt-3" *ngIf="tagsData.length>itemsPerPage">
+                  <div class="col-auto ml-auto">
+                    <ngb-pagination [collectionSize]="tagsData.length" [(page)]="currentPage" [pageSize]="itemsPerPage"
+                      aria-label="Pagination" [maxSize]="1" [rotate]="true" (pageChange)="onPageChange($event)" [boundaryLinks]="true" aria-label="Default pagination" class="d-flex justify-content-end pagination-rounded-flat pagination-success"></ngb-pagination>
+                  </div>
+                </div>
+              </div>
+            </ng-template>
+          </li>
+        </ul>
+  
+      </div>
+  
+      <div class="col-auto d-flex gap-2">
+        <div class=""><input type="text" class="form-control search-field" placeholder="{{'designEditor.beeEditorComponent.searchsTagslbl' | translate}}"
+            [(ngModel)]="searchTag" (input)="applySearch()"></div>
+            <!-- <button
+            type="button"
+            class="btn buttonCss shadow-none"
+            (click)="viewSummarizedPerformance()">
+            <i class="far fa-chart mr-2"></i> View summarised performance
+          </button>
+          <button
+            type="button"
+            class="btn buttonCss shadow-none"
+            >
+            <i class="far fa-plus mr-2"></i> {{'personalizationTagsComponent.createPersonalizationTagLbl' | translate}}
+          </button> -->
+        <button type="button" class="btn btn-outline-primary ptags-secondary" (click)="viewSummarizedPerformance()">
+          <i class="barIcon mr-2"></i> {{'apiPersonalization.viewSummarisedPerformanceLbl' | translate}}
+        </button> 
+       <button type="button" class="btn btn-outline-primary ptags-secondary" (click)="createPersonalizationTagMethod();">
+          <i class="far fa-plus mr-2"></i> {{'personalizationTagsComponent.createPersonalizationTagLbl' | translate}}
+        </button>
+      </div>
+    </div>
+    <!-- Tab Section -->
+  
+    <div [ngbNavOutlet]="nav" class="mt-3"></div>
+  
+  
+  
+    <!-- Associated Compaigns Popover -->
+    <div class="positioned-element">
+      <ng-template #popTitle>
+          <div class="d-flex align-items-center gap-2">
+            <div>Associated campaigns</div>
+            <div class="pagination gap-1">
+              <button type="button" class="btn btn-outline-primary" (click)="navigate('prev')" *ngIf="showPrevButton()">
+                <i class="bi bi-caret-left-fill"></i>
+              </button>
+              <button type="button" class="btn btn-outline-primary" (click)="navigate('next')" *ngIf="showNextButton()">
+                <i class="bi bi-caret-right-fill"></i>
+              </button>
+            </div>
+            <button type="button" class="btn btn-link btn-close" aria-label="Close" (click)="closePopover()">
+              <i class="bi bi-x-lg"></i>
+            </button>
+          </div>
+        </ng-template>
+        <ng-template #popoverContent>
+          <div *ngIf="associatedCompaigns">
+            <ul class="list-group list-group-flush">
+              <li class="list-group-item" *ngFor="let campaign of displayedCampaigns()">
+                  {{ campaign?.compaignName || ''}}
+                </li>
+            </ul>
+          </div>
+        </ng-template>
+    </div>
+    <ng-template #pTagTemplate>
+      <div class="modal-header">
+        <h5 class="col-10 p-0 pl-2" *ngIf="showViewTagPopupEnabled">{{'finalize.attachTags' | translate}}</h5>
+        <h5 class="col-10 p-0 pl-2" *ngIf="showEditPopupEnabled">{{'personalizationTagsComponent.editTagLbl' | translate}}</h5>
+        <h5 class="col-10 p-0 pl-2" *ngIf="showCopyPopupEnabled">{{'personalizationTagsComponent.copyTagLbl' | translate}}</h5>
+        <div class="col-2 text-right">
+          <i class="far fa-question-circle mr-2" *ngIf="showEditPopupEnabled || showCopyPopupEnabled"></i>
+          <i class="fa fa-times cursor-pointer iconPosition" (click)="closePTagModel()"></i>
+        </div>
+      </div>
+      <div class="modal-body pl-4">
+        <div class="tagURLSection" *ngIf="showViewTagPopupEnabled">
+          <div *ngIf="viewPtags == null || viewPtags == undefined">{{'personalizationTagsComponent.noTagAttachedToPersonalizationtagsLbl' | translate}}</div>
+          <div *ngFor="let item of viewPtags | keyvalue">
+            <!-- <div class="mr-3">&lt;{{ item.key }}&gt;</div> -->
+            <div class="mr-3">{{ item.value }}</div>
+            <span
+              ><i
+                class="far fa-copy align-text-top"
+                #t1="ngbTooltip"
+                triggers="manual" 
+                ngbTooltip="{{'copiedLbl' | translate}}"
+                title="{{'copy' | translate}}"
+                (click)="copyToPaste(t1, item.value)"></i
+            ></span>
+          </div>
+        </div>
+    
+        <!-- Edit contenet Here -->
+        <div class="row col pr-0" *ngIf="showEditPopupEnabled">
+          <div class="col warningMsgEditActive m-0">
+            <div class="row m-0 p-0">
+            <div class="col pl-0">
+              <i class="far fa-exclamation-triangle warnColor mr-2"></i>
+               <label class="mediumFont">{{'personalizationTagsComponent.warningLbl' | translate}}</label>
+            </div>
+            <!-- <div class="col text-right">
+                <i class="fal fa-times pointer" ></i>
+            </div>  -->
+          </div>  
+            <div class="row col contentMsgStyle" [innerHTML]="warningEditMessageLbl">
+            </div>       
+        </div>
+        </div>
+    
+        <!-- copy contenet Here -->
+        <div class="row col pr-0" *ngIf="showCopyPopupEnabled">
+          <div class="col infoMsgCopyPtag m-0">
+            <div class="row m-0 p-0">
+            <div class="col pl-0">
+              <i class="far fa-info-circle infoColor mr-2"></i>
+               <label class="mediumFont">{{'personalizationTagsComponent.informationLbl' | translate}}</label>
+            </div>
+            <!-- <div class="col text-right">
+                <i class="fal fa-times pointer" ></i>
+            </div>  -->
+          </div>  
+            <div class="row col contentMsgStyle" [innerHTML]="warningCopyMessageLbl">
+              
+            </div>       
+        </div>
+        </div>
+    
+      </div>
+      <div class="modal-footer">
+        <ng-container *ngIf="showViewTagPopupEnabled">
+          <button type="button" class="btn buttonCss shadow-none m-0 mr-3" id="closeBtn" (click)="closePTagModel()">
+            {{'cancel' | translate}}
+          </button>
+        </ng-container>
+        <ng-container *ngIf="showEditPopupEnabled">
+          <button type="button" class="btn buttonCss shadow-none m-0 mr-3" id="closeBtn" (click)="closePTagModel()">
+            {{'cancel' | translate}}
+          </button>
+          <button type="button" class="btn buttonCss buttonPrimaryCss shadow-none m-0 mr-3" id="closeBtn" (click)="confirmEditMethod()">
+            {{'confirm' | translate}}
+          </button>
+        </ng-container>
+        <ng-container *ngIf="showCopyPopupEnabled">
+          <button type="button" class="btn buttonCss shadow-none m-0 mr-3" id="closeBtn" (click)="closePTagModel()">
+            {{'cancel' | translate}}
+          </button>
+          <button type="button" class="btn buttonCss buttonPrimaryCss shadow-none m-0 mr-3" id="closeBtn" (click)="confirmCopyMethod()">
+            {{'confirm' | translate}}
+          </button>
+        </ng-container>
+      </div>
+    </ng-template>
+  </div>
+  <ng-template #popoverInfoContent>
+    <div class="row col wordbreakLabel">
+      {{'personalizationTagsComponent.copyInfoForActiveContentLbl' | translate}}
+    </div>
+  </ng-template>

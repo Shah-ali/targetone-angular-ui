@@ -1,0 +1,153 @@
+<app-channels (loadFreshTemplate)="loadFreshChannel($event)" (loadSavedTemplate)="loadSavedChannel($event)"></app-channels>
+<div class="ChannelAnalyticsCtr">
+    <div class="row col p-1 m-0 pl-3">
+        <div class="col pt-2 pl-0">
+          <label class="top-d-heading mt-2 pt-1">Email template</label>
+        </div>
+      </div>
+    <div class="w-100"> </div> 
+    <div class="row p-2 ml-1 mr-1 mb-1" *ngIf="!isPreview else previewTemplate">
+        <div class="col preview-area">
+            <div class="row pl-3 pr-3">
+                <div class="col mt-4">                
+                    <img class="img-fluid rounded"  src="{{defaultPreview}}" width="100%" height="100%">
+                </div>
+            </div>
+        </div>    
+    </div>
+
+</div><!-- End -->
+
+<ng-template #previewTemplate>    
+    <div class="col-12 mt-2 mr-1 actual-preview mx-auto">
+        <app-failsafe (updatePreviewObj)='loadSavedChannel($event)'></app-failsafe>
+         <hr id="wrapperSeperator">
+        <div id="analyticsWrapper">           
+            <div  class = "emailContent" id="emailContent">
+                <div class="mapLabel">Heat map</div>
+                <div class="text-center" *ngIf="!isMobileView ? 'col-6' : 'col-3' "> 
+                    <div class="row" *ngIf="!isMobileView && isPayload">
+                        <div class="col bg-light text-dark border p-1 ml-3 mr-3 mb-1 payload" *ngIf="_object.keys(payloadSavingJson).length > 0;">
+                             <div class="col text-left" >
+                                <label><b>From:</b> <span class="ml-3 font-light"> {{vendorDesc}}</span></label>                    
+                            </div>
+                            <div class="col text-left">
+                            <label><b>Subject:</b> <span class="ml-3 font-light" [innerHTML]="subject | sanitizeHtml"></span></label>
+                            </div>
+                            <div class="col text-left">
+                                <label><b>Preheader: </b><span class="ml-3 font-light" [innerHTML]="preHeader | sanitizeHtml"></span></label>
+                            </div>                    
+                        </div>  
+                        <div id="heatMapContainer"></div>          
+                    </div> 
+                    <ng-container *ngIf="isTemplateEditMode else imgThumbnail">
+                        <iframe  echarts [options]="heatmapConfiguration" scrolling="no" class="" [ngClass]="!isMobileView ? '' : 'mobileView'" id="thumbnailContent">
+                        </iframe>                  
+                    </ng-container>
+                </div>
+            </div>
+            <div id="channelAnalytics"> 
+                <div id="conversationFunnelInfo">
+                    <div class="mapLabel"> Overall performance</div> 
+                    <div id="funnelChart" echarts [options]="funnelChartOption" class="chart"></div>                    
+                    <div ><span  class="analyticsLabel" ><b>Message deliveries</b></span> <span id="deliveredCount">{{deliveredCount}}</span> </div>
+                    <hr _ngcontent-wcm-c104="" class="mt-2 mb-1">
+                    <div><span  class="analyticsLabel"><b>Opens</b></span> <span id="openCount">{{openCount}}</span></div>
+                    <hr _ngcontent-wcm-c104="" class="mt-2 mb-1">
+                    <div ><span class="analyticsLabel"><b>Clicks</b></span> <span id="clickCount" >{{clickCount}}</span></div>
+                    <hr _ngcontent-wcm-c104="" class="mt-2 mb-1">
+                    <div><span class="analyticsLabel" ><b>Purchases</b></span> <span id="totalPurchase">{{totalPurchase}}</span></div>
+                    <hr _ngcontent-wcm-c104="" class="mt-2 mb-1">
+                </div>
+                <div id="clickPerformanceInfo">
+                    <div class="mapLabel"> Click and open rate</div>
+                    <div id="clickAndOpenRateChart" echarts [options]="clickOpenRateOption" class="chart" ></div>
+                    <div id="clickAndOpenRateChartLegend">
+                        <div>
+                            <span id="openRateCircle"></span>
+                            <span class="legendLabel">Open rate</span>
+                            <span id="clickRateCircle"></span>
+                            <span class="legendLabel">Click rate</span>                           
+                        </div>  
+                    </div>
+                </div>
+                <div id="clickAndOpenRate">                   
+                    <div class="mapLabel"> Click performance</div> 
+                    <div id="clickPerformanceChart" echarts [options]="clickPerformanceChartOption" class="chart"></div>
+                    <div id="clickAndOpenRateChartLegend">
+                        <div >
+                            <span id="morningCircle">
+                            </span>
+                            <span class="legendLabel">Morning</span>
+                            <span id="noonCircle">
+                            </span>
+                            <span class="legendLabel">Noon
+                            </span>
+                            <span id="eveningCircle">
+                            </span>
+                            <span class="legendLabel">Evening</span>
+                           </div> 
+                    </div>
+                </div>
+                 
+                
+                
+
+                
+           </div>
+
+        </div>
+           
+        <div class="row">
+            <div class="mx-auto text-center" [ngClass]="!isMobileView ? 'col-8' : 'col-3' ">  
+                <!-- <div class="row" *ngIf="isMobileView && isPayload">
+                    <div class="col-12 bg-light text-dark border p-1 ml-3 mr-3 mb-1 payload" *ngIf="_object.keys(payloadSavingJson).length > 0;">
+                        <div class="col text-left" >
+                            <label><b>From:</b> <span class="ml-3 font-light"> {{vendorDesc}}</span></label>                    
+                        </div>
+                        <div class="col text-left">
+                        <label><b>Subject:</b> <span class="ml-3 font-light"> {{subject}}</span></label>
+                        </div>
+                        <div class="col text-left">
+                            <label><b>Preheader: </b><span class="ml-3 font-light"> {{preHeader}}</span></label>
+                        </div>                    
+                    </div>            
+                </div> -->
+
+                                
+                <ng-template #imgThumbnail>
+                    <ng-container *ngIf="!isMobileView else imgThumbnailMobile">
+                        <img class="mx-auto img-fluid rounded" src="{{imgThumbnailView}}" width="100%" height="100%">
+                    </ng-container>                    
+                </ng-template>
+                <ng-template #imgThumbnailMobile>
+                    <img class="mx-auto img-fluid rounded" src="{{imgThumbnailMobileView}}" width="100%" height="100%">
+                </ng-template>
+            </div>
+            <!-- Mobile view -->
+            <!-- <ng-template #mobile>
+                <div class="mobileV">
+                    <div class="col-3 mx-auto text-center overflow-auto mt-5 fitOnMobile">   
+                        
+                        <div class="row mt-1" *ngIf="isMobileView && isPayload">
+                            <div class="col bg-light text-dark border p-1 ml-3 mr-3 mb-1" *ngIf="_object.keys(payloadSavingJson).length > 0">
+                                <div class="col text-left">
+                                    <label><b>From:</b> <span class="ml-2 font-light"> {{vendorDesc}}</span></label>                    
+                                </div>
+                                <div class="col text-left">
+                                  <label><b>Subject:</b> <span class="ml-2 font-light"> {{subject}}</span></label>
+                                 </div>
+                                 <div class="col text-left">
+                                    <label><b>Preheader: </b><span class="ml-2 font-light"> {{preHeader}}</span></label>
+                                 </div>                    
+                            </div>
+                        </div>        
+                                      
+                        <img class="mx-auto img-fluid rounded"  src="{{imgThumbnailMobileView}}" width="100%" height="100%">
+                    </div>
+                 </div>
+            </ng-template> -->
+          
+        </div>
+    </div>
+</ng-template>

@@ -1,0 +1,228 @@
+<div class="modal-header">
+    <h5 class="modal-title" id="exampleModalLabel">
+        <span class="mediumLable">{{ 'simulatePtagComponent.logs.simulateLogLbl' | translate }}</span>
+  </h5>
+    <button type="button" class="close" (mousedown)="onClose()" aria-label="Close">
+        <span aria-hidden="true"><i class="fal fa-times"></i></span>
+    </button>
+</div>
+<div class="modal-body">
+    <div class="m-0 col viewSimulateBodyContent p-3" #simulateLogConsoleContent>
+        <ng-container *ngFor="let multipleArraylogObj of overAllLogObj; let loopLogCount=index;">
+            <p class="row mt-2 mb-2">-------------------------- {{'simulatePtagComponent.fragmentDetailsLbl' | translate}} {{loopLogCount+1}} ----------------------------</p>                    
+            <div class="row p-0 outterWrapperLogObjArry">                
+                <div class="col p-0 overAllLogObjArea">
+                    <!-- Response Parameters Section-->
+                    <ng-container *ngIf="multipleArraylogObj.request.requestParameters.length > 0">
+                        <div class="row">
+                            <label class="mediumFont">--------------------- {{ 'simulatePtagComponent.logs.requestParametersLbl' | translate }} ---------------------</label>
+                        </div>
+                         <div class="row col-12 head-panel-group" *ngFor="let item of multipleArraylogObj.request.requestParameters"> 
+                            <div class="row col-12 head-panel-group" *ngFor="let subItem of item | keyvalue"> 
+                                <div class="col-2 p-0">
+                                    <label>{{subItem.key}}</label>
+                                </div>
+                                <div class="col p-0">
+                                    <label>{{subItem.value}}</label>
+                                </div>
+                                </div>
+                         </div>
+                    </ng-container>
+                    <!-- Response Section-->
+                     <ng-container *ngIf="multipleArraylogObj.response !== null">
+                        <div class="row">
+                            <label class="mediumFont">--------------------- {{ 'simulatePtagComponent.logs.responseLbl' | translate }} ---------------------</label>
+                        </div>
+                    
+                        <div class="row col-12 head-panel-group">                
+                            <div class="col-2 p-0">
+                                <label>{{ 'simulatePtagComponent.logs.timeTakenExecuteLbl' | translate }} : </label>
+                            </div>
+                            <div class="col p-0">
+                                <label>{{multipleArraylogObj.response.overAllTimeTaken}}ms</label>
+                            </div>
+                         </div>
+                         <div class="row col-12 head-panel-group">                
+                            <div class="col-2 p-0">
+                                <label>{{ 'simulatePtagComponent.logs.imageProcessDetailsLbl' | translate }} : </label>
+                            </div>
+                            <div class="col p-0">
+                                <label>{{multipleArraylogObj.response.imageProcessDetails}}ms</label>
+                            </div>
+                         </div>
+                         <div class="row col-12 head-panel-group">                
+                            <div class="col-2 p-0">
+                                <label>{{ 'simulatePtagComponent.logs.puppeteerTimeTakenLbl' | translate }} : </label>
+                            </div>
+                            <div class="col p-0">
+                                <label>{{multipleArraylogObj.response.puppeteerTimeTaken}}ms</label>
+                            </div>
+                         </div>
+                            <ng-container *ngIf="multipleArraylogObj.response.statusMessage === 'FAIL'">
+                                <div class="row col-12 head-panel-group">                
+                                    <div class="col-2 p-0">
+                                        <label>{{ 'simulatePtagComponent.logs.statusMessageLbl' | translate }} :</label>
+                                    </div>
+                                    <div class="col p-0">
+                                        <label>{{multipleArraylogObj.response.statusMessage}}</label>
+                                    </div>
+                                 </div>
+                                 <div class="row col-12 head-panel-group">                
+                                    <div class="col-2 p-0">
+                                        <label>{{ 'simulatePtagComponent.logs.failureReasonLbl' | translate }} :</label>
+                                    </div>
+                                    <div class="col p-0">
+                                        <label>{{multipleArraylogObj.response.failureReason}}</label>
+                                    </div>
+                                 </div>
+                            </ng-container>
+                    </ng-container>
+                    <!-- Row Details Section-->
+                     
+                    <ng-container *ngIf="multipleArraylogObj.rowDetails.length > 0">
+                        
+                        <ng-container *ngFor="let item of multipleArraylogObj.rowDetails; let i=index">
+                            <div class="row">
+                                <label class="mediumFont">--------------------- {{ 'simulatePtagComponent.logs.rowLbl' | translate }} {{i+1}} {{ 'simulatePtagComponent.logs.detailsLbl' | translate }} ---------------------</label>
+                            </div>
+                            <ng-container>
+                                <div class="row col-12 head-panel-group">                
+                                    <div class="col-2 p-0">
+                                        <label>{{item.type}} {{ 'simulatePtagComponent.logs.detailsLbl' | translate }} : </label>
+                                    </div>
+                                    <div class="col p-0">
+                                        <label>{{item.details}}</label>
+                                    </div>
+                                 </div>
+                                 <div class="row col-12 head-panel-group">                
+                                    <div class="col-2 p-0">
+                                        <label>{{ 'simulatePtagComponent.logs.timeTakenLbl' | translate }} : </label>
+                                    </div>
+                                    <div class="col p-0">
+                                        <label>{{item.overAllTimeTaken}}ms</label>
+                                    </div>
+                                 </div>
+                                 <div class="row col-12 head-panel-group">                
+                                    <div class="col-2 p-0">
+                                        <label>{{ 'simulatePtagComponent.logs.totalOutputLbl' | translate }} : </label>
+                                    </div>
+                                    <div class="col p-0">
+                                        <label>{{item.numberOfResultObjects}}</label>
+                                    </div>
+                                 </div>
+                                 <div class="row col-12 head-panel-group">                
+                                    <div class="col-2 p-0">
+                                        <label>{{ 'simulatePtagComponent.logs.fromCacheLbl' | translate }} : </label>
+                                    </div>
+                                    <div class="col p-0">
+                                        <label>{{item.fromCache}}</label>
+                                    </div>
+                                 </div>                         
+                            </ng-container>            
+                             <ng-container *ngIf="item.statusMessage === 'FAIL'">
+                                <div class="row col-12 head-panel-group">                
+                                    <div class="col-2 p-0">
+                                        <label>{{ 'simulatePtagComponent.logs.statusMessageLbl' | translate }} :</label>
+                                    </div>
+                                    <div class="col p-0">
+                                        <label>{{item.statusMessage}}</label>
+                                    </div>
+                                 </div>
+                                 <div class="row col-12 head-panel-group">                
+                                    <div class="col-2 p-0">
+                                        <label>{{ 'simulatePtagComponent.logs.failureReasonLbl' | translate }} :</label>
+                                    </div>
+                                    <div class="col p-0">
+                                        <label>{{item.failureReason}}</label>
+                                    </div>
+                                 </div>
+                            </ng-container>
+                            <ng-container>
+                                <div class="row">
+                                    <label class="mediumFont">--------------------- {{ 'simulatePtagComponent.logs.endOfRowLbl' | translate }} {{i+1}} {{ 'simulatePtagComponent.logs.detailsLbl' | translate }}---------------------</label>
+                                </div>
+                            </ng-container>
+                            <!--Merge Tag Extension Details-->
+                     
+                    <ng-container *ngIf="item.mergeTagExtensions.length > 0">
+                        
+                        <ng-container *ngFor="let itemMerge of item.mergeTagExtensions; let j=index">
+                            <div class="row">
+                                <label class="mediumFont">--------------------- {{ 'simulatePtagComponent.logs.mergeTagExtensionLbl' | translate }} {{j+1}} {{ 'simulatePtagComponent.logs.detailsLbl' | translate }}---------------------</label>
+                            </div>
+                            <ng-container>
+                                <div class="row col-12 head-panel-group">                
+                                    <div class="col-2 p-0">
+                                        <label>{{itemMerge.type}} details : </label>
+                                    </div>
+                                    <div class="col p-0">
+                                        <label>{{itemMerge.details}}</label>
+                                    </div>
+                                 </div>
+                                 <div class="row col-12 head-panel-group">                
+                                    <div class="col-2 p-0">
+                                        <label>{{ 'simulatePtagComponent.logs.timeTakenLbl' | translate }} : </label>
+                                    </div>
+                                    <div class="col p-0">
+                                        <label>{{itemMerge.timeTaken}}ms</label>
+                                    </div>
+                                 </div>
+                                 <div class="row col-12 head-panel-group">                
+                                    <div class="col-2 p-0">
+                                        <label>{{ 'simulatePtagComponent.logs.totalOutputLbl' | translate }} : </label>
+                                    </div>
+                                    <div class="col p-0">
+                                        <label>{{itemMerge.numberOfResultObjects}}</label>
+                                    </div>
+                                 </div>
+                            </ng-container>            
+                             <ng-container *ngIf="itemMerge.statusMessage === 'FAIL'">
+                                <div class="row col-12 head-panel-group">                
+                                    <div class="col-2 p-0">
+                                        <label>{{ 'simulatePtagComponent.logs.statusMessageLbl' | translate }} :</label>
+                                    </div>
+                                    <div class="col p-0">
+                                        <label>{{itemMerge.statusMessage}}</label>
+                                    </div>
+                                 </div>
+                                 <div class="row col-12 head-panel-group">                
+                                    <div class="col-2 p-0">
+                                        <label>{{ 'simulatePtagComponent.logs.failureReasonLbl' | translate }} :</label>
+                                    </div>
+                                    <div class="col p-0">
+                                        <label>{{itemMerge.failureReason}}</label>
+                                    </div>
+                                 </div>
+                            </ng-container>
+                            <div class="row">
+                                <label class="mediumFont">---------------------{{ 'simulatePtagComponent.logs.endOfMergeTagExtensionLbl' | translate }} {{j+1}} {{ 'simulatePtagComponent.logs.detailsLbl' | translate }}---------------------</label>
+                            </div>
+                        </ng-container>
+                    </ng-container>
+                        </ng-container>
+                        
+                    </ng-container>
+                    
+                </div>
+               
+            </div>
+            
+             
+        </ng-container>        
+       
+    </div>
+
+</div>
+<div class="modal-footer d-flex justify-content-right">   
+    <button type="button" class="btn buttonCss shadow-none m-0 mr-1" id="copyBtn"
+    (click)="copyToPaste(t1,simulateLogConsoleHmtl)">
+    <i
+      class="far fa-copy"
+      #t1="ngbTooltip"
+      triggers="manual"
+      ngbTooltip="{{'productRecoAdvanceComponent.copiedTextFromMergeTagLbl' | translate}}"
+      ></i>
+    {{'copy' | translate}}</button>
+    <button type="button" class="btn buttonCss shadow-none m-0 mr-1" id="closeBtn" (click)="onClose();">{{'close' | translate}}</button>
+</div>
+

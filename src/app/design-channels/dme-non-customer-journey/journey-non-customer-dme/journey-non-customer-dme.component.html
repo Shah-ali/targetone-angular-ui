@@ -1,0 +1,189 @@
+<div class="modal-container apiPersonalizationConatiner">
+    <div class="loaderMask" *ngIf="showLoader">
+      <div class="spinner-border text-dark" role="status">
+        <span class="visually-hidden d-none">{{ 'recommendationComponent.loadinglbl' | translate }}</span>
+      </div>
+    </div>
+    <div class="col-12 mainContainer p-0">
+        <div class="row reco-section m-0">
+            <div class="col-3 d-flex flex-column p-0">
+              <div class="title" *ngIf="navigatorActiveStage1 else layoutTitle">{{'customerNonCustomerDMEComponents.selectNonCustomerDMELbl' | translate}}</div>
+              <ng-template #layoutTitle>
+                <div class="title">{{'recommendationComponent.selectLayout' | translate}}</div>
+              </ng-template>
+              <div class="subTitle" *ngIf="navigatorActiveStage1 else layoutSubTitle">
+                <div class="row col pl-2">
+                  <ul class="nav tabsLiStyle">
+                      <li *ngFor="let x of singleMultiCheckEnable">
+                          <input type="radio" class="mr-2 cursor-pointer" [(value)]="x.singleVal" id="{{x.id}}" [checked]="x.checked" (click)="singleMultiCheckMethod($event);">
+                          <label for="{{x.id}}" class="smallLabel m-0 cursor-pointer">{{x.name}}</label>
+                      </li>
+                  </ul>
+              </div>
+              </div>
+              <ng-template #layoutSubTitle>
+                <!-- <div class="subTitle text-truncate defaultPointer" title="Select layout to be included in email template">{{'apiPersonalization.selectLayoutToBeIncludedEmailTemplateLbl' | translate}}</div> -->
+              </ng-template>
+            </div>
+              <!-- <div class="col-4 d-flex flex-column p-0 headerLabls" *ngIf="productContentDialogId == 'reco-rule'">
+                  <div class="title">{{'recommendationComponent.productRecommendationlbl' | translate}}</div>
+                  <div class="subTitle">{{'recommendationComponent.chooseTemplateToAddInEmailLbl' | translate}}</div>
+              </div> -->
+              <div class="col-6 flex-column p-0">
+                  <!-- <div class="title">{{'DMEComponentLabels.selectDMElbl' | translate}}</div>
+                  <div class="subTitle">{{'DMEComponentLabels.subTitleChooseMgsLbl' | translate}}</div> -->
+                  <div class="row col p-0 justify-content-center mt-3" id="navigatorCntext" *ngIf="multiArrayPath">
+                      <div class="text-left mr-5 p-0" id="navOne">
+                          <span class="numberInCircle blue" *ngIf="navigatorActiveStage1" [ngClass]="navigatorActiveStage1 ? 'blue':'grey'">1</span>
+                          <div class="circle" *ngIf="checkmarkEnable1">
+                              <div class="checkmark"></div> 
+                          </div>
+                          <label class="fontSmall navi-placemt-1">{{'DMEComponentLabels.selectDMElbl' | translate}}</label>
+                      </div>
+                      <div class="text-left mr-5 p-0" id="navTwo">
+                          <span class="numberInCircle grey" *ngIf="(!navigatorActiveStage2 && !checkmarkEnable2) else highlightBlue">2</span>
+                          <ng-template #highlightBlue>
+                              <span class="numberInCircle" *ngIf="(navigatorActiveStage2 && !checkmarkEnable2)" [ngClass]="navigatorActiveStage2 ? 'blue':'grey'">2</span>  
+                          </ng-template>
+                          <div class="circle" *ngIf="checkmarkEnable2">
+                              <div class="checkmark"></div> 
+                          </div>                           
+                          <label class="fontSmall navi-advds-2">{{'recommendationComponent.selectLayout' | translate}}</label>
+                      </div>                       
+                     
+                  </div>
+              </div>
+              <div class="row col-3 justify-content-end p-0">
+                <button type="button" class="btn buttonCss shadow-none m-0 mr-2 heigt35" *ngIf="multiArrayPath && checkmarkEnable1" id="backBtn" (click)="backToGridPage($event)"><i class="far fa-arrow-left"></i> {{ 'backLbl' | translate }}</button>
+                  <button type="button" class="btn buttonCss shadow-none m-0 mr-2 heigt35" id="cancelBtn" (click)="onClose()">{{ 'cancel' | translate }}</button>
+                  <button type="button" class="btn buttonPrimaryCss shadow-none m-0 mr-2 heigt35" *ngIf="multiArrayPath && !checkmarkEnable1" [disabled]="!viewParameterSectionEnabled" id="nextBtn" (click)="redirectToLayoutPage($event)">{{ 'nextLbl' | translate }} <i class="far fa-arrow-right"></i></button>
+                  <button type="button" id="doneBtn" *ngIf="multiArrayPath && checkmarkEnable1" [disabled]="isPublishedPersonalization" (click)="insertApiRow()" class="btn buttonPrimaryCss shadow-none m-0 heigt35">
+                    {{ 'done' | translate }}
+                  </button>
+                  <button type="button" id="doneBtn" *ngIf="!multiArrayPath" (click)="insertApiRow()" [disabled]="!viewParameterSectionEnabled" class="btn buttonPrimaryCss shadow-none m-0 heigt35">
+                    {{ 'done' | translate }}
+                  </button>
+              </div>
+      </div>
+      <hr *ngIf="navigatorActiveStage2" class="m-0"/>
+      
+      <div class="col-12 mt-2 apiFieldSelectionSection p-0" id="apiFieldSelectionSection" *ngIf="!navigatorActiveStage2 && !checkmarkEnable1, else chooseLayoutPage">
+          <div class="row col apiNameSection p-2">
+            <div class="col-8 mt-3 mb-3">
+              <div class="col-12 p-0 d-flex p-0 justify-content-end mb-2">
+                <div class="searchReco col-3">
+                    <input type="text" placeholder="{{'searchLbl' | translate}}" (keyup)="searchByModelName($event)"
+                    id="searchInput" class="shadow-none form-control mediumFont" [(ngModel)]="searchText"/>
+                </div>
+            </div>
+              <div class="outerWrapTable col">
+                <ag-grid-angular 
+                    style="width: 100%; height: calc(100vh - 262px)" 
+                    class="ag-theme-alpine"
+                    [rowData]="modelDataListsArry" 
+                    [columnDefs]="columnHeadersRuleReco"
+                    [defaultColDef]="defaultColDef"
+                    [rowSelection]="rowSelection"
+                    [getRowId]="getRowId"
+                    [animateRows]="true" 
+                    [pagination]="true" 
+                    [paginationPageSize]="15"
+                    [suppressRowClickSelection]="true"
+                    [localeText]="localeText"
+                    (paginationChanged)="paginationChangeMethod($event)"
+                    >                        
+                </ag-grid-angular>
+                
+            </div>
+            </div>
+            <div class="col mt-3 mb-3 p-0">
+              <div class="col API-Grid-Section dottedBorder mt-3 pl-3 pr-1" *ngIf="viewParameterSectionEnabled else withoutDataView">
+                <div class="row col mt-2">
+                  <label class="m-0">{{'apiPersonalization.filterParametersLbl' | translate}}</label>
+                </div>
+                <div class="row col mb-3">
+                  <sub class="text-muted fontSmall">{{'apiPersonalization.filterParametersSubtitleForDataModelLbl' | translate}}</sub>
+                </div>
+                <div class="row col mb-1 p-0">
+                  <div class="col-3 mb-2 p-0">
+                    <app-merge-tag-copy></app-merge-tag-copy>
+                  </div>
+                </div>      
+                <!-- <div class="row col" *ngFor="let item of inputParamSelected | keyvalue; let i=index">
+                  <div class="col-6 p-0 mb-3">
+                    <div class="col p-0">
+                      <label class="mediumFont m-0">{{item.key}}</label>
+                      <input class="form-control mediumFont shadow-none col-12 mt-1" [(ngModel)]="item.value" (change)="updateParamsInputs(item.key,$event);">
+                    </div>
+                  </div>
+                </div> -->
+                <!-- <ng-container *ngIf="dataModelSelectedProdFiltrsEnable"> -->
+                   <app-journey-product-filters (parameterValueArray)="getParemeterValFromFIltersMethod($event)" (fieldsOfDMEModelArray)="getFieldsArrayListMethod($event);"></app-journey-product-filters>
+                <!-- </ng-container>   
+                            -->
+                            <div class="col sorted-Wrapped p-0" *ngIf="sortedAreaEnabled">
+                              <hr class="smallFont"/>
+                              <div class="row col" *ngIf="sortedAreaEnabled">
+                                <input class="m-0 mr-2" type="checkbox" id="sortedInt" value="" *ngIf="sortInputCheck" checked (click)="expandSortableAreaMethod($event)">
+                                <input class="m-0 mr-2" type="checkbox" id="sortedInt" value="" *ngIf="!sortInputCheck" (click)="expandSortableAreaMethod($event)">
+                                <label class="smallFont m-0">{{'customerNonCustomerDMEComponents.sortbyLbl' | translate}}</label>
+                              </div>
+                              <div class="row col ascDscOrderArea" *ngIf="sortableExpandCollapse">
+                                <div class="col-6">
+                                  <label class="smallFont">{{'customerNonCustomerDMEComponents.sortableFieldLbl' | translate}}</label>
+                                  <select class="form-control smallFont" id="sortableField" (click)="sortedSelectedFieldMethod($event)" [ngModel]="sortedFieldEditmode">
+                                    <option value="-1" selected>{{'designEditor.selectlbl' | translate}}</option>
+                                    <option value="{{x.name}}" *ngFor="let x of fieldsOfSelectedDMEModel">{{x.name}}</option>
+                                  </select>
+                                </div>
+                                <div class="col-6">
+                                  <label class="smallFont">{{'customerNonCustomerDMEComponents.ascDscLbl' | translate}}</label>
+                                  <select class="form-control smallFont " id="ascDscField" (click)="sortedSelectedAscDscMethod($event)" [ngModel]="sortedOrderEditmode">
+                                    <option value="-1" selected>{{'designEditor.selectlbl' | translate}}</option>                 
+                                    <option value="{{y.id}}" *ngFor="let y of ascDscArray">{{y.value}}</option>   
+                                  </select>
+                                </div>
+                              </div>
+                            </div>
+              </div>
+              
+              <ng-template #withoutDataView>
+                <div class="row col displayAreaView">
+                   <label class="mediumFont labelMiddle">{{'apiPersonalization.selectDMETableToDefineFiltersLbl' | translate}}</label>
+                </div>
+              </ng-template>
+            </div>
+          </div>
+        
+          
+      </div>
+      <ng-template #chooseLayoutPage>
+        <app-journey-choose-template-layout [blockNameLoadedFor]="blockNameLoadedFor" [modelNameSelectedForLayoutPg]="modelNameSelectedForLayoutPg" [createSavedObj]="createSavedObj" (dynamicContentObj)="collectDataFromLayoutTemplate($event);"></app-journey-choose-template-layout>
+      </ng-template>
+    </div>
+  </div>
+  
+  
+  <!-- <div class="col-3 p-0 mb-2">
+    <div class="col p-0">
+      <label class="mediumFont">{{ 'apiPersonalization.apiNameLbl' | translate }}</label>
+      
+      <select
+        *ngIf="api_responses.length > 0"
+        [(ngModel)]="selectedApiKey"
+        (ngModelChange)="onChangeApiNames($event)"
+        name="apiName"
+        class="form-control shadow-none col-8 mt-2 mediumFont apiPersonalizationSelect">
+        <option *ngFor="let item of api_responses" value="{{ item.apiKey }}">{{ item.apiName }}</option>
+      </select>
+  
+      <select
+        *ngIf="api_responses.length == 0"
+        name="apiName"
+        class="form-control shadow-none col-8 mt-2 mediumFont apiPersonalizationSelect">
+        <option value="-1">There is no api saved</option>
+      </select>
+      
+    </div>
+    <hr class="separator mt-4 mb-4" />
+  </div> -->

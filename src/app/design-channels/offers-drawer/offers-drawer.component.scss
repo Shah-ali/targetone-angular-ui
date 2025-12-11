@@ -1,0 +1,217 @@
+.headerTitle{
+    .titleAddOffers{
+        font-size: 20px;
+        line-height: 30px;        
+    }
+    .closeAlign{
+        right:-30px;
+        top:6px;
+    }
+}
+.searchOffers{
+    border: 1px solid #CCCCCC;
+    border-radius: 8px; 
+    padding: 3px;
+    width:99%;
+    input{border:none;outline: none;}
+}
+.btnPadd{
+    padding: 10px 16px;
+}
+.mrgTop16{
+    margin-top:16px;
+}
+.done-btn{
+    position: absolute;
+    bottom: 0rem;
+}
+.fontWeight600{
+    font-weight: 600;
+}
+.borderBottom{
+    border-bottom: 0.5px solid #D0D0D0;
+}
+.recoCard{
+    grid-auto-rows: 315px !important;
+    grid-template-areas: "a" !important;
+    gap: 36px;
+}
+.redColor{
+    color: #EB5757;
+}
+.cardWrapper{
+    align-items: baseline;
+    margin:7px auto;
+    padding: 0;
+    display: grid;
+    grid-template-areas: "a a";
+    gap: 10px;
+    grid-auto-rows: 252px;
+    
+    .verticalMiddle{vertical-align: middle;}
+.sliderBackDrop{
+    position: absolute;
+    top:0;
+    left: 0;
+    width:100%;
+    height: 100%;
+    background-color: #666;
+    opacity: 0.1;
+    pointer-events: all;
+    z-index: 9;
+}
+.card{
+    border: 1px solid #C2C9D1;
+    border-radius: 15px;
+    box-sizing: border-box;
+    // margin-right: 1.3rem;   
+    // margin-bottom: 10px; 
+    
+    
+}
+.cardBuleBorder{
+    border-color: #C2C9D1;
+}
+.attrsOverFlow{
+    overflow-x: hidden;
+    overflow-y: auto;
+    height: calc(100vh - 379px);
+
+    > i {
+        cursor: pointer;
+    }
+}
+.card-header{
+    background: #D7D7D7;
+    border-radius: 10px 10px 0px 0px;
+    padding: .6rem;
+    font-style: normal;
+    font-size: .9rem;
+    text-align: center;
+    color:#FFF;
+}
+.card.col-5 {
+    flex: 0 0 46%;
+    max-width: 46%;
+}
+    
+.cardname{
+    font-size: .75rem;
+    color: #000000;
+    margin-bottom: 2px;
+}
+.cardDesc{
+    font-size: .65rem;
+    color: #666666;
+    margin-bottom: 2px;
+}
+.card  hr{
+    width: 100%;
+    margin:0 auto;
+}
+.card  .card-text{
+    font-style: normal;
+    font-size: .75rem;
+    color: #666666;
+    line-height: 161.1%;
+}
+.card .cardSelectoffer{
+    font-style: normal;
+    font-size: .75rem;
+    line-height: 161.1%;
+    color: #666666;
+    padding-left: 15px;
+}
+.card .card-body{
+    padding: .6rem;
+}
+.card .toggleButton{
+    margin-left: 20px;
+}
+.card .attrsArea{
+    font-size: .65rem;
+    color: #026FE9;
+}
+.card .countAttr{
+    font-size: .65rem;
+    color: #026FE9;
+}
+.card .offerAttrlabel{
+    font-style: normal;
+    font-weight: 600;
+    font-size: .6rem;
+    color:#333333;
+    line-height: normal;
+}
+.card .liListOffers{
+    display: flex;
+
+    > i {
+        cursor: pointer;
+    }
+}
+.card .checkBoxStyle{
+    vertical-align: middle;
+}
+ .card .attrTitleName{
+    font-style: normal;
+    font-weight: 600;
+    font-size: 18px;
+    line-height: 30px;
+ }
+ .mrgtop-5{
+    padding: 6px 8px;
+ }
+ 
+
+}
+.loadingOfferswait{
+    width: 100%;
+    height: 100px;
+    margin:5rem auto;
+    text-align: center;
+    padding: 5rem;
+    color: #666;
+    font-size: 7rem;
+    opacity: .5;
+}
+.mergeTagTab{
+    .userdataStyle {
+        margin: 0;
+        overflow-x: hidden;
+        overflow-y: auto;
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        height: auto !important;
+
+        li{
+            background: #FFFFFF;
+            border: 1px solid #C2C9D1;
+        }
+
+        .col-5 {
+            flex: 0 0 45.6%;
+            max-width: 45.6%;
+        }
+    }
+    
+    .lighterColor{
+        color:#666666;
+    }
+    .darkerColor{
+        color:#333333;
+    }
+    .mergeTagCopyIconForAPIChannel{
+        position: absolute;
+        right: 20px;
+        cursor: pointer;
+    }
+
+    .actionSection {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    }
+    
+}

@@ -1,0 +1,34 @@
+<div *ngIf="channelType === CHANNEL_INFO_HTML.CHANNEL_TYPE.EMAIL">
+    <app-email-templates *ngIf="!promoExecutedOrRunning"></app-email-templates>
+    <app-trigger-analytics *ngIf="promoExecutedOrRunning"></app-trigger-analytics>
+</div>
+<div *ngIf="channelType === CHANNEL_INFO_HTML.CHANNEL_TYPE.PUSH_NOTIFICATION">
+    <app-mobile-push></app-mobile-push>
+</div>
+<div *ngIf="channelType === CHANNEL_INFO_HTML.CHANNEL_TYPE.WEB_PUSH">
+    <app-web-push></app-web-push>
+</div>
+<div *ngIf="channelType === CHANNEL_INFO_HTML.CHANNEL_TYPE.INAPP_NOTIFICATION">
+    <app-inapp-channel></app-inapp-channel>
+ </div>
+ <div *ngIf="channelType === CHANNEL_INFO_HTML.CHANNEL_TYPE.DM_CHANNEL && dmType == '3'">
+    <app-dm-channel></app-dm-channel>
+ </div>
+ <div *ngIf="channelType === CHANNEL_INFO_HTML.CHANNEL_TYPE.DM_CHANNEL && dmType == '1'">
+    <app-dm-free-text></app-dm-free-text>
+ </div>
+ <div *ngIf="channelType === CHANNEL_INFO_HTML.CHANNEL_TYPE.DM_CHANNEL && dmType == '2'">
+    <app-dm-columnar></app-dm-columnar>
+ </div>
+ <div *ngIf="channelType === CHANNEL_INFO_HTML.CHANNEL_TYPE.SMS_CHANNEL">
+    <app-sms-channel></app-sms-channel>
+ </div>
+ <div *ngIf="channelType === CHANNEL_INFO_HTML.CHANNEL_TYPE.FACEBOOK_CHANNEL">
+   <app-facebook-channel></app-facebook-channel>
+</div>
+<div *ngIf="channelType === CHANNEL_INFO_HTML.CHANNEL_TYPE.API_CHANNEL">
+   <app-api-channel></app-api-channel>
+</div>
+<div *ngIf="channelType === CHANNEL_INFO_HTML.CHANNEL_TYPE.WHATS_APP_CHANNEL">
+   <app-whats-app-channel></app-whats-app-channel>
+</div>

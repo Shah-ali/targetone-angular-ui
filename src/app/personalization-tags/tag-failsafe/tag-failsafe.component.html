@@ -1,0 +1,43 @@
+
+<div class="row pl-2 pr-3 pt-1 ml-0 mr-0 whiteBg" [ngClass]="isPreview ? 'pb-2' : 'pb-0 border-bottom' ">   
+    <!-- <div class="p-1 pointer" *ngIf="navigateToPage === '2'">
+      <img src="./assets/images/back.png" width="25px" (click)="getPreviousPage();">
+    </div> -->
+    <div class="p-1" *ngIf="ngCloak">
+      <label class="font-small">{{'designEditor.failsafePage.designlbl' | translate}}</label>
+    </div> 
+    <div class="pl-1" *ngIf="ngCloak">
+      <ul class="tab-list pl-0 mb-0 mt-1">
+        <li class="" [ngClass]="setActive == 0? 'active primary' : 'text-muted'"  (click)="setFailSafeDetails(0,false,1);">         
+             <span>{{'personalizationTagsComponent.tabNameUndefinedLbl1' | translate}}</span>
+        </li>
+        <li class="" *ngIf="!isTemplateLibraryMode" [ngClass]="[setActive == 1? 'active primary' : 'text-muted', (!isFailSafeEnable) ? 'disabledLi' : 'text-muted']" (click)="setFailSafeDetails(1,true,0);">
+             <span class="">{{'designEditor.failsafePage.failsafelbl' | translate}} {{'personalizationTagsComponent.tabNameUndefinedLbl2' | translate}}</span><span *ngIf="!isFailSafeEnable">{{'designEditor.failsafePage.optionallbl' | translate}}</span>
+        </li>
+      </ul>
+    </div>
+    <div class="row col p-0 text-right float-right mt-1" *ngIf="ngCloak">
+      <div class="col p-0">
+        <div id="beefree-step-6" style="display: inline;">  
+          <input class="mr-1 align-middle" type="checkbox" id="failsafeEnable" [disabled]="isPublishedPersonalization || tenentPriviledgeEditDisabled" [(ngModel)]="isFailSafeEnable" (click)="enableFailSafe($event);">
+          <label class="font-small mr-1" for="failsafeEnable"> {{'designEditor.failsafePage.enableFailsafelbl' | translate}} </label>
+        </div>       
+
+        <button id="beefree-step-7" type="button" class="btn buttonCss shadow-none ml-2" (click)="onsave(false, '');" [disabled]="isSavedAsQA || isPublishedPersonalization || tenentPriviledgeEditDisabled">{{'personalizationTagsComponent.saveAsDraftLbl' | translate}}</button> 
+        <!-- <button type="button" class="btn btn-outline-primary buttonStyle shadow-none mr-2 ml-2" *ngIf="navigateToPage === '3'" [disabled]="isPublishedPersonalization">Save tag</button> 
+        <button type="button" class="btn btn-outline-primary buttonStyle shadow-none mr-2 ml-2" *ngIf="navigateToPage === '4'" (click)="saveAndPublishPersonalization(false);" [disabled]="isPublishedPersonalization">Save tag</button>  -->
+        <!--Personalization page-->
+        <button type="button" class="btn buttonCss shadow-none mr-2 d-none" [disabled]="isPublishedPersonalization || tenentPriviledgeEditDisabled" *ngIf="navigateToPage === '2' && !isPublishedPersonalization" (click)="redirectToSimulatePersonalized(true);"> {{'nextLbl' | translate}}</button> 
+        <button type="button" class="btn buttonCss shadow-none mr-2 d-none"  *ngIf="navigateToPage === '2' && isPublishedPersonalization" (click)="reloadToSimulateTagMethod();"> {{'nextLbl' | translate}}</button> 
+             
+    <!-- Simulate page-->
+      <button type="button" *ngIf="navigateToPage === '3'" class="btn buttonCss shadow-none mr-2 d-none" (click)="reloadToDefinePersonlizedMethod()" [disabled]="ispromoExecutedOrRunning"> {{'backLbl' | translate}}</button>
+      <button type="button" *ngIf="navigateToPage === '3'" class="btn buttonCss shadow-none d-none" (click)="finalizePageLanding()">{{'nextLbl' | translate}}</button>
+    <!--tag name page-->
+   <button id="beefree-step-8" type="button" class="btn buttonCss shadow-none ml-2" (click)="onsave(true, 'QA');" [disabled]="isPublishedPersonalization || tenentPriviledgeEditDisabled">{{'personalizationTagsComponent.saveToQALbl' | translate}} </button> 
+   <button id="beefree-step-8" type="button" class="btn buttonCss shadow-none mr-2 ml-2" (click)="onsave(true, 'PROD');" [disabled]="isPublishedPersonalization || tenentPriviledgeEditDisabled">{{'personalizationTagsComponent.save&publishLbl' | translate}} </button>    
+      <button type="button" *ngIf="navigateToPage === '4'" class="btn buttonCss shadow-none d-none" (click)="getPreviousPage()" [disabled]="ispromoExecutedOrRunning">{{'backLbl' | translate}}</button>
+    </div>
+  </div>  
+</div>
+

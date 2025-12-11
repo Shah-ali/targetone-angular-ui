@@ -1,0 +1,355 @@
+<div class="ptags-wrapper">     
+    <div class="row align-items-end">
+       <div class="col-auto d-flex gap-2 align-items-center">
+           <div class="heading">{{selectedTagName}}</div>           
+        <button *ngIf="!filterApplied" (click)="openDrawer($event)" type="button"
+                class="btn btn-outline-primary">
+                <i class="bi bi-funnel"></i> {{'header.personalisationTags.filterByCampaignlbl' | translate}}
+                </button>
+                <button *ngIf="filterApplied" (click)="clearCompaignFilter($event)" type="button"
+                class="btn btn-outline-primary">
+                <span>
+                <span class="active" style="padding-right: 10px;">{{'header.personalisationTags.clearFilterLbl' | translate}}</span>
+                <span class="active" style ="border-left: 1px solid #007bff;height: fit-content;padding-right: 10px;"></span> 
+                <i class="bi bi-funnel active"></i>
+                </span>
+        </button>   
+       </div>
+       <div class="col-auto d-flex gap-2 ml-auto justify-content-end">
+            <div class="row col p-0">
+                <div class="col" *ngIf="showCustomDatesSelected">
+                    <div class="row p-0">
+                        <div class="col p-0">
+                            <label for="timePerioddropdown">{{'header.personalisationTags.fromDateLbl'| translate}}</label>
+                            <input type="text" class="height32 bordernoneInput" disabled [ngModel]='customRangeDateObj.startDate'>
+                        </div>
+                        <div class="col p-0">
+                            <label for="timePerioddropdown">{{'header.personalisationTags.toDateLbl' | translate}}</label>
+                            <input type="text" class="height32 bordernoneInput" disabled [ngModel] = 'customRangeDateObj.endDate'>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-auto d-flex gap-2 ml-auto justify-content-end">
+                    <!-- Dropdown -->
+                    <div class="form-group mb-0">
+                        <label for="timePerioddropdown">{{'header.personalisationTags.timePeriodlbl' | translate}}</label>
+                        <div ngbDropdown>
+                        <button type="button" class="btn btn-light" id="timePerioddropdown" ngbDropdownToggle>
+                            {{ selectedTimePeriod }}
+                        </button>
+                        <div ngbDropdownMenu aria-labelledby="timePerioddropdown">
+                            <button ngbDropdownItem (click)="selectTimePeriod(LAST_7_DAYS)">{{ this.LAST_7_DAYS }}</button>
+                            <button ngbDropdownItem (click)="selectTimePeriod(LAST_30_DAYS)">{{ this.LAST_30_DAYS }}</button>
+                            <button ngbDropdownItem (click)="selectTimePeriod(LAST_60_DAYS)">{{ this.LAST_60_DAYS }}</button>
+                            <button ngbDropdownItem (click)="open(customDateRange)">{{ this.CUSTOM_DATE_RANGE }}</button>
+                        </div>
+                        </div>
+                    </div>
+          
+                </div>
+            </div>
+
+
+
+
+           
+
+       </div>
+   </div>
+
+   <div class="row mt-3">
+       <div class="col-4">
+           <div class="card border-0 rounded-5 p-3">
+               <div class="sub-title mb-3">
+                 {{'header.personalisationTags.opensLbl' | translate}}
+               </div> 
+               <div class="heading">
+                 {{openStatusSum}}
+               </div> 
+           </div>
+       </div>
+       <div class="col-4">
+           <div class="card border-0 rounded-5 p-3">
+               <div class="sub-title mb-3">
+                   {{'header.personalisationTags.clicksLbl' | translate}}
+               </div> 
+               <div class="heading">
+                   {{clickSum}}
+               </div> 
+           </div>
+       </div>
+       <div class="col-4">
+           <div class="card border-0 rounded-5 p-3">
+               <div class="sub-title mb-3">
+                   {{'header.personalisationTags.CTRLbl' | translate}}
+               </div> 
+               <div class="heading">
+                {{ ctrSum !== 0 ? ctrSum + '%' : ctrSum }}
+               </div> 
+           </div>
+       </div>
+   </div>
+   
+
+   <!-- Tab section -->
+   <div class="card border-0 rounded-5 p-3 mt-3">
+       <div class="row">
+           <div class="col-auto">            
+                <ul ngbNav #nav="ngbNav" [(activeId)]="active" class="nav-tabs custom-tabs">
+                   <li [ngbNavItem]="1">
+                       <a ngbNavLink>{{'header.personalisationTags.opensLbl' | translate}}</a>
+                       <ng-template ngbNavContent>
+                           <div class="row">
+                               <div class="col-6">
+                                   <div class="ptags-content-graph rounded-5">
+                                       <div class="heading">
+                                           {{'header.personalisationTags.openByTopDeviceslbl' | translate}}
+                                       </div> 
+                                       <div class="chart-area">
+                                        <app-bar-chart-simple
+                                         [selectedTimePeriod]="selectedTimePeriod"
+                                         [datefrom]="dateFrom"
+                                         [dateTo]="dateTo"
+                                         
+                                         >
+                                       </app-bar-chart-simple>
+                                       </div>
+                                   </div>
+                               </div>
+                               <div class="col-6">
+                                   <div class="ptags-content-graph rounded-5">
+                                       <div class="heading">
+                                           {{'header.personalisationTags.openTimeofTheDayLbl' | translate}}
+                                       </div> 
+                                       <div class="chart-area">
+                                        <app-bar-chart-multi-series></app-bar-chart-multi-series>
+                                       </div>
+                                   </div>
+                               </div>
+                           </div>
+                           
+                       </ng-template>
+                   </li>
+                   <li [ngbNavItem]="2">
+                       <a ngbNavLink>{{'header.personalisationTags.trendGraphLbl' | translate}}</a>
+                       <ng-template ngbNavContent>
+                           <div class="row">
+                               <div class="col-12">
+                                   <div class="ptags-content-graph rounded-5">
+                                       <div class="heading">
+                                           {{'header.personalisationTags.trendGraphLbl' | translate}}
+                                       </div> 
+                                       <div class="chart-area">
+                                       <app-trend-chart></app-trend-chart>
+                                       </div>
+                                   </div>
+                               </div>  
+                           </div>
+                       </ng-template>
+                   </li>
+                   <li [ngbNavItem]="3">
+                       <a ngbNavLink> {{'header.personalisationTags.topLocationslbl' | translate}}</a>
+                       <ng-template ngbNavContent>
+                           <div class="row">
+                               <div class="col-12">
+                                   <div class="ptags-content-graph rounded-5">
+                                       <div class="heading">
+                                           {{'header.personalisationTags.topLocationslbl' | translate}}
+                                       </div> 
+                                       <div class="chart-area">
+                                     <app-location-chart></app-location-chart>
+                                       </div>
+                                   </div>
+                               </div> 
+                           </div>
+                       </ng-template>
+                   </li>
+               </ul>
+           </div>
+       </div>        
+   </div>
+
+   <div [ngbNavOutlet]="nav" class="mt-3"></div>
+   <!-- Tab Section -->
+
+   <!-- New Chart Area-->
+   <div class="graphAreaAllPerforms col p-0">
+                                
+    <div class="row p-0 m-0">
+        <div class="col-5 pt-3">
+            <div class="row col justify-content-end p-0">
+                <div class="col-8">
+                    <h6 class="mediumFont linkClor mb-0 mt-1">{{'header.personalisationTags.tabularPerformanceSummaryLbl' | translate}}</h6>
+                </div>
+                <div class="col p-0 text-right">
+                    <button class="btn btn-outline-primary mb-2" (click)="downloadTabularDataMethod();" [disabled]="downloadDisabled">
+                        <i class="fas fa-download"></i>
+                        {{'activePerformanceLocationChartLabel.downloadDataMsgLbl' | translate}}
+                    </button>
+                </div>
+            </div>
+                <ag-grid-angular 
+                    #myAgGrid11
+                    style="width: 98%; height: 94%" 
+                    class="ag-theme-alpine"
+                    [rowData]="rowData" 
+                    [columnDefs]="columnHeadersRuleReco"
+                    [defaultColDef]="defaultColDef"
+                    [rowSelection]="rowSelection"
+                    [getRowId]="getRowId"
+                    [animateRows]="true" 
+                    [pagination]="true" 
+                    [paginateChildRows]="true"
+                    [paginationPageSize]="25"                    
+                    [suppressRowClickSelection]="true"
+                    [localeText]="localeText" 
+                    [suppressScrollOnNewData] = "true"                     
+                    [groupDefaultExpanded]="groupDefaultExpanded"  
+                    [groupDisplayType]="groupDisplayType"    
+                    (paginationChanged)="paginationChangeMethod($event)" 
+                    (gridReady)="onGridReady($event)"
+                    >                        
+                </ag-grid-angular>
+        </div>
+         <div class="col-7 p-0">
+    <div class="col p-0">
+      <h6 class="mediumFont linkClor mt-3">{{ activeContentName }}</h6>
+    </div>
+    <div class="row col p-0 mb-3 mt-2">
+      <div class="col-5">
+        <ul class="nav tabsLiStyle">
+          <li *ngFor="let x of showClickOrCtrObj">
+            <input
+              type="radio"
+              class="mr-2 cursor-pointer verticalAlignMiddle"
+              value="{{ x.saveVal }}"
+              id="show_{{ x.id }}"
+              [checked]="x.checked"
+              (click)="switchBtwClickNCtrMethod($event);"
+            />
+            <label
+              for="show_{{ x.id }}"
+              class="smallLabel m-0 cursor-pointer"
+              >{{ x.name }}</label
+            >
+          </li>
+        </ul>
+      </div>
+      <div class="col">
+        <div class="row justify-content-end p-0 text-right">
+          <div class="d-flex flex-column align-items-end">
+            <button
+              class="btn btn-outline-primary mb-2"
+              (click)="downloadChartImage();"
+              [disabled]="downloadDisabled"
+            >
+              <i class="fas fa-download"></i>
+              {{ 'activePerformanceLocationChartLabel.downloadImageAsPngLbl' | translate }}
+            </button>
+
+           <div class="w-100 d-flex justify-content-end">
+  <div class="chart-toggle btn-group" role="group">
+    <button
+      type="button"
+      class="chart-btn btn border-0 p-0"
+      [class.active]="chartType === 'bar'"
+      (click)="setChartType('bar')"
+      title="{{ 'header.personalisationTags.BarChartLbl' | translate }}"
+    >
+      <img src="./assets/images/bar.jpg" />
+    </button>
+    <button
+      type="button"
+      class="chart-btn btn border-0 p-0"
+      [class.active]="chartType === 'line'"
+      (click)="setChartType('line')"
+      title="{{ 'header.personalisationTags.LineChartLbl' | translate }}"
+    >
+      <img src="./assets/images/line.jpg" />
+    </button>
+  </div>
+</div>
+                        </div>                        
+                    </div>
+                </div>
+            </div>
+            <div class="col chartBorderRoundedStyle mb-3">
+                <div class="heading pt-3">
+                   {{chartTitleLabelUpdate}}
+                </div>
+                <div class="chart-area">
+                    <div echarts #echartAreaSection class="echarts-container col">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+   <ng-template #customDateRange let-c="close" let-d="dismiss">
+       <div class="modal-header align-items-center"> 
+           <h4 class="modal-title" id="modal-basic-title">{{'header.personalisationTags.customDateRangelbl' | translate}}</h4>        
+           <i class="bi bi-question-circle ml-auto mr-2"></i> 
+           <a type="button" class="btn-link btn-close"aria-label="Close" (click)="d('Cross click')"><i class="bi bi-x-lg"></i></a>
+       </div>
+       <div class="modal-body">
+           <!-- <div><p>{{'dateLbl' | translate}} <i class="bi bi-info-circle ml-2"></i></p></div> -->
+           
+           <div class="row p-2 pl-0">
+            <div class="col pl-2">
+                <div class="d-flex align-items-center">
+                    <label for="journey-start-date" class="col-3 p-0 pr-2 control-label"> {{'header.personalisationTags.fromDateLbl' | translate}}</label>
+                    <div class="col position-relative pl-0">
+                      <!-- https://github.com/DanielYKPan/date-time-picker -->
+                      <input [owlDateTime]="dt1" [(ngModel)]="startDate" id="journey-start-date" readonly (ngModelChange)="getDateMethod($event,'startDate');"
+                        class="form-control shadow-none" [min]="" [max]="today">
+                        <i (click)="dateclearMethod($event,'startDate')" *ngIf="clearIconStartDateEnable" class="smallLabel normalStyleFont setClearIcon" >x</i>
+                      <span [owlDateTimeTrigger]="dt1"><i class="fa fa-calendar-alt position-absolute fa-lg"></i></span>
+                      <owl-date-time [pickerType]="'calendar'" #dt1></owl-date-time>
+                      <!-- <span class="timeZoneGtmtext">{{timeZoneInGMT}}</span> -->
+                      <!-- <owl-date-time #dt1 [hour12Timer]="true"></owl-date-time> -->
+                    </div>
+                  </div>
+            </div>
+            <div class="col">
+                <div class="d-flex align-items-center">
+                    <label for="journey-end-date" class="col-2 p-0 pr-2 control-label">{{'header.personalisationTags.toDateLbl' | translate}}</label>
+                    <div class="col position-relative">
+                      <!-- https://github.com/DanielYKPan/date-time-picker -->
+                      <input [owlDateTime]="dt2" [(ngModel)]="endDate" id="journey-end-date" readonly (ngModelChange)="getDateMethod($event,'endDate');"
+                        class="form-control shadow-none" [min]="startDate" [max]="today">
+                        <i (click)="dateclearMethod($event,'endDate')" *ngIf="clearIconEndDateEnable" class="smallLabel normalStyleFont setClearIcon">x</i>
+                      <span [owlDateTimeTrigger]="dt2"><i class="fa fa-calendar-alt position-absolute fa-lg"></i></span>
+                      <owl-date-time [pickerType]="'calendar'" #dt2></owl-date-time>
+                          <!-- <span class="timeZoneGtmtext">{{timeZoneInGMT}}</span> -->
+                    </div>
+                  </div>
+            </div>
+               <!-- <div class="col-6">
+                   <div class="form-group">
+                       <label for="activationDate" class="sr-only">Activation date</label>
+                       <select class="form-control" id="activationDate">
+                         <option>Activation date</option> 
+                       </select>
+                     </div>
+               </div> -->
+               <!-- <div class="col-4">
+                   <div class="form-group">
+                       <label for="toDate" class="sr-only" >To</label>
+                       <select class="form-control" id="toDate">
+                         <option>To</option> 
+                       </select>
+                     </div>
+               </div> -->
+           </div>
+       </div>
+       <div class="modal-footer gap-2">
+           <button type="button" class="btn btn-outline-primary" (click)="c('Cancel')">{{'cancel' | translate}}</button>
+           <button type="button" class="btn btn-primary" (click)="applyDates()">{{'designEditor.applyBtn' | translate}}</button>
+       </div>
+   </ng-template>
+
+</div>
+  <!-- Drawer -->
+  <app-drawer (applySelectedCompaigns)="applySelectedCompaigns($event)"></app-drawer>

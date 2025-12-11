@@ -1,0 +1,11 @@
+<div class="col-6 pr-0 relative alignItems">
+    <div class="floatingDivCopied smallFont" *ngIf="copiedDivEnabled">{{'productRecoAdvanceComponent.copiedTextFromMergeTagLbl' | translate}}</div>
+    <ngx-dropdown-treeview #mergeTagsListData
+        [buttonClass]="customBootstrapStyle"
+        class="treeViewDropdownStyle"
+        [config]="configuration"
+        [items]="items"                             
+        (selectedChange)="onSelectedChange($event)"
+        >                                    
+    </ngx-dropdown-treeview>
+</div>

@@ -1,0 +1,11 @@
+<div class="header-section">
+  <app-header [journeyNameInput]="journeyName"></app-header>
+</div>
+<hr class="mt-2 mb-0" />
+<div class="container-fluid">
+  <app-loader></app-loader>
+
+  <div class="body-content" (click)="handlePageClick($event)">
+    <router-outlet> </router-outlet>
+  </div>
+</div>

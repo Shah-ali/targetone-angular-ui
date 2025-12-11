@@ -1,0 +1,246 @@
+@import '../../../custom-style.scss';
+.buttonCss {
+  @include secondaryBttn;
+}
+
+.buttonPrimaryCss {
+  @include primaryBttn;
+}
+.disabled-tab {
+  cursor: not-allowed;
+  pointer-events: none;
+  opacity: 0.3;
+}
+.displayinlineText{
+  display:inline;
+}
+.circleColorX{
+  position: absolute;
+  top: 11px;
+  right: 22px;
+  z-index: 999;
+  color:#a1a1a1;
+}
+.fragmentSectionPreview{
+  width: 100%;
+  height: calc(100vh - 321px);
+  border: 1px dotted #bbb050;
+  border-radius: 8px;
+  background: #fdfdf4;
+  overflow-x: auto;
+  overflow-y: auto;
+}
+.htmlTagSectionPreview{
+  width: 100%;
+  height: calc(100vh - 311px);
+  border: 1px dotted #bbb050;
+  border-radius: 8px;
+  background: #fdfdf4;
+  overflow-x: auto;
+  overflow-y: auto;
+  margin: 0 auto;
+}
+.modalBackdropCustom{
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1040;
+  width: 100vw;
+  height: 100vh;
+  background-color: #000;
+  opacity: 0.5;
+}
+
+.tagUrlStyle {
+  color: #737373;
+  font-size: 0.688rem;
+  word-break: break-all;
+}
+
+.previewSectionPanel {
+  width: 100%;
+  height: calc(100vh - 311px);
+  border: 1px dotted #bbb050;
+  border-radius: 8px;
+  background: #fdfdf4;
+  overflow-x: auto;
+  overflow-y: auto;
+  text-align: center;
+}
+.tagPramasAreaSection{
+    max-height: calc(100vh - 485px);
+    overflow-x: hidden;
+    overflow-y: auto;
+}
+.tagUrlArea {
+  width: 100%;
+  background: #e2e2e2;
+  height: calc(100vh - 124px);
+
+  .loaderMask {
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    z-index: 1;
+    background-color: rgb(238, 238, 238);
+    display: block;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    opacity: 30%;
+    overflow: hidden;
+    z-index: 10;
+
+    .spinner-border.text-dark {
+      position: relative;
+      top: 50%;
+      left: 40%;
+    }
+  }
+}
+#thumbnailContent {
+  border: none;
+  overflow: hidden !important;
+  height: calc(100vh - 266px);
+  border-radius: 8px;
+  width: 100%;
+}
+#thumbnailContent html body table {
+  width: 600px !important;
+}
+.row-justify {
+  justify-content: center;
+}
+
+.scrollTable {
+  height: 300px;
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+.smallFont {
+  font-size: 0.69rem;
+}
+.mediumFont {
+  font-size: 0.75rem;
+}
+.desktopView {
+  cursor: default;
+  // width:100%;
+  // height: 100%;
+}
+.mobileView {
+  cursor: default;
+  // width: 38% !important;
+  // margin: 0 35% auto;
+  // height: 100%;
+}
+.mrgtop11{
+  margin-top:11px;
+}
+.greyViewBckGrd {
+  background-color: #ddd;
+  border: 1px solid #ddd;
+}
+
+.previewSectionLeft {
+  background-color: #f2f2f2;
+
+  .deviceView {
+    z-index: 99999;
+
+    > i {
+      cursor: pointer;
+
+      &.selected {
+        color: #0074fa;
+        border-bottom: 2px solid #0074fa;
+      }
+    }
+
+    span {
+      font-size: 12px;
+      margin-right: 10px;
+    }
+  }
+}
+.whiteBck {
+  background-color: #fff;
+}
+
+.simulateMoodalHeader {
+  .pTagNameStyle {
+    font-size: 14px;
+  }
+
+  .modal-title {
+    border-right: 1px solid #000;
+    padding-right: 10px;
+  }
+}
+.previewSectionRight {
+  background-color: #fff;
+  border-radius: 10px;
+  height: calc(100vh - 155px);
+  border: 1px solid #e2e2e2;
+
+  .tabsLiStyle {
+    li {
+      max-width: 132px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+  }
+}
+.borderBttmLine {
+  border-bottom: 1px solid #e2e2e2;
+  margin-left: -15px;
+  margin-right: -15px;
+  label {
+    padding-left: 10px;
+  }
+}
+
+.pTagsimulateSection {
+  .tabsLiStyle {
+    li {
+      border-bottom: 2px solid #ccc;
+      // width: 130px;
+      text-align: center;
+
+      &.active {
+        border-bottom: 2px solid #0074fa;
+      }
+    }
+  }
+
+  .tagUrlStyle {
+    color: #737373;
+    font-size: 0.688rem;
+    word-break: break-all;
+  }
+
+  .previewSectionRight {
+    .deviceStyle {
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+    }
+  }
+}
+.consoleLogText{
+  // border: 1px solid #ccc;
+    max-height: calc(100vh - 285px);
+    overflow-x: hidden;
+    overflow-y: auto;
+    font-size: 12px;
+    padding: 15px;
+    line-height: 30px;
+    overflow-x: hidden;
+    overflow-y: auto;
+    text-align: justify;
+    word-wrap: break-word;
+    font-weight: 400;
+    line-height: 27px;
+    color:#000;
+}

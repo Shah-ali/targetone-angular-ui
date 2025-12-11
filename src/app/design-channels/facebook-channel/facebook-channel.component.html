@@ -1,0 +1,86 @@
+<app-channels></app-channels>
+<div class="col-12 facebookLayoutContainer">
+    <div class="row col-12 p-0 m-0  mb-3 relative">
+        <h6 class="col p-0 pl-1 m-0 mt-3 titleHeadtext"></h6>
+        <button class="btn buttonStyle buttonCssStyle shadow-none p-0" (click)="finalSaveMethod();">{{'save' | translate}}</button>
+        
+            <div class="col-1 d-none">
+                <select class="smallLabel">
+                  <option value="-1">{{'designEditor.emailEditor.actionslbl' | translate}}</option>
+                  <option>{{'dmFreeTextComponent.testLbl'}} {{channelObj.channelName}}</option>
+                </select>
+            </div>
+        
+    </div>
+    <div class="row innerContainer col-12 p-0 m-0">
+        <div class="col p-4 tempLayoutSection p-4">
+            <div class="row col p-0 heading">
+                <div class="col mt-1 p-0">
+                    <h6 class="col"><label class="smallLable">{{'facebookComponent.facebookLbl' | translate}}</label></h6>
+                </div>
+            </div>
+            <div class="row col saveasTemplate liteBckgrd mb-4 m-0">
+                <div class="col-4 p-0">
+                    <p class="m-0 p-0"><label class="smallLable text-muted">{{'dmColumnarCompontent.templateLbl' | translate}}</label></p>
+                    <p class=""> 
+                        <select class="col-6 p-0 xSmallLabel inputStyle text-muted" (change)="getSelectedfacebookTemplateData($event);">
+                            <!-- <option value="-1">Select template</option> -->
+                            <option *ngFor="let x of facebookTemplates" value="{{x.dbKey}}">{{x.templateName}}</option>
+                        </select>
+                    </p>
+                </div>
+                <!-- <div class="col p-0 text-right">
+                    <button class="btn buttonStyle buttonCssStyle shadow-none p-0 mt-2" (click)="openPopupForSaveAsTemplate();">Save as template</button>
+                </div>
+                <div class="col-5 p-3 saveAsTemplatePopup" *ngIf="isSaveAsTemplateEnable">
+                    <div class="row col outerWrap mt-4 m-0">
+                        <label class="col-2 p-0 verticalMiddle">Name: </label>
+                        <input class="col form-control inputStyle" placeholder="Template Name" [(ngModel)]="templateNameEntered">
+                    </div>
+                    <div class="row col justify-content-end p-0 ">
+                        <div class="col-4 text-right p-0 mt-5">
+                            <button class="btn buttonStyle buttonCssStyle shadow-none p-0 smallLabel inputStyle mr-2 mt-2 blueColorBtn" type="button" (click)="callSaveAsTemplate();">Save</button> 
+                            <label class="btn buttonStyle buttonCssStyle shadow-none p-0 smallLabel inputStyle m-0 mt-2" (click)="closeSaveAsTemplatePopup();">Cancel</label>
+                        </div>                         
+                    </div>
+                </div> -->
+            </div>
+
+            <!-- Table data columnar -->
+            <div class="outerWrap col p-0">
+                <div class="row col p-0 m-0"><h6><label>{{'designEditor.offerDrawerComponent.attributeslbl' | translate}}</label></h6></div>
+                <div class="row col m-0 p-0">                    
+                    <div class="col p-3 backgroundWhite columnarTable" id="tableColumnar" #tableColumnarData>
+                        <div class="row col p-0 m-0">
+                            <div class="col-5 ml"><label class="smallLabel">{{'dmColumnarCompontent.columnNamelbl' | translate}}</label></div>
+                            <div class="col-5"><label class="smallLabel">{{'dmColumnarCompontent.columnValueLbl' | translate}}</label></div>
+                           
+                        </div>                        
+                        <div class="col p-0 scrollTable table-striped" #colValInputContent>
+                            <div class="row rowStripe p-3" *ngFor="let x of facebookTableData; let i = index" id="row_{{x.id}}">
+                                <div class="col-5">
+                                    <input class="form-control inputStyle xSmallLabel col-9 colName_{{x.id}}" placeholder="{{'dmColumnarCompontent.columnNamelbl' | translate}}" value="{{x.colname}}" readonly="{{x.editable}}">
+                                </div>
+                                <div class="col-5">
+                                    <div class="">
+                                        <input [attr.contenteditable]="true" class="columnValueInp form-control inputStyle xSmallLabel col-11 pl-2 pt-1 colVal_{{x.id}}" [value]="x.colvalue"
+                                            id="columnValueInp_{{x.id}}" name="columnValueInp" spellcheck="false" readonly="{{x.editable}}" placeholder="{{'dmColumnarCompontent.columnValueLbl' | translate}}"                      
+                                            ngDefaultControl isNative="true" perLine="7" showPreview="false" 
+                                            >
+                                    
+                                        <!-- <emoji-mart class="emoji-mart-inapp" [custom]="customEmojis" *ngIf="emojisToggle" title="Pick your emoji…" [showPreview]="false" 
+                                        (emojiSelect)="addEmojiItem($event, 'title')" [enableSearch]="false" [enableFrequentEmojiSort]="true" [showSingleCategory]="true" 
+                                            [include]="['custom']" emoji="point_up">
+                                        </emoji-mart> -->
+                
+                                        
+                                    </div>
+                                </div>
+                                
+                            </div>                      
+                        </div>                          
+                    </div>
+                    
+                </div>
+                
+            </div>

@@ -1,0 +1,181 @@
+<div class="header-component">
+  <div class="row align-items-center">
+    <div class="col-md-12 p-0">
+      <h1 class="title">
+        <span *ngIf="!isTemplateLibraryMode && !isRuleBuilderActivity && !isPersonalizeTagMode && !apiBasedIntegrationPage && !listViewPerformance && !graphViewPerformance && !summarisedViewPerformance && !fusionAPIJsModuleEnabled">
+          {{ 'header.journeyBuilder' | translate }}
+        </span>
+        <span *ngIf="isTemplateLibraryMode">{{ 'header.templateLibrary' | translate }}</span>
+        <span *ngIf="isRuleBuilderActivity">{{ 'header.ruleBuilder.activityRule' | translate }}</span>
+        <span *ngIf="isPersonalizeTagMode && !listViewPerformance && !graphViewPerformance && !summarisedViewPerformance">
+          <span *ngIf="!isPersonalizedEditor && !listViewPerformance && !graphViewPerformance && !summarisedViewPerformance">{{ 'header.personalisationTags.heading' | translate }}</span>
+          <div class="pEditorHeader" *ngIf="isPersonalizedEditor">
+            <span><i class="far fa-arrow-left mr-2 pointer" (click)="goToPersonalizationTagsPage()"></i></span>
+            <span *ngIf="!isPublishedPersonalization && pTagName == null">{{ 'header.personalisationTags.editorPageHeading' | translate }}</span>
+            <span *ngIf="isPublishedPersonalization && pTagName != null">{{ 'header.personalisationTags.viewEditorPageHeading' | translate }}</span>
+            <span *ngIf="!isPublishedPersonalization && pTagName != null">{{ 'header.personalisationTags.editEditorPageHeading' | translate }}</span>
+          </div>
+        </span>
+        <span *ngIf="apiBasedIntegrationPage">{{ 'header.apiBasedIntegrationPage' | translate }}</span>
+        <span *ngIf="fusionAPIJsModuleEnabled">{{ 'header.fusionAPIJsPageLbl' | translate }}</span>
+        <span *ngIf="listViewPerformance && !graphViewPerformance && !summarisedViewPerformance">
+          <!-- <span *ngIf="listViewPerformance"><i class="far fa-arrow-left mr-2 pointer" (click)="goToPersonalizationTagsPage()"></i></span> -->
+          {{'header.personalisationTags.heading' | translate}}
+        </span>
+        <span *ngIf="graphViewPerformance && !listViewPerformance && !summarisedViewPerformance">
+          <i class="far fa-arrow-left mr-2 pointer" (click)="goToPersonalizationTagsPage()"></i>
+          {{'header.personalisationTags.activeContentPerformancelbl' | translate}} 
+        </span>
+        <span *ngIf="summarisedViewPerformance && !listViewPerformance && !graphViewPerformance">
+          <i class="far fa-arrow-left mr-2 pointer" (click)="goToPersonalizationTagsPage()" *ngIf="viewSummarizedEnabledBackArrowshow"></i>
+          {{'header.personalisationTags.summarisedTagPerformancelbl' | translate}} 
+        </span>
+        <img class="visual-help-icon" ngbTooltip="{{'header.personalisationTags.visualHelpTooltip' | translate}}" tooltipClass="ngbTooltipStyle" *ngIf="isPersonalizeTagMode" src="./assets/images/visual_help.svg" (click)="visualHelpOLH()" />
+        <img class="header-help-icon" ngbTooltip="{{'header.personalisationTags.olhHelp' | translate}}" tooltipClass="ngbTooltipStyle" src="./assets/images/info-circle.svg" (click)="globalHelpOLH()" />
+      </h1>
+      <span class="header-seprator" *ngIf="!isSetPage && !isPersonalizeTagMode && !isTemplateLibraryMode && (isFinalize || isDesign)">|</span>
+      <span class="header-seprator" *ngIf="!isSetPage && pTagName && isPersonalizeTagMode && !summarisedViewPerformance && !listViewPerformance && !graphViewPerformance">|</span>
+
+      <span class="ml-2" *ngIf="!isSetPage && !isTemplateLibraryMode && isShowBreadcrumbs && isPersonalizeTagMode && pTagName != null && !listViewPerformance && !graphViewPerformance && !summarisedViewPerformance">
+        <span *ngIf="isPublishedPersonalization"><img src="./assets/images/prodIcon.svg"/></span>
+        <span *ngIf="isSavedAsQA"><img src="./assets/images/QAIcon.svg"/></span>
+        <span *ngIf="!isPublishedPersonalization && !isSavedAsQA"><img src="./assets/images/draftIcon.svg"/></span>
+      </span>
+
+      <h2
+        *ngIf="isSetPage && !isTemplateLibraryMode && !isRuleBuilderActivity && !isPersonalizeTagMode && !apiBasedIntegrationPage && !listViewPerformance && !graphViewPerformance && !summarisedViewPerformance && !fusionAPIJsModuleEnabled"
+        class="content5 color-secondary-dark">
+        {{ 'header.journeyBuilderDesc' | translate }}
+      </h2>
+      <h2 *ngIf="isTemplateLibraryMode" class="content5 color-secondary-dark">{{ 'header.templateLibraryDesc' | translate }}</h2>
+      <h2 *ngIf="isRuleBuilderActivity" class="content5 color-secondary-dark">
+        {{ 'header.ruleBuilder.activityRuleDesc' | translate }}
+      </h2>
+      <h2 *ngIf="isPersonalizeTagMode && !isPersonalizedEditor && !listViewPerformance && !graphViewPerformance && !summarisedViewPerformance" class="content5 color-secondary-dark">
+        {{ 'header.personalisationTags.subHeading' | translate }}
+      </h2>
+      <div class="promo-name emailJourneyNameSection" *ngIf="!isSetPage && !isTemplateLibraryMode && !isPersonalizeTagMode && !listViewPerformance && !graphViewPerformance && !summarisedViewPerformance">
+        <span *ngIf="isPromoNameLabel" class="truncateTextPname" title="{{ journeyNameInput }}">{{ journeyNameInput }}</span>
+        <input
+          *ngIf="isPromoNameEdit"
+          type="text"
+          class="form-control form-input fontSizeH5 bannerTitle"
+          name="journeyName"
+          [(ngModel)]="journeyNameInput"
+          autocomplete="off" />
+        <i *ngIf="isPromoNameLabel && !runningPromotion && activeEdit == 0" class="fal fa-pencil-alt" (click)="editPromotionName()"></i>
+        <i *ngIf="isPromoNameEdit && !runningPromotion" class="fas fa-check" (click)="savePromotionName()"></i>
+      </div>
+
+      <div
+        class="promo-name activeContentNameSection"
+        *ngIf="!isSetPage && !isTemplateLibraryMode && isShowBreadcrumbs && isPersonalizeTagMode && pTagName != null && !listViewPerformance && !graphViewPerformance && !summarisedViewPerformance">
+        <span *ngIf="isPromoNameLabel" class="truncateTextPname" title="{{ pTagName }}">{{ pTagName }}</span>
+        <input
+          *ngIf="isPromoNameEdit"
+          type="text"
+          class="form-control form-input fontSizeH5 bannerTitle"
+          name="journeyName"
+          [(ngModel)]="pTagName"
+          autocomplete="off" />
+        <i *ngIf="isPromoNameLabel && !isPublishedPersonalization && activeEdit == 0" class="fal fa-pencil-alt" (click)="editPersonalizedName()"></i>
+        <i *ngIf="isPromoNameEdit && !isPublishedPersonalization" class="fas fa-check" (click)="savePersonalizedName()"></i>
+      </div>
+      
+    </div>
+    <!-- <div class="col-md-7 text-right">
+        <img class="cal-help-icon mr-4 pointer" src="./assets/images/info-circle.svg" (click)="globalHelpOLH()"/>
+        <img class="cal-help-icon pointer userDetailspopup" src="./assets/images/usericon.svg" width="32" (click)="toggleUserDetails()"/>
+      </div> -->
+  </div>
+
+  <!-- <nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item active" aria-current="page">Home</li>
+    </ol>
+  </nav>
+  
+  <nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a href="#">Home</a></li>
+      <li class="breadcrumb-item active" aria-current="page">Library</li>
+    </ol>
+  </nav> -->
+
+  <nav class="row" aria-label="breadcrumb" *ngIf="(isDesign || isReview) && !isTemplateLibraryMode">
+    <ol class="breadcrumb mb-0">
+      <li class="breadcrumb-item">
+        <a (click)="workbenchPage()">{{ 'header.workbench' | translate }}</a>
+      </li>
+      <li class="breadcrumb-item active" aria-current="page" *ngIf="!runningPromotion">{{ 'header.design' | translate }}</li>
+      <li class="breadcrumb-item active" aria-current="page" *ngIf="runningPromotion">{{ 'header.review' | translate }}</li>
+      <li class="breadcrumb-item" *ngIf="lastSavedStep == 4">
+        <a (click)="finalizePage()">{{ 'header.finalize' | translate }}</a>
+      </li>
+      <li class="breadcrumb-item" *ngIf="lastSavedStep != 4">{{ 'header.finalize' | translate }}</li>
+    </ol>
+  </nav>
+
+  <nav class="row" aria-label="breadcrumb" *ngIf="isFinalize && !isTemplateLibraryMode">
+    <ol class="breadcrumb mb-0">
+      <li class="breadcrumb-item">
+        <a (click)="workbenchPage()">{{ 'header.workbench' | translate }}</a>
+      </li>
+      <li class="breadcrumb-item" *ngIf="!runningPromotion">
+        <a (click)="designPage()">{{ 'header.design' | translate }}</a>
+      </li>
+      <li class="breadcrumb-item" *ngIf="runningPromotion">
+        <a (click)="reviewPage()">{{ 'header.review' | translate }}</a>
+      </li>
+      <li class="breadcrumb-item active" aria-current="page">{{ 'header.finalize' | translate }}</li>
+    </ol>
+  </nav>
+
+  <!-- <nav class="row" aria-label="breadcrumb" *ngIf="isPersonalizeTagMode">
+    <ol class="breadcrumb mb-0">
+      <li class="breadcrumb-item" [ngClass]="{ active: isPersonalizedEditor }" *ngIf="!isSavedPersonalizedTags">
+        <a (click)="reloadToMethod('definePersonalization')">{{
+          'header.personalisationTags.breadcrumb.tagDefinition' | translate
+        }}</a>
+      </li>
+
+      <li class="breadcrumb-item" [ngClass]="{ active: tagSimulation }" *ngIf="isPersonalizedSimulate || isPersonalizedFinal">
+        <a (click)="reloadToMethod('loadSimulateTag')">{{ 'header.personalisationTags.breadcrumb.tagSimulation' | translate }}</a>
+      </li>
+
+      <li class="breadcrumb-item" [ngClass]="{ active: tagSimulation }" *ngIf="isPersonalizedEditor">
+        {{ 'header.personalisationTags.breadcrumb.tagSimulation' | translate }}
+      </li>
+
+      <li
+        class="breadcrumb-item"
+        [ngClass]="{ active: isPersonalizedFinal }"
+        *ngIf="isPersonalizedSimulate || isPersonalizedFinal || isPersonalizedEditor">
+        {{ 'header.personalisationTags.breadcrumb.tagFinalize' | translate }}
+      </li>
+    </ol>
+  </nav> -->
+  <!-- <div class="col login-User-Details-Popup" *ngIf="userDetailsSection">
+		<div class="row loginUser-name p-3">
+			<div class="col-3 p-0">
+				<img class="cal-help-icon" src="./assets/images/usericon.svg" width="48"/>
+			</div>
+			<div class="col p-0">
+				<label class="userName-Dts">{{userDetailsObj.userDts}}</label>
+				<label class="userSubname-Dts">{{userDetailsObj.userQualify}}</label>
+			</div>			
+		</div>
+		<div class="col-12 logoutUser-list p-0 mt-2">
+			<ul class="logoutlist p-0">
+				<li class="" style="opacity: 0.3;">
+					<img src="./assets/images/user_setting.svg" style='margin-right: 30px'/>
+					<label class="defaultPointer">Settings</label>
+				</li>
+				<li>
+					<img src="./assets/images/user_logout.svg" style='margin-right: 30px'/>
+					<label class="redColor pointer" (click)="ssoLogout()">Logout</label>
+				</li>
+			</ul>
+		</div>
+	</div> -->
+</div>

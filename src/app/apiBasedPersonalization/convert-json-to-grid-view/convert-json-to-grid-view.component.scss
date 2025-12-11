@@ -1,0 +1,68 @@
+@import '../../../custom-style.scss';
+.buttonCss {
+  @include secondaryBttn;
+}
+
+.buttonPrimaryCss {
+  @include primaryBttn;
+}
+.whitebck{
+    background-color: #fff;
+}
+.wrapperChild{
+    overflow: auto;
+    max-height: calc(100vh - 411px);
+    min-height:100%;
+    background-color: #000;
+}
+.checkInput{
+    margin-left: 10px;
+}
+.width25P{width:25%;}
+.width75P{width:70%;}
+.accordion-panel-grid{
+  background-color: #D9D9D9;
+  border-radius: 8px 8px 0px 0px;
+  font-size: 14px;
+  font-weight: 500;  
+}
+.caretIconAccrd{
+  line-height: 20px;
+  height: 10px;
+}
+.border3sides{
+  border-top:none;
+  border-left:1px solid #D9D9D9;
+  border-right:1px solid #D9D9D9;
+  border-bottom:1px solid #D9D9D9;
+}
+.emptyFieldsCss{
+  margin: 0 auto;
+    font-size: 12px;
+    font-weight: 400;
+}
+.showManualFieldAdded{
+  position: absolute;
+  top: 31px;
+  right: 0;
+  z-index: 999;
+  width: 67%;
+  height: 64px;
+  background: #fff;
+  border: 1px solid #ddd;
+  box-shadow: 0px 3px 14px 4px #afafaf;
+  line-height: 46px;
+  border-radius: 5px;
+
+  i.arrowPointUp{
+    position: absolute;
+    top:-13px;
+    right:0;
+    z-index:99;
+    color:#026fe9;
+    cursor: pointer;
+  }
+  i.circlePlusIcon{
+    color: rgb(0, 238, 0);
+  }
+}

@@ -1,0 +1,135 @@
+
+<app-tag-failsafe 
+(callBeeInstancePersonalized)="saveEmail($event[0], $event[1])"
+(callBeeInstanceWhenTabSwitch)="onTabSwitchCall()"
+(saveAsTemplate)="saveMyTemplate($event)"
+(updateBeeEditorTempObj)="reloadBeeEditor($event)" [isPublishedPersonalization]="isPublishedPersonalization" [ngCloak]="ngCloak"></app-tag-failsafe>
+<app-copy-clipboard></app-copy-clipboard>
+<div class="row p-3" id="mainContainerBEE">
+    <div class="col p-3 rounded bg-white">
+      <div class="row bg-white">
+        <div class="col-3 customTopLeftBar text-left">
+          <p>{{'beeEditorGlobalComponent.tagDesignerText' | translate}}</p>
+          <!-- <h3 *ngIf="ngCloak">
+            <p class="">{{ 'designEditor.beeEditorComponent.emaildesignerlbl' | translate }}</p>
+            <p class="font-small text-muted mt-1">{{ 'designEditor.beeEditorComponent.designYourEmaillbl' | translate }}</p>
+          </h3> -->
+        </div>
+        <div class="col customTopRightBar text-right" *ngIf="ngCloak">
+          <div class="row">
+            <div class="col-9 bluebar pl-1">
+              <div class="col-lg-9 col-md-9 col-sm-9">
+                <span>{{'beeEditorGlobalComponent.startHereText' | translate}}</span>
+              <i class="fas fa-long-arrow-alt-right fa-1x ml-2 mr-3"></i>
+              <!-- <span>{{isPublishedPersonalization}} -- {{tenentPriviledgeEditDisabled}} -- {{editAfterPublish}}</span> -->
+              <button class="btn buttonCss shadow-none m-0 buttonMaxSize" id="beefree-step-1" [disabled]="isPublishedPersonalization || tenentPriviledgeEditDisabled || editAfterPublish"  (click)="openTagParameterPopup()" ngbTooltip="{{'beeEditorGlobalComponent.tagParameterLbl' | translate}}">{{'beeEditorGlobalComponent.tagParameterLbl' | translate}}</button> 
+              <span class="separator mx-2">|</span>
+              <!-- <span>{{'beeEditorGlobalComponent.useToAddVariablesText' | translate}}</span>
+              <i class="fas fa-long-arrow-alt-right fa-1x ml-2 mr-3"></i> -->
+              <button class="btn buttonCss shadow-none m-0 buttonMaxSize" id="beefree-step-2" [disabled]="!isMergeTagDmeEnabled || isPublishedPersonalization || tenentPriviledgeEditDisabled" ngbTooltip="+ {{ 'designEditor.beeEditorComponent.globalMergeTaglbl2' | translate }}"  (click)="openGlobalMergeTag()">+ {{ 'designEditor.beeEditorComponent.globalMergeTaglbl2' | translate }}</button>
+              <!-- <button class="btn buttonCss shadow-none m-0" [disabled]="isMergeTagBttnDisabled"  (click)="openGlobalMTag()">{{ 'designEditor.beeEditorComponent.globalMergeTaglbl' | translate }} <i class="fal fa-info-circle" title="To copy global merge tag extesnsion"></i></button> -->
+              
+              </div>              
+              <div class="col justify-content-end text-right">
+                <button class="btn buttonCss shadow-none m-0 buttonMaxSize" *ngIf="activeEditObj.activeEdit == 1" (click)="discardDrafMethod(activeEditObj)" ngbTooltip="{{'beeEditorGlobalComponent.discardDraftLbl' | translate}}">{{'beeEditorGlobalComponent.discardDraftLbl' | translate}}</button>
+              </div>
+            </div>
+            <div class="col pt-2">
+              <button *ngIf="!isPublishedPersonalization" ngbTooltip="{{ 'clipboard.clipboardLbl' | translate }}"
+              tooltipClass="ngbTooltipStyle" id="beefree-step-3" class="btn buttonCss shadow-none mr-1" (click)="openClipboard()"><i class="far fa-lg fa-clipboard-list"></i></button> 
+              <div class="btn-group action-section-lists relative">
+                <button
+                  ngbTooltip="{{ 'settings' | translate }}"
+                  tooltipClass="ngbTooltipStyle"
+                  id="beefree-step-4" 
+                  class="btn buttonCss shadow-none mr-2 actionMenuBtn"
+                  type="button"
+                  data-bs-toggle="dropdown"
+                  aria-expanded="false"
+                  (click)="toggleActionPopup()">
+                  <i class="fal fa-cog fa-lg"></i>
+                </button>
+                <ul class="actionMenusPopup" *ngIf="showActionListpopup">
+                  <li class="pt-3 pb-3" (click)="openCacheControlPopup()" *ngIf="!isPublishedPersonalization">
+                    {{ 'beeEditorGlobalComponent.cacheControlLbl' | translate }}
+                  </li>
+                  <li class="dropdown-divider p-0"></li>
+                  <li class="pt-3" (click)="openImageQualitySettingPopup()" *ngIf="!isPublishedPersonalization">
+                    {{ 'designEditor.mergeTagExtensions.imageSettings' | translate }}
+                  </li>
+                </ul>
+              </div>
+              <!-- <button class="btn buttonCss shadow-none mr-1" [disabled]="isPublishedPersonalization"  (click)="openCacheControlPopup()">{{'beeEditorGlobalComponent.cacheControlLbl' | translate}}</button> -->
+              <button id="beefree-step-5" class="btn buttonCss shadow-none mr-1" (click)="saveBeforeSimulateMethod(true)" [disabled]="disableSimulateTillOpen">{{'beeEditorGlobalComponent.simulateLbl' | translate}}</button>  
+               
+              <!-- <button class="btn buttonCss shadow-none mr-1" [disabled]="isPublishedPersonalization"  (click)="openTagParameterPopup()">{{'beeEditorGlobalComponent.tagParameterLbl' | translate}}</button>        
+              <button class="btn buttonCss shadow-none" [disabled]="!isMergeTagDmeEnabled || isPublishedPersonalization"  (click)="openGlobalMergeTag()">{{ 'designEditor.beeEditorComponent.globalMergeTaglbl' | translate }}</button>         -->
+            </div>
+          </div>
+
+          
+        </div>        
+      </div>
+      <div id="beefree-sdk-container" #emailContainer></div>
+    </div>
+
+    <div class="inline-js-container">
+      <div class="mini-section" ngbTooltip="{{ 'inlineJSComponent.label.inlineJs' | translate }}">
+        <img src="./assets/images/inline-js/icon.svg" (click)="callParentEditorFunction()"/>
+      </div>
+    </div>
+  </div> 
+  
+  <ng-template #imageQaulitySettings>
+    <app-image-quality-settings></app-image-quality-settings>
+   </ng-template>
+  <ng-template #cacheControl>
+    <app-cache-control></app-cache-control>
+   </ng-template>
+   <ng-template #tagParameter>
+    <app-tag-response-paramters #tagParametersPopupEvents></app-tag-response-paramters>
+   </ng-template>
+   <ng-template #simulatePopup>
+    <app-simulate-tag-paramters #simulateViewContent></app-simulate-tag-paramters>
+   </ng-template>
+   <ng-template #pTagTemplate>
+    <div class="modal-header p-3">
+      <h5 class="col-10 p-0">{{'personalizationTagsComponent.editTagLbl' | translate}}</h5>
+      <div class="col-2 text-right">
+        <i class="far fa-circle-question mr-2"></i>
+        <i class="fa fa-times cursor-pointer iconPosition" (click)="closePTagModel()"></i>
+      </div>
+    </div>
+    <div class="modal-body p-3">  
+      <!-- copy contenet Here -->
+      <div class="row col">
+        <div class="col warningMsgEditActive m-0">
+          <div class="row m-0 p-0">
+            <div class="col pl-0">
+              <i class="far fa-exclamation-triangle warnColor mr-2"></i>
+              <label class="mediumFont">{{'personalizationTagsComponent.warningLbl' | translate}}</label>
+            </div>
+            <!-- <div class="col text-right">
+                <i class="fal fa-times pointer" ></i>
+            </div>  -->
+        </div>  
+          <div class="row col contentMsgStyle">
+            {{warningActiveContentBeforePublishMsg}}
+          </div>       
+          
+      </div>
+      </div>
+      <div class="row col mt-2 font-small">
+          <b>{{'personalizationTagsComponent.areyousureyouProceedLbl' | translate}}</b>
+      </div>
+    </div>
+    <div class="modal-footer p-3">      
+        <button type="button" class="btn buttonCss shadow-none m-0 mr-3" id="closeBtn" (click)="closePTagModel()">
+          {{'close' | translate}}
+        </button>
+        <button type="button" class="btn buttonCss buttonPrimaryCss shadow-none m-0 mr-3" id="closeBtn" (click)="confirmActiveEditPublishMethod()">
+          {{'confirm' | translate}}
+        </button>
+    </div>
+  </ng-template>
+  

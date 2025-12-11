@@ -1,0 +1,305 @@
+<div class="modal-container offersConatiner" [ngStyle]="editModeEnable ? {'background': '#F0F2F6'} : {}">
+  <div class="loaderMask" *ngIf="showLoader">
+    <div class="spinner-border text-dark" role="status">
+        <span class="visually-hidden d-none">{{'designEditor.loadinglbl' | translate}}</span>
+    </div>
+  </div>
+
+  <div class="offer-section" *ngIf="editModeEnable">
+      <div class="d-flex">
+          <div class="col-6 d-flex flex-column p-0">
+              <div class="title">{{'offerComponent.offerWidgetLbl' | translate}}</div>
+              <div class="subTitle">{{'offerComponent.chooseOffersToBeIncludedInTheEmailTemplateLbl' | translate}}</div>
+          </div>
+          <div class="col-6 d-flex justify-content-end p-0 align-items-center">
+              <div><button type="button" id="cancelBtn" (click)="onClose()">{{'cancel' | translate}}</button></div>
+              <div>
+                  <button type="button" id="doneBtn" (click)="insertData()"
+                  class="btn btn-outline-primary buttonStyle shadow-none">{{'done' | translate}}</button>
+              </div>
+          </div>
+      </div>
+      <hr class="separator"/>
+  </div>
+
+  <div *ngIf="!editModeEnable">
+    <div class="d-flex justify-content-center align-items-center">
+      <div class="col-12 titleSection">
+        <div class="row">
+          <h5 class="col-6" *ngIf="!isCouponEnable">{{'designEditor.offerDrawerComponent.Offers' | translate}}</h5>
+          <h5 class="col-6" *ngIf="isCouponEnable">{{'designEditor.offerDrawerComponent.couponslbl' | translate}}</h5>
+          <div class="col-6 text-right">
+            <!-- <i class="fa fa-times cursor-pointer iconPosition" (click)="onClose()"></i> -->
+            <div class="modal-footer d-flex justify-content-right p-0 tpBttn">
+              <button type="button" class="btn btn-outline-primary buttonStyle shadow-none tpBttnMrg-10" (mousedown)="onClose()">{{'cancel' | translate}}</button>
+              <button type="submit" class="btn btn-primary buttonStyle shadow-none tpBttnMrg-10" *ngIf="isCouponEnable"
+                (click)="insertOfferInTemplate($event);">{{'done' | translate}}</button>
+              <button type="submit" class="btn btn-primary buttonStyle shadow-none tpBttnMrg-10" *ngIf="!isCouponEnable"
+                (click)="userSelectedOffers()">{{'done' | translate}}</button>
+            </div>
+          </div>
+        </div>
+        
+      </div>
+    </div>
+    <hr class="m-0" />
+
+    <div class="d-flex contentHeader">
+      <div class="offerItem col-6 p-0" [ngClass]="{'sorted': codeSorted}">
+        <input type="checkbox" (click)="selectAllOffers($event)" [checked]="objCh.length === offerDataJson.length" class="d-none"/>
+        <div class="d-flex fadeColor"><i class="fas fa-sort-up iconStyle"></i><i class="fas fa-sort-down"></i></div>
+        <label class="ml-2 mt-2 fadeColor cursor-pointer" (click)="sortOffers('code')">{{'offerComponent.codeLbl' | translate}}</label>
+      </div>
+      <div class="offerItem col-6 p-0" [ngClass]="{'sorted': dateSorted}">
+        <div class="d-flex fadeColor"><i class="fas fa-sort-up iconStyle"></i><i class="fas fa-sort-down"></i></div>
+        <label class="ml-2 mt-2 fadeColor cursor-pointer" (click)="sortOffers('date')">{{'offerComponent.dateLbl' | translate}}</label>
+      </div>
+    </div>
+
+    <div class="searchBox col-12 pt-3">
+      <div class="label col-5 mb-1">{{'searchLbl' | translate}}</div>
+      <div class="col">
+        <i class="fa fa-search iconPosition"></i>
+        <input type="text" [(ngModel)]="searchText" class="searchInput" (keyup.enter)="searchOfferByText($event)" placeholder="{{'offerComponent.searchOffersLbl' | translate}}"/>
+        <select class="d-inline-block" [(ngModel)]="selectedParameter" >
+          <option value="offerCode">{{'offerComponent.codelowerLbl' | translate}}</option>
+          <option value="offerBarCode">{{'offerComponent.barCodeLbl' |translate}}</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="resultNotFound" *ngIf="noDataFound">
+      <span>{{'offerComponent.resultNotFoundLbl' | translate}}</span>
+      <span class="ml-2 cursor-pointer reset" (click)="getDataOffers(); selectedParameter = 'offerCode';">{{'recommendationComponent.resetLbl' | translate}}</span>
+    </div>
+
+    <!-- RR API intergration popup widget -->
+    <div class="p-3 contentHeight" (scroll)="loadMoreOffers($event)" *ngIf="!noDataFound" #offerCardSectionArea>
+      <div class="offerDetails position-relative" *ngFor="let item of offerDataJson" id="{{item.dbKey}}"
+        [ngClass]="{'selected': objCh.indexOf(item) > -1}">
+        <div class="d-flex" id="check_{{item.dbKey}}">
+          <div class="checkBoxContainer">
+            <input type="checkbox" class="inputChecked_{{item.dbKey}}" id="checkbox_{{item.dbKey}}" (click)="selectOffer($event, item.dbKey)" 
+              [checked]="objCh.indexOf(item) > -1">
+          </div>
+          <div class="imgContainer">
+            <img *ngIf="item.offerImgUrl !== null" src="{{item.offerImgUrl}}" />
+            <i class="fas fa-folder-open iconSize" *ngIf="item.offerImgUrl === null || item.offerImgUrl === ''"></i>
+          </div>
+          <div class="labelContainer">
+            <div>
+              <label>{{'offerComponent.codelowerLbl' | translate}}</label>
+              <div class="textStyle">{{item.offerCode || '--'}}</div>
+            </div>
+            <div>
+              <label>{{'offerComponent.barCodeLbl' | translate}}</label>
+              <div class="textStyle">{{item.offerBarCode || '--'}}</div>
+            </div>
+            <div>
+              <label>{{'designEditor.offerDrawerComponent.endDatelbl' | translate}}</label>
+              <div class="textStyle">{{item.offerEndDate | date : "dd/MM/y"}}</div>
+            </div>
+            <div *ngIf="item.couponPermitted">
+              <label>{{'offerComponent.availableCouponsLbl' | translate}}</label>
+              <div class="textStyle">{{item.couponsCount}}</div>
+            </div>
+            <div *ngIf="item.isOfferDistLimit === '--'">
+              <label>{{'offerComponent.offerDistlimitLbl' | translate}}</label>
+              <div class="textStyle">{{item.isOfferDistLimit}}</div>
+            </div>
+            <div *ngIf="item.isOfferDistLimit !== '--'">
+              <label>{{'offerComponent.offerDistlimitLbl' | translate}}</label>
+              <div class="textStyle">{{item.offerDistLimit || '0'}}</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    
+  </div>
+
+  <div id="offerEditSection" *ngIf="editModeEnable">
+    <div class="innerContainer col-12 d-flex p-0">
+        <div class="leftSection col-4 p-0">
+            <div class="selectedOfferPreview">
+                <div class="col-12 d-flex divStyle">
+                    <div class="col-6 p-0 text"><span>1. {{'offerComponent.selectedOffersLbl' | translate}}</span>
+                      <span class="ml-1">{{'(' + noOfSelectedOffers + ')'}}</span>
+                    </div>
+                    <div class="text-right col-6 p-0">
+                        <i class="fa fa-pencil cursor-pointer" (click)="editOfferSelection()"></i>
+                    </div>
+                </div>
+                <div class="col-12 pb-2 selectedOfferDiv">
+                    <div class="selectedItems" *ngFor="let item of objCh">
+                      <div class="offerTitle">{{item.offerCode}}</div>
+                      <div class="offerDesc">{{item.offerDesc}}</div>
+                    </div>
+                </div>
+            </div>
+            <div class="offerLayout mt-2">
+                <div class="chooseLayout col-12 d-flex divStyle">
+                    <div class="col-6 p-0 text">2. {{'recommendationComponent.chooselayoutStep2Lbl' | translate}}</div>
+                    <div class="text-right col-6 p-0"><i class="fa fa-angle-down cursor-pointer"></i></div>
+                </div>
+
+                <div class="layoutConatiner col-12 pt-4 pb-3">
+                    <div class="col-6 p-0 text-center mb-4 d-inline-block" *ngFor="let item of layoutArray"><img src="{{item.imgUrl}}"
+                        (click)="selectOfferLayout(item.templateName, item.dbKey)" [ngClass]="{'selected': layout === item.templateName}"/>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="offerPreview col-8 ml-3">
+            <div class="previewHeader mb-4 pt-2">{{'recommendationComponent.previewLbl' | translate}}</div>
+            <div *ngIf="layout === 'layout1' || layout === 'layout3'">
+                <div class="productPreview col-12 d-flex mb-4 layout1" *ngFor="let item of objCh" 
+                [ngClass]="{'reverseLayout': layout === 'layout3'}">
+                    <div class="col-12 p-0 d-flex reverseContent">
+                        <div class="col-2 p-0 mt-2"><img src="{{item.offerImgUrl}}" class="imgStyle"/></div>
+                        <div class="itemDetails col-10 p-0 mt-2 pr-5">
+                            <div class="itemTitle">{{item.offerCode}}</div>
+                            <div class="itemDescription">{{item.offerDesc}}</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="productParent col-12 p-0" *ngIf="layout === 'layout2' || layout === 'layout4'"
+                [ngClass]="{'layout4': layout === 'layout4'}">
+                <div class="productPreview col-3 mb-4 layout2" *ngFor="let item of objCh">
+                    <div class="text-center"><img src="{{item.offerImgUrl}}" class="imgStyle"/></div>
+                    <div class="itemDetails">
+                        <div class="itemTitle mt-2">{{item.offerCode}}</div>
+                        <div class="itemDescription mt-2">{{item.offerDesc}}</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+  </div>
+</div>
+
+<div #myDiv id="offerCards" class="offerCards" *ngIf="isCouponEnable">
+  <div class="container">
+    <div class="col-12 row"
+      style="display:inline-block;width: 100%;border: 1px solid #a4a4a4;border-left: none;background-color: #fff;">
+      <div class="card col-3 col-md-3 col-sm-3" *ngFor="let item of objCh index as i" id="items_"
+        style="max-width:100%;min-width:33%;text-align:center;display:inline-block;padding:1em;font-size: 1em;line-height: 20px;border-left: 1px solid #a4a4a4;">
+        <div style="width:100%;text-align:center;">
+          <img src="{{item.offerImgUrl}}" class="card-img-top" width="100" height="100" *ngIf="item.offerImgUrl !== null">
+          <span *ngIf="item.offerImgUrl === null" 
+            style="display:inline-block;height:50px;width:50px;background-color:#eee;">
+          </span>
+        </div>
+        <div class="card-body" style="padding:5px;">
+          <h5 class="card-title" style="text-align:center;font-size:1em;word-break: break-all;;font-family:inherit;color:#666;">
+            {{item.offerCode}}</h5>
+          <p class="card-text" style="text-align:center;font-size:.8em;font-weight:bold;">
+            {{'{' + item.couponCode + '}'}}
+          </p>
+        </div>
+        <input type="hidden" id="t1_p_offers_{{item.dbKey}}" value="{{item | json}}" class="t1_p_offers"/>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div #myDiv id="offerCards" class="offerCards" *ngIf="!isCouponEnable">
+  <div class="container" style="
+      background: transparent;
+      width: 100%;
+      text-align: center;">
+
+      <!-- layout 1 and layout 3 widgets -->
+      <div *ngIf="layout === 'layout1' || layout === 'layout3'" style="text-align:left; padding: 10px 10px 1px 10px;">
+          <div class="productPreview" *ngFor="let item of objCh index as i" style="
+              padding: 15px;
+              background: #FFFFFF;
+              margin-bottom: 10px;
+              border-radius: 5px;
+              overflow: auto;
+              box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 1px 3px 1px;
+              -webkit-box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 1px 3px 1px;
+              -moz-box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 1px 3px 1px;">
+
+              <div style="padding: 10px 15px 7px 0px; width: 16%"
+              [ngStyle]="(layout === 'layout3' && i%2 !== 0) ? {'float': 'right', 'padding': '10px 0 7px 15px'} : {'float': 'left'}">
+                  <img src="{{item.offerImgUrl}}" style="
+                  width: 80px;
+                  height: 80px;
+                  border-radius: 6px;"/>
+              </div>
+              <div class="itemDetails" style="width: 84%; padding-top: 15px;"
+                  [ngStyle]="(layout === 'layout3' && i%2 !== 0) ? {'float': 'right', 'text-align': 'right'} : {'float': 'left'}">
+                  <div class="itemTitle"
+                      style="
+                      color: #333;
+                      font-size: 1rem;
+                      font-weight: 700;
+                      white-space: nowrap;
+                      overflow: hidden;
+                      text-overflow: ellipsis;">
+                      {{item.offerCode}}
+                  </div>
+                  <div class="itemDescription" style="
+                      color: #333;
+                      font-weight: 400;
+                      margin-top: 10px;
+                      font-size: 12px;
+                      line-height: 22px;
+                      word-break: break-all;">
+                      {{item.offerDesc}}
+                  </div>
+              </div>
+              <div style="clear:both"></div>
+              <input type="hidden" value="{{item | json}}" class="t1_p_offers" id="t1_p_offers_{{item.dbKey}}"/>
+          </div>
+      </div>
+
+      <!-- layout 2 and layout 4 widgets -->
+      <div *ngIf="layout === 'layout2' || layout === 'layout4'" style="padding-bottom: 10px; width: 100%"
+          [ngStyle]="layout === 'layout4' ? {'margin': '0 auto'} : {}">
+          <div class="productPreview" *ngFor="let item of objCh index as i" style="
+              height:auto;
+              display: inline-block;
+              margin: 10px 5px 0 5px;
+              background: #fff;
+              padding: 15px;
+              border-radius: 5px;
+              box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 1px 3px 1px;
+              -webkit-box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 1px 3px 1px;
+              -moz-box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 1px 3px 1px;"
+              [ngStyle]="layout === 'layout4' ? {'width': '45%'} : {'width': '23%'}">
+              <div style="text-align:center;">
+                  <img src="{{item.offerImgUrl}}" style="
+                      width: 80px;
+                      height: 80px;
+                      border-radius: 6px;"/>
+              </div>
+              <div class="itemDetails">
+                  <div class="itemTitle" style="
+                      color: #333;
+                      font-size: 1rem;
+                      font-weight: 700;
+                      margin-top: 10px;
+                      white-space: nowrap;
+                      overflow: hidden;
+                      text-overflow: ellipsis;">
+                      {{item.offerCode}}
+                  </div>
+                  <div class="itemDescription" style="
+                      color: #333;
+                      font-weight: 400;
+                      margin-top: 10px;
+                      font-size: 12px;
+                      line-height: 22px;
+                      word-break: break-all;">
+                      {{item.offerDesc}}
+                  </div>
+              </div>
+              <input type="hidden" value="{{item | json}}" id="t1_p_offers_{{item.dbKey}}" class="t1_p_offers"/>
+          </div>
+      </div>
+  </div>
+</div>

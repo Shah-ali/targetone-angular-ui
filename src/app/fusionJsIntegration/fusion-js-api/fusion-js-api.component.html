@@ -1,0 +1,331 @@
+<div id="fusionJsPageCtr" class="row m-0">
+
+	<div id="pageContent" class="row col m-0 p-0">
+		<!-- <div class="" *ngIf="testConsoleExpandArea" [innerHtml]="testConsoleHtmlContent"></div> -->
+		 <div class="p-0 m-0 relative" id="leftSideAddScriptArea" [ngClass]="isLeftSideExpandedEnabled ? 'col-2':''">
+			<div class="leftSideFileExpand pointer sidebar__expand-handle" ngbTooltip="{{scriptToolTipText}} {{'fusionJSComponent.leftSideScriptExpandCollapseLbl' | translate}}" tooltipClass="ngbTooltipStyle" placement="right" [ngClass]="!isLeftSideExpandedEnabled ? 'sidebar__collapse-handle':''" (click)="expandCollaoseLeftSideAreaMethod($event);">
+          		<i class="fal mt-2 fa-sm" [ngClass]="isLeftSideExpandedEnabled ? 'fa-chevron-left':'fa-chevron-right'"></i>
+        	</div>
+			<div class="col p-0" id="fileDetalsCtr" *ngIf="isLeftSideExpandedEnabled">			
+				<div class="col text-center pt-3 pb-2">
+					<button id="addNewApi" type="button" class="btn buttonCss shadow-none m-0" (click)="openScriptPopup(addFilesScript)" title="{{'fusionJSComponent.addFileMsgLbl' | translate}}"><i class="far fa-plus mr-2"></i> {{'fusionJSComponent.addFileMsgLbl' | translate}} </button>
+				</div>
+				<div class="col mt-2 searchScriptSection">
+					<i class="far fa-search pointer"></i>
+					<input
+					  type="text"
+					  id="searchScriptJs"
+					  class="form-control shadow-none searchPTagsBtn"
+					  placeholder="{{'searchLbl' | translate}}"
+					  (keyup)="searchScriptListByName($event)"
+					  autocomplete="off" />
+				  </div>
+				<ul class="mrgtop10 fusionJSlist p-0 mt-2">
+					<li class="pointer relative m-0" [ngClass]="selectedRightArrow == listJs.jsKey ? 'active': ''" id="fileName_{{i}}" (mouseenter)="showIcon(listJs.jsKey);" (mouseleave)="hideIcon(listJs.jsKey)" *ngFor="let listJs of filterListJsScript; let i=index;" (click)="editCallMethod(listJs.jsKey,false,false);">
+						<img class="liImg" src="./assets/images/draftFileicon.svg" *ngIf="listJs.status == 1 || listJs.status == '-1' " />
+						<img class="liImg" src="./assets/images/publishFileicon.svg" *ngIf="listJs.status == 2" />
+						<img class="liImg" src="./assets/images/editPublishFileicon.svg" *ngIf="listJs.status == 3" />
+						<span class="ellipeLiJsLabel liNavSpan" title="{{listJs.scriptName}}">{{listJs.scriptName}}</span>
+							<ng-container *ngIf="activeJsTab == listJs.jsKey">
+								<span class="iconsCorner" *ngIf="showEditDeleteIcon">
+								<!-- <i class="far fa-pencil fa-md text-right mr-3" title="{{'edit' | translate}}" *ngIf="listJs.status == 1"></i> -->
+								<i class="far fa-pencil fa-md text-right mr-3" title="{{'edit' | translate}}"  placement="auto" *ngIf="listJs.status == 2" (click)="openConfirmationPopup(confirmationErrorMsg,'1',listJs.jsKey);"></i>							
+								<i class="far fa-trash fa-md text-right" title="{{'delete' | translate}}"  placement="auto" *ngIf="listJs.status == 1" (click)="openConfirmationPopup(confirmationErrorMsg,'2',listJs.jsKey);"></i>
+								</span>
+							</ng-container>
+												
+						<i class="fas fa-chevron-right iconsCornerArrow" *ngIf="selectedRightArrow == listJs.jsKey"></i>
+						
+					</li>							
+				</ul>
+	
+				<div class="col relative">
+					<ul class="row nav bordernone floatBottomArea">
+						<li class="col text-center p-0" ngbTooltip="{{'fusionJSComponent.draftScriptMsgLbl' | translate}}" tooltipClass="ngbTooltipStyle" placement="top">
+							<img class="liImg widthIconNotation mr-0" src="./assets/images/draftFileicon.svg"/>
+							<label class="iconSizeLabel">{{'fusionJSComponent.draftScriptMsgLbl' | translate}}</label>
+						</li>
+						<li class="col text-center p-0" ngbTooltip="{{'fusionJSComponent.publishedMsgLbl' | translate}}" tooltipClass="ngbTooltipStyle" placement="top">						
+							<img class="liImg widthIconNotation mr-0" src="./assets/images/publishFileicon.svg"/>					
+							<label class="iconSizeLabel">{{'fusionJSComponent.publishedMsgLbl' | translate}}</label>
+						</li>					
+						<li class="col text-center p-0" ngbTooltip="{{'fusionJSComponent.editPublishedMsgLbl' | translate}}" tooltipClass="ngbTooltipStyle" placement="top">
+							<img class="liImg widthIconNotation mr-0" src="./assets/images/editPublishFileicon.svg"/>
+							<label class="iconSizeLabel">{{'fusionJSComponent.editPublishedMsgLbl' | translate}}</label>
+						</li>
+						
+					</ul>
+					
+				</div>
+			</div>
+		 </div>
+		
+		<div id="fileContentCtr" class="col">
+			<div id="editorHeader" class="col p-0" *ngIf="!testConsoleExpandArea">
+				<ul class="nav tabsLiStyle tabsNoSpace mrgtop10 padd5" id="fileName">
+					<li class="tab active" id="">
+						<span class="" title="{{scriptName}}">{{scriptName}}</span>
+					</li>							
+				</ul>
+				<div class="col text-right mediumFontSmall redColor pt-2" *ngIf="showUnpublishedMsgEnabled">
+					{{'fusionJSComponent.youHaveUnpublishedChangesMsgLbl' | translate}}
+					</div>
+				<div class="pr-3">
+					<button id="saveJs" type="button" class="btn buttonCss shadow-none m-0 mr-2" [disabled]="(jsFileStatus != 2 && !discardChangesEnabled) || (jsFileStatus == 2 && !discardChangesEnabled)" (click)="discardChangesToPublishScriptMethod();"> {{'fusionJSComponent.discardChangesLbl' | translate}}</button>
+					<button id="saveJs" type="button" class="btn buttonCss shadow-none m-0 mr-2" [disabled]="jsFileStatus == 2 && !discardChangesEnabled" (click)="finalSaveNPublicJsFilehMethod(1,false);"> {{'fusionJSComponent.saveJSfileLbl' | translate}} </button>
+					<button id="publishJs" type="button" class="btn buttonCss shadow-none m-0" [disabled]="jsFileStatus == 2 && !discardChangesEnabled" (click)="finalSaveNPublicJsFilehMethod(2,true);"> {{'fusionJSComponent.publishJSfileLbl' | translate}} </button>
+				</div>
+			
+			</div>
+		  	<div class="row m-0 rightSideDivAreaOfCodeMirror" id="codeCtr" *ngIf="!testConsoleExpandArea" #divAreaOfCodeMirror>				
+                <div class="fusionColorbg relative" [ngClass]="!isDescExpandedEnabled ? 'expandWidth':'collapseWidth'">
+					<!-- <img class="liImg mr-1 justify-content-end viewlogConsole d-none" src="./assets/images/consoleLogIconFJ.svg" [ngClass]="!isConsoleviewEnabled ? 'disabledImg':''" (click)="openConsoleLogPopup(viewConsoleLogError);"/> -->
+                        <div class="col JsAPIContentArea m-0 p-0 mediumFontPlus" [ngClass]="[!isDescExpandedEnabled ? 'expandCodeMirror':'collapseCodeMirror', jsFileStatus == 2 ? 'disabledCodeMirror':'']" #codemirrorElementReference>
+                            <ngx-codemirror #codemirror 							
+                            [options]="codeMirrorOptions"
+                            [(ngModel)]="jsScriptWrittenContent"
+                            (ngModelChange)="setEditorContent($event)" id="">                    
+                            </ngx-codemirror>
+                        </div>
+                        
+						<div class="rightDescAreaExpand sidebar__expand-handle pointer mt-0 mb-0" ngbTooltip="{{descriptionToolTipText}} {{'fusionJSComponent.rightSideDescExpandCollapseLbl' | translate}}" tooltipClass="ngbTooltipStyle" placement="left" [ngClass]="[!isDescExpandedEnabled ? 'sidebar__collapse-handle':'', halfTestConsoleExpandConsole ? 'd-none' :'']" (click)="expandCollapseDescMethod($event);">
+							<i class="fal  mt-2 fa-sm" [ngClass]="isDescExpandedEnabled ? 'fa-chevron-right':'fa-chevron-left'"></i>
+					  </div>						
+                </div>
+                <!-- <div class="row col justify-content-end ml-1" id="descriptionAreaPanel"> -->
+					<!-- <div class="descexpArea collapsed-desc mt-0 mb-0 relative" (click)="expandCollapseDescMethod($event);">
+						<i class="fas" [ngClass]="isDescExpandedEnabled ? 'fa-caret-right':'fa-caret-left'"></i>
+					</div>  -->
+				
+					<div class="col p-0 fusionColorbg relative ml-2" *ngIf="isDescExpandedEnabled">
+						<div class="row col p-0" id="detailsBlockCtr" >
+							<div class="col" id="detailsBlcok">
+							  <label class="col mediumFontPlus p-0">
+								  {{'descriptionLbl' | translate}}
+							  </label>
+							  <div class="col p-0">
+								<textArea class="col form-control mediumFont descTextAreaSize" type="text" [disabled]="jsFileStatus == 2" (blur)="getUpdatedScriptDescMethod($event);">    
+									{{scriptDesc}}                     
+								</textArea>
+							  </div>                       
+							  
+						  </div>                      
+						</div>
+						<div class="row col p-0 justify-content-end positionSaveBtn d-none">
+							<button id="saveDetails" type="button" class="btn buttonCss shadow-none m-0" (click)="updateDescMethod();" [disabled]="jsFileStatus == 2">
+								<img src="./assets/images/saveIconDesc.svg" class="saveIconDesc mr-1"> {{'saveLbl' | translate}} </button>
+						</div>
+					</div>                 
+                    
+                <!-- </div>              -->
+		  		
+
+		  	</div>		  	
+		  	<div class="col m-0 p-0 relative" id="consoleCtr" [ngClass]="halfTestConsoleExpandConsole ? 'halfTestConsoleSection' : ''" [ngStyle]="{'top.px':halfTestConsoleExpandConsole ? halfHeightForTestConsole : null}">
+				<div class="testConsoleExpandIcon sidebar__expand-handle pointer mt-0 mb-0" ngbTooltip="{{testConsoleToolTipText}} {{'fusionJSComponent.testConsoleExpandCollapseLbl' | translate}}" tooltipClass="ngbTooltipStyle" placement="top"  [ngClass]="!testConsoleExpandArea ? 'sidebar__collapse-handle':''" (click)="testConsoleExpandCollapseMethod($event,false);">
+					<i class="fal mt-2 fa-sm" [ngClass]="testConsoleExpandArea ? 'fa-chevron-down':'fa-chevron-up'"></i>
+			  </div>
+			  <img class="liImg extendHalfAreaIcon mr-0" [ngClass]="halfTestConsoleExpandConsole ? 'expandHalf' : 'collapseHalf'" (click)="setHalfHeightForTestConsoleMethod($event);" src="./assets/images/expandCollapseIconFusionJs.svg" ngbTooltip="{{testConsoleToolTipText}} {{'fusionJSComponent.testConsoleHalfExpandCollapseLbl' | translate}}" tooltipClass="ngbTooltipStyle" placement="top"/>
+			  <div class="row col m-0 pl-0" id="testConsoleAndTsCodeBtn">
+				<div class="col-2 p-0 whiteBgColor">
+					<label class="row col mb-2 m-0 mediumFontPlus p-0" [ngClass]="!testConsoleExpandArea ? 'mt-4' : 'mt-4'">{{'fusionJSComponent.testConsoleMsgLbl' | translate}}</label>
+				</div>
+				<div  class="row col justify-content-end m-0 p-0 pt-3" id="testCodeCtr">
+					<button id="testCode" type="button" class=" btn buttonCss shadow-none m-0 mb-2" (click)="testConsoleAPICallMethod();" ngbTooltip="{{'fusionJSComponent.testYourScriptcodeGivesyoutheResultObj' | translate}}" tooltipClass="ngbTooltipStyle" placement="left"> {{'fusionJSComponent.testCodeMsgLbl' | translate}} </button>
+				</div>
+			  </div>  	  
+
+			  <div class="col p-0 m-0" id="testConsoleArea" [ngClass]="testConsoleExpandArea ? 'heightCalc':''" [ngStyle]="{'height.px':halfTestConsoleExpandConsole ? halfHeightForTestConsole : '85'}">
+								
+				<div class="outterWrapperTestConsole col p-0 relative" #getEachInputData>				
+					<ng-container *ngFor="let eachRow of functionNameNargumentsCollectData; let i=index">
+					<div class="row col m-0 consolePanelEach_{{eachRow.functionName}}" *ngIf="(eachRow.functionName !== undefined && eachRow.argumentList !== undefined)">				
+						<div class="col p-0 mb-3">
+							<ng-container *ngFor="let prevList of collectPreviousQuery; let i=index;">
+								<h5 class="xSmallLable mt-4">{{prevList.methodName}}</h5>
+								<hr class="hrline m-1"/>
+								<ng-container>
+									<div class="row col mt-2 list_{{i}} relative">
+										<div class="col p-0 m-0">
+											<h5 class="mediumFont p-2 m-0 outputBorderCss row" [ngClass]="prevList.responseStatus ? 'succesColr' : 'errorColr'">
+												<i class="far mr-1 arrowWidth" [ngClass]="prevList.open ? 'fa-chevron-down':'fa-chevron-up'" (click)="toggleConsoleAreaMethod($event,prevList);">							
+												</i>
+												<ul class="nav tabsLiStyle tabsNoSpace mrgtop10 padd5 col" id="fileName">
+													<li class="tab" id="" [ngClass]="prevList.activetab === 1 ? 'active' : ''" (click)="showActiveTabResponseOutputNConsoleMethod(1,i);">
+														<span class="xSmallLable" title="">{{'fusionJSComponent.outputLbl' | translate}}</span>
+													</li>							
+													<li class="tab" id="" [ngClass]="prevList.activetab === 2 ? 'active' : ''" (click)="showActiveTabResponseOutputNConsoleMethod(2,i);">
+														<span class="xSmallLable" title="">{{'fusionJSComponent.consolelogLbl' | translate}}</span>
+													</li>
+													<li class="tab" id="" [ngClass]="prevList.activetab === 3  ? 'active' : ''" (click)="showActiveTabResponseOutputNConsoleMethod(3,i);">
+														<span class="xSmallLable" title="">{{'fusionJSComponent.consoleInfoLbl' | translate}}</span>
+													</li>
+												</ul>
+												<i
+												class="far fa-copy align-text-top viewlogConsole pointer"
+												#t1="ngbTooltip"
+												triggers="manual"
+												title="{{'fusionJSComponent.copyOutputorConsolelogResultdataLbl' | translate}}"
+												ngbTooltip="{{ 'copiedLbl' | translate }}"
+												
+												(click)="copyToClipboardMethod(prevList,t1);"></i>
+											</h5>
+											<div class="col testConsoleOutputarea" *ngIf="prevList.open" [ngClass]="[prevList.responseStatus ? 'successMsgTestConsole':'errorMsgTestConsole', prevList.extendActiveArea ? 'expandActive':'expandInActive' ]">
+												<div class="col p-0" *ngIf="prevList.activetab === 1">
+													<pre>{{prevList.response}}</pre>
+												</div>
+												<div class="col" *ngIf="prevList.activetab === 2">
+													<div class="col p-3 mediumFont wrapper">
+														<div class="col p-0 m-0" *ngFor="let log of prevList.consoleLogError; let i=index;">
+															<div class="mediumFont consolelogPrint">
+																{{i}}. {{log}}
+															</div>
+															<hr class="hrline">
+														</div>
+													</div>	
+												</div>
+												<div class="col" *ngIf="prevList.activetab === 3">
+													<div class="col p-3 mediumFont wrapper">
+														<div class="col p-0 m-0" *ngFor="let loginfo of prevList.consoleInfoError; let j=index;">
+															<div class="mediumFont consolelogPrint">
+																{{j}}. {{loginfo}}
+															</div>
+															<hr class="hrline">
+														</div>
+													</div>	
+												</div>
+												
+											</div>
+										</div>
+										
+										<img class="liImg extendAreaIcon mr-0" ngbTooltip="{{'fusionJSComponent.outputConsoleLogExpandTooltipLbl' | translate}}" tooltipClass="ngbTooltipStyle" placement="top" *ngIf="testConsoleExpandArea" (click)="setOutPutHeightMethod($event,i);" src="./assets/images/expandCollapseIconFusionJs.svg"/>
+									</div>
+								</ng-container>
+								
+							<hr class="hrline"/>
+							</ng-container>
+							<div class="col mt-3 p-0">
+								<div class="col argrumentsSection p-0">
+									<div class="row col">
+										<label class="funcationNameLabel mediumFont linehgt mr-2">{{eachRow.functionName}} ( </label> 
+										<ng-container class="row m-0" *ngFor="let inpt of eachRow.argumentList; let j=index;"> 
+											<input type="text" class="col-1 form-control mr-2 mediumFont borderradiusNone functionName_{{eachRow.functionName}} " name="{{eachRow.functionName}}_{{j}}" placeholder="{{inpt}}">
+										</ng-container>
+										<label class="functionEnd mediumFont linehgt" > ) </label>
+										<img src="./assets/images/executeQueryFJ.svg" class="ml-3 pointer testcodeExecuteIcon" (click)="executeQueryJsMethod(eachRow.functionName)" ngbTooltip="{{'fusionJSComponent.executeTestConsoleResultLbl' | translate}}" tooltipClass="ngbTooltipStyle" placement="right">
+									</div>									
+								</div>
+								<hr class="hrline m-0"/>
+							</div>
+							
+						</div>
+					</div>				  	
+					</ng-container>
+					
+				</div>
+				
+			  </div>
+			  <button id="cancelTestConsole" type="button" class=" btn buttonCss shadow-none m-0 mb-2" *ngIf="testConsoleExpandArea" (click)="testConsoleExpandCollapseMethod($event,false)"> {{'close' | translate}} </button>
+		  	</div>
+
+		</div>
+	</div>
+
+</div>
+    <ng-template #addFilesScript>
+	<div class="col p-0" id="addNewScript_popup">			
+		 <div class="row col modal-header m-0">
+		 	<h5 class="modal-title col" >{{'fusionJSComponent.addNewPageLbl' | translate}}</h5>	
+			<div class="col p-0 m-0 text-right">
+					<i class="fal fa-question-circle mr-3 d-none"></i>
+					<i aria-hidden="true" class="fal fa-times pointer" data-dismiss="modal" (click)="closeModel();"></i>
+			</div>		 
+							
+      	 </div>	
+      	 <div class="modal-body" style="height:395px;">	
+            <div class="row col infoMsgCopyPtag m-0">
+                <i class="far fa-info-circle fa-lg infoColor mr-2 mt-2"></i>
+                 <label class="col mediumFontSmall p-0">{{'fusionJSComponent.detailstoAddScriptNameMsgLbl' | translate}}</label>
+              </div>      	 	
+            
+      	 	<div class="col p-0 mt-3">
+      	 		<label class="control-label">{{'fusionJSComponent.scriptNameLbl' | translate}}</label>
+      	 	</div> 
+            <div class="row col m-0 p-0">
+                <input type="text"  name="nameScript" id="scriptNameELemt" 
+				required [(ngModel)]="popupScriptName" value=""  class="col96Perwid form-control form-control-sm mediumFont" placeholder="{{'fusionJSComponent.scriptNameLbl' | translate}}">
+                <label class="col30px">{{'fusionJSComponent.jsExtensionLbl' | translate}}</label>
+            </div>			
+      	 		
+      	 	<div class="col p-0 mt-3">
+      	 		<label class="control-label">{{'descriptionLbl' | translate}}</label>
+      	 	</div> 
+      	 	<div class="col-12 p-0">
+      	 		<textarea type="text"  name="scriptDesc" id="scriptDescELemt" 
+				   required [(ngModel)]="popupScriptDesc" value=""  class="form-control form-control-sm mediumFont" placeholder="{{'descriptionLbl' | translate}}"></textarea>
+      	 	</div>      	 	
+			   
+			
+		 </div>	
+		 <div class="clearfix"></div>
+		 <div class="modal-footer">		 			
+					<button ng-if="pageState == 0" id="AddPages" name="upload" type="button" aria-hidden="true" class="btn buttonCss shadow-none m-0"  (click)="closeModel()">{{'cancel' | translate}}</button>
+					<button ng-if="pageState == 1" id="AddPages" name="upload" type="button" aria-hidden="true" class="btn btn-primary btn-sm"  (click)="saveScriptNameMethod();">{{'saveLbl' | translate}}</button>
+		</div>
+		
+	</div>
+    </ng-template>
+	<ng-template #confirmationErrorMsg>
+		<div class="col p-0" id="addNewScript_popup" *ngIf="confirmationPopupFlag">			
+			 <div class="modal-header">
+				 <h5 class="modal-title">{{confirmationTitle}}</h5>
+				 <div class="col p-0 m-0 text-right">
+					<i class="fal fa-question-circle mr-3 d-none"></i>
+					<i aria-hidden="true" class="fal fa-times pointer" data-dismiss="modal" (click)="closeModel();"></i>
+				</div>
+			   </div>	
+			   <div class="modal-body" style="height:200px;">					
+				<div class="col warningMsgEditActive">
+					<i class="far fa-exclamation-triangle fa-lg warnColor mr-2"></i>
+					<label class="mediumFont">{{'personalizationTagsComponent.warningLbl' | translate}}</label>
+					 <p class="xSmallLable ml-4" [innerHtml]="confirmationContentText"></p>
+				  </div>      	 	
+			 </div>	
+			 <div class="clearfix"></div>
+			 <div class="modal-footer">		 			
+				<button name="cancel" type="button" aria-hidden="true" class="btn buttonCss shadow-none m-0"  (click)="confirmationResultMethod(false,jsKey,'cancel')">{{'cancel' | translate}}</button>
+				<button name="confirm" type="button" aria-hidden="true" class="btn btn-primary btn-sm" *ngIf="!isDeleteCallEnabled && !discardChangesEnabled"  (click)="confirmationResultMethod(true,jsKey,'edit');">{{'confirm' | translate}}</button>
+				<button name="confirm" type="button" aria-hidden="true" class="btn btn-primary btn-sm" *ngIf="isDeleteCallEnabled && !discardChangesEnabled"  (click)="confirmationResultMethod(true,jsKey,'delete');">{{'confirm' | translate}}</button>
+				<button name="confirm" type="button" aria-hidden="true" class="btn btn-primary btn-sm" *ngIf="discardChangesEnabled" (click)="confirmationResultMethod(true,jsKey,'discard');">{{'confirm' | translate}}</button>
+			</div>
+			
+		</div>
+		</ng-template>
+		<ng-template #viewConsoleLogError>
+			<div class="col p-0" id="addNewScript_popup">			
+				   <div class="row col modal-header m-0">
+					<h5 class="modal-title col">{{'fusionJSComponent.consolelogLbl' | translate}}</h5>	
+				   <div class="col p-0 m-0 text-right">
+						   <i class="fal fa-question-circle mr-3"></i>
+						   <i aria-hidden="true" class="fal fa-times pointer" data-dismiss="modal" (click)="closeModel();"></i>
+				   </div>		 
+								   
+				  </div>	
+				   <div class="modal-body" style="height:435px;">	
+						<div class="col p-3 mediumFont consolelogCss wrapper">
+							<div class="col p-0 m-0" *ngFor="let log of consoleLogErrorViewContent; let i=index;">
+								<div class="mediumFont consolelogPrint">
+									{{i}}. {{log}}
+								</div>
+								<hr class="hrline">
+							</div>
+						</div>	  
+					
+				 </div>	
+				 <div class="clearfix"></div>
+				 <div class="modal-footer">		 			
+							<button ng-if="pageState == 0" id="AddPages" name="upload" type="button" aria-hidden="true" class="btn buttonCss shadow-none m-0"  (click)="closeModel()">{{'cancel' | translate}}</button>
+				</div>
+				
+			</div>
+			</ng-template>

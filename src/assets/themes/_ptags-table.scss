@@ -1,0 +1,48 @@
+.ptags-wrapper {
+    .custom-table {
+        .table {
+            thead {
+                th {
+                    background-color: $light-gray;
+                    border-bottom: 1px;
+                    font-size: $size-12;
+                    color: $gray20;
+                    font-weight: $medium;
+                    padding: 0.7rem;
+                    border-radius: 0;
+                    &:first-child {
+                        padding-left: 2rem;
+                    } 
+                    &:last-child{
+                        padding-left: 3rem;
+                    }
+                }
+            }
+
+            tbody {
+                td {
+                    // &:last-child {
+                    //     width: 200px;
+                    // }  
+                    &:first-child {
+                        padding-left: 2rem;
+                    }   
+                    &:last-child{
+                        padding-left: 2.5rem;
+                    }  
+                    font-weight: $regular;
+                    padding: 0.7rem;
+                    overflow: unset;
+                    cursor: default;
+                }
+                max-height: 500px;
+                overflow-x: hidden;
+                overflow-y: auto;
+            }            
+            border: 1px solid #dee2e6;
+        }
+        overflow-x: hidden;
+        overflow-y: auto;
+        max-height: calc(100vh - 288px);
+    }
+}

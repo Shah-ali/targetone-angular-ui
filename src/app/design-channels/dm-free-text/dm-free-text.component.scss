@@ -1,0 +1,64 @@
+.dmLayoutContainer {
+    background: #F0F2F7;
+    padding: 15px;
+    height: calc(100vh - 120px);
+    overflow: auto;
+
+}
+.innerContainer{
+    .marginTop30 {margin-top: 30px;}
+    .verticalTopText{vertical-align: text-top;}
+    .backgroundWhite{background-color: #FFF;}
+    .verticalMiddle{vertical-align: middle;}
+    .backgCol{background-color:#FBFBFB;}
+    .mr-15{margin-right: -15px;}
+    .color333{color: #333333;}
+    .tempLayoutSection{
+        background-color: #FFF;
+        height: calc(100vh - 90px);
+        overflow-x: hidden;
+        overflow-y: auto;
+        .columnHeaderText{
+            height: 70px;
+            font-size: 11px;
+        }
+        .radiusStyle{
+            border-radius: 8px;
+            border-color: #026FE9;    
+        }
+        .attributeDiv {
+            border: 1px solid #026FE9;
+            border-radius: 8px;
+            height: 70px;
+            background: #fff;
+            .attribute {
+                margin-top: 7px;
+                outline: none;
+                width: 96%;
+                left: 10px;
+                position: absolute;
+                font-size: 13px;
+                height: 61px;
+                overflow: scroll;
+                border: 0;
+            }
+           
+            .iconContainer {
+                position: absolute;
+                right: 0;
+            }
+            .fa-grin, .fa-plus {
+                padding: 27px 15px;
+                border-left: 1px solid #ccc;
+                cursor: pointer;
+            }
+            .disabledPlusBtn{
+                pointer-events: none;
+                cursor: not-allowed;
+                color: rgb(179, 179, 179);
+            }
+            
+        }
+        
+    }
+}

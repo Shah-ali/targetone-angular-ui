@@ -1,0 +1,422 @@
+.mobilePushContainer {
+    background: #F0F2F7;
+    padding: 15px;
+    height: calc(100vh - 120px);
+    overflow: auto;
+    .buttonStyle {
+        outline: none;
+        height: 40px;
+        border: 1px solid #026FE9;
+        border-radius: 7px;
+        font-size: 14px;
+        color: #026FE9;
+        background: #fff;
+        cursor: pointer;
+        padding: 0 16px;
+    }
+    .innerContainer {
+        .notificationInputs {
+            background: #fff;
+            border: 1px solid #E6E6E6;
+            border-radius: 10px;
+            width: 68%;
+            padding: 15px;
+            .titleStyle {
+                font-weight: 500;
+                font-size: 14px;
+                color: #666;
+            }
+            .androidIosTabs {
+                .androidTab, .iosTab {
+                    padding: 0 10px 5px 10px;
+                    border-bottom: 2px solid #ccc;
+                    font-size: 14px;
+                    font-weight: 500;
+                    &.active {
+                        color: #0091FF;
+                        border-bottom: 2px solid #0091FF;
+                    }
+                }
+            }
+            .androidInputSection, .iosInputSection {
+                .textNotificationSection {
+                    background: #F8FCFF;
+                    border-radius: 10px;
+                    padding: 25px;
+                    .title {
+                        font-size: 14px;
+                    }
+                    .innerSection {
+                        .mobileTitle, .mobileMessage {
+                            .emoji-mart, .emoji-mart-mobilePush {
+                                position: absolute;
+                                z-index: 99;
+                                top: 40px;
+                                right: 0;
+                            }
+                            .emojiPosition {
+                                top: 55px;
+                            }
+                            .titleDiv, .msgDiv {
+                                border: 1px solid #CCCCCC;
+                                border-radius: 8px;
+                                height: 40px;
+                                background: #fff;
+                                .mobileTitleStyle, .mobileMsgStyle {
+                                    margin-top: 7px;
+                                    outline: none;
+                                    width: 86%;
+                                    left: 10px;
+                                    position: absolute;
+                                    font-size: 13px;
+                                    height: 30px;
+                                    overflow: scroll;
+                                    border: 0;
+                                }
+                                .mobileMsgStyle {
+                                    height: 71px;
+                                }
+                                .iconContainer {
+                                    position: absolute;
+                                    right: 0;
+                                }
+                                .fa-grin, .fa-plus {
+                                    padding: 11px 15px;
+                                    border-left: 1px solid #ccc;
+                                    cursor: pointer;
+                                }
+                                .disabledPlusBtn{
+                                    pointer-events: none;
+                                    cursor: not-allowed;
+                                    color: rgb(179, 179, 179);
+                                }
+                            }
+                            .msgDiv {
+                                height: 80px;
+                                .fa-grin, .fa-plus {
+                                    padding: 31px 15px;
+                                }
+                            }
+                        }
+                    }
+                }
+                .richNotificationSection {
+                    background: #FBFBFB;
+                    border-radius: 10px;
+                    padding: 25px;
+                    .title {
+                        font-size: 14px;
+                    }
+                    .header {
+                        font-size: 14px;
+                        font-weight: 500;
+                        color: #333;
+                        margin-left: 10px;
+                    }
+                    .textInfo {
+                        font-size: 12px;
+                        color: #000;
+                        margin-top: 5px;
+                    }
+                    .toggleButton {
+                        .switch {
+                            position: relative;
+                            display: inline-block;
+                            width: 36px;
+                            height: 20px;
+                            input {
+                                opacity: 0;
+                                width: 0;
+                                height: 0;
+                            }
+                            input:checked+.slider {
+                                background-color: #026FE9;
+                            }
+                            input:focus+.slider {
+                                box-shadow: 0 0 1px #2196F3;
+                            }
+                            input:checked+.slider:before {
+                                -webkit-transform: translateX(14px);
+                                -ms-transform: translateX(14px);
+                                transform: translateX(14px);
+                            }
+                        }
+                        .slider {
+                            position: absolute;
+                            cursor: pointer;
+                            top: 0;
+                            left: 0;
+                            right: 0;
+                            bottom: 0;
+                            background-color: #A6A6A6;
+                            -webkit-transition: .4s;
+                            transition: .4s;
+                            &:before {
+                                position: absolute;
+                                content: "";
+                                height: 14px;
+                                width: 14px;
+                                left: 4px;
+                                bottom: 3px;
+                                background-color: white;
+                                -webkit-transition: .4s;
+                                transition: .4s;
+                            }
+                        }
+                        .slider.round {
+                            border-radius: 34px;
+                        }
+                        .slider.round:before {
+                            border-radius: 50%;
+                        }                        
+                    }
+                    .singleMedia {
+                        input[type="text"], input[type="number"] {
+                            background: #FFFFFF;
+                            border: 1px solid #CCCCCC;
+                            border-radius: 8px;
+                            height: 40px;
+                            width: 100%;
+                            padding-left: 10px;
+                            font-weight: 100;
+                            outline: none;
+                        }
+                        input[type="number"] {
+                            width: 20%;
+                        }
+                    }
+                    .imageCarousel {
+                        .landscapePortrait {
+                            .landscapeTab, .portraitTab {
+                                padding: 0 10px 5px 10px;
+                                border-bottom: 2px solid #ccc;
+                                font-size: 14px;
+                                font-weight: 500;
+                                &.active {
+                                    color: #0091FF;
+                                    border-bottom: 2px solid #0091FF;
+                                }
+                            }
+                        }
+                        .sliderSection {
+                            .sliderConatiner {
+                                height: 45px;
+                                background: #F2F2F2;
+                                border-radius: 10px;
+                                padding: 4px;
+                                width: auto;
+                                .slideStyle {
+                                    color: #666;
+                                    font-size: 14px;
+                                    padding: 8px 13px;
+                                    &.active {
+                                        background: #FFFFFF;
+                                        box-shadow: 0px 0px 1px rgba(40, 41, 61, 0.04), 0px 2px 4px rgba(96, 97, 112, 0.16);
+                                        border-radius: 10px;
+                                        color: #026FE9;
+                                        .iconStyle {
+                                            position: absolute;
+                                            top: -5px;
+                                            right: -5px;
+                                            font-size: 16px;
+                                            cursor: pointer;
+                                        }
+                                    }
+                                }
+                            }
+                            .addSlideBtn {
+                                color: #026FE9;
+                                font-size: 14px;
+                            }
+                            .sliderDetails {
+                                .slides {
+                                    display: none;
+                                    &.show {
+                                        display: block;
+                                    }
+                                }
+                                input[type="text"], input[type="number"] {
+                                    background: #FFFFFF;
+                                    border: 1px solid #CCCCCC;
+                                    border-radius: 8px;
+                                    height: 40px;
+                                    width: 100%;
+                                    padding-left: 10px;
+                                    font-weight: 100;
+                                    outline: none;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            .keyValuePair {
+                background: #FBFBFB;
+                border-radius: 10px;
+                padding: 25px;
+                .title {
+                    font-size: 14px;
+                }
+                input[type="text"] {
+                    outline: none;
+                    border: 1px solid #CCCCCC;
+                    border-radius: 8px;
+                    height: 40px;
+                    font-weight: 400;
+                    width: 94%;
+                    padding-left: 10px;
+                }
+                .btnPosition {
+                    position: relative;
+                    top: 30px;
+                    &.iconColor {
+                        border-color: #F4312A;
+                        color: #F4312A;
+                    }
+                }
+            }
+        }
+
+        .notificationPreview {
+            background: #fff;
+            width: 31%;
+            padding: 25px 0;
+            border-radius: 10px;
+            .previewHeading {
+                font-size: 14px;
+                font-weight: 600;
+            }
+            input[type="radio"] {
+                outline: none;
+            }
+            .androidPreview, .iosPreview {
+                .smartphone {
+                    position: relative;
+                    width: 270px;
+                    height: 480px;
+                    margin: auto;
+                    border: 16px #C1C1C1 solid;
+                    border-top-width: 60px;
+                    border-bottom-width: 60px;
+                    border-radius: 36px;
+                    .content {
+                        margin: 7px;
+                        border-radius: 8px;
+                        background: #f4f2ed;
+                        padding: 7px 7px 4px 7px;
+                        .androidPreviewTitle {
+                            font-size: 13px;
+                            color: #000;
+                            font-weight: 500;
+                            white-space: nowrap;
+                            overflow: hidden;
+                            text-overflow: ellipsis;
+                        }
+                        .androidPreviewMsg {
+                            font-size: 13px;
+                            color: #666;
+                            word-break: break-all;
+                        }
+                        .imageDiv, .mediaDiv {
+                            background: #FBFBFB;
+                            height: 120px;
+                            width: auto;
+                            img {
+                                width: 210px;
+                            }
+                        }
+                        .iconDiv {
+                            background: #FBFBFB;
+                            height: 34px;
+                            width: 34px;
+                            position: relative;
+                            top: 3px;
+                            img {
+                                width: 34px;
+                                height: 34px;
+                            }
+                        }
+                        .imageCarousel {
+                            .slideContent, .sliderImg {
+                                display: none;
+                                &.active {
+                                    display: block;
+                                }
+                                .text {
+                                    font-size: 12px;
+                                    font-weight: 500;
+                                }
+                            }
+                            .sliderImg {
+                                text-align: center;
+                                img {
+                                    width: 210px;
+                                    height: 105px;
+                                    &.portMode {
+                                        height: 105px;
+                                        width: 55px;
+                                    }
+                                }
+                            }
+                            .nextNPrev {
+                                width: 100%;
+                                position: absolute;
+                                top: 45px;
+                                .iconHolder {
+                                    background: rgba(0, 0, 0, 0.7);
+                                    height: 25px;
+                                    width: 25px;
+                                    border-radius: 50%;
+                                    position: relative;
+                                    i {
+                                        position: absolute;
+                                        color: #aaa;
+                                        font-size: 20px;
+                                        top: 3px;
+                                        &.fa-chevron-left {
+                                            left: 4px;
+                                        }
+                                        &.fa-chevron-right {
+                                            right: 4px;
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+                .smartphone:before {
+                    content: '';
+                    display: block;
+                    width: 60px;
+                    height: 5px;
+                    position: absolute;
+                    top: -30px;
+                    left: 50%;
+                    transform: translate(-50%, -50%);
+                    background: #a1a1a1;
+                    border-radius: 10px;
+                }
+                .expNCollapse {
+                    font-size: 14px;
+                    color: #333;
+                    font-weight: 500;
+                }
+            }
+            .iosPreview {
+                .smartphone:after {
+                    content: '';
+                    display: block;
+                    width: 35px;
+                    height: 35px;
+                    position: absolute;
+                    left: 50%;
+                    bottom: -65px;
+                    transform: translate(-50%, -50%);
+                    background: #a1a1a1;
+                    border-radius: 50%;
+                }
+            }
+        }
+    }
+}

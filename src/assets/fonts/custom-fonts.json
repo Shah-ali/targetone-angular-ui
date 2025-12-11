@@ -1,0 +1,162 @@
+[
+  {
+    "name": "TT Norms Normal",
+    "fontFamily": "TT Norms normal",
+    "url": "{baseUrl}/fonts/tt_norms.css?&display=swap"
+  },
+  {
+    "name": "TT Norms Bold",
+    "fontFamily": "TT Norms bold",
+    "url": "{baseUrl}/fonts/tt_norms.css?&display=swap"
+  },
+  {
+    "name": "GelicaLight",
+    "fontFamily": "GelicaLight",
+    "url": "{baseUrl}/fonts/tt_norms.css?&display=swap"
+  },
+  {
+    "name": "GelicaBlack",
+    "fontFamily": "GelicaBlack",
+    "url": "{baseUrl}/fonts/tt_norms.css?&display=swap"
+  },
+  {
+    "name": "CircularXXWeb-Bold",
+    "fontFamily": "CircularXXWeb-Bold",
+    "url": "{baseUrl}/fonts/tt_norms.css?&display=swap"
+  },
+  {
+    "name": "CircularXXWeb-Medium",
+    "fontFamily": "CircularXXWeb-Medium",
+    "url": "{baseUrl}/fonts/tt_norms.css?&display=swap"
+  },
+  {
+    "name": "CircularXXWeb-Regular",
+    "fontFamily": "CircularXXWeb-Regular",
+    "url": "{baseUrl}/fonts/tt_norms.css?&display=swap"
+  },
+  {
+    "name": "CircularXXWeb-Book",
+    "fontFamily": "CircularXXWeb-Book",
+    "url": "{baseUrl}/fonts/tt_norms.css?&display=swap"
+  },
+  {
+    "name": "Nunito Sans",
+    "fontFamily": "Nunito Sans",
+    "url": "{baseUrl}/fonts/tt_norms.css?&display=swap"
+  },
+  {
+    "name": "CentraNo1-Bold",
+    "fontFamily": "CentraNo1-Bold",
+    "url": "{baseUrl}/fonts/tt_norms.css?&display=swap"
+  },
+  {
+    "name": "CentraNo1-Light",
+    "fontFamily": "CentraNo1-Light",
+    "url": "{baseUrl}/fonts/tt_norms.css?&display=swap"
+  },
+  {
+    "name": "CentraNo1-Medium",
+    "fontFamily": "CentraNo1-Medium",
+    "url": "{baseUrl}/fonts/tt_norms.css?&display=swap"
+  },
+  {
+    "name": "SO5Ogg-Bold",
+    "fontFamily": "SO5Ogg-Bold",
+    "url": "{baseUrl}/fonts/tt_norms.css?&display=swap"
+  },
+  {
+    "name": "SO5Ogg-Light",
+    "fontFamily": "SO5Ogg-Light",
+    "url": "{baseUrl}/fonts/tt_norms.css?&display=swap"
+  },
+  {
+    "name": "SO5Ogg-Medium",
+    "fontFamily": "SO5Ogg-Medium",
+    "url": "{baseUrl}/fonts/tt_norms.css?&display=swap"
+  },
+  {
+    "name": "SO5Ogg-Regular",
+    "fontFamily": "SO5Ogg-Regular",
+    "url": "{baseUrl}/fonts/tt_norms.css?&display=swap"
+  },
+  {
+    "name": "BogleWeb-Black",
+    "fontFamily": "BogleWeb-Black",
+    "url": "{baseUrl}/fonts/tt_norms.css?&display=swap"
+  },
+  {
+    "name": "BogleWeb-Bold",
+    "fontFamily": "BogleWeb-Bold",
+    "url": "{baseUrl}/fonts/tt_norms.css?&display=swap"
+  },
+  {
+    "name": "BogleWeb-Light",
+    "fontFamily": "BogleWeb-Light",
+    "url": "{baseUrl}/fonts/tt_norms.css?&display=swap"
+  },
+  {
+    "name": "BogleWeb-Medium",
+    "fontFamily": "BogleWeb-Medium",
+    "url": "{baseUrl}/fonts/tt_norms.css?&display=swap"
+  },
+  {
+    "name": "BogleWeb-Regular",
+    "fontFamily": "BogleWeb-Regular",
+    "url": "{baseUrl}/fonts/tt_norms.css?&display=swap"
+  },
+  {
+    "name": "BogleWeb-Thin",
+    "fontFamily": "BogleWeb-Thin",
+    "url": "{baseUrl}/fonts/tt_norms.css?&display=swap"
+  },
+  {
+    "name": "ConduitBold",
+    "fontFamily": "ConduitBold",
+    "url": "{baseUrl}/fonts/tt_norms.css?&display=swap"
+  },
+  {
+    "name": "ConduitExtraBold",
+    "fontFamily": "ConduitExtraBold",
+    "url": "{baseUrl}/fonts/tt_norms.css?&display=swap"
+  },
+  {
+    "name": "ConduitLight",
+    "fontFamily": "ConduitLight",
+    "url": "{baseUrl}/fonts/tt_norms.css?&display=swap"
+  },
+  {
+    "name": "SharpSansDispNo1-Semibold",
+    "fontFamily": "SharpSansDispNo1-Semibold",
+    "url": "{baseUrl}/fonts/tt_norms.css?&display=swap"
+  },
+  {
+    "name": "Corinthia",
+    "fontFamily": "Corinthia",
+    "url": "{baseUrl}/fonts/tt_norms.css?&display=swap"
+  },
+  {
+    "name": "Lobster",
+    "fontFamily": "Lobster",
+    "url": "{baseUrl}/fonts/tt_norms.css?&display=swap"
+  },
+  {
+    "name": "Quicksand",
+    "fontFamily": "Quicksand",
+    "url": "{baseUrl}/fonts/tt_norms.css?&display=swap"
+  },
+  {
+    "name": "TT Norms Pro Black",
+    "fontFamily": "TT Norms Pro Black",
+    "url": "{baseUrl}/fonts/tt_norms.css?&display=swap"
+  },
+  {
+    "name": "TT Norms Pro Bold",
+    "fontFamily": "TT Norms Pro Bold",
+    "url": "{baseUrl}/fonts/tt_norms.css?&display=swap"
+  },
+  {
+    "name": "TT Norms Pro Regular",
+    "fontFamily": "TT Norms Pro Regular",
+    "url": "{baseUrl}/fonts/tt_norms.css?&display=swap"
+  }
+]

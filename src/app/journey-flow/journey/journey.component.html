@@ -1,0 +1,50 @@
+<div class="journeyContainer ml-3 mr-3 mt-3">
+    <div class="journeyDetails">
+        <div class="d-flex align-items-center justify-content-between journeyContents">
+            <div class="form-group col-6 p-0">
+                <label for="journey-name" class="journey-name">{{'journeySetUp.journeyName' | translate }}</label>
+                <input type="text" class="form-control shadow-none" id="journey-name"
+                placeholder="{{'journeySetUp.journeyNamePlaceholder' | translate }}" [(ngModel)]="journeyName" autocomplete="off" />
+            </div>
+            <div class="alignButton">
+                <button type="button" class="btn buttonCss shadow-none m-0" id="proceedBtn"
+                (click)="createJourney()">{{ (selectedTemplate ? 'journeySetUp.buttonLabels.proceedWithTemplate' : 'journeySetUp.buttonLabels.proceedWithoutTemplate') | translate }}
+                </button>
+            </div>
+        </div>
+    </div>
+    <div class="journeyTemplates">
+        <div class="d-flex align-items-center justify-content-between searchSection">
+            <div class="col-10">
+                <h5>{{'journeySetUp.journeyTemplate' | translate }}</h5>
+                <div class="sortBy"><span>{{'journeySetUp.sortBy' | translate }}</span>
+                    <select class="form-control shadow-none col-3 parameter" id="" [(ngModel)]="sortingParameter" 
+                    (change)="templateSortBy(sortingParameter)">
+                        <option value="">{{'journeySetUp.all' | translate }}</option>
+                        <option value="name">{{'journeySetUp.templateName' | translate }}</option>
+                        <option value="source">{{'journeySetUp.source' | translate }}</option>
+                        <option value="createdUser">{{'journeySetUp.createdBy' | translate }}</option>
+                        <option value="createdDate">{{'journeySetUp.createdOn' | translate }}</option>
+                    </select>
+                </div>
+            </div>
+            <div class="col-2 p-0">
+                <div class="input-group searchBox">
+                    <input type="text" id="searchTemplateBtn" class="form-control shadow-none"
+                    placeholder="{{'journeySetUp.searchTemplates' | translate }}" (keyup.enter)="searchTemplate($event)" autocomplete="off" />
+                    <div class="input-group-append">
+                        <i class="fa fa-search input-group-text"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    
+        <div class="d-flex align-content-between flex-wrap">
+            <div *ngFor="let item of templates">
+                <app-template [template]="item" (selectTemplate)="setSeletedTemplate($event)" 
+                [selectedTemplate]="selectedTemplate"></app-template>
+            </div>
+        </div>
+    </div>
+</div>
+

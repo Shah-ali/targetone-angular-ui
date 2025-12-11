@@ -1,0 +1,60 @@
+{
+    "imageData":[{
+        "mid":"img1",
+        "alt": "Alternative desc",
+        "href": "http://www.example.com/",
+        "src": "https://d1oco4z2z1fhwp.cloudfront.net/templates/default/731/HNY2020.gif",
+        "dynamicSrc": "email"
+    },
+    {
+        "mid":"img2",
+        "alt": "Alternative desc",
+        "href": "http://www.example.com/",
+        "src": "https://img.freepik.com/free-photo/product-package-boxes-shopping-bag-cart-with-laptop-online-shopping-delivery-concept_38716-138.jpg?size=626&ext=jpg",
+        "dynamicSrc": "email"
+    },
+    {
+        "mid":"img3",
+        "alt": "Alternative desc",
+        "href": "http://www.example.com/",
+        "src": "https://media.istockphoto.com/photos/school-supplies-in-shopping-cart-back-to-school-picture-id483482958",
+        "dynamicSrc": "email"
+    },
+    {
+        "mid":"img4",
+        "alt": "Alternative desc",
+        "href": "http://www.example.com/",
+        "src": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTsFL9qN9k1W9AoNthWW7GvCvundDrUlvQx2JnQxpV3m-IJj6AiBMZaKSjKY94k7GY1jCw&usqp=CAU",
+        "dynamicSrc": "email"
+    },
+    {
+        "mid":"img5",
+        "alt": "Alternative desc",
+        "href": "http://www.example.com/",
+        "src": "https://img.freepik.com/free-photo/woman-holding-various-shopping-bags-copy-space_23-2148674122.jpg?size=626&ext=jpg",
+        "dynamicSrc": "email"
+    },
+    {
+        "mid":"img6",
+        "alt": "Alternative desc",
+        "href": "http://www.example.com/",
+        "src": "https://media.istockphoto.com/vectors/shopping-cart-filled-with-back-to-school-supplies-vector-id587927748",
+        "dynamicSrc": "email"
+    },
+    {
+        "mid":"img7",
+        "alt": "Alternative desc",
+        "href": "http://www.example.com/",
+        "src": "https://newsd.in/wp-content/uploads/2018/11/online-shopping.jpg",
+        "dynamicSrc": "email"
+    },
+    {
+        "mid":"img8",
+        "alt": "Alternative desc",
+        "href": "http://www.example.com/",
+        "src": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTsFL9qN9k1W9AoNthWW7GvCvundDrUlvQx2JnQxpV3m-IJj6AiBMZaKSjKY94k7GY1jCw&usqp=CAU",
+        "dynamicSrc": "email"
+    }
+]
+
+}

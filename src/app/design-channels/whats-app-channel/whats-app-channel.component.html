@@ -1,0 +1,245 @@
+<app-channels></app-channels>
+<div class="col-12 whatsappLayoutContainer">
+    <div class="row col-12 p-0 m-0  mb-3 relative">
+        <h6 class="col p-0 pl-1 m-0 mt-3 titleHeadtext"></h6>
+        <button class="btn buttonStyle buttonCssStyle shadow-none mr-3" (click)="openOfferSliderPopup($event, 'whatsAppInput')" [disabled]="promoExecutedOrRunning">{{'designEditor.beeEditorComponent.globalMergeTaglbl2' | translate}}</button>
+        <button class="btn buttonStyle buttonCssStyle shadow-none mr-3" (click)="openTestWhatsAppModal(testSMSModel)" [disabled]="promoExecutedOrRunning">{{'whatsAppComponent.testwhatsApplbl' | translate}}</button>
+        <button class="btn buttonStyle buttonCssStyle shadow-none p-0" (click)="finalSaveMethod();" [disabled]="promoExecutedOrRunning">{{'save' | translate}}</button>
+        
+            <div class="col-1 d-none inappActionListEnable">
+                <select class="smallLabel">
+                  <option value="-1">{{'designEditor.emailEditor.actionslbl' | translate}}</option>
+                  <!-- <option>Test {{channelObj.channelName}}</option> -->
+                </select>
+            </div>
+        
+    </div>
+    <div class="row innerContainer col-12 p-0 m-0">
+        <div class="col-8 m-0 tempLayoutSection mr-3 ">
+            <div class="row col p-0 pt-2 heading">
+                <div class="col mt-1 p-0">
+                    <h6 class="col"><label class="smallLable">{{'whatsAppComponent.whatsapplbl' | translate}}</label></h6>
+                </div>
+            </div>
+            <div class="row col saveasTemplate liteBckgrd m-0 pl-4 pr-4">
+                <div class="col-4 p-0">
+                    <p class="m-0 p-0"><label class="smallLable text-muted">{{'dmColumnarCompontent.templateLbl' | translate}}</label></p>
+                    <p class=""> 
+                        <select class="col-8 p-0 xSmallLabel inputStyle text-muted" #columnarTemplateElement (change)="getSelectedSmsTemplateData($event);">
+                            <option value="-1">{{'dmColumnarCompontent.selectTemplateLbl' | translate}}</option>
+                            <option *ngFor="let x of whatsAppTemplates" value="{{x.dbKey}}">{{x.templateName}}</option>
+                        </select>
+                    </p>
+                </div>
+                <div class="col p-0 mt-2 text-right">
+                    <button class="btn buttonStyle buttonCssStyle shadow-none p-0 mt-3" (click)="openPopupForSaveAsTemplate();" [disabled]="selectedWhatsAppTemplate == '-1' || promoExecutedOrRunning">{{'designEditor.failsafePage.saveastemplatebtn' | translate}}</button>
+                </div>
+                <div class="col-8 p-3 saveAsTemplatePopup" *ngIf="isSaveAsTemplateEnable">
+                    <div class="row col outerWrap mt-4 m-0">
+                        <label class="verticalMiddle mt-1 mr-3">{{'dmColumnarCompontent.nameLbl' | translate}}: </label>
+                        <input class="col form-control inputStyle" placeholder="{{'dmColumnarCompontent.templateNameLbl' | translate}}" [(ngModel)]="templateNameEntered">
+                    </div>
+                    <div class="row col justify-content-end p-0 ">
+                        <div class="col-12 text-right p-0 mt-5">
+                            <button class="btn buttonStyle buttonCssStyle shadow-none p-0 smallLabel inputStyle mr-2 mt-2 blueColor" type="button" (click)="callSaveAsTemplate();">{{'save' | translate}}</button> 
+                            <label class="btn buttonStyle buttonCssStyle shadow-none p-0 smallLabel inputStyle m-0 mt-2" (click)="closeSaveAsTemplatePopup();">{{'cancel' | translate}}</label>
+                        </div>                         
+                    </div>
+                </div>                
+            </div>
+            
+            <div class="row col p-0 mt-2">
+                <div class="col-6">
+                    <label class="smallLabel m-0 p-0 mt-3">{{'whatsAppComponent.templateIDlbl' | translate}} : <span class="font-small">{{templateIdBindFlag}}</span></label>
+                </div>
+                <div class="col">
+                    <div class="row justify-content-end p-0 pb-2">
+                        <button class="btn buttonStyle buttonCssStyle shadow-none p-0 mt-2 mr-2" type="button" [disabled]="editBtnDisabled || selectedWhatsAppTemplate == -1 || promoExecutedOrRunning" (click)="editTemplateMethod();">{{'whatsAppComponent.editfieldsLbl' | translate}}</button>
+                        <button class="btn buttonStyle buttonCssStyle shadow-none p-0 mt-2" type="button" [disabled]="saveBtnDisabled || promoExecutedOrRunning" (click)="saveEdittedTemplateMethod();">{{'whatsAppComponent.savefieldsLbl' | translate}}</button>
+                    </div>                    
+                </div>
+            </div>
+            <div class="row p-0 col">
+                <div class="col mt-1 pr-0">
+                    
+                    <div class="position-relative col smsInputTabContent" #whatsAppInputContent [ngClass]="selectedWhatsAppTemplate == '-1' ? 'disabledPlusBtn disableBckg':''">
+                        <div [attr.contenteditable]="false" class="whatsAppInputVal editable radiusStyle" 
+                            id="whatsAppInput" name="whatsAppInput" (keyup)="getCaretIndex($event,'whatsAppInput');" (click)="getCaretIndex($event,'whatsAppInput');"
+                            spellcheck="false" (paste)="getCaretIndex($event,'whatsAppInput');" (keydown.Tab)="getCaretIndex($event,'whatsAppInput');"                               
+                            ngDefaultControl isNative="true" perLine="7" showPreview="false" (blur)="previewUpdateWhatsapp()">
+                        </div>
+                        <!-- <emoji-mart class="emoji-mart-sms" [custom]="customEmojis" *ngIf="emojisToggle" title="{{'inappChannelComponent.pickyouremojiLbl' | translate}}" [showPreview]="false" 
+                        (emojiSelect)="addEmojiItem($event, 'title')" [enableSearch]="false" [enableFrequentEmojiSort]="true" [showSingleCategory]="true" 
+                            [include]="['custom']" emoji="point_up">
+                        </emoji-mart> -->
+
+                        <!-- <div class="d-inline iconContainer">
+                            <span class="fal fa-plus" id="" [ngClass]="enablePlusBtn ? '' : 'disabledPlusBtn'" (click)="openOfferSliderPopup($event, 'whatsAppInput');"></span>
+                        </div> -->
+                        
+                    </div>
+                </div>
+            </div>
+            <!-- <div class="row col p-0 justify-content-end"> 
+                <button class="btn buttonStyle buttonCssStyle shadow-none p-0 mt-2" type="button" [ngClass]="enablePlusBtn ? '' : 'disabledPlusBtn'" (click)="openOfferSliderPopup($event, 'smsInput');">{{'designEditor.beeEditorComponent.globalMergeTaglbl2' | translate}}</button>
+            </div> -->
+            
+            <div class="row col mt-4 p-0 mt-2" *ngIf="mediaContentTypeSelecton == 'image' || mediaContentTypeSelecton == 'document' || mediaContentTypeSelecton == 'video'">
+                <div class="col-3">
+                    <p class="m-0 p-0"><label class="smallLabel text-muted">{{'whatsAppComponent.multiMediaContentlbl' | translate}}</label></p>
+                    <p class=""> 
+                        <select class="col p-0 xSmallLabel inputStyle text-muted" #columnarTemplateElement (change)="setSelectMediaContent($event);" [(ngModel)]="mediaContentTypeSelecton">
+                            <option value="-1" selected>{{'whatsAppComponent.selectMediaTypelbl' | translate}}</option>
+                            <option value="image">{{'whatsAppComponent.imageMedialbl' | translate}}</option>
+                            <option value="document">{{'whatsAppComponent.pdfMedialbl' | translate}}</option>
+                            <option value="video">{{'whatsAppComponent.videoMedialbl' | translate}}</option>                            
+                        </select>
+                    </p>
+                </div>
+                <div class="col p-0">
+                    <p class="m-0 p-0"><label class="smallLabel text-muted">{{'whatsAppComponent.mediaLinklbl' | translate}}</label></p>
+                    <p class=""> 
+                        <input class="inputStyle form-control text-muted" placeholder="{{'designEditor.testSMSComponent.URLAppearsHereLbl' | translate}}" [disabled]="mediaContentTypeSelecton == -1" [(ngModel)]="mediaLinkSavedVal" title="{{mediaLinkSavedVal}}" (blur)="viewMediaTypeInPreviewMethod($event);">
+                    </p>
+                </div>
+            </div>
+             <!--Carousel template load section-->
+             <ng-container class="" *ngIf="carouselCardObj !== undefined">
+
+                <div class="well col mt-3 pb-3 pt-4 mb-4" id="carouselOutterWrapper" #whatsAppCarouselInputContent>
+                    <h6 class="smallLable mb-3">{{'whatsAppComponent.carouselMessagesLabels.carouselSettingsLbl' | translate}}</h6>
+                    <div class="row col">
+                        <ul class="col nav tabsLiStyle tabsNoSpace mb-2">
+                            <li class="" (click)="switchTextTab(i);" *ngFor="let cards of carouselCardObj.card; let i=index;" [ngClass]="carouselTabActive === i? 'active':''">{{'whatsAppComponent.carouselMessagesLabels.carouselTabNameCardsLbl' | translate}} {{i+1}}</li>                    
+                        </ul>
+                    </div>                    
+                    <div class="row col p-3" id="tabContent">
+                        <ng-container *ngFor="let cards of carouselCardObj.card; let i=index;">
+                            <div class="wrapperContent col p-0" *ngIf="carouselTabActive == i">
+                                <!--Media type section-->
+                                <div class="col p-0" id="mediaType_section">
+                                    <div class="col-3">
+                                        <p class="m-0 p-0"><label class="smallLabel text-muted">{{'whatsAppComponent.carouselMessagesLabels.mediaTypeCarouselLbl' | translate}}</label></p>
+                                        <p class=""> 
+                                            <select class="col p-0 xSmallLabel inputStyle text-muted" #columnarTemplateElement>
+                                                <option value="{{carouselCardObj.crouselType}}" selected>{{carouselCardObj.crouselType}}</option>                                                                   
+                                            </select>
+                                        </p>
+                                    </div>
+                                </div>
+                                <!--Media URL section-->
+                                <div class="col p-0" id="mediaUrl_section">
+                                    <div class="col-6">
+                                        <p class="m-0 p-0"><label class="smallLabel text-muted">{{'whatsAppComponent.carouselMessagesLabels.mediaUrlCarouselLbl' | translate}}</label></p>
+                                        <p class=""> 
+                                            <ng-container *ngFor="let urlX of filterMediaUrlMethod(cards);">
+                                                <input type="text" class="xSmallLabel mediaUrlCarousel_{{i}} form-control inputStyle" name="url" placeholder="" value="{{urlX.url}}" (blur)="updatePreviewMethod($event,i,'urlCarousel',0);" (change)="updatePreviewMethod($event,i,'urlCarousel',0);">
+                                                <span class="fal fa-plus enableMergeTagBtn" id="" [ngClass]="enablePlusBtn ? '' : 'disabledPlusBtn'" (click)="openOfferSliderPopup($event, 'whatsAppInputCarousel');"></span>
+                                            </ng-container>                                            
+                                        </p>
+                                    </div>
+                                </div>
+                                <!--Carousel editor section-->
+                                <div class="col p-0" id="carouselTemplate_section">
+                                    <div class="row col p-0 mt-2">
+                                        <!-- <div class="col-6">
+                                            <label class="smallLabel m-0 p-0 mt-3">{{'whatsAppComponent.templateIDlbl' | translate}} : <span class="font-small">{{templateIdBindFlag}}</span></label>
+                                        </div> -->
+                                        <div class="col">
+                                            <div class="row justify-content-end p-0 pb-2">
+                                                <button class="btn buttonStyle buttonCssStyle shadow-none p-0 mt-2 mr-2" type="button" [disabled]="editBtnDisabledCarousel || promoExecutedOrRunning" (click)="editTemplateMethodCarousel(i);">{{'whatsAppComponent.editfieldsLbl' | translate}}</button>
+                                                <button class="btn buttonStyle buttonCssStyle shadow-none p-0 mt-2" type="button" [disabled]="saveBtnDisabledCarousel || promoExecutedOrRunning" (click)="saveEdittedTemplateMethodCarousel(i);">{{'whatsAppComponent.savefieldsLbl' | translate}}</button>
+                                            </div>                    
+                                        </div>
+                                    </div>
+                                    <div class="row p-0 col">
+                                        <div class="col mt-1 pr-0 mb-3"> 
+                                            <div class="position-relative col carouselInputTabContent" #whatsAppInputContentCarousel [ngClass]="selectedWhatsAppTemplate == '-1' ? 'disabledPlusBtn disableBckg':''">
+                                                <div [attr.contenteditable]="false" class="whatsAppInputValCarousel editable radiusStyle msgInput_{{i}}" 
+                                                    id="whatsAppInputCarousel" name="whatsAppInputCarousel" (keyup)="getCaretIndex($event,'whatsAppInputCarousel',i);" (click)="getCaretIndex($event,'whatsAppInputCarousel',i);"
+                                                    spellcheck="false" (paste)="getCaretIndex($event,'whatsAppInputCarousel',i);" (keydown.Tab)="getCaretIndex($event,'whatsAppInputCarousel',i);"                               
+                                                    ngDefaultControl isNative="true" perLine="7" showPreview="false">
+                                                    
+                                                </div>
+                                                <!-- <emoji-mart class="emoji-mart-sms" [custom]="customEmojis" *ngIf="emojisToggle" title="{{'inappChannelComponent.pickyouremojiLbl' | translate}}" [showPreview]="false" 
+                                                (emojiSelect)="addEmojiItem($event, 'title')" [enableSearch]="false" [enableFrequentEmojiSort]="true" [showSingleCategory]="true" 
+                                                    [include]="['custom']" emoji="point_up">
+                                                </emoji-mart> -->
+                        
+                                                <div class="d-inline iconContainer">
+                                                    <!-- <i class="far fa-grin" (click)="emojisToggle = !emojisToggle"></i> -->
+                                                    <span class="fal fa-plus" id="" [ngClass]="enablePlusBtn ? '' : 'disabledPlusBtn'" (click)="openOfferSliderPopup($event, 'whatsAppInputCarousel');"></span>
+                                                </div>
+                                                
+                                            </div>
+                                                                                        
+                                        </div>
+                                    </div>
+                                </div>
+                                <!--Quick reply section-->
+                                <div class="col p-0" id="quickReplyNCallToAction_section">
+                                    <ng-container class="appendQuickReply_template" *ngTemplateOutlet="quickReplyCallToAction_Template; context: {tabIndex:i, jsonObjList:cards.variables,quickReplyObj:quickReplyObjCarousel,calToActionObj:calToActionObjCarousel}"></ng-container>
+                                </div>
+                            </div>
+                        </ng-container>
+                    </div>
+                </div> 
+            </ng-container>
+            <!-- Quick Reply section-->
+             <ng-container class="appendQuickReply_template" *ngTemplateOutlet="quickReplyCallToAction_Template; context: {tabIndex:undefined, jsonObjList:templateVariableObj,quickReplyObj:quickReplyObj,calToActionObj:calToActionObj} "></ng-container>
+            
+            
+        </div>
+
+        <!-- Right side Panel Notification Preview starts here -->
+        <div class="notificationPreview col">
+            <div class="previewHeading text-center">{{'whatsAppComponent.whatsappPreviewMobileLbl' | translate}}</div>  
+            <div class="androidPreview mt-3">
+                <div class="smartphone p-2 labelMediumFont" #previewHtmlElement [innerHTML]="previewSMSText">
+                    <!--Html Preview Will render here-->
+                    
+                    
+                </div>
+            </div>          
+        </div>
+    </div>
+</div>
+<div class="customeOffers relative" *ngIf="offerDrawerSectionEnable" [ngClass]="offerDrawerSectionEnable ? 'slideIN':'slideOUT'">
+    <app-offers-drawer [dataFromParent]="modalRef" (onCloseOfferPopup)="onCloseOfferDrawer();" (offersAppendToInput)="finalOffersSelected($event);" (showloader)="showloaderMethod($event);"></app-offers-drawer>
+</div>
+<!-- <div class="backdrop_offerSlider" *ngIf="backropOffersEnable"></div> -->
+<ng-template #quickReplyCallToAction_Template let-jsonObjList=jsonObjList let-tabIndex=tabIndex let-quickReplyObj=quickReplyObj let-calToActionObj=calToActionObj>
+    <div class="col p-0" id="quickReplySection_OutterWrapper">
+        <label class="mediumFont mt-2 mb-2" *ngIf="quickReplyObj.length > 0">{{'whatsAppComponent.carouselMessagesLabels.quickReplyTitleLbl' | translate}}</label>
+        <ng-container *ngFor="let colx of jsonObjList; let i=index;">
+            <div class="col mt-1" id="quickReplySection_whatsApp" *ngIf="colx.type == 'button' && colx.header == 'quick_reply'">                        
+                <button type='button' class='buttonStyle xSmallLabel mt-2 mb-2 widthX100 borderStyle' disabled title='{{colx.name}}'>{{colx.name}}</button>
+            </div>
+            <!-- Call to Text-->
+            <div class="col" id="textSection_whatsApp" *ngIf="colx.type == 'button' && colx.header == 'text'">
+                <button type='button' class='buttonStyle xSmallLabel mt-2 mb-2 widthX100 borderStyle' disabled title='{{colx.name}}'>{{colx.name}}</button>
+            </div>
+        </ng-container>
+        <!--Call to Action-->
+        <label class="mediumFont mt-4" *ngIf="calToActionObj.length > 0">{{'whatsAppComponent.carouselMessagesLabels.callToActiontitleLbl' | translate}}</label>
+        <ng-container *ngFor="let coly of jsonObjList; let j=index;">                    
+            <div class="col mt-3" id="callToActionSection_whatsApp" *ngIf="coly.type == 'button' && coly.header == 'cta_url'">
+                <label class="smallLable text-muted">{{coly.name}}</label>
+                <div class="row col mt-2 mb-2 p-0">
+                    <div class="col-3" *ngIf="coly.buttonPrefix !== undefined && coly.buttonPrefix !== '' ">
+                        <input type='text' class='xSmallLabel form-control inputStyle buttonPrefixUrl_{{tabIndex}}' name="{{coly.buttonPrefix}}" disabled title='{{coly.buttonPrefix}}' value="{{coly.buttonPrefix}}">
+                    </div>
+                    <div class="col-6">
+                        <input type="text" class="xSmallLabel form-control inputStyle callToActionUrl_{{tabIndex}}" name="{{coly.value}}" placeholder="{{coly.name}}" [(ngModel)]="coly.value" value="{{coly.value}}">
+                        <span class="fal fa-plus enableMergeTagBtnCarousel" id="" [ngClass]="enablePlusBtn ? '' : 'disabledPlusBtn'" (click)="openOfferSliderPopup($event, 'whatsAppInputCarousel');"></span>
+                    </div>
+                </div>
+                
+            </div>
+        </ng-container>
+       
+     </div>
+</ng-template>
+<ng-template #testSMSModel>
+    <app-test-email [dataFromParent]="modalRef"></app-test-email>
+</ng-template>

@@ -1,0 +1,1053 @@
+<div class="main-container m-2">
+  <div class="loaderMask" *ngIf="showLoader">
+    <div class="spinner-border text-dark" role="status">
+      <span class="visually-hidden d-none">{{ 'designEditor.loadinglbl' | translate }}</span>
+    </div>
+  </div>
+  <div class="row m-0">
+    <div class="previewSection col-8">
+      <div class="html-preview" [ngClass]="!isMobileView ? 'col' : 'col-4 rowConfigPreview-mobile-view' ">
+        <div class="main-container" id="previewMainContainer" #previewMainContainer></div>
+      </div>
+    </div>
+    <div class="control-section col ml-3 mr-4">
+      <h2>{{ 'designEditor.rowPreview.previewControl' | translate }}</h2>
+      <div class="preview-tabs">
+        <div class="col-md-6 p-0 tabs">
+          <div class="tab" (click)="selectTab('tab1')" [class.active]="selectedTab === 'tab1'" *ngIf="selectedLayoutClassName != 'layoutPR0'">
+            {{ 'designEditor.rowPreview.card' | translate }}
+          </div>
+          <div class="tab" (click)="selectTab('tab2')" [class.active]="selectedTab === 'tab2'">
+            {{ 'designEditor.rowPreview.layout' | translate }}
+          </div>
+        </div>
+      </div>
+
+      <div class="card-style-config mt-4" *ngIf="selectedTab === 'tab1' && selectedLayoutClassName != 'layoutPR0'">
+        <div class="mb-2">
+          <h6>{{ 'designEditor.rowPreview.productView' | translate }}</h6>
+          <input
+            type="range"
+            [value]="noOfCards.length"
+            min="1"
+            max="{{ maxCountVal }}"
+            (input)="updateProductRange($event)" />
+          <div class="noOfCardsStyle">{{ noOfCards.length }} - {{ maxCountVal }}</div>
+        </div>
+        <hr />
+        <h6>{{ 'designEditor.rowPreview.cardSize' | translate }}</h6>
+        <div class="cardSizeSection">
+          <div class="col-md-12 m-0 p-0">
+            <div class="col-md-6 p-0 borderType">
+              <label for="borderType" class="col-md-6 p-0 innerLabel">{{
+                'designEditor.rowPreview.width' | translate
+              }}</label>
+              <div class="gr">
+                <input
+                  id="borderThick"
+                  type="number"
+                  class="form-control"
+                  step="1"
+                  [(ngModel)]="cardStyles.width"
+                  (input)="updateStyle()"
+                  min="1"
+                  max="800"
+                  [disabled]="cardStyles.selectedWidthUnit === 'unset'" />
+                <select
+                  id="cardStylesWidthUnit"
+                  class="form-control cardStylesWidthUnit"
+                  [(ngModel)]="cardStyles.selectedWidthUnit"
+                  (ngModelChange)="updateStyle()">
+                  <option value="px">px</option>
+                  <option value="%">%</option>
+                </select>
+              </div>
+            </div>
+            <div class="col-md-6 mt-2 p-0 borderColor">
+              <label for="borderThick" class="col-md-6 p-0 innerLabel">{{
+                'designEditor.rowPreview.height' | translate
+              }}</label>
+              <div class="gr">
+                <input
+                  id="borderThick"
+                  type="number"
+                  class="form-control"
+                  step="1"
+                  [(ngModel)]="cardStyles.height"
+                  (input)="updateStyle()"
+                  min="1"
+                  max="800"
+                  [disabled]="cardStyles.selectedHeightUnit === 'unset'" />
+                <select
+                  class="form-control cardStylesHeightUnit"
+                  [(ngModel)]="cardStyles.selectedHeightUnit"
+                  (ngModelChange)="updateStyle()">
+                  <option value="px">px</option>
+                  <option value="%">%</option>
+                </select>
+              </div>
+            </div>
+          </div>
+        </div>
+        <hr />
+        <h6>{{ 'designEditor.rowPreview.border' | translate }}</h6>
+        <div class="borderSection">
+          <div class="col-md-6 m-0 p-0">
+            <div class="col-md-6 mr-2 p-0 borderType">
+              <label for="borderType" class="innerLabel">{{ 'designEditor.rowPreview.type' | translate }}</label>
+              <select
+                id="border-style"
+                class="form-control"
+                [(ngModel)]="cardStyles.borderStyle"
+                (ngModelChange)="updateStyle()">
+                <option value="solid">Solid</option>
+                <option value="dotted">Dotted</option>
+                <option value="dashed">Dashed</option>
+                <option value="double">Double</option>
+              </select>
+            </div>
+            <div class="col-md-6 mr-2 mt-2 p-0 borderColor">
+              <label for="borderThick" class="innerLabel">{{ 'designEditor.rowPreview.color' | translate }}</label>
+              <input
+                id="borderThick"
+                class="form-control"
+                type="color"
+                [(ngModel)]="cardStyles.borderColor"
+                (input)="updateStyle()" />
+            </div>
+          </div>
+
+          <div class="col-md-6">
+            <div class="col-md-6 mr-2 p-0 borderThickness">
+              <label for="borderThick" class="innerLabel">{{ 'designEditor.rowPreview.thickness' | translate }}</label>
+              <input
+                id="borderThick"
+                type="number"
+                class="form-control"
+                step="1"
+                [(ngModel)]="cardStyles.borderWidth"
+                (input)="updateStyle()"
+                min="0"
+                max="20" />
+            </div>
+            <div class="col-md-6 mr-2 mt-2 p-0 borderRedius">
+              <label for="borderThick" class="innerLabel">{{ 'designEditor.rowPreview.radius' | translate }}</label>
+              <input
+                id="borderThick"
+                type="number"
+                class="form-control"
+                step="1"
+                [(ngModel)]="cardStyles.borderRadius"
+                (input)="updateStyle()"
+                min="0"
+                max="20" />
+            </div>
+          </div>
+        </div>
+        <!-- Card Border end here -->
+        <hr />
+        <!-- Card background start -->
+        <div class="backgroundSection">
+          <div class="">
+            <h6>{{ 'designEditor.rowPreview.background' | translate }}</h6>
+          </div>
+          <div>
+            <div class="col-md-12 m-0 p-0">
+              <div class="col-md-6 mr-2 p-0 borderType">
+                <label for="borderType" class="innerLabel">{{ 'designEditor.rowPreview.bgColor' | translate }}</label>
+                <input
+                  id="cardBgColor"
+                  class="form-control"
+                  type="color"
+                  [(ngModel)]="cardStyles.backgroundColor"
+                  (input)="updateStyle()" />
+              </div>
+              <div class="col-md-6 mr-2 mt-2 p-0 borderColor">
+                <label for="borderThick" class="innerLabel">{{ 'designEditor.rowPreview.transparency' | translate }}</label>
+                <input
+                  id="cardTransparency"
+                  class="form-control"
+                  type="number"
+                  [(ngModel)]="cardStyles.bgTransparency"
+                  (input)="updateStyle()"
+                  min="0"
+                  max="100" />
+              </div>
+            </div>
+          </div>
+        </div>
+        <hr />
+        <!-- Card background end here -->
+        <hr />
+        <!-- Padding All and Custom -->
+        <div class="paddingSection">
+          <div class="">
+            <h6>{{ 'designEditor.rowPreview.padding' | translate }}</h6>
+            <div class="ml-3">
+              <input
+                id="a"
+                type="radio"
+                name="paddingOptions"
+                [(ngModel)]="paddingOptions"
+                (click)="changePaddingOption('true')"
+                checked
+                value="true" />
+              <label for="a" class="paddingLabel ml-2">{{ 'designEditor.rowPreview.allSides' | translate }}</label>
+            </div>
+            <div class="ml-3">
+              <input
+                id="b"
+                type="radio"
+                [(ngModel)]="paddingOptions"
+                name="paddingOptions"
+                (click)="changePaddingOption('false')"
+                value="false" />
+              <label for="b" class="paddingLabel ml-2">{{ 'designEditor.rowPreview.custom' | translate }}</label>
+            </div>
+          </div>
+          <div class="col-md-12 m-0 p-0 customPadding">
+            <div *ngIf="isAllPaddingVisible === 'true'" class="col-md-3 mr-1 p-0 borderType">
+              <select
+                id="border-style"
+                class="form-control"
+                [(ngModel)]="cardStyles.padding"
+                (ngModelChange)="updateStyle()">
+                <option *ngFor="let i of paddingMarginRange" [value]="i">{{ i }}</option>
+              </select>
+            </div>
+            <div *ngIf="isAllPaddingVisible === 'true'" class="mr-2 ml-2">|</div>
+            <div *ngIf="isAllPaddingVisible === 'true'" class="col-md-2 mr-1 p-0 borderType">
+              <select class="form-control" [(ngModel)]="cardStyles.paddingUnitAll" (ngModelChange)="updateStyle()">
+                <option value="px">px</option>
+                <option value="%">%</option>
+              </select>
+            </div>
+            <div class="col-md-12 m-0 p-0" *ngIf="isAllPaddingVisible === 'false'">
+              <div class="col-md-12 m-0 p-0 customPadding">
+                <div class="col-md-2 mr-1 p-0 borderType">
+                  <label>{{ 'designEditor.rowPreview.top' | translate }}</label>
+                  <select
+                    id="border-style"
+                    class="form-control cardPaddingStyle"
+                    [(ngModel)]="cardStyles.paddingTop"
+                    (ngModelChange)="updateStyle()">
+                    <option *ngFor="let i of paddingMarginRange" [value]="i">{{ i }}</option>
+                  </select>
+                </div>
+
+                <div class="col-md-2 mr-1 p-0 borderType">
+                  <label>{{ 'designEditor.rowPreview.right' | translate }}</label>
+                  <select
+                    id="border-style"
+                    class="form-control cardPaddingStyle"
+                    [(ngModel)]="cardStyles.paddingRight"
+                    (ngModelChange)="updateStyle()">
+                    <option *ngFor="let i of paddingMarginRange" [value]="i">{{ i }}</option>
+                  </select>
+                </div>
+
+                <div class="col-md-2 mr-1 p-0 borderType">
+                  <label>{{ 'designEditor.rowPreview.bottom' | translate }}</label>
+                  <select
+                    id="border-style"
+                    class="form-control cardPaddingStyle"
+                    [(ngModel)]="cardStyles.paddingBottom"
+                    (ngModelChange)="updateStyle()">
+                    <option *ngFor="let i of paddingMarginRange" [value]="i">{{ i }}</option>
+                  </select>
+                </div>
+
+                <div class="col-md-2 mr-1 p-0 borderType">
+                  <label>{{ 'designEditor.rowPreview.left' | translate }}</label>
+                  <select
+                    id="border-style"
+                    class="form-control cardPaddingStyle"
+                    [(ngModel)]="cardStyles.paddingLeft"
+                    (ngModelChange)="updateStyle()">
+                    <option *ngFor="let i of paddingMarginRange" [value]="i">{{ i }}</option>
+                  </select>
+                </div>
+                <div *ngIf="isAllPaddingVisible === 'false'" class="ml-2 mr-2">
+                  <label>&nbsp;</label>
+                  <div>|</div>
+                </div>
+                <div *ngIf="isAllPaddingVisible === 'false'" class="col-md-1 mr-1 p-0 borderType">
+                  <label>{{ 'designEditor.rowPreview.unit' | translate }}</label>
+                  <select
+                    class="form-control cardPaddingStyle"
+                    [(ngModel)]="cardStyles.paddingUnitAll"
+                    (ngModelChange)="updateStyle()">
+                    <option value="px">px</option>
+                    <option value="%">%</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <hr />
+        <!-- Margin All and Custom -->
+        <div class="marginSection">
+          <div class="">
+            <h6>{{ 'designEditor.rowPreview.margin' | translate }}</h6>
+            <div class="ml-3">
+              <input
+                id="marginA"
+                type="radio"
+                name="marginOptions"
+                [(ngModel)]="marginOptions"
+                (click)="changeMarginOption('true')"
+                checked
+                value="true" />
+              <label for="marginA" class="paddingLabel ml-1">{{ 'designEditor.rowPreview.allSides' | translate }}</label>
+            </div>
+            <div class="ml-3">
+              <input
+                id="marginC"
+                type="radio"
+                name="marginOptions"
+                [(ngModel)]="marginOptions"
+                (click)="changeMarginOption('false')"
+                value="false" />
+              <label for="marginC" class="paddingLabel ml-1">{{ 'designEditor.rowPreview.custom' | translate }}</label>
+            </div>
+          </div>
+          <div class="col-md-12 m-0 p-0 customPadding">
+            <div *ngIf="isAllMarginVisible === 'true'" class="col-md-3 mr-1 p-0 borderType">
+              <select id="border-style" class="form-control" [(ngModel)]="cardStyles.margin" (ngModelChange)="updateStyle()">
+                <option *ngFor="let i of paddingMarginRange" [value]="i">{{ i }}</option>
+              </select>
+            </div>
+            <div *ngIf="isAllMarginVisible === 'true'" class="mr-2 ml-2">|</div>
+            <div *ngIf="isAllMarginVisible === 'true'" class="col-md-2 mr-1 p-0 borderType">
+              <select class="form-control" [(ngModel)]="cardStyles.marginUnitAll" (ngModelChange)="updateStyle()">
+                <option value="px">px</option>
+                <option value="%">%</option>
+              </select>
+            </div>
+            <div class="col-md-12 m-0 p-0" *ngIf="isAllMarginVisible === 'false'">
+              <div class="col-md-12 m-0 p-0 customPadding">
+                <div class="col-md-2 mr-1 p-0 borderType">
+                  <label>{{ 'designEditor.rowPreview.top' | translate }}</label>
+                  <select
+                    id="border-style"
+                    class="form-control cardPaddingStyle"
+                    [(ngModel)]="cardStyles.marginTop"
+                    (ngModelChange)="updateStyle()">
+                    <option *ngFor="let i of paddingMarginRange" [value]="i">{{ i }}</option>
+                  </select>
+                </div>
+
+                <div class="col-md-2 mr-1 p-0 borderType">
+                  <label>{{ 'designEditor.rowPreview.right' | translate }}</label>
+                  <select
+                    id="border-style"
+                    class="form-control cardPaddingStyle"
+                    [(ngModel)]="cardStyles.marginRight"
+                    (ngModelChange)="updateStyle()">
+                    <option *ngFor="let i of paddingMarginRange" [value]="i">{{ i }}</option>
+                  </select>
+                </div>
+
+                <div class="col-md-2 mr-1 p-0 borderType">
+                  <label>{{ 'designEditor.rowPreview.bottom' | translate }}</label>
+                  <select
+                    id="border-style"
+                    class="form-control cardPaddingStyle"
+                    [(ngModel)]="cardStyles.marginBottom"
+                    (ngModelChange)="updateStyle()">
+                    <option *ngFor="let i of paddingMarginRange" [value]="i">{{ i }}</option>
+                  </select>
+                </div>
+
+                <div class="col-md-2 mr-1 p-0 borderType">
+                  <label>{{ 'designEditor.rowPreview.left' | translate }}</label>
+                  <select
+                    id="border-style"
+                    class="form-control cardPaddingStyle"
+                    [(ngModel)]="cardStyles.marginLeft"
+                    (ngModelChange)="updateStyle()">
+                    <option *ngFor="let i of paddingMarginRange" [value]="i">{{ i }}</option>
+                  </select>
+                </div>
+                <div *ngIf="isAllMarginVisible === 'false'" class="ml-2 mr-2">
+                  <label>&nbsp;</label>
+                  <div>|</div>
+                </div>
+                <div *ngIf="isAllMarginVisible === 'false'" class="col-md-1 mr-1 p-0 borderType">
+                  <label>{{ 'designEditor.rowPreview.unit' | translate }}</label>
+                  <select
+                    class="form-control cardPaddingStyle"
+                    [(ngModel)]="cardStyles.marginUnitAll"
+                    (ngModelChange)="updateStyle()">
+                    <option value="px">px</option>
+                    <option value="%">%</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <hr />
+        <!-- Drop shadow -->
+
+        <div class="marginSection">
+          <div class="">
+            <h6>{{ 'designEditor.rowPreview.dropShadow' | translate }}</h6>
+          </div>
+          <div class="col-md-12 m-0 p-0">
+            <div class="col-md-12 m-0 p-0">
+              <div class="col-md-12 m-0 p-0 customPadding">
+                <div class="col-md-3 mr-1 p-0 borderType">
+                  <label>X</label>
+                  <select
+                    id="border-style"
+                    class="form-control cardPaddingStyle"
+                    [(ngModel)]="cardStyles.boxShadowX"
+                    (ngModelChange)="updateStyle()">
+                    <option value="0">0</option>
+                    <option value="1">1px</option>
+                    <option value="2">2px</option>
+                    <option value="3">3px</option>
+                    <option value="4">4px</option>
+                    <option value="5">5px</option>
+                    <option value="6">6px</option>
+                    <option value="7">7px</option>
+                    <option value="8">8px</option>
+                  </select>
+                </div>
+
+                <div class="col-md-3 mr-1 p-0 borderType">
+                  <label>Y</label>
+                  <select
+                    id="border-style"
+                    class="form-control cardPaddingStyle"
+                    [(ngModel)]="cardStyles.boxShadowY"
+                    (ngModelChange)="updateStyle()">
+                    <option value="0">0</option>
+                    <option value="1">1px</option>
+                    <option value="2">2px</option>
+                    <option value="3">3px</option>
+                    <option value="4">4px</option>
+                    <option value="5">5px</option>
+                    <option value="6">6px</option>
+                    <option value="7">7px</option>
+                    <option value="8">8px</option>
+                  </select>
+                </div>
+
+                <div class="col-md-3 mr-1 p-0 borderType">
+                  <label>{{ 'designEditor.rowPreview.blur' | translate }}</label>
+                  <select
+                    id="border-style"
+                    class="form-control cardPaddingStyle"
+                    [(ngModel)]="cardStyles.boxShadowBlur"
+                    (ngModelChange)="updateStyle()">
+                    <option value="0">0</option>
+                    <option value="1">1px</option>
+                    <option value="2">2px</option>
+                    <option value="3">3px</option>
+                    <option value="4">4px</option>
+                    <option value="5">5px</option>
+                    <option value="6">6px</option>
+                    <option value="7">7px</option>
+                    <option value="8">8px</option>
+                  </select>
+                </div>
+
+                <div class="col-md-3 mr-1 p-0 borderType">
+                  <label>{{ 'designEditor.rowPreview.spread' | translate }}</label>
+                  <select
+                    id="border-style"
+                    class="form-control cardPaddingStyle"
+                    [(ngModel)]="cardStyles.boxShadowSpread"
+                    (ngModelChange)="updateStyle()">
+                    <option value="0">0</option>
+                    <option value="1">1px</option>
+                    <option value="2">2px</option>
+                    <option value="3">3px</option>
+                    <option value="4">4px</option>
+                    <option value="5">5px</option>
+                    <option value="6">6px</option>
+                    <option value="7">7px</option>
+                    <option value="8">8px</option>
+                  </select>
+                </div>
+              </div>
+              <div class="col-md-12 m-0 mt-4 p-0 customPadding">
+                <div class="col-md-6 mr-1 p-0 borderType">
+                  <label>{{ 'designEditor.rowPreview.color' | translate }}</label>
+                  <input
+                    id="borderThick"
+                    class="form-control"
+                    type="color"
+                    [(ngModel)]="cardStyles.boxShadowColor"
+                    (input)="updateStyle()" />
+                </div>
+                <div class="col-md-6 mr-1 p-0 borderType">
+                  <label>{{ 'designEditor.rowPreview.transparency' | translate }}</label>
+                  <input
+                    id="borderThick"
+                    class="form-control"
+                    type="number"
+                    [(ngModel)]="cardStyles.boxShadowTransparency"
+                    (input)="updateStyle()"
+                    min="0"
+                    max="100" />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- Drop shadow End -->
+
+        <div class="col p-0">
+          <hr />
+          <button class="btn buttonCss shadow-none mr-1 mb-2" (click)="factoryReset()">            
+            <i
+              class="far fa-info-circle"
+              tooltipClass="ngbTooltipStyleRowPreview"
+              ngbTooltip="{{ 'designEditor.rowPreview.resetBttnInfo' | translate }}" placement="right"></i
+            >
+            &nbsp;{{ 'designEditor.rowPreview.reset' | translate }}
+          </button>
+          <button class="btn buttonCss shadow-none mr-1 mb-2" (click)="clearAllStyles()">            
+            <i
+              class="far fa-info-circle"
+              tooltipClass="ngbTooltipStyleRowPreview"
+              ngbTooltip="{{ 'designEditor.rowPreview.clearBttnInfo' | translate }}" placement="top"></i
+            >&nbsp;{{ 'designEditor.rowPreview.clear' | translate }}
+          </button>
+        </div>
+      </div>
+
+      <!-- Layout Styles  -->
+      <div class="layout-style-config col-md-12 p-0 mt-4" *ngIf="selectedTab === 'tab2'">
+        <div class="col mr-2 mt-2 p-0 borderType responsiveLayout" *ngIf="selectedLayoutClassName != 'layoutPR0'">
+          <input type="checkbox" class="mr-2" (change)="onCheckboxChange($event)" [(ngModel)]="isResponsiveChecked" />
+          <label for="borderType" class="innerLabel m-0">{{ 'designEditor.rowPreview.responsive' | translate }}</label>
+        </div>
+        <hr *ngIf="selectedLayoutClassName != 'layoutPR0'" />
+
+        <h6>{{ 'designEditor.rowPreview.layoutSize' | translate }}</h6>
+        <div class="cardSizeSection mb-2" [ngClass]="{ 'disabled-div': isResponsiveChecked && selectedLayoutClassName != 'layoutPR0' }">
+          <div class="col-md-12 m-0 p-0">
+            <div class="col-md-6 p-0 borderType">
+              <label for="borderType" class="col-md-6 p-0 innerLabel">{{
+                'designEditor.rowPreview.width' | translate
+              }}</label>
+              <div class="gr">
+                <input
+                  type="number"
+                  class="form-control"
+                  step="1"
+                  [(ngModel)]="containerStyles.width"
+                  (input)="updateLayoutStyle()"
+                  min="1"
+                  max="800"
+                  [disabled]="containerStyles.selectedWidthUnit === 'unset'" />
+                <select
+                  class="form-control cardStylesWidthUnit"
+                  [(ngModel)]="containerStyles.selectedWidthUnit"
+                  (ngModelChange)="updateLayoutStyle()">
+                  <option value="unset">None</option>
+                  <option value="px">px</option>
+                  <option value="%">%</option>
+                </select>
+              </div>
+            </div>
+            <div class="col-md-6 mt-2 p-0 borderColor">
+              <label for="borderThick" class="col-md-6 p-0 innerLabel">{{
+                'designEditor.rowPreview.height' | translate
+              }}</label>
+              <div class="gr">
+                <input
+                  type="number"
+                  class="form-control"
+                  step="1"
+                  [(ngModel)]="containerStyles.height"
+                  (input)="updateLayoutStyle()"
+                  min="1"
+                  max="800"
+                  [disabled]="containerStyles.selectedHeightUnit === 'unset'" />
+                <select
+                  class="form-control cardStylesHeightUnit"
+                  [(ngModel)]="containerStyles.selectedHeightUnit"
+                  (ngModelChange)="updateLayoutStyle()">
+                  <option value="unset">None</option>
+                  <option value="px">px</option>
+                  <option value="%">%</option>
+                </select>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <hr />
+        <div class="card-section mt-3">
+          <h6>{{ 'designEditor.rowPreview.layoutBorder' | translate }}</h6>
+          <div class="borderSection">
+            <div class="col-md-6 m-0 p-0">
+              <div class="col-md-6 mr-2 p-0 borderType">
+                <label for="borderType" class="innerLabel">{{ 'designEditor.rowPreview.type' | translate }}</label>
+                <select
+                  id="con-border-style"
+                  class="form-control"
+                  [(ngModel)]="containerStyles.borderStyle"
+                  (ngModelChange)="updateLayoutStyle()">
+                  <option value="solid">Solid</option>
+                  <option value="dotted">Dotted</option>
+                  <option value="dashed">Dashed</option>
+                  <option value="double">Double</option>
+                </select>
+              </div>
+              <div class="col-md-6 mr-2 mt-2 p-0 borderColor">
+                <label for="borderThick" class="innerLabel">{{ 'designEditor.rowPreview.color' | translate }}</label>
+                <input
+                  id="borderThick"
+                  class="form-control"
+                  type="color"
+                  [(ngModel)]="containerStyles.borderColor"
+                  (input)="updateLayoutStyle()" />
+              </div>
+            </div>
+
+            <div class="col-md-6">
+              <div class="col-md-6 mr-2 p-0 borderThickness">
+                <label for="borderThick" class="innerLabel">{{ 'designEditor.rowPreview.thickness' | translate }}</label>
+                <input
+                  id="con-borderThick"
+                  type="number"
+                  class="form-control"
+                  step="1"
+                  [(ngModel)]="containerStyles.borderWidth"
+                  (input)="updateLayoutStyle()"
+                  min="0"
+                  max="20" />
+              </div>
+              <div class="col-md-6 mr-2 mt-2 p-0 borderRedius">
+                <label for="borderThick" class="innerLabel">{{ 'designEditor.rowPreview.radius' | translate }}</label>
+                <input
+                  id="con-borderThick"
+                  type="number"
+                  class="form-control"
+                  step="1"
+                  [(ngModel)]="containerStyles.borderRadius"
+                  (input)="updateLayoutStyle()"
+                  min="0"
+                  max="20" />
+              </div>
+            </div>
+          </div>
+
+          <hr />
+          <!-- Layout background -->
+          <div class="backgroundSection">
+            <div class="">
+              <h6>{{ 'designEditor.rowPreview.layout' | translate }}</h6>
+            </div>
+            <div>
+              <div class="col-md-12 m-0 p-0">
+                <div class="col-md-6 mr-2 p-0 borderType">
+                  <label for="borderType" class="innerLabel">{{ 'designEditor.rowPreview.bgColor' | translate }}</label>
+                  <input
+                    id="bgColor"
+                    class="form-control"
+                    type="color"
+                    [(ngModel)]="containerStyles.backgroundColor"
+                    (input)="updateLayoutStyle()" />
+                </div>
+                <div class="col-md-6 mr-2 mt-2 p-0 borderColor">
+                  <label for="borderThick" class="innerLabel">{{
+                    'designEditor.rowPreview.transparency' | translate
+                  }}</label>
+                  <input
+                    id="layoutTransparency"
+                    class="form-control"
+                    type="number"
+                    [(ngModel)]="containerStyles.bgTransparency"
+                    (input)="updateLayoutStyle()"
+                    min="0"
+                    max="100" />
+                </div>
+              </div>
+            </div>
+          </div>
+          <hr />
+          <!-- Layout background -->
+
+          <div class="marginSection">
+            <div class="">
+              <h6>{{ 'designEditor.rowPreview.dropShadow' | translate }}</h6>
+            </div>
+            <div class="col-md-12 m-0 p-0">
+              <div class="col-md-12 m-0 p-0">
+                <div class="col-md-12 m-0 p-0 customPadding">
+                  <div class="col-md-3 mr-1 p-0 borderType">
+                    <label>X</label>
+                    <select
+                      id="border-style"
+                      class="form-control cardPaddingStyle"
+                      [(ngModel)]="containerStyles.boxShadowX"
+                      (ngModelChange)="updateLayoutStyle()">
+                      <option value="0">0</option>
+                      <option value="1">1px</option>
+                      <option value="2">2px</option>
+                      <option value="3">3px</option>
+                      <option value="4">4px</option>
+                      <option value="5">5px</option>
+                      <option value="6">6px</option>
+                      <option value="7">7px</option>
+                      <option value="8">8px</option>
+                    </select>
+                  </div>
+
+                  <div class="col-md-3 mr-1 p-0 borderType">
+                    <label>Y</label>
+                    <select
+                      id="border-style"
+                      class="form-control cardPaddingStyle"
+                      [(ngModel)]="containerStyles.boxShadowY"
+                      (ngModelChange)="updateLayoutStyle()">
+                      <option value="0">0</option>
+                      <option value="1">1px</option>
+                      <option value="2">2px</option>
+                      <option value="3">3px</option>
+                      <option value="4">4px</option>
+                      <option value="5">5px</option>
+                      <option value="6">6px</option>
+                      <option value="7">7px</option>
+                      <option value="8">8px</option>
+                    </select>
+                  </div>
+
+                  <div class="col-md-3 mr-1 p-0 borderType">
+                    <label>{{ 'designEditor.rowPreview.blur' | translate }}</label>
+                    <select
+                      id="border-style"
+                      class="form-control cardPaddingStyle"
+                      [(ngModel)]="containerStyles.boxShadowBlur"
+                      (ngModelChange)="updateLayoutStyle()">
+                      <option value="0">0</option>
+                      <option value="1">1px</option>
+                      <option value="2">2px</option>
+                      <option value="3">3px</option>
+                      <option value="4">4px</option>
+                      <option value="5">5px</option>
+                      <option value="6">6px</option>
+                      <option value="7">7px</option>
+                      <option value="8">8px</option>
+                    </select>
+                  </div>
+
+                  <div class="col-md-3 mr-1 p-0 borderType">
+                    <label>{{ 'designEditor.rowPreview.spread' | translate }}</label>
+                    <select
+                      id="border-style"
+                      class="form-control cardPaddingStyle"
+                      [(ngModel)]="containerStyles.boxShadowSpread"
+                      (ngModelChange)="updateLayoutStyle()">
+                      <option value="0">0</option>
+                      <option value="1">1px</option>
+                      <option value="2">2px</option>
+                      <option value="3">3px</option>
+                      <option value="4">4px</option>
+                      <option value="5">5px</option>
+                      <option value="6">6px</option>
+                      <option value="7">7px</option>
+                      <option value="8">8px</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="col-md-12 m-0 mt-4 p-0 customPadding">
+                  <div class="col-md-6 mr-1 p-0 borderType">
+                    <label>{{ 'designEditor.rowPreview.color' | translate }}</label>
+                    <input
+                      id="borderThick"
+                      class="form-control"
+                      type="color"
+                      [(ngModel)]="containerStyles.boxShadowColor"
+                      (input)="updateLayoutStyle()" />
+                  </div>
+                  <div class="col-md-6 mr-1 p-0 borderType">
+                    <label>{{ 'designEditor.rowPreview.transparency' | translate }}</label>
+                    <input
+                      id="borderThick"
+                      class="form-control"
+                      type="number"
+                      [(ngModel)]="containerStyles.boxShadowTransparency"
+                      (input)="updateLayoutStyle()"
+                      min="0"
+                      max="100" />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- Drop shadow End -->
+          <hr />
+
+          <!-- Flex controls start -->
+          <div class="flexSection" *ngIf="selectedLayoutClassName != 'layoutPR0'">
+            <div class="">
+              <h6>{{ 'designEditor.rowPreview.flexControls' | translate }}</h6>
+            </div>
+            <div>
+              <div class="col-md-12 m-0 p-0">
+                <div class="col mr-2 p-0 borderType">
+                  <label for="borderType" class="innerLabel">{{
+                    'designEditor.rowPreview.flexDirection' | translate
+                  }}</label>
+                  <div class="flexIcons">
+                    <div class="flexDirection">
+                      <picture
+                        ngbTooltip="{{ 'designEditor.rowPreview.row' | translate }}"
+                        tooltipClass="ngbTooltipStyle"
+                        (click)="selectFlexProperty('flexDirection', 'row')">
+                        <svg-icon
+                          src="./assets/images/flex-img/row.svg"
+                          [svgStyle]="{ 'width.px': 18 }"
+                          [ngClass]="{ active: containerStyles.flexDirection === 'row' }"></svg-icon>
+                      </picture>
+                      <picture
+                        ngbTooltip="{{ 'designEditor.rowPreview.column' | translate }}"
+                        tooltipClass="ngbTooltipStyle"
+                        (click)="selectFlexProperty('flexDirection', 'column')">
+                        <svg-icon
+                          src="./assets/images/flex-img/column.svg"
+                          [svgStyle]="{ 'width.px': 18 }"
+                          [ngClass]="{ active: containerStyles.flexDirection === 'column' }"></svg-icon>
+                      </picture>
+                      <picture
+                        ngbTooltip="{{ 'designEditor.rowPreview.rowReverse' | translate }}"
+                        tooltipClass="ngbTooltipStyle"
+                        (click)="selectFlexProperty('flexDirection', 'row-reverse')">
+                        <svg-icon
+                          src="./assets/images/flex-img/row-reverse.svg"
+                          [svgStyle]="{ 'width.px': 18 }"
+                          [ngClass]="{ active: containerStyles.flexDirection === 'row-reverse' }"></svg-icon>
+                      </picture>
+                      <picture
+                        ngbTooltip="{{ 'designEditor.rowPreview.columnReverse' | translate }}"
+                        tooltipClass="ngbTooltipStyle"
+                        (click)="selectFlexProperty('flexDirection', 'column-reverse')">
+                        <svg-icon
+                          src="./assets/images/flex-img/column-reverse.svg"
+                          [svgStyle]="{ 'width.px': 18 }"
+                          [ngClass]="{ active: containerStyles.flexDirection === 'column-reverse' }"></svg-icon>
+                      </picture>
+                    </div>
+                  </div>
+                </div>
+                <div class="col mr-2 mt-2 p-0 borderType">
+                  <label for="borderType" class="innerLabel">{{ 'designEditor.rowPreview.flexWrap' | translate }}</label>
+                  <div class="flexIcons">
+                    <div class="flexWrap">
+                      <picture
+                        ngbTooltip="{{ 'designEditor.rowPreview.noWrap' | translate }}"
+                        tooltipClass="ngbTooltipStyle"
+                        (click)="selectFlexProperty('flexWrap', 'nowrap')">
+                        <svg-icon
+                          src="./assets/images/flex-img/no-wrap.svg"
+                          [svgStyle]="{ 'width.px': 18 }"
+                          [ngClass]="{ active: containerStyles.flexWrap === 'nowrap' }"></svg-icon>
+                      </picture>
+                      <picture
+                        ngbTooltip="{{ 'designEditor.rowPreview.wrap' | translate }}"
+                        tooltipClass="ngbTooltipStyle"
+                        (click)="selectFlexProperty('flexWrap', 'wrap')">
+                        <svg-icon
+                          src="./assets/images/flex-img/wrap.svg"
+                          [svgStyle]="{ 'width.px': 18 }"
+                          [ngClass]="{ active: containerStyles.flexWrap === 'wrap' }"></svg-icon>
+                      </picture>
+                    </div>
+                  </div>
+                </div>
+                <div class="col mr-2 mt-2 p-0 borderType">
+                  <label for="borderType" class="innerLabel">{{ 'designEditor.rowPreview.alignContent' | translate }}</label>
+                  <div class="flexIcons">
+                    <div class="alignContent">
+                      <picture
+                        ngbTooltip="{{ 'designEditor.rowPreview.center' | translate }}"
+                        tooltipClass="ngbTooltipStyle"
+                        (click)="selectFlexProperty('alignContent', 'center')">
+                        <svg-icon
+                          src="./assets/images/flex-img/align-content-center.svg"
+                          [svgStyle]="{ 'width.px': 18 }"
+                          [ngClass]="{ active: containerStyles.alignContent === 'center' }"></svg-icon>
+                      </picture>
+                      <picture
+                        ngbTooltip="{{ 'designEditor.rowPreview.flexStart' | translate }}"
+                        tooltipClass="ngbTooltipStyle"
+                        (click)="selectFlexProperty('alignContent', 'flex-start')">
+                        <svg-icon
+                          src="./assets/images/flex-img/align-content-flex-start.svg"
+                          [svgStyle]="{ 'width.px': 18 }"
+                          [ngClass]="{ active: containerStyles.alignContent === 'flex-start' }"></svg-icon>
+                      </picture>
+                      <picture
+                        ngbTooltip="{{ 'designEditor.rowPreview.flexEnd' | translate }}"
+                        tooltipClass="ngbTooltipStyle"
+                        (click)="selectFlexProperty('alignContent', 'flex-end')">
+                        <svg-icon
+                          src="./assets/images/flex-img/align-content-flex-end.svg"
+                          [svgStyle]="{ 'width.px': 18 }"
+                          [ngClass]="{ active: containerStyles.alignContent === 'flex-end' }"></svg-icon>
+                      </picture>
+                      <picture
+                        ngbTooltip="{{ 'designEditor.rowPreview.spaceAround' | translate }}"
+                        tooltipClass="ngbTooltipStyle"
+                        (click)="selectFlexProperty('alignContent', 'space-around')">
+                        <svg-icon
+                          src="./assets/images/flex-img/align-content-space-around.svg"
+                          [svgStyle]="{ 'width.px': 18 }"
+                          [ngClass]="{ active: containerStyles.alignContent === 'space-around' }"></svg-icon>
+                      </picture>
+                      <picture
+                        ngbTooltip="{{ 'designEditor.rowPreview.spaceBetween' | translate }}"
+                        tooltipClass="ngbTooltipStyle"
+                        (click)="selectFlexProperty('alignContent', 'space-between')">
+                        <svg-icon
+                          src="./assets/images/flex-img/align-content-space-between.svg"
+                          [svgStyle]="{ 'width.px': 18 }"
+                          [ngClass]="{ active: containerStyles.alignContent === 'space-between' }"></svg-icon>
+                      </picture>
+                      <picture
+                        ngbTooltip="{{ 'designEditor.rowPreview.stretch' | translate }}"
+                        tooltipClass="ngbTooltipStyle"
+                        (click)="selectFlexProperty('alignContent', 'stretch')">
+                        <svg-icon
+                          src="./assets/images/flex-img/align-content-stretch.svg"
+                          [svgStyle]="{ 'width.px': 18 }"
+                          [ngClass]="{ active: containerStyles.alignContent === 'stretch' }"></svg-icon>
+                      </picture>
+                    </div>
+                  </div>
+                </div>
+                <div class="col mr-2 mt-2 p-0 borderType">
+                  <label for="borderType" class="innerLabel">{{
+                    'designEditor.rowPreview.justifyContent' | translate
+                  }}</label>
+                  <div class="flexIcons">
+                    <div class="justifyContent">
+                      <picture
+                        ngbTooltip="{{ 'designEditor.rowPreview.center' | translate }}"
+                        tooltipClass="ngbTooltipStyle"
+                        (click)="selectFlexProperty('justifyContent', 'center')">
+                        <svg-icon
+                          src="./assets/images/flex-img/justify-content-center.svg"
+                          [svgStyle]="{ 'width.px': 18 }"
+                          [ngClass]="{ active: containerStyles.justifyContent === 'center' }"></svg-icon>
+                      </picture>
+                      <picture
+                        ngbTooltip="{{ 'designEditor.rowPreview.flexStart' | translate }}"
+                        tooltipClass="ngbTooltipStyle"
+                        (click)="selectFlexProperty('justifyContent', 'flex-start')">
+                        <svg-icon
+                          src="./assets/images/flex-img/justify-content-flex-start.svg"
+                          [svgStyle]="{ 'width.px': 18 }"
+                          [ngClass]="{ active: containerStyles.justifyContent === 'flex-start' }"></svg-icon>
+                      </picture>
+                      <picture
+                        ngbTooltip="{{ 'designEditor.rowPreview.flexEnd' | translate }}"
+                        tooltipClass="ngbTooltipStyle"
+                        (click)="selectFlexProperty('justifyContent', 'flex-end')">
+                        <svg-icon
+                          src="./assets/images/flex-img/justify-content-flex-end.svg"
+                          [svgStyle]="{ 'width.px': 18 }"
+                          [ngClass]="{ active: containerStyles.justifyContent === 'flex-end' }"></svg-icon>
+                      </picture>
+                      <picture
+                        ngbTooltip="{{ 'designEditor.rowPreview.spaceBetween' | translate }}"
+                        tooltipClass="ngbTooltipStyle"
+                        (click)="selectFlexProperty('justifyContent', 'space-between')">
+                        <svg-icon
+                          src="./assets/images/flex-img/justify-content-space-between.svg"
+                          [svgStyle]="{ 'width.px': 18 }"
+                          [ngClass]="{ active: containerStyles.justifyContent === 'space-between' }"></svg-icon>
+                      </picture>
+                      <picture
+                        ngbTooltip="{{ 'designEditor.rowPreview.spaceAround' | translate }}"
+                        tooltipClass="ngbTooltipStyle"
+                        (click)="selectFlexProperty('justifyContent', 'space-around')">
+                        <svg-icon
+                          src="./assets/images/flex-img/justify-content-space-around.svg"
+                          [svgStyle]="{ 'width.px': 18 }"
+                          [ngClass]="{ active: containerStyles.justifyContent === 'space-around' }"></svg-icon>
+                      </picture>
+                      <picture
+                        ngbTooltip="{{ 'designEditor.rowPreview.spaceEvenly' | translate }}"
+                        tooltipClass="ngbTooltipStyle"
+                        (click)="selectFlexProperty('justifyContent', 'space-evenly')">
+                        <svg-icon
+                          src="./assets/images/flex-img/justify-content-space-evenly.svg"
+                          [svgStyle]="{ 'width.px': 18 }"
+                          [ngClass]="{ active: containerStyles.justifyContent === 'space-evenly' }"></svg-icon>
+                      </picture>
+                    </div>
+                  </div>
+                </div>
+                <div class="col mr-2 mt-2 p-0 borderType">
+                  <label for="borderType" class="innerLabel">{{ 'designEditor.rowPreview.alignItems' | translate }}</label>
+                  <div class="flexIcons">
+                    <div class="alignItems">
+                      <picture
+                        ngbTooltip="{{ 'designEditor.rowPreview.center' | translate }}"
+                        tooltipClass="ngbTooltipStyle"
+                        (click)="selectFlexProperty('alignItems', 'center')">
+                        <svg-icon
+                          src="./assets/images/flex-img/align-items-center.svg"
+                          [svgStyle]="{ 'width.px': 18 }"
+                          [ngClass]="{ active: containerStyles.alignItems === 'center' }"></svg-icon>
+                      </picture>
+                      <picture
+                        ngbTooltip="{{ 'designEditor.rowPreview.flexStart' | translate }}"
+                        tooltipClass="ngbTooltipStyle"
+                        (click)="selectFlexProperty('alignItems', 'flex-start')">
+                        <svg-icon
+                          src="./assets/images/flex-img/align-items-flex-start.svg"
+                          [svgStyle]="{ 'width.px': 18 }"
+                          [ngClass]="{ active: containerStyles.alignItems === 'flex-start' }"></svg-icon>
+                      </picture>
+                      <picture
+                        ngbTooltip="{{ 'designEditor.rowPreview.flexEnd' | translate }}"
+                        tooltipClass="ngbTooltipStyle"
+                        (click)="selectFlexProperty('alignItems', 'flex-end')">
+                        <svg-icon
+                          src="./assets/images/flex-img/align-items-flex-end.svg"
+                          [svgStyle]="{ 'width.px': 18 }"
+                          [ngClass]="{ active: containerStyles.alignItems === 'flex-end' }"></svg-icon>
+                      </picture>
+                      <picture
+                        ngbTooltip="{{ 'designEditor.rowPreview.stretch' | translate }}"
+                        tooltipClass="ngbTooltipStyle"
+                        (click)="selectFlexProperty('alignItems', 'stretch')">
+                        <svg-icon
+                          src="./assets/images/flex-img/align-items-stretch.svg"
+                          [svgStyle]="{ 'width.px': 18 }"
+                          [ngClass]="{ active: containerStyles.alignItems === 'stretch' }"></svg-icon>
+                      </picture>
+                      <picture
+                        ngbTooltip="{{ 'designEditor.rowPreview.baseline' | translate }}"
+                        tooltipClass="ngbTooltipStyle"
+                        (click)="selectFlexProperty('alignItems', 'baseline')">
+                        <svg-icon
+                          src="./assets/images/flex-img/align-items-baseline.svg"
+                          [svgStyle]="{ 'width.px': 18 }"
+                          [ngClass]="{ active: containerStyles.alignItems === 'baseline' }"></svg-icon>
+                      </picture>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- Flex controls end -->
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

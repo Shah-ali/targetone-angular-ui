@@ -1,0 +1,20 @@
+<div class="modal-header">
+	<h4 class="modal-title ml-auto pl-5" id="exampleModalLabel">
+		<span>Save emails</span>
+  </h4>
+  <button type="button" class="close pull-right" (mousedown)="onClose()" aria-label="Close">
+  <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<div class="modal-body">
+ <!-- <iframe width="100%" src="{{iframeUrlPath}}">{{iframeContent}}</iframe> --> 
+ <div class="col-12 p-0">
+     <label>Name</label>
+     <input class="form-control" name="savedName" [(ngModel)]="savedName" autocomplete="off">
+ 
+</div>
+</div>
+<div class="modal-footer d-flex justify-content-right m-3">
+    <button type="submit" class="btn btn-primary buttonStyle shadow-none" (click)="getsavemethod();">Save</button>
+  <button type="button" class="btn btn-outline-primary buttonStyle shadow-none" (mousedown)="onClose()">close</button>
+</div>

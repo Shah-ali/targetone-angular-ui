@@ -1,0 +1,30 @@
+<div *ngIf="template !== undefined" class="templateContainer" [class.selected]="template === selectedTemplate"
+    (click)="onSelect(template)">
+    <div class="d-flex">
+        <div class="templateImg rounded">
+            <img src="./assets/images/source_default.svg" alt="default image"/>
+            <!-- <img src={{template.imagePath}}/> -->
+        </div>
+        <h6 class="ml-2 mt-1">{{template.name}}</h6>
+    </div>
+
+    <div class="templateInfo"><span>{{template.createdUser}}</span><span>{{template.createdDateUi}}</span></div>
+    <div class="templateInfo"><span>{{'journeySetUp.templateSourceLbl' | translate }}</span><span>{{template.source}}</span></div>
+    <div class="templateInfo"><span>{{'journeySetUp.templateObjectiveLbl' | translate }}</span><span>{{template.desc}}</span></div>
+    <div class="templateInfo mb-0" *ngIf="template.tagsForUi != null; else elseBlock">
+        <span>{{'journeySetUp.templateTagsLbl' | translate }}</span>
+        <div class="d-flex align-content-between flex-wrap mt-1 tagsContainer">
+            <div *ngFor="let tag of template.tagsForUi" class="mt-1">
+                <div [style.border-color]="tag.tagColorCode" class="templateTags">
+                    <span [style.color]="tag.tagColorCode">{{tag.tagName}}</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <ng-template #elseBlock>
+        <div class="templateInfo mb-0">
+            <span>{{'journeySetUp.templateNoTagsAvailableLbl' | translate }}</span>
+        </div>
+    </ng-template>
+    
+</div>

@@ -1,0 +1,23 @@
+.activateJourneyConatiner {
+    .titleSection {
+        padding: 15px 15px 5px 15px;
+    }
+    .iconPosition {
+        color: #aaa;
+    }
+    #closeBtn, #okButton {
+        padding: 5px 15px;
+        border-radius: 5px;
+    }
+    .enableContact {
+        height: 100px;
+        padding-top: 10px;
+        .enableCheckbox {
+            margin-right: 10px;
+            height: 18px;
+        }
+        .enableText {
+            font-size: 12px;
+        }
+    }
+}

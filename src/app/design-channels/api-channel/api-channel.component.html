@@ -1,0 +1,193 @@
+<app-channels></app-channels>
+<div class="col-12 apiContainerSection">
+    <div class="row col-12 p-0 m-0  mb-3 relative">
+        <h6 class="col p-0 pl-1 m-0 mt-3 titleHeadtext"></h6>
+        <button class="btn buttonStyle buttonCssStyle shadow-none mr-3" (click)="openOfferSliderPopup($event, 'addMergeTag');">{{'designEditor.beeEditorComponent.globalMergeTaglbl2' | translate}}</button>
+        <button class="btn buttonStyle buttonCssStyle shadow-none mr-3" (click)="callSaveAsMethod()">{{'designEditor.failsafePage.saveastemplatebtn' | translate}}</button>
+        <button class="btn buttonStyle buttonCssStyle shadow-none mr-3" (click)="openTestAPIModal(testAPINotifyModel)">{{'APIChannelComponent.APIpopupNotificationTitleLbl' | translate}}</button>
+        <button class="btn buttonStyle buttonCssStyle shadow-none p-0" (click)="finalSaveMethod(true);">{{'save' | translate}}</button><!--(click)="finalSaveMethod();"-->
+        
+    </div>
+    <div class="innerContainer col-12 p-0 m-0">
+        <div class="col m-0 tempLayoutSection mr-3 ">
+            <div class="row col p-0 pt-2 heading">
+                <div class="col p-0">
+                    <h6 class="col"><label class="smallLable fontWeight600">{{'APIChannelComponent.APIDetailsLbl' | translate}}</label></h6>
+                </div>
+            </div>
+        </div>
+        <div class="row col p-0 m-0">          
+            <div class="col-5">
+                <div class="m-0 p-0"><label class="smallLable text-muted fontWeight400 ">{{'APIChannelComponent.selectAPITemplatelbl' | translate}}</label></div>
+                <div class="col p-0"> 
+                    <select class="col-8 p-0 xSmallLabel text-muted fontWeight500 cursor-pointer" [(ngModel)]="apiSelectedTemplate" (change)="getAPiTemplateMethod($event)">
+
+                        <option value="0" selected>{{'dmColumnarCompontent.selectTemplateLbl' | translate}}</option>
+                        <option *ngFor="let x of apiChannelSavedTemplatesArray" value="{{x.dbKey}}">
+                            {{x.templateName}}                            
+                        </option>
+                    </select>
+                </div>
+            </div>
+            <!-- <div class="col">
+                <div class="col p-0 mt-2 text-right">
+                    <button class="btn buttonStyle buttonCssStyle shadow-none p-0 mt-2 cursor-pointer" id="addMergeTag" (click)="openOfferSliderPopup($event, 'addMergeTag');">{{'designEditor.beeEditorComponent.globalMergeTaglbl2' | translate}}</button>
+                </div>
+            </div> -->
+        </div>
+        <div class="row col p-0 m-0 mt-4">          
+            <div class="col-10">
+                <div class="m-0 p-0"><label class="smallLable text-muted fontWeight400">{{'APIChannelComponent.urlInputTitleLbl' | translate}}</label></div>
+                <div class="col p-0"> 
+                    <input type="text" class="form-control text-muted fontWeight500" [(ngModel)]="APIUrlLink">
+                </div>
+            </div>
+            <div class="col">
+                <div class="m-0 p-0 text-left"><label class="smallLable text-muted fontWeight400">{{'APIChannelComponent.selectedMethodType' | translate}}</label></div>
+                <div class="col p-0 text-left">
+                    <select class="col p-0 xSmallLabel text-muted fontWeight500 cursor-pointer" [(ngModel)]="requestMethodType" (change)="requestMethod($event)">
+                        <option value="{{option.value}}" *ngFor="let option of apiResponseType">{{option.display}}</option>
+                        <!-- <option value="POST">{{'APIChannelComponent.postLbl' | translate}}</option>
+                        <option value="GET">{{'APIChannelComponent.getLbl' | translate}}</option>
+                        <option value="PUT">{{'APIChannelComponent.putLbl' | translate}}</option>
+                        <option value="DELETE">{{'APIChannelComponent.deleteLbl' | translate}}</option>
+                        <option value="OPTIONS">{{'APIChannelComponent.optionsLbl' | translate}}</option> -->
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <div class="col m-0 mt-4">
+            <div class="col m-0 p-0"><label class="xSmallLabel color333 fontWeight400">{{'APIChannelComponent.httpRequestHeaderLbl' | translate}}</label></div>
+            <div class="col m-0 requestHeaderArea blueContentArea">
+                <div class="row col">
+                    <input type="checkbox" class="verticalMiddle mr-1 m-0 cursor-pointer" [(ngModel)]="requestHeaderEnabled" (click)="getRequestHeaderMethod($event);">
+                    <label class="xSmallLabel text-muted m-0 fontWeight300 cursor-pointer">{{'APIChannelComponent.requestHeaderLbl' | translate}}</label>
+                </div>
+                <div class="row col">
+                     <!-- Key value pair implementation starts here -->
+                        <div class="keyValuePair col-5" *ngIf="requestHeaderEnabled">
+                            <div class="col-12 p-0 d-flex mt-1" *ngFor="let item of keyValueArray">
+                                <div class="col-5 p-0">
+                                    <div><label class="titleStyle">{{'designEditor.mobilePushComponent.key' | translate}}</label></div>
+                                    <div><input type="text" class="fontWeight300 cursor-pointer" [(ngModel)]="item.key"/></div>
+                                </div>
+                                <div class="col-5 p-0">
+                                    <div><label class="titleStyle">{{'designEditor.mobilePushComponent.value' | translate}}</label></div>
+                                    <div><input type="text" class="fontWeight300" [(ngModel)]="item.value"/></div>
+                                </div>
+                                <div class="col-1 p-0">
+                                    <button class="btn shadow-none btnPosition iconPlusColor cursor-pointer" (click)="addNewKeyValue(item,'requestHeader')" *ngIf="item.add">
+                                        <i class="far fa-plus"></i>
+                                    </button>
+                                    <button class="btn shadow-none btnPosition iconDeleteColor cursor-pointer" (click)="removeKeyValue(item,'requestHeader')" *ngIf="!item.add">
+                                        <i class="far fa-trash-alt"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col m-0 mt-4">
+            <div class="col-6 m-0 p-0"><label class="xSmallLabel color333 fontWeight400">{{'APIChannelComponent.httpRequestBodyLbl' | translate}}</label></div>
+            <div class="col m-0 requestBodyArea blueContentArea" #requestBodyElementRefence>                
+                <div class="row col-10 m-0 p-0 equalRowInsideCol">
+                    <div class="equalCol mr-4">
+                        <input type="radio" class="m-0 verticalMiddle mr-1 radioCheck noneInputElem cursor-pointer" id="none" (click)="switchRequestBodyTypeMethod($event,'none');">
+                        <label for="none" class="xSmallLabel text-muted m-0 fontWeight300 cursor-pointer">{{'APIChannelComponent.noneOptionLbl' | translate}}</label>
+                    </div>
+                    <div class="equalCol mr-4">
+                        <input type="radio" class="m-0 verticalMiddle mr-1 radioCheck formDataInputElem cursor-pointer" [ngClass]="isRequestMethodTypeDisabled ? 'disabledClass' : ''" [disabled]="isRequestMethodTypeDisabled" id="formData" (click)="switchRequestBodyTypeMethod($event,'formData');">
+                        <label for="formData" class="xSmallLabel text-muted m-0 fontWeight300 cursor-pointer">{{'APIChannelComponent.formDataOptionLbl' | translate}}</label>
+                    </div>
+                    <div class="equalCol mr-4">
+                        <input type="radio" class="m-0 verticalMiddle mr-1 radioCheck urlEncodeInputElem cursor-pointer" [ngClass]="isRequestMethodTypeDisabled ? 'disabledClass' : ''" [disabled]="isRequestMethodTypeDisabled" id="urlEncode" (click)="switchRequestBodyTypeMethod($event,'urlEncode');">
+                        <label for="urlEncode" class="xSmallLabel text-muted m-0 fontWeight300 cursor-pointer">{{'APIChannelComponent.xwwwUrlEncodeLbl' | translate}}</label>
+                    </div>
+                    <div class="equalCol mr-4">
+                        <input type="radio" class="m-0 verticalMiddle mr-1 radioCheck rawJsonInputElem cursor-pointer" [ngClass]="isRequestMethodTypeDisabled ? 'disabledClass' : ''" [disabled]="isRequestMethodTypeDisabled" id="rawJson" (click)="switchRequestBodyTypeMethod($event,'rawJson');">
+                        <label for="rawJson" class="xSmallLabel text-muted m-0 fontWeight300 cursor-pointer">{{'APIChannelComponent.rawJsonOptionLbl' | translate}}</label>
+                    </div>
+    
+                </div>
+            
+            <ng-container *ngIf="formDataFlagEnable">
+                <div class="keyValuePair col-5">
+                    <div class="col-12 p-0 d-flex mt-1" *ngFor="let item of keyValueArrayFormData">
+                        <div class="col-5 p-0">
+                            <div><label class="titleStyle">{{'designEditor.mobilePushComponent.key' | translate}}</label></div>
+                            <div><input type="text" class="fontWeight300" [(ngModel)]="item.key"/></div>
+                        </div>
+                        <div class="col-5 p-0">
+                            <div><label class="titleStyle">{{'designEditor.mobilePushComponent.value' | translate}}</label></div>
+                            <div><input type="text" class="fontWeight300" [(ngModel)]="item.value"/></div>
+                        </div>
+                        <div class="col-1 p-0">
+                            <button class="btn buttonStyle shadow-none btnPosition iconPlusColor cursor-pointer" (click)="addNewKeyValue(item,'formData')" *ngIf="item.add">
+                                <i class="far fa-plus"></i>
+                            </button>
+                            <button class="btn buttonStyle shadow-none btnPosition iconDeleteColor cursor-pointer" (click)="removeKeyValue(item,'formData')" *ngIf="!item.add">
+                                <i class="far fa-trash-alt"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </ng-container>
+            <ng-container *ngIf="urlEncodeFlagEnable">
+                <div class="keyValuePair col-5">
+                    <div class="col-12 p-0 d-flex mt-1" *ngFor="let item of keyValueArrayUrlEncode">
+                        <div class="col-5 p-0">
+                            <div><label class="titleStyle">{{'designEditor.mobilePushComponent.key' | translate}}</label></div>
+                            <div><input type="text" class="fontWeight300" [(ngModel)]="item.key"/></div>
+                        </div>
+                        <div class="col-5 p-0">
+                            <div><label class="titleStyle">{{'designEditor.mobilePushComponent.value' | translate}}</label></div>
+                            <div><input type="text" class="fontWeight300" [(ngModel)]="item.value"/></div>
+                        </div>
+                        <div class="col-1 p-0">
+                            <button class="btn buttonStyle shadow-none btnPosition iconPlusColor cursor-pointer" (click)="addNewKeyValue(item,'urlEncode')" *ngIf="item.add">
+                                <i class="far fa-plus"></i>
+                            </button>
+                            <button class="btn buttonStyle shadow-none btnPosition iconDeleteColor cursor-pointer" (click)="removeKeyValue(item,'urlEncode')" *ngIf="!item.add">
+                                <i class="far fa-trash-alt"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </ng-container>
+            <ng-container *ngIf="rawJsonFlagEnable">
+                <div class="row col rawJsonContentArea m-0 mt-3">
+                    <ngx-codemirror #codemirror 
+                    [options]="codeMirrorOptions"
+                    [(ngModel)]="rawJsonContentText"
+                    (ngModelChange)="setEditorContent($event)" id="">                    
+                    </ngx-codemirror>
+                </div>
+            </ng-container>
+        </div>
+        </div>
+        
+        <div class="row col p-0" *ngIf="throttlingEnabled">
+            <div class="row col m-0 mt-3" >
+                <input type="checkbox" class="m-0 verticalMiddle mr-1">
+                <label class="xSmallLabel m-0 fontWeight400">{{'APIChannelComponent.enableThrottlingLbl' | translate}}</label>
+            </div>
+            <div class="col m-0 mt-3">
+                <div class="col p-0"><label class="smallLable text-muted fontWeight300">{{'APIChannelComponent.maxRequestPerSecondLbl' | translate}}</label></div>
+                <div class="col p-0"> 
+                    <input type="text" class="form-control text-muted col-3 fontWeight300">
+                </div>
+            </div>
+        </div>        
+
+</div>
+
+<div class="customeOffers relative" *ngIf="offerDrawerSectionEnable" [ngClass]="offerDrawerSectionEnable ? 'slideIN':'slideOUT'">
+    <app-offers-drawer #mergeTagComponentElem [dataFromParent]="modalRef" (onCloseOfferPopup)="onCloseOfferDrawer();" (offersAppendToInput)="finalOffersSelected($event);" [mergeTagEnabled]="mergeTagEnabled" (showloader)="showloaderMethod($event);"></app-offers-drawer>
+</div>
+<ng-template #testAPINotifyModel>
+    <app-test-email [dataFromParent]="modalRef" [finalAPIPayloadData]="finalAPIPayloadData"></app-test-email>
+</ng-template>
+<!-- <div class="backdrop_offerSlider" *ngIf="backropOffersEnable"></div> -->

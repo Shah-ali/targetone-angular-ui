@@ -1,0 +1,124 @@
+<div class="clipboard-modal" id="clipboardModal" #clipboardModal>
+  <div class="row col-12 m-0 header">
+    <div>{{ 'clipboard.clipboardLbl' | translate }}</div>
+    <div>
+      <span (click)="minimizeAndMaximizeClipboard($event)"><i class="far fa-minus"></i></span>
+      <span class="move"><i class="fas fa-grip-vertical"></i></span>
+      <span (click)="toggleClipboardPopup()"><i class="fal fa-times"></i></span>
+    </div>
+  </div>
+  <div class="body">
+    <div class="tag-section" *ngIf="clipboardData.length != 0">
+      <div id="accordion" class="accordion">
+        <div *ngFor="let item of clipboardData; let i = index" class="accordion-item">
+          <div class="card">
+            <div class="card-header" [id]="'heading' + i" (click)="toggleCollapse(i)">
+              <div>{{ item.name }}</div>
+              <div>
+                <span class="delete-icon" (click)="deleteAccordionItem(i, 'notAll')"><i class="fal fa-trash-alt"></i></span>
+                <span class="collapse-arrow" [ngClass]="{ collapsed: !isCollapsed[i] }">
+                  <i class="fal fa-chevron-right"></i>
+                </span>
+              </div>
+            </div>
+
+            <div
+              [id]="'collapse' + i"
+              class="collapse"
+              [ngClass]="{ show: !isCollapsed[i] }"
+              [attr.aria-labelledby]="'heading' + i"
+              data-parent="#accordion">
+              <div class="card-body">
+                <table class="table">
+                  <thead>
+                    <tr>
+                      <th>{{ 'clipboard.fieldNameLbl' | translate }}</th>
+                      <th>{{ 'clipboard.mergeTagLbl' | translate }}</th>
+                      <th class="align-center">{{ 'clipboard.actionLbl' | translate }}</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let row of item.fields; let i = index">
+                      <td style="width: 20%">{{ row.name }}</td>
+                      <!-- <td style="width: 70%" title="{{ row.value }}">{{ row.value }}</td> -->
+
+                      <!-- <td>{{ item.value }}</td> -->
+                      <ng-container *ngIf="ifFreeStyleLayout(row.value); else stringValue">
+                        <td class="inner-table-cell freeStyle-table-row" colspan="2">
+                          <span
+                            class="expand show"
+                            (click)="toggleInnerTable($event, 'collapse', i)"
+                            [class.hide]="rowExpansionState[i]">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
+                              <path
+                                d="M64 80c-8.8 0-16 7.2-16 16V416c0 8.8 7.2 16 16 16H384c8.8 0 16-7.2 16-16V96c0-8.8-7.2-16-16-16H64zM0 96C0 60.7 28.7 32 64 32H384c35.3 0 64 28.7 64 64V416c0 35.3-28.7 64-64 64H64c-35.3 0-64-28.7-64-64V96zM200 344V280H136c-13.3 0-24-10.7-24-24s10.7-24 24-24h64V168c0-13.3 10.7-24 24-24s24 10.7 24 24v64h64c13.3 0 24 10.7 24 24s-10.7 24-24 24H248v64c0 13.3-10.7 24-24 24s-24-10.7-24-24z" />
+                            </svg>
+                          </span>
+                          <span
+                            class="collapse show"
+                            (click)="toggleInnerTable($event, 'expand', i)"
+                            [class.hide]="!rowExpansionState[i]">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
+                              <path
+                                d="M64 80c-8.8 0-16 7.2-16 16V416c0 8.8 7.2 16 16 16H384c8.8 0 16-7.2 16-16V96c0-8.8-7.2-16-16-16H64zM0 96C0 60.7 28.7 32 64 32H384c35.3 0 64 28.7 64 64V416c0 35.3-28.7 64-64 64H64c-35.3 0-64-28.7-64-64V96zM152 232H296c13.3 0 24 10.7 24 24s-10.7 24-24 24H152c-13.3 0-24-10.7-24-24s10.7-24 24-24z" />
+                            </svg>
+                          </span>
+                          {{ row.displayName }}
+                          <table class="inner-table hide">
+                            <thead></thead>
+                            <tbody>
+                              <tr *ngFor="let value of row.value">
+                                <td>{{ value }}</td>
+
+                                <td class="left-align-td">
+                                  <i
+                                    class="far fa-copy align-text-top"
+                                    #t1="ngbTooltip"
+                                    triggers="manual"
+                                    ngbTooltip="{{ 'copiedLbl' | translate }}"
+                                    (click)="copyPasteChildElement(t1, value)"></i>
+                                </td>
+                              </tr>
+                            </tbody>
+                          </table>
+                        </td>
+                      </ng-container>
+
+                      <ng-template #stringValue>
+                        <td>
+                          {{ row.value }}
+                        </td>
+
+                        <td style="width: 10%" class="align-center">
+                          <i
+                            class="fal fa-copy"
+                            #t1="ngbTooltip"
+                            triggers="manual"
+                            ngbTooltip="{{ 'copiedLbl' | translate }}"
+                            (click)="copyToPaste(t1, row.value)"></i>
+                        </td>
+                      </ng-template>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="tag-section-empty" *ngIf="clipboardData.length == 0">{{ 'clipboard.noTagCopiedLbl' | translate }}</div>
+
+    <hr />
+    <div class="footer">
+      <div>
+        <button type="button" class="btn buttonCss shadow-none clearClipBoard" (click)="deleteAccordionItem(0, 'All')">
+          <i class="far fa-trash mr-2"></i> {{ 'clipboard.clearClipBoard' | translate }}
+        </button>
+        <button type="button" class="btn buttonCss shadow-non" (click)="toggleClipboardPopup()">
+          {{ 'close' | translate }}
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

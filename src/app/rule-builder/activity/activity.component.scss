@@ -1,0 +1,73 @@
+.ruleSummaryDetails {
+  display: flex;
+  height: 80px;
+  justify-content: space-between;
+  align-content: center;
+  align-items: center;
+
+  h2 {
+    font-size: 18px;
+    color: #000;
+  }
+}
+
+::ng-deep .textAlignCenter {
+  justify-content: center;
+  text-align: center;
+}
+::ng-deep .textAlignCenter .ag-header-cell-label {
+  text-align: center;
+  justify-content: center;
+}
+
+::ng-deep .mutton-icon-style {
+  cursor: pointer;
+}
+
+.actionDetailsCtr, .dataSetDetailsCtr {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 8px 0px;
+  position: absolute;
+  width: 100px;
+  left: -200px;
+  top: 0px;
+  background: #ffffff;
+  border: 1px solid #e6e6e6;
+  box-shadow: 0px 0px 2px rgba(40, 41, 61, 0.04), 0px 4px 8px rgba(96, 97, 112, 0.16);
+  border-radius: 7px;
+}
+
+.actionDetailsCtr.hide, .dataSetDetailsCtr.hide {
+  display: none;
+}
+
+.detailsMenuItem{
+  display: flex;
+  width: 100%;
+  flex-direction: row;
+  align-items: center;
+  padding: 10px 16px;
+  cursor: pointer;
+}
+
+.menuItemIcon{
+  margin-right: 16px;
+}
+.menuItemDesc{
+  height: 21px;
+  font-family: 'Poppins';
+  font-style: normal;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 21px;
+  color: #666666;
+  
+}
+.menuItemDesc:hover,
+.detailsMenuItem:hover{
+  color: #333333;
+  background: #F4F9FF;
+}

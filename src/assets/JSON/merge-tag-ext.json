@@ -1,0 +1,146 @@
+[
+  {
+    "id": 1,
+    "icon": "customers.svg",
+    "name": "Customer",
+    "type": "Customer",
+    "child": [],
+    "fields": [
+      {
+        "name": "field customer 1",
+        "mTag": "tag1 customer"
+      },
+      {
+        "name": "field customer 2",
+        "mTag": "tag2 customer"
+      }
+    ]
+  },
+  {
+    "id": 2,
+    "icon": "tag-params.svg",
+    "name": "TagParam",
+    "type": "TagParam",
+    "child": [],
+    "fields": [
+      {
+        "name": "field nTagParam 1",
+        "mTag": "tag1 TagParam"
+      },
+      {
+        "name": "field TagParam 2",
+        "mTag": "tag2 TagParam"
+      }
+    ]
+  },
+  {
+    "id": 3,
+    "icon": "dme.svg",
+    "name": "DME",
+    "type": "DME",
+    "child": [
+      {
+        "cid": "11",
+        "icon": "dme.svg",
+        "name": "DME 1",
+        "type": "DME",
+        "fields": [
+          {
+            "name": "DME1 field1 ",
+            "mTag": "DME1 tag1"
+          },
+          {
+            "name": "DME1 field2",
+            "mTag": "DME1 tag2"
+          }
+        ],
+        "inputs": []
+      },
+      {
+        "cid": "12",
+        "icon": "dme.svg",
+        "name": "DME 2",
+        "type": "DME",
+        "fields": [
+          {
+            "name": "DME2 field1",
+            "mTag": "DME2 tag1"
+          },
+          {
+            "name": "DME2 field2",
+            "mTag": "DME2 tag2"
+          }
+        ],
+        "inputs": []
+      }
+    ]
+  },
+  {
+    "id": 4,
+    "icon": "api.svg",
+    "name": "API",
+    "type": "API",
+    "child": [
+      {
+        "cid": "11",
+        "icon": "api.svg",
+        "name": "hotelPrice",
+        "type": "API",
+        "fields": [
+          {
+            "name": "API1 field1",
+            "mTag": "API1 tag1"
+          },
+          {
+            "name": "API1 field2",
+            "mTag": "API1 tag2"
+          },
+          {
+            "name": "API1 field3",
+            "mTag": "API1 tag3"
+          }
+        ],
+        "inputs": [
+          {
+            "hotel_id": "{Model.HotelMaster.hotel_id}",
+            "loc": "BAN"
+          },
+          {
+            "hotel_id": "{Model.HotelMaster.hotel_id}",
+            "loc": "DEL"
+          }
+        ]
+      },
+      {
+        "cid": "12",
+        "icon": "api.svg",
+        "name": "hotelRating",
+        "type": "API",
+        "fields": [
+          {
+            "name": "API2 field1",
+            "mTag": "API2 tag1"
+          },
+          {
+            "name": "API2 field2",
+            "mTag": "API2 tag2"
+          },
+          {
+            "name": "API3 field3",
+            "mTag": "API3 tag3"
+          }
+        ],
+        "inputs": [
+          {
+            "hotel_id": "{Model.HotelMaster.hotel_id}",
+            "loc": "BAN"
+          },
+          {
+            "hotel_id": "{Model.HotelMaster.hotel_id}",
+            "loc": "DEL"
+          }
+        ]
+      }
+    ]
+  }
+]

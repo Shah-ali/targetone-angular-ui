@@ -1,0 +1,116 @@
+{
+    "placements": [
+      {
+        "recommendedProducts": [
+          {
+            "id": "558",
+            "title": "20% Discount",
+            "imgsrc": "https://png.pngtree.com/png-clipart/20191120/original/pngtree-sale-discount-banner-special-offer-png-image_5008258.jpg",
+            "content": "Special Offer",
+            "display": true,
+            "buttonName": "Add"
+          },
+          {
+            "id": "559",
+            "title": "90% Discount ",
+            "imgsrc": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTC_pG5ZblY2lw2HF8wr1ivKfaX_pexjdKTwA&usqp=CAU",
+            "content": "New offer",
+            "display": true,
+            "buttonName": "Add"
+          },
+          {
+            "id": "553",
+            "title": "New Year Product",
+            "imgsrc": "https://png.pngtree.com/png-clipart/20190520/original/pngtree-offer-discount-sale-pink-label-png-image_3588558.jpg",
+            "content": "Happy New Year ahead",
+            "display": true,
+            "buttonName": "Buy"
+          },
+          {
+            "id": "560",
+            "title": "Happy days",
+            "imgsrc": "https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/delish-homemade-pizza-horizontal-1542312378.png?crop=1.00xw:1.00xh;0,0&resize=980:*",
+            "content": "Happy days and hours",
+            "display": true,
+            "buttonName": "Buy"
+          },
+          {
+            "id": "561",
+            "title": "90% Discount ",
+            "imgsrc": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTC_pG5ZblY2lw2HF8wr1ivKfaX_pexjdKTwA&usqp=CAU",
+            "content": "New offer",
+            "display": true,
+            "buttonName": "Add"
+          }
+        ],
+        "placement": "home_page.recs_1"
+      },
+      {
+        "recommendedProducts": [
+          {
+            "id": "551",
+            "title": "New Year Product",
+            "imgsrc": "https://png.pngtree.com/png-clipart/20190520/original/pngtree-offer-discount-sale-pink-label-png-image_3588558.jpg",
+            "content": "Happy New Year ahead",
+            "display": true,
+            "buttonName": "Buy"
+          },
+          {
+            "id": "552",
+            "title": "20% Discount",
+            "imgsrc": "https://png.pngtree.com/png-clipart/20191120/original/pngtree-sale-discount-banner-special-offer-png-image_5008258.jpg",
+            "content": "Special Offer",
+            "display": true,
+            "buttonName": "Add"
+          }
+        ],
+        "placement": "home_page.recs_2"
+      },
+      {
+        "recommendedProducts": [
+          {
+            "id": "553",
+            "title": "Apply 20% off",
+            "imgsrc": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSoJU1j7yzdXz_SvOGcq5qi5k3DHR_6xKTRIw&usqp=CAU",
+            "content": "Apply coupon code",
+            "display": true,
+            "buttonName": "Buy"
+          },
+          {
+            "id": "554",
+            "title": "90% Discount ",
+            "imgsrc": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTC_pG5ZblY2lw2HF8wr1ivKfaX_pexjdKTwA&usqp=CAU",
+            "content": "New offer",
+            "display": true,
+            "buttonName": "Add"
+          },
+          {
+            "id": "555",
+            "title": "Happy days",
+            "imgsrc": "https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/delish-homemade-pizza-horizontal-1542312378.png?crop=1.00xw:1.00xh;0,0&resize=980:*",
+            "content": "Happy days and hours",
+            "display": true,
+            "buttonName": "Buy"
+          },
+          {
+            "id": "556",
+            "title": "20% Discount",
+            "imgsrc": "https://png.pngtree.com/png-clipart/20191120/original/pngtree-sale-discount-banner-special-offer-png-image_5008258.jpg",
+            "content": "Special Offer",
+            "display": true,
+            "buttonName": "Add"
+          },
+          {
+            "id": "557",
+            "title": "New Year Product",
+            "imgsrc": "https://png.pngtree.com/png-clipart/20190520/original/pngtree-offer-discount-sale-pink-label-png-image_3588558.jpg",
+            "content": "Happy New Year ahead",
+            "display": true,
+            "buttonName": "Buy"
+          }
+        ],
+        "placement": "home_page.recs_3"
+      }
+    ]
+  }
+  

@@ -1,0 +1,150 @@
+@import '../../../custom-style.scss';
+.buttonCss {
+  @include secondaryBttn;
+}
+
+.buttonPrimaryCss {
+  @include primaryBttn;
+}
+
+/* .modal-header {
+  background-color: #d0d4d7;
+  padding: 0.5rem 1rem;
+
+  .modal-title {
+    color: #3e484c;
+  }
+} */
+
+.textArea {
+  .accordionSection {
+    .error-message {
+      color: red;
+      font-size: 12px;
+      margin-top: 5px;
+    }
+
+    .accordion {
+      height: auto;
+
+      hr {
+        margin: 5px 0;
+      }
+    }
+
+    .accordion-item {
+      margin-bottom: 10px;
+
+      .card {
+        background-color: #fff;
+        border: none;
+
+        .card-header {
+          cursor: pointer;
+          display: flex;
+          justify-content: space-between;
+          font-size: 14px;
+          font-weight: 500;
+          background-color: #f5f5f5;
+          border: none;
+          padding: 10px;
+
+          .res {
+            display: flex;
+            align-items: center;
+
+            span {
+              font-size: 12px;
+              color: #333333;
+            }
+          }
+
+          .toggleButton label {
+            margin-bottom: 0;
+          }
+        }
+
+        .card-body {
+          padding: 0;
+          margin: 10px;
+
+          .conditionLabel {
+            display: flex;
+            justify-content: space-between;
+            font-size: 13px;
+          }
+
+          .conditionTextArea {
+            textarea {
+              width: 100%;
+              height: 133px;
+              font-size: 12px;
+              color: #333333;
+            }
+          }
+        }
+
+        .disabledFields {
+          pointer-events: none;
+          cursor: not-allowed;
+          color: rgb(179, 179, 179);
+          opacity: 0.5;
+        }
+      }
+
+      .collapse-arrow {
+        &.collapsed i {
+          transform: translateY(0%) rotate(-270deg);
+          font-size: 12px;
+        }
+      }
+
+      .heightAndLinesStyle {
+        display: flex;
+
+        label,
+        input {
+          font-size: 12px;
+          color: #333333;
+        }
+        .inputBox {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+
+          span {
+            margin-left: 5px;
+            font-size: 12px;
+          }
+        }
+      }
+    }
+  }
+}
+
+.condtionSpace {
+  span {
+    font-size: 13px;
+    font-weight: 500;
+  }
+  label {
+    font-size: 12px;
+    color: #333;
+    font-weight: 400;
+    margin-right: 20px;
+    display: flex;
+    align-items: center;
+  }
+
+  input[type='radio'] {
+    margin-right: 5px;
+  }
+}
+
+.helpTextToBuildCondition {
+  a {
+    font-family: 'POPPINS';
+    color: #29b0e3;
+    font-size: 12px;
+  }
+}

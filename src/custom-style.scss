@@ -1,0 +1,99 @@
+@import '../src/assets/themes/variables.scss';
+
+// common button style
+
+$btnbgColor: #fff;
+$btntextColor: #7396ff;
+$btnborderColor: #026fe9;
+$btnfontsize: 0.8rem;
+$labelfontsize: 0.8rem;
+$inputlabelsize: 0.7rem;
+$fontweightnormal: normal;
+$fontweight100: 100;
+$fontweightlight: 400;
+$inputfontsize: 1rem;
+$selectfontsize: 1rem;
+$titlefontsize: 1.2rem;
+$titleLabelcolor: #666f80;
+$borderradius: 0.3rem;
+$btnPadding: 0.379rem 0.75rem !important;
+
+@mixin buttonStyle1($button: #026fe9) {
+  padding: $btnPadding;
+  border-radius: 5px;
+  font-size: 0.75rem;
+  font-weight: 400;
+  border-color: $button;
+  color: $button;
+  background-color: #fff;
+  margin: auto;
+
+  .buttonStyle1:hover {
+    color: $button;
+    background-color: #fff;
+  }
+}
+
+@mixin primaryBttn() {
+  padding: $btnPadding;
+  border-radius: 7px;
+  font-size: 0.75rem;
+  font-weight: normal;
+  border-color: $secondaryBtnColor;
+  color: #fff;
+  background-color: $secondaryBtnColor;
+  margin: auto;
+
+  &:hover {
+    color: #fff;
+    background-color: #358ced;
+    border: 1px solid $secondaryBtnColor;
+    box-shadow: 0px 0px 7px 2px rgba(10, 165, 255, 0.16) !important;
+  }
+
+  :disabled {
+    color: #ecf5ff;
+    background-color: #9ac5f6;
+    border: 1px solid $secondaryBtnColor;
+  }
+}
+
+@mixin secondaryBttn() {
+  padding: $btnPadding;
+  border-radius: 7px;
+  font-size: 0.75rem;
+  font-weight: normal;
+  border-color: $secondaryBtnColor;
+  color: $secondaryBtnColor;
+  background-color: #fff;
+  margin: auto;
+
+  &:hover {
+    color: $secondaryBtnHoverColor;
+    border: 1px solid $secondaryBtnHoverColor;
+    background-color: #fff;
+    box-shadow: 0px 0px 7px 2px rgba(10, 165, 255, 0.16) !important;
+  }
+
+  :disabled {
+    color: #9ac5f6;
+    border: 1px solid #9ac5f6;
+  }
+}
+
+@mixin titleLabel($fontCss: #666f80, $fs: $btnfontsize, $fw: $fontweightnormal) {
+  color: $fontCss;
+  font-size: $fs;
+  font-weight: $fw;
+}
+@mixin subTitleLabel($fontWgt: 100, $fontSz: $inputlabelsize) {
+  font-size: $fontSz;
+  font-weight: $fontWgt;
+}
+@mixin borderColor($color: #e9e9e9) {
+  border: 1px solid;
+  border-color: $color;
+}
+@mixin handTool($tool: pointer) {
+  cursor: $tool;
+}

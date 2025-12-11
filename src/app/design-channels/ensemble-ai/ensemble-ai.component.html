@@ -1,0 +1,331 @@
+<div class="modal-header whiteBackColor mb-2 borderRadius0 headerHeight relative">
+    <h5 class="m-0">{{'ensembleAiComponentLables.ensembleAiTitleLbl' | translate}}</h5> 
+    <img tooltipclass="ngbTooltipStyle" src="./assets/images/info-circle.svg" class="header-help-icon mr-2 mb-1 helpIconPos" (click)="getHelpContentMethod('defining_outfit_style')"
+         [ngbTooltip]="'header.personalisationTags.olhHelp' | translate" placement="left" container="body">   
+    <button type="button" class="close" (mousedown)="onClose()" aria-label="Close">                
+        <i aria-hidden="true" class="fal fa-times greylight"></i>
+    </button>
+</div>
+<div class="modal-body">
+   <div class="row col m-0 p-0 ensembleAISection">
+    <div class="col-2 whiteBackColor mr-2 p-0" id="leftsideOptionMenu">
+        <div class="col wrapperleftoptionMenu p-0 layoutHeightCalc">
+            <ul class="m-0 p-0 mt-1 tabs-section">
+                <li (click)="selectLeftTabs(i)" [ngClass]="nav.tabActive == activeTabId? 'active' : ''" *ngFor="let nav of leftSideOptions let i=index;">
+                    {{ nav.menuName }}
+                </li>
+            </ul>            
+        </div>
+    </div>
+    <div class="col whiteBackColor p-0" id="rightSideSection">
+        <!-- Input parameter Tab content-->
+        <div class="col p-0 tabcontentEnsemble_{{activeTabId}} layoutHeightCalc" *ngIf="activeTabId == 0">
+            <div class="col autenticationSection p-0 pt-4 pb-3">
+                <div class="row col-6 p-0">
+                    <div class="col {{key.id}}_section relative" *ngFor="let key of seedOptionDataArrayObj[0]?.authentication; let i=index;">
+                        <div class="col">
+                            <label class="col smallLabel textColor control-label p-0">{{key.name}} </label>
+                            <input class="form-control col smallLabel textColor mr-2"  [type]="key.visiblePassword? 'text' : 'password'" placeholder="" name="apiKey" [(ngModel)]="key.value">
+                            <i class="fa eyePosition" [ngClass]="key.visiblePassword ? 'fa-eye-slash' : 'fa-eye'" (click)="showPasswordMethod(i);"></i>
+                        </div>
+                    </div>
+                    
+                </div>
+            </div>
+            <div class="row col p-0 m-0" id="">
+                <div class="row col p-0 m-0">
+                    <div class="col-5" id="sectionArea_seedwrapper">
+                        <div class="col m-0 mt-3 p-0" >
+                            <app-merge-tag-copy></app-merge-tag-copy>
+                        </div>
+                        <!--Seed option Area-->
+                        <div class="col seedOption_area m-0 mt-3 mb-3">
+                            <div class="col wrapperOfOptions m-0 pl-3 pr-3">
+                                <label class="p-0 mb-2 mt-2">{{'ensembleAiComponentLables.chooseSeedOptionLbl' | translate}}</label>
+                                <div class="row col m-0 p-0">
+                                    <ng-container *ngFor="let radioOpt of seedOptionDataArrayObj[0]?.seedOptions; let i=index;">
+                                        <div class="col radioOpt_{{i}} p-0">
+                                            <input type="radio" class="m-0 mr-2 verticalAlign pointer inlineLabel" name="{{radioOpt.id}}" [checked]="radioOpt.activeStatus" (click)="onChangeOfProductIdMethod($event,i);">
+                                            <label class="fontCustomSize inlineLabel" for="{{radioOpt.id}}">{{radioOpt.name}}</label>
+                                        </div>                                        
+                                    </ng-container>
+                                    
+                                </div>
+                                <div class="col p-0">
+                                    <ng-container *ngFor="let item of seedOptionDataArrayObj[0]?.seedOptionObjArray; let i=index;">                                        
+                                        <div class="col p-0" id="eachSection_{{i}}" *ngIf="item.activeStatus">
+                                            <label class="smallLabel textColor m-0 pt-2">
+                                                <i class="far fa-info-circle">                                           
+                                                </i>
+                                                {{item.labelInfo}}
+                                            </label>
+                                            <div class="col {{item.id}}_section p-0">
+                                                <ng-container *ngTemplateOutlet="keyValuePairInputVal; context: {tempObj:item.arrayObj}"></ng-container>
+                                            </div>
+                                        </div> 
+                                    </ng-container>                                                                   
+                                </div>
+                            </div>
+                        </div>
+                        <!--Region Area-->
+                        <div class="col RegionOptionArea">
+                            <ng-container *ngTemplateOutlet="keyValuePairInputVal; context: {tempObj:seedOptionDataArrayObj[0]?.regionOption}"></ng-container>
+                        </div>
+                    </div>
+                        <div class="col mt-4" id="outterWrapperViewConfig">
+                            <div class="viewMoreConfigSettings p-3" [ngClass]="viewMoreConfigFlagEnabled ? 'borderLink':''">
+                                <div class="col p-0 viewMoreArea">
+                                    <div class="col" [ngClass]="!viewMoreConfigFlagEnabled ? 'p-3 border':'pl-0 pt-2'">
+                                        <input type="checkbox" class="p-0 mr-2 verticalAlign" [checked]="viewMoreConfigFlagEnabled" (click)="enableViewMoreOptionMethod($event)">
+                                        <label class="smallLabel textColor">{{'ensembleAiComponentLables.viewMoreConfigurationSettingsLbl' | translate }}</label>
+                                    </div>
+                                    <div class="col-6 p-0 moreSettingsOptionDisplay" *ngIf="viewMoreConfigFlagEnabled">
+                                        <ng-container *ngTemplateOutlet="keyValuePairInputVal; context: {tempObj:seedOptionDataArrayObj[0]?.viewmoreConfigOption}"></ng-container>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <!--Addition Input parameter -->
+                        <div class="col" id="addAdditionalParameters_section">
+                            <div class="col p-0 parameterAppendArea mt-3 mb-3">
+                                <div class="row col mt-2 mb-2 p-0" *ngFor="let param of addPramaAddtionalObjArray; let i=index;">
+                                    <div class="col">
+                                        <input type="text" class="form-control smallLabel" placeholder="{{param.placeholderId}}" [(ngModel)]="param.id">
+                                    </div>
+                                    <div class="col">
+                                        <input type="text" class="form-control smallLabel" placeholder="{{param.placeholderValue}}" [(ngModel)]="param.value">
+                                    </div>
+                                    <div class="col">
+                                        <i class="fal fa-times mt-2 pt-1 greylight pointer" title="{{'removeLbl' | translate}}" (click)="deletePramaMethod(i);"></i>
+                                    </div>
+                                </div>
+                            </div>
+                            <button type="submit" class="btn buttonCss shadow-none m-0 mr-1" [disabled]="addParamsDisabledMode" (click)="addAdditionParamMethod();">{{'ensembleAiComponentLables.addAdditionalInputsLbl' | translate}}</button>
+                        </div>
+    
+                            
+                        </div>
+                        
+                </div>
+            </div>
+        </div>
+        <!-- Layout configuration Tab Conent-->
+         <div class="col p-0 tabcontentEnsemble_{{activeTabId}} layoutHeightCalc" *ngIf="activeTabId == 1">
+           <div class="col mt-3 mb-2">
+                <div class="headerPart" id="headerSettings_section">
+                    <h5 class="upperCaseLabel">{{'ensembleAiComponentLables.layoutConfigurationLbl' | translate}}</h5>
+                    <label class="smallLabel mb-2 textColor">{{'ensembleAiComponentLables.confirmationMsgOnChnageOfDimensionLbl' | translate}}</label>
+                </div>
+                <div class="col-3 p-0 mt-3 mb-2" id="rowsNcolumnsSettings_Section">
+                    <label class="mediumLabel textColor">{{'ensembleAiComponentLables.selectGridDimensionsForNoofRowNcolumnLbl' | translate}}</label>
+                    <div class="row p-0">
+                        <div class="col">
+                            <label class="smallLabel textColor">{{'ensembleAiComponentLables.noofRowsLbl' |translate}}</label>
+                            <select class="form-control" [(ngModel)]="selectedNoofRows" (change)="confirmationSwalMsgCallMethod($event,'row');">
+                                <option *ngFor="let count of noofRowsArray">{{count}}</option>
+                            </select>
+
+                        </div>
+                        <div class="col">
+                            <label class="smallLabel textColor">{{'ensembleAiComponentLables.noofColumnsLbl' | translate}}</label>
+                            <select class="form-control" [(ngModel)]="selectedNoofColumns" (change)="confirmationSwalMsgCallMethod($event,'column');">
+                                <option *ngFor="let count of noofColumnsArray">{{count}}</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="col p-0">
+                    <label class="mediumLabel mt-2 mb-2 textColor">{{'ensembleAiComponentLables.configureforNoofPartsLbl' | translate }}</label>
+                    <ul class="col nav tabsLiStyle tabsNoSpace mb-2">
+                        <li class="" (click)="switchLayoutTab(i,layout);" *ngFor="let layout of tabsLayoutArray; let i=index;" [ngClass]="layoutTabActive === i? 'active':''">{{layout}} {{'ensembleAiComponentLables.partsLbl' | translate}}</li>                    
+                    </ul>
+                </div>
+                <div class="col mt-3 mb-3" id="layoutConfigSettings_section">
+                    <label class="mediumLabel mt-2 mb-2 upperCaseLabel">{{'ensembleAiComponentLables.configuringforLbl' | translate }} {{currentActivePartSelected}} {{'ensembleAiComponentLables.partsLbl' | translate}}</label>
+                    <div class="col p-2 mt-2 mb-3">
+                        <ng-container *ngTemplateOutlet="layoutStrutureDivs;"></ng-container>
+                        <label class="smallLabel p-0 mt-2 mb-2 textColor">{{'ensembleAiComponentLables.clickonthecellstoMmanagePartsfromEnsemble' | translate}}</label>
+                    </div>
+                    
+                </div>
+            </div>
+         </div>
+         <!-- Block configuration Tab Conent-->
+         <div class="col p-0 tabcontentEnsemble_{{activeTabId}} blockConfigStrutureArea layoutHeightCalc" *ngIf="activeTabId == 2">
+            <ng-container *ngTemplateOutlet="blockConfigStruture"></ng-container>
+         </div>
+        
+   </div>
+
+</div>
+<div class="modal-footer d-flex justify-content-right whiteBackColor">    
+    <button type="button" class="btn buttonCss shadow-none m-0 mr-1" id="closeBtn" (click)="onClose();">{{'close' | translate}}</button>
+    <button type="submit" class="btn buttonPrimaryCss shadow-none m-0" [disabled]="isPublishActiveContentEnabled" (click)="insertDynamicContentMethod();">{{'done' | translate}}</button>
+</div>
+<ng-template #keyValuePairInputVal let-tempObj="tempObj">
+    <div class="col p-0 mt-3 mb-2 divSection" *ngFor="let child of tempObj; let j=index;">
+        <ng-container *ngIf="child.type !== 'checkbox'">
+            <label class="col smallLabel textColor p-0" [ngClass]="child.mandatory ? 'control-label':''">{{child.name}}
+                <i class="far fa-info-circle" title="{{child.infoText}}" *ngIf="child.infoIconEnable"></i>
+                <i class="optionalSetting xSmallLable textColor float-right normalFontStyle" *ngIf="child.optional">{{'ensembleAiComponentLables.optionalLbl' | translate}}</i>
+            </label>            
+        </ng-container>        
+        <!--If its Input Type-->
+        <ng-container *ngIf="child.type == 'input'">            
+            <input class="form-control col smallLabel textColor" type="text" placeholder="" [(ngModel)]="child.value">            
+        </ng-container>
+        <!--If its Select option Type-->
+        <ng-container *ngIf="child.type == 'select'">
+            <div class="row selectNumberDiv m-0">
+                <div class="numVal pointer" [ngClass]="noofSeedSelected == list ? 'active':''"  *ngFor="let list of child.noofSeeds; let i=index;" (click)="noofSeedsSelectionMethod(child,list);">
+                    {{list}}
+                </div>
+            </div>
+        </ng-container>
+        <!--If its dropdown option Type-->
+        <ng-container *ngIf="child.type == 'dropdown'">
+            <select class="form-control smallLabel" [(ngModel)]="child.value" (change)="getnumberoFPartsSelectedMethod(child.value);">       
+                <!-- <option value="-1">Choose part</option>          -->
+                <option value="{{list.value}}" *ngFor="let list of child.defaultOption; let i=index;">{{list.name}}</option>
+            </select>
+        </ng-container>
+        <!--If It is checkbox type-->
+        <ng-container *ngIf="child.type == 'checkbox'">                        
+            <input class="smallLabel textColor mr-2 verticalAlign" type="checkbox" [(ngModel)]="child.value"> 
+            <span class="col smallLabel p-0 boldFont">{{child.name}}</span>           
+        </ng-container>
+    </div>
+</ng-template>
+<ng-template #layoutStrutureDivs>
+    <ng-container *ngFor="let partLoop of AiLayoutDataArrayObj; let i=index;"> 
+        <div class="col p-0 wrapperParts" [ngStyle]="widthOflayoutOutterPanel" *ngIf="partLoop.partNo == currentActivePartSelected">
+            <div class="partBoxStyle relative" [ngClass]="!loopDiv.clickTextEnabled? 'higlightParts' : ''" *ngFor="let loopDiv of partLoop.partArray; let j=index;"  [ngStyle]="{ 'background-image': 'url(' + loopDiv.imagePath + ')', 'width': eachPartBoxSize,'background-position': 'center'}">
+                <span>{{loopDiv.partPosition}}</span>  
+                <i class="xSmallLable floatBottomLink pointer" *ngIf="loopDiv.clickTextEnabled" (click)="getDropdownListMethod(loopDiv.partPosition,j);">{{'ensembleAiComponentLables.clickToChangePartLbl' | translate  }}</i>          
+                    <ng-container *ngIf="partDropdownEnabled == loopDiv.partPosition  && !loopDiv.clickTextEnabled">
+                        <div class="wrapperChoosPart">                    
+                            <label class="smallLabel">{{'ensembleAiComponentLables.choosePartLbl' | translate }}</label>
+                        <select type="dropdown" class="form-control m-0 smallLabel" (change)="changePartToLayoutMethod($event,j);">
+                            <option value="">{{'ensembleAiComponentLables.selectPartLbl' | translate }}</option>
+                            <option value="">{{'ensembleAiComponentLables.emptyPartLbl'  | translate }}</option>
+                            <option *ngFor="let partVal of loadPartsInDropdown;" value="{{partVal}}">{{'ensembleAiComponentLables.partLableMsg' | translate }} {{partVal}}</option>                            
+                        </select>
+                        </div>                
+                </ng-container>
+                
+                
+            </div>
+        </div> 
+        
+    </ng-container>    
+    <!-- <div class="row p-0" id="row_{{i}}" *ngFor="let rows of calculateLayoutSize(selectedNoofRows); let i=index">
+        <div class="col partBoxStyle" id="columns_{{j}}" *ngFor="let columns of calculateLayoutSize(selectedNoofColumns); let j=index;">
+            <span>{{columns}}</span>
+            <i class="smallLabel float-bottom">Click to change part</i>
+        </div>
+    </div> -->
+</ng-template>
+<ng-template #blockConfigStruture>
+   <div class="col p-0" id="BlockConfigOutterWrapper">
+    <div class="row col">
+        <div class="col-8">
+            <div class="row col pt-3">
+                <h4 class="upperCaseLabel">
+                    {{'ensembleAiComponentLables.blockConfigurationLbl' | translate}}
+                </h4>
+                <p class="xSmallLable mt-2 mb-2 textColor">{{'ensembleAiComponentLables.blockConfigDetailsDescriptionLbl' | translate}}</p>
+            </div>     
+            <div class="row col mt-2 mb-2">
+                <div class="p-0 imgResponsive">
+                    <img  class="" src="assets/images/layoutimages_ensembleAI/blockConfigImg.svg">
+                </div>
+                <div class="col-6 p-0">
+                    <div class="col p-0" id="widthHeightSettings">
+                        <div class="col styleArea_section">
+                            <div class="col p-0 mb-2" *ngFor="let xxx of widthHeightBorderObjJson; let i = index">
+                                <label class="col smallLabel textColor p-0 ml-0">{{xxx.displayName}}</label>
+                                <div class="row col">
+                                    <input class="form-control col-7 smallLabel textColor" type="text" placeholder="" [(ngModel)]="xxx.value"> 
+                                    <span class="col xSmallLable marginTopCustom">px</span>
+                                </div>                                
+                            </div>
+                            
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <label class="smallLabel textColor">
+                {{'ensembleAiComponentLables.showTheseProductDetailsasPartofensemblesLbl' | translate }}
+            </label>
+            <div class="col-9 p-0">
+                <div class="accordionSTyle mb-1" [ngClass]="prodObj.needed ? 'activeA':'borderbottomUnactive'" *ngFor="let prodObj of productDetailsObjJson; let i=index;">
+                    <div class="col p-0">
+                        <input type="checkbox" class="smallLabel verticalAlign" [(ngModel)]="prodObj.needed">
+                        <label class="smallLabel pl-2 linkLabelActive">{{prodObj.displayName}} </label>
+                        <i class="smallLabel float-right"></i>
+                    </div>
+                    
+                    <div class="col content-Accordion" *ngIf="prodObj.needed">
+                        <div class="row col-9 p-0 mt-3 mb-3">
+                            <div class="col fontSize_section">
+                                <div class="col">
+                                    <label class="col smallLabel textColor p-0 ml-0">{{'ensembleAiComponentLables.fontSizeLbl' | translate}}</label>
+                                    <select class="form-control col smallLabel textColor" type="text" placeholder="" [(ngModel)]="prodObj.fontsize">
+
+                                        <option [value]="sizeOpt.value" *ngFor="let sizeOpt of prodObj.fontObject.fontSize">{{sizeOpt.value}}</option>
+                                    </select>
+                                    <!-- <i class="far fa-eye"></i> -->
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div class="col fontColor_section">
+                                    <label class="col smallLabel textColor p-0 ml-0">{{'ensembleAiComponentLables.colourLbl' | translate }}</label>
+                                    <input class="form-control col smallLabel textColor" type="color" [(ngModel)]="prodObj.color">
+                                    
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row col-9 p-0 mt-3 mb-3">
+                            <div class="col fontFamily_section">
+                                <div class="col">
+                                    <label class="col smallLabel textColor p-0 ml-0">{{'ensembleAiComponentLables.fontFamilyLbl' | translate }}</label>
+                                    <!-- <input class="form-control col smallLabel textColor" type="text" [(ngModel)]="prodObj.fontfamily"> -->
+                                    <select class="form-control col smallLabel textColor" type="text" [(ngModel)]="prodObj.fontfamily">
+                                        <option [value]="familyOpt.value" *ngFor="let familyOpt of prodObj.fontObject.fontFamily">{{familyOpt.value}}</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div class="col fontWeight_section">
+                                    <label class="col smallLabel textColor p-0 ml-0">{{'ensembleAiComponentLables.fontWeightLbl' | translate }}</label>
+                                    <!-- <input class="form-control col smallLabel textColor" type="text" [(ngModel)]="prodObj.fontweight"> -->
+                                    <select class="form-control col smallLabel textColor" type="text" [(ngModel)]="prodObj.fontweight">
+                                        <option [value]="weightOpt.value" *ngFor="let weightOpt of prodObj.fontObject.fontWeight">{{weightOpt.value}}</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row col-9 p-0 mt-3 mb-3" *ngIf="prodObj.value !== undefined">
+                            <div class="col fontFamily_section">
+                                <div class="col">
+                                    <label class="col smallLabel textColor p-0 ml-0">{{'ensembleAiComponentLables.valueLbl' | translate }}</label>
+                                    <input class="form-control col smallLabel textColor" type="text" [(ngModel)]="prodObj.value">
+                                </div>
+                            </div>                            
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col p-0">
+            <div class="col-8 fontColor_section mt-2">
+                <label class="col smallLabel textColor p-0 ml-0">{{'ensembleAiComponentLables.noofEnsemblesLbl' | translate }}</label>
+                <input class="form-control col smallLabel textColor" type="number" min="1" max="{{ensembleResponseLimit}}" [(ngModel)]="noofEnsembles" (change)="ensemblesDefineMethod($event);">
+            </div>
+        </div>
+    </div>
+   </div>
+</ng-template>
+
+
+

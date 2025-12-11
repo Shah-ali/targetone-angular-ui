@@ -1,0 +1,126 @@
+.dmColumnarLayoutContainer {
+    background: #F0F2F7;
+    padding: 15px;
+    height: calc(100vh - 120px);
+    overflow: auto;
+
+}
+.innerContainer{
+    .marginTop30 {margin-top: 30px;}
+    .verticalTopText{vertical-align: text-top;}
+    .backgroundWhite{background-color: #FFFFFF;}
+    .verticalMiddle{vertical-align: middle;}
+    .backgCol{background-color:#FBFBFB;}
+    .mr-15{margin-right: -15px;}
+    .blueColorBtn{color:#026FE9}
+    .blueColorBtn{color: #fff !important;
+        background: #026FE9 !important;}
+    .blueBorder{
+        border: 1px solid #026FE9;
+        border-radius: 0 6px 6px 0;
+        height: 70px;
+    }
+    .saveAsTemplatePopup{
+        position: absolute;
+        width: 70%;
+        height: 185px;
+        z-index: 999;
+        left: 26%;
+        top: 55%;
+        border-radius: 10px;
+        border: 1px solid #ccc;
+        background-color: #FFFFFF;
+    }
+    .table-striped>.rowStripe:nth-child(odd), 
+    .table-striped>.rowStripe:nth-child(odd) {
+        background-color: #FFFFFF; 
+    }
+    .table-striped>.rowStripe:nth-child(even), 
+    .table-striped>.rowStripe:nth-child(even) {
+        background-color: #FAFAFA; 
+    }
+    .tempLayoutSection{
+        background-color: #FFF;
+        height: calc(100vh - 0px);
+        overflow-x: hidden;
+        overflow-y: auto;
+        .liteBckgrd{
+            background: #FBFBFB;
+            border-radius: 10px;
+            padding: 15px;
+        }
+        .scrollTable{
+            height: 300px;
+            overflow-x: hidden;
+            overflow-y: auto;
+          }
+          .customTableStyle{
+            // border:1px solid #848485;
+            font-size: 0.9rem;
+            background-color: #fdfdf5;
+            width: 100%;
+          }
+          .customTableStyle th{
+            background-color: #F1F1F1;
+            font-size:0.80rem;
+            border-radius: 0;
+            font-weight: 500;
+            padding: .8rem;
+            color: #666666;
+          }
+          .customTableStyle thead tr, .customTableStyle tbody tr{
+            //border:1px solid #ccc;
+            font-size: 0.75rem;
+            background-color: #fff;  
+          }
+          .customTableStyle tbody td{
+            vertical-align: top;
+            padding: 15px;
+          }
+        .columnHeaderText{
+            height: 70px;
+        }
+        .radiusStyle{
+            border-radius: 8px;
+            border-color: #026FE9;    
+        }
+        #tableColumnar{
+            background: #F1F1F1;
+            border-radius: 10px;
+            padding: 10px;
+        }
+        .columnValueArea {
+            border: 1px solid #CCCCCC;
+            border-radius: 8.5px;
+            height: 70px;
+            background: #fff;
+            .columnValueInp {
+                //margin-top: 7px;
+                outline: none;
+                width: 96%;
+                //left: 10px;
+                position: absolute;
+                font-size: 13px;
+                height: 68px;
+                overflow: scroll;
+                border: 0;
+            }
+           
+            .iconContainer {
+                position: absolute;
+                right: 0;
+            }
+            .fa-grin, .fa-plus {
+                padding: 27px 15px;
+                border-left: 1px solid #ccc;
+                cursor: pointer;
+            }
+            .disabledPlusBtn{
+                pointer-events: none;
+                cursor: not-allowed;
+                color: rgb(179, 179, 179);
+            }
+        }
+        
+    }
+}

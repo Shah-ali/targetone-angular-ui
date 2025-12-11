@@ -1,0 +1,88 @@
+<app-failsafe
+  (callBeeInstance)="saveEmail()"
+  (callBeeInstanceWhenTabSwitch)="onTabSwitchCall()"
+  (saveAsTemplate)="saveMyTemplate($event)"
+  (updateBeeEditorTempObj)="reloadBeeEditor($event)"></app-failsafe>
+<app-copy-clipboard></app-copy-clipboard>
+<div *ngIf="!isTemplateLibraryMode">
+  <app-subjectline (getSubjectVal)="updateSubjectObj($event)"></app-subjectline>
+</div>
+<div class="row p-3">
+  <div class="col p-3 rounded bg-white" [ngClass]="isTemplateLibraryMode? 'templateLibraryParent':''">
+    <div class="row bg-white">
+      <div class="col text-left">
+        <h3>
+          <p class="">{{ 'designEditor.beeEditorComponent.emaildesignerlbl' | translate }}</p>
+          <p class="font-small text-muted mt-1">{{ 'designEditor.beeEditorComponent.designYourEmaillbl' | translate }}</p>
+        </h3>
+      </div>
+      <div class="col text-center d-none">
+        <span class="text-dark m-2 font-small" (click)="previewDeskTop()">
+          <i class="fa fa-desktop mr-1"></i>{{ 'designEditor.emailEditor.desktoplbl' | translate }}</span>
+        <span class="text-dark m-2 font-small" (click)="previewMobile()">
+          <i class="fa fa-mobile mr-1"></i>{{ 'designEditor.emailEditor.mobilelbl' | translate }}</span>
+      </div>
+      <div class="col-10 text-right" *ngIf="!isTemplateLibraryMode">
+        <button class="btn buttonCss shadow-none mr-1"[disabled]="!fullPreviewBtnDisabled"  (click)="openFullPreviewMethod()">{{ 'designEditor.beeEditorComponent.fullPreview' | translate }}</button>
+        <button class="btn buttonCss shadow-none mr-1" [disabled]="!isMergeTagDmeEnabled"  (click)="openGlobalMergeTag()">+ {{ 'designEditor.beeEditorComponent.globalMergeTaglbl2' | translate }}</button> 
+        <!-- <button class="btn buttonCss shadow-none mr-1" [disabled]="isMergeTagBttnDisabled"  (click)="openGlobalMTag()">{{ 'designEditor.beeEditorComponent.globalMergeTaglbl' | translate }} <i class="fal fa-info-circle" title="To copy global merge tag extesnsion"></i></button>-->
+        <button class="btn buttonCss shadow-none mr-1" (click)="openAttachmentModal(attachmentModal)">
+          <i class="fa fa-paperclip mr-2"></i>{{ 'designEditor.beeEditorComponent.attachmentlbl' | translate }}
+        </button>
+        <button class="btn buttonCss shadow-none mr-1" (click)="openClipboard()"><i class="far fa-lg fa-clipboard-list"></i></button> 
+        <!-- <button class="btn buttonCss shadow-none mr-1" (click)="openTestEmailModal(testEmailModal)">
+          <i class="fal fa-clipboard-list mr-2"></i>{{ 'designEditor.beeEditorComponent.testEmaillbl' | translate }}
+        </button> -->
+        <!-- <select class="action-section-lists">
+                    <option value="-1">Actions</option>
+                    <option value="1">Preview on client</option>
+                    <option value="2">Spam Test</option>
+                </select> -->
+        <div class="btn-group action-section-lists relative">
+          <button
+            class="btn buttonCss shadow-none mr-1 dropdown-toggle actionMenuBtn"
+            type="button"
+            data-bs-toggle="dropdown"
+            aria-expanded="false"
+            (click)="toggleActionPopup()">
+            {{ 'designEditor.emailEditor.actionslbl' | translate }}
+          </button>
+          <ul class="actionMenusPopup" *ngIf="showActionListpopup">
+            <li class="" (click)="openTestEmailModal(testEmailModal)">
+              {{ 'designEditor.beeEditorComponent.testEmaillbl' | translate }}
+            </li>
+            <li class="" (click)="callPreviewOnClientMethodFromSaveBtn(previewOnClientTemplate, 1)">
+              {{ 'designEditor.beeEditorComponent.previewonClientlbl' | translate }}
+            </li>
+            <li class="" (click)="callPreviewOnClientMethodFromSaveBtn(previewOnClientTemplate, 2)">
+              {{ 'designEditor.beeEditorComponent.spamTestlbl' | translate }}
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div id="beefree-sdk-container" #emailContainer></div>
+  </div>
+</div>
+
+<ng-template #testEmailModal>
+  <app-test-email [dataFromParent]="modalRef"></app-test-email>
+</ng-template>
+
+<ng-template #attachmentModal>
+  <app-attach-email [dataFromParent]="modalRef"></app-attach-email>
+</ng-template>
+
+<ng-template #previewOnClientTemplate>
+  <app-preview-on-client [dataFromParent]="modalRef"></app-preview-on-client>
+</ng-template>
+
+<ng-template #mergeTagModal>
+  <app-merge-tags></app-merge-tags>
+</ng-template>
+
+<ng-template #fullPreviewDesignModal>
+ <app-full-preview-addons></app-full-preview-addons>
+</ng-template>
+
+

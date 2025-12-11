@@ -1,0 +1,347 @@
+<div class="modal-container testEmailConatiner">
+    <div class="loaderMask" *ngIf="showLoader">
+        <div class="spinner-border text-dark" role="status">
+            <span class="visually-hidden d-none">{{'designEditor.loadinglbl' | translate}}</span>
+        </div>
+    </div>
+    <div class="d-flex justify-content-center align-items-center">
+        <div class="col-12" *ngIf="!responseReceived">
+            <div class="row">
+                <h5 class="col-10 mediumLabel" *ngIf="channelType === CHANNEL_INFO_HTML.CHANNEL_TYPE.EMAIL">{{'designEditor.testEmailComponent.testEmaillbl' | translate}}</h5>
+                <h5 class="col-10 mediumLabel" *ngIf="channelType === CHANNEL_INFO_HTML.CHANNEL_TYPE.SMS_CHANNEL">{{'designEditor.testSMSComponent.testSMSlbl' | translate}}</h5>
+                <h5 class="col-10 mediumLabel" *ngIf="channelType === CHANNEL_INFO_HTML.CHANNEL_TYPE.WHATS_APP_CHANNEL">{{'whatsAppComponent.testwhatsApplbl' | translate}}</h5>
+                <h5 class="col-10 mediumLabel" *ngIf="channelType === CHANNEL_INFO_HTML.CHANNEL_TYPE.PUSH_NOTIFICATION"> {{'designEditor.mobilePushComponent.testPushNotificationTitleLbl' | translate}} </h5>
+                <h5 class="col-10 mediumLabel" *ngIf="channelType === CHANNEL_INFO_HTML.CHANNEL_TYPE.INAPP_NOTIFICATION"> {{'inappChannelComponent.testInappPopupNotificationLbl' | translate}} </h5>
+                <h5 class="col-10 mediumLabel" *ngIf="channelType === CHANNEL_INFO_HTML.CHANNEL_TYPE.API_CHANNEL"> {{'APIChannelComponent.APIpopupNotificationTitleLbl' | translate}} </h5>
+                <div class="col-2 text-right p-0">
+                    <i class="fa fa-times cursor-pointer iconPosition" (click)="closeTestEmail()"></i>
+                </div>
+            </div>
+            <p class="titleText" *ngIf="channelType === CHANNEL_INFO_HTML.CHANNEL_TYPE.EMAIL">
+                {{'designEditor.testEmailComponent.testEmailPreviewlbl' | translate}}
+            </p>
+            <p class="titleText" *ngIf="channelType === CHANNEL_INFO_HTML.CHANNEL_TYPE.SMS_CHANNEL">
+                {{'designEditor.testSMSComponent.testSMSPreviewlbl' | translate}}
+            </p>
+            <p class="titleText" *ngIf="channelType === CHANNEL_INFO_HTML.CHANNEL_TYPE.WHATS_APP_CHANNEL">
+                {{'whatsAppComponent.testWhatsappPreviewlbl' | translate}}
+            </p>
+            <p class="titleText" *ngIf="channelType === CHANNEL_INFO_HTML.CHANNEL_TYPE.PUSH_NOTIFICATION">
+                {{'designEditor.mobilePushComponent.testPushNotificationPreviewLbl' | translate}}
+            </p>
+            <p class="titleText" *ngIf="channelType === CHANNEL_INFO_HTML.CHANNEL_TYPE.INAPP_NOTIFICATION">
+                {{'inappChannelComponent.testInappPopupNotificationSubTitleLbl' | translate}}
+            </p>
+            <p class="titleText" *ngIf="channelType === CHANNEL_INFO_HTML.CHANNEL_TYPE.API_CHANNEL">
+                {{'APIChannelComponent.APIpopupNotificationSubTitleLbl' | translate}}
+            </p>
+        </div>
+        <div class="col-12" *ngIf="responseReceived">
+            <div class="row">
+                <h5 class="col-10" *ngIf="channelType === CHANNEL_INFO_HTML.CHANNEL_TYPE.EMAIL">{{'designEditor.testEmailComponent.emailValidationReport' | translate}}</h5>
+                <h5 class="col-10" *ngIf="channelType === CHANNEL_INFO_HTML.CHANNEL_TYPE.SMS_CHANNEL">{{'designEditor.testSMSComponent.smsValidationReport' | translate}}</h5>
+                <h5 class="col-10" *ngIf="channelType === CHANNEL_INFO_HTML.CHANNEL_TYPE.WHATS_APP_CHANNEL">{{'whatsAppComponent.whatsappValidationReport' | translate}}</h5>
+                <h5 class="col-10" *ngIf="channelType === CHANNEL_INFO_HTML.CHANNEL_TYPE.PUSH_NOTIFICATION">{{'designEditor.mobilePushComponent.testPushNotifyValidationReportLbl' | translate}}</h5>
+                <h5 class="col-10" *ngIf="channelType === CHANNEL_INFO_HTML.CHANNEL_TYPE.INAPP_NOTIFICATION">{{'designEditor.mobilePushComponent.testPushNotifyValidationReportLbl' | translate}}</h5>
+                <h5 class="col-10" *ngIf="channelType === CHANNEL_INFO_HTML.CHANNEL_TYPE.API_CHANNEL">{{'APIChannelComponent.APIpopupNotificationTitleLbl' | translate}}</h5>
+                <div class="col-2 text-right p-0">
+                    <i class="fa fa-times cursor-pointer iconPosition" (click)="closeTestEmail()"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div *ngIf="!responseReceived">
+        <div class="d-flex align-items-center mb-3" *ngIf="channelType !== CHANNEL_INFO_HTML.CHANNEL_TYPE.API_CHANNEL">            
+            <div class="col-4">
+                <input type="radio" class="verticalAlignMiddle" [(ngModel)]="sendTo" value="email" (click)="getUserDetails('email')" />
+                <span class="radioLabel ml-2" *ngIf="channelType === CHANNEL_INFO_HTML.CHANNEL_TYPE.EMAIL">{{'designEditor.testEmailComponent.sendToEmailIDslbl' | translate}}</span>
+                <span class="radioLabel ml-2" *ngIf="channelType === CHANNEL_INFO_HTML.CHANNEL_TYPE.SMS_CHANNEL || channelType === CHANNEL_INFO_HTML.CHANNEL_TYPE.WHATS_APP_CHANNEL">{{'designEditor.testSMSComponent.sendToMobileNumberslbl' | translate}}</span>
+                <span class="radioLabel ml-2" *ngIf="channelType === CHANNEL_INFO_HTML.CHANNEL_TYPE.INAPP_NOTIFICATION || channelType === CHANNEL_INFO_HTML.CHANNEL_TYPE.PUSH_NOTIFICATION">{{'inappChannelComponent.sendtodeviceidlbl' | translate}}</span>
+                
+            </div>
+            <div class="col-6">
+                <input type="radio" class="verticalAlignMiddle" [(ngModel)]="sendTo" value="list" (click)="getUserDetails('list')" />
+                <span class="ml-2 radioLabel"> {{'designEditor.testEmailComponent.sendToSeedListLbl' | translate}}  </span>
+            </div>
+        </div>
+
+        <div id="sendToEmail" *ngIf="sendTo === 'email'">
+            <div class="col-12" *ngIf="channelType === CHANNEL_INFO_HTML.CHANNEL_TYPE.EMAIL">
+                <label for="email-id">{{'designEditor.testEmailComponent.enterEmailIDslbl' | translate}}</label>
+            </div>
+            <div class="col-12" *ngIf="channelType === CHANNEL_INFO_HTML.CHANNEL_TYPE.SMS_CHANNEL">
+                <label for="email-id">{{'designEditor.testSMSComponent.enterPhoneNumlbl' | translate}}</label>
+            </div>
+            <div class="col-12" *ngIf="channelType === CHANNEL_INFO_HTML.CHANNEL_TYPE.WHATS_APP_CHANNEL">
+                <label for="email-id">{{'designEditor.testSMSComponent.enterPhoneNumlbl' | translate}}</label>
+            </div>
+            <div class="d-flex align-items-center mb-3">
+                <div class="col-10" *ngIf="channelType === CHANNEL_INFO_HTML.CHANNEL_TYPE.EMAIL">
+                    <ng-container *ngIf="!isTestList">
+                        <input type="text" class="form-control shadow-none" id="email-id" [(ngModel)]="inputEmail"
+                        placeholder="{{'designEditor.testEmailComponent.enterMoreEmailIdlbl' | translate}}" />
+                    </ng-container>                    
+                    
+                        
+                </div>
+                <div class="col-10" *ngIf="channelType === CHANNEL_INFO_HTML.CHANNEL_TYPE.SMS_CHANNEL">
+                    <input type="text" class="form-control shadow-none" id="email-id" [(ngModel)]="inputSMS"
+                    (keypress)="numberWithCommaOnly($event)" placeholder="{{'designEditor.testSMSComponent.enterMorePhonelbl' | translate}}" />
+                    
+                </div>
+                <div class="col-10" *ngIf="channelType === CHANNEL_INFO_HTML.CHANNEL_TYPE.WHATS_APP_CHANNEL">
+                    <input type="text" class="form-control shadow-none" id="email-id" [(ngModel)]="inputSMS"
+                    (keypress)="numberWithCommaOnly($event)" placeholder="{{'designEditor.testSMSComponent.enterMorePhonelbl' | translate}}" />
+                    
+                </div>
+                
+
+                <div class="col-2 text-right">
+                    <button type="button" *ngIf="channelType === CHANNEL_INFO_HTML.CHANNEL_TYPE.EMAIL" class="btn btn-outline-primary buttonStyle shadow-none" (click)="addEmails()">{{'designEditor.addlbl' | translate}}</button>
+                    <button type="button" *ngIf="channelType === CHANNEL_INFO_HTML.CHANNEL_TYPE.SMS_CHANNEL" class="btn btn-outline-primary buttonStyle shadow-none" (click)="addSMSNumbers()">{{'designEditor.addlbl' | translate}}</button>
+                    <button type="button" *ngIf="channelType === CHANNEL_INFO_HTML.CHANNEL_TYPE.WHATS_APP_CHANNEL" class="btn btn-outline-primary buttonStyle shadow-none" (click)="addSMSNumbers()">{{'designEditor.addlbl' | translate}}</button>
+                </div>
+            </div>
+            <div class="d-flex col-12">
+                <div class="emailsContainer col-12" *ngIf="channelType === CHANNEL_INFO_HTML.CHANNEL_TYPE.EMAIL">
+                    <span class="emailTag mr-2" *ngFor="let email of emailList">{{email}}
+                        <i class="fa fa-times ml-1 cursor-pointer" (click)="removeEmail(email)"></i>
+                    </span>
+                </div>
+                <div class="emailsContainer col-12" *ngIf="channelType === CHANNEL_INFO_HTML.CHANNEL_TYPE.SMS_CHANNEL">
+                    <span class="emailTag mr-2" *ngFor="let smsNumber of smsList">{{smsNumber}}
+                        <i class="fa fa-times ml-1 cursor-pointer"  (click)="removeSMS(smsNumber)"></i>
+                    </span>
+                </div>
+                <div class="emailsContainer col-12" *ngIf="channelType === CHANNEL_INFO_HTML.CHANNEL_TYPE.WHATS_APP_CHANNEL">
+                    <span class="emailTag mr-2" *ngFor="let smsNumber of smsList">{{smsNumber}}
+                        <i class="fa fa-times ml-1 cursor-pointer" (click)="removeSMS(smsNumber)"></i>
+                    </span>
+                </div>
+                <div class="col-12 p-0" *ngIf="channelType === CHANNEL_INFO_HTML.CHANNEL_TYPE.PUSH_NOTIFICATION || channelType === CHANNEL_INFO_HTML.CHANNEL_TYPE.INAPP_NOTIFICATION">
+                    <div class="row col-12">                        
+                        <div class="row col-6 align-items-center mb-3">
+                            <label for="android-device-id" class="col-12 p-0">{{'designEditor.mobilePushComponent.android' | translate}}</label>
+                            <div class="col-8 p-0">                                
+                                <input type="text" class="form-control shadow-none smallLabel" id="android-device-id" title="{{inputAndroidDeviceId}}" [(ngModel)]="inputAndroidDeviceId"
+                                    placeholder="{{'designEditor.mobilePushComponent.enteroneormoreDeviceIdPlaceholderLbl' | translate}}" />
+                            </div>
+                            <div class="col-2 text-right">
+                                <button type="button" class="btn btn-outline-primary buttonStyle shadow-none" (click)="addAndroidIosDeviceId('android',inputAndroidDeviceId)">{{'designEditor.addlbl' | translate}}</button>
+                            </div>
+                        </div>
+                        
+                        <div class="row col-6 align-items-center mb-3">
+                            <label for="ios-device-id" class="col-12 ml-2">{{'designEditor.mobilePushComponent.ios' | translate}}</label>
+                            <div class="col-8 ml-2">                                
+                                <input type="text" class="form-control shadow-none smallLabel" id="ios-device-id" title="{{inputIOSDeviceId}}" [(ngModel)]="inputIOSDeviceId"
+                                    placeholder="{{'designEditor.mobilePushComponent.enteroneormoreDeviceIdPlaceholderLbl' | translate}}" />
+                            </div>
+                            <div class="col-2 text-right">
+                                <button type="button" class="btn btn-outline-primary buttonStyle shadow-none" (click)="addAndroidIosDeviceId('ios',inputIOSDeviceId)">{{'designEditor.addlbl' | translate}}</button>
+                            </div>
+                        </div>
+                        <div class="row col-12 ">
+                            <div class="emailsContainer deviceIdsContainer AndroidView col mr-3">
+                                <span class="emailTag  mr-2" *ngFor="let androidId of androidDeviceIds" title="{{androidId}}">{{androidId}}
+                                    <i class="fa fa-times ml-1 cursor-pointer" (click)="removeAndroidDeviceId(androidId)"></i>
+                                </span>
+                            </div>
+                            <div class="emailsContainer deviceIdsContainer iosView col">
+                                <span class="emailTag mr-2" *ngFor="let iosId of iosDeviceIds" title="{{iosId}}">{{iosId}}
+                                    <i class="fa fa-times ml-1 cursor-pointer" (click)="removeIOSDeviceId(iosId)"></i>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+
+        <div id="sendToTestList" *ngIf="sendTo === 'list'">
+            <ng-container *ngIf="channelType === CHANNEL_INFO_HTML.CHANNEL_TYPE.EMAIL">
+                <div class="col-12" >
+                    <label for="email-id">{{'designEditor.sendToTestListChannelLbl' | translate}} </label>
+                </div>
+                <ng-container *ngTemplateOutlet="testListDropdownTemplate; context: { listObj:searchFilterListIption }"></ng-container>
+                <div class="d-flex col-12 p-0">
+                    <div class="emailsContainer col-12">
+                        <span class="emailTag mr-2" *ngFor="let email of emailList">{{email}}
+                            <i class="fa fa-times ml-1 cursor-pointer" *ngIf="!isTestList" (click)="removeEmail(email)"></i>
+                        </span>
+                    </div>                
+            </div>
+            </ng-container>
+            <ng-container *ngIf="channelType === CHANNEL_INFO_HTML.CHANNEL_TYPE.SMS_CHANNEL || channelType === CHANNEL_INFO_HTML.CHANNEL_TYPE.WHATS_APP_CHANNEL">
+                <div class="col-12" >
+                    <label for="email-id" *ngIf="channelType === CHANNEL_INFO_HTML.CHANNEL_TYPE.SMS_CHANNEL || channelType === CHANNEL_INFO_HTML.CHANNEL_TYPE.WHATS_APP_CHANNEL">{{'designEditor.sendToTestListChannelLbl' | translate}}</label>
+                </div>
+                <ng-container *ngTemplateOutlet="testListDropdownTemplate; context: { listObj:searchFilterListIption }"></ng-container>
+                <div class="d-flex col-12 p-0">
+                    <div class="emailsContainer col-12">
+                        <span class="emailTag mr-2" *ngFor="let smsNums of smsList">{{smsNums}}
+                            <i class="fa fa-times ml-1 cursor-pointer" *ngIf="!isTestList" (click)="removeSMS(smsNums)"></i>
+                        </span>
+                    </div>                
+                </div>
+            </ng-container>
+            
+            <ng-container *ngIf="channelType === CHANNEL_INFO_HTML.CHANNEL_TYPE.INAPP_NOTIFICATION || channelType === CHANNEL_INFO_HTML.CHANNEL_TYPE.PUSH_NOTIFICATION">
+                <div class="col-12" >
+                    <label for="email-id">{{'designEditor.sendToTestListChannelLbl' | translate}}</label>
+                </div>
+                <ng-container *ngTemplateOutlet="testListDropdownTemplate; context: { listObj:searchFilterListIption }"></ng-container>
+                <div class="d-flex col-12 p-0">
+                    <div class="row col-12 ">
+                        <div class="col">
+                            <label for="android-device-id" class="col-12 p-0">{{'designEditor.mobilePushComponent.android' | translate}}</label>
+                            <div class="emailsContainer deviceIdsContainer col mr-3">
+                                <span class="emailTag  mr-2" *ngFor="let androidId of androidDeviceIds" title="{{androidId}}">{{androidId}}
+                                    <i class="fa fa-times ml-1 cursor-pointer" *ngIf="!isTestList" (click)="removeAndroidDeviceId(androidId)"></i>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <label for="ios-device-id" class="col-12 ml-2">{{'designEditor.mobilePushComponent.ios' | translate}}</label>
+                            <div class="emailsContainer deviceIdsContainer col">
+                                <span class="emailTag mr-2" *ngFor="let iosId of iosDeviceIds" title="{{iosId}}">{{iosId}}
+                                    <i class="fa fa-times ml-1 cursor-pointer" *ngIf="!isTestList" (click)="removeIOSDeviceId(iosId)"></i>
+                                </span>
+                            </div>
+                        </div>
+                        
+                        
+                    </div>                
+                </div>
+            </ng-container>
+            
+        </div>
+        <!--Seed list name section-->
+        <div class="d-flex align-items-center mb-3 mt-3" *ngIf="channelType !== CHANNEL_INFO_HTML.CHANNEL_TYPE.API_CHANNEL && sendTo !== 'list'">
+            <div class="col fontSizeSmall">
+                <input type="checkbox" [disabled]="isTestList" class="verticalAlignMiddle" [(ngModel)]="seedListNameInputEnable"  (click)="enableTestNameInputMethod($event);" />
+                <span class="ml-2 mediumLabel" *ngIf="channelType === CHANNEL_INFO_HTML.CHANNEL_TYPE.EMAIL">{{'designEditor.testEmailComponent.saveAddressesToASeedListLbl' | translate}}</span>
+                <span class="ml-2 mediumLabel" *ngIf="channelType === CHANNEL_INFO_HTML.CHANNEL_TYPE.SMS_CHANNEL || channelType === CHANNEL_INFO_HTML.CHANNEL_TYPE.WHATS_APP_CHANNEL">{{'designEditor.testEmailComponent.savePhoneNumberToASeedListLbl'| translate}}</span>
+                <span class="ml-2 mediumLabel" *ngIf="channelType === CHANNEL_INFO_HTML.CHANNEL_TYPE.INAPP_NOTIFICATION || channelType === CHANNEL_INFO_HTML.CHANNEL_TYPE.PUSH_NOTIFICATION">{{'inappChannelComponent.saveDeviceIdsToASeedListLbl'| translate}}</span>
+                <!-- <i class="fa fa-info-circle cursor-pointer ml-2 iconGrayColor"></i> -->
+            </div>
+            <div class="col-3">
+                <input type="text" [disabled]="!seedListNameInputEnable" maxlength="50" class="form-control shadow-none" placeholder="{{'designEditor.testEmailComponent.seedListNameLbl' | translate}}"
+                     [(ngModel)]="seedListName" />
+            </div>
+        </div>
+
+        <div class="d-flex align-items-center mb-3 mt-3">
+            <div class="col-9 fontSizeSmall">
+                <input type="checkbox" class="verticalAlignMiddle" [(ngModel)]="customerCodechecked" (click)="checkCustomerCodeValue($event)" />
+                <span class="ml-2 mediumLabel">{{'designEditor.testEmailComponent.simulateChannelCommunicationOutputforCustomerCodelbl' | translate}}</span>
+                <!-- <i class="fa fa-info-circle cursor-pointer ml-2 iconGrayColor"></i> -->
+            </div>
+            <div class="col-3">
+                <input type="text" class="form-control shadow-none" placeholder="{{'designEditor.testEmailComponent.customerCodeplaceholderlbl' | translate}}"
+                    [disabled]="!customerCodechecked" [(ngModel)]="customerCode" />
+            </div>
+        </div>
+        <!--New Test Params fields section-->
+        <ng-container *ngIf="enableTestWithParams && personalizedFields.length > 0">
+            <div class="col p-0 m-0" id="testParamsSection">
+                <div class="row col-8 mt-2" *ngFor="let param of personalizedFields; let i = index">
+                    <div class="row col-12">
+                        <div class="pl-3">
+                            <label class="ellipseText m-0 mr-2 mt-2 mediumLable" title="{{param.displayName}}">
+                                <span class="mr-2">{{param.displayName}}</span>
+                                <!-- <i class="far fa-plus-circle fa-lg cursor-pointer blueColor" *ngIf="param.dataArrayType" (click)="addFieldValue(param)"></i> -->
+                            </label>
+                            
+                        </div>                    
+                            <div class="col-7 p-0">
+                                <!-- <ng-container *ngFor="let multiParam of param.values; let j=index"> -->
+                                <div class="row col-12">
+                                    <div class="col p-0">                        
+                                        <input type="text" class="form-control shadow-none mediumLable" id="param_{{param.cname}}_{{i}}" [(ngModel)]="param.values"  title="{{param.values}}"/>
+                                        <span class="multiArrayText" *ngIf="param.dataArrayType">{{param.multiResponseMessage}}</span>
+                                    </div>                                    
+                                </div>                                    
+                                <!-- </ng-container> -->
+                            </div>                            
+                    </div>                     
+            </div>
+            </div>
+        </ng-container>
+
+        <hr />
+        <div class="d-flex justify-content-end col-12">
+            <button type="button" class="btn btn-outline-primary buttonStyle shadow-none mr-3" id="closeBtn"
+                (click)="closeTestEmail()">{{'designEditor.closeBtn' | translate}}</button>
+            <button type="button" *ngIf="channelType === CHANNEL_INFO_HTML.CHANNEL_TYPE.EMAIL" class="btn btn-primary shadow-none" (click)="sendTestEmails()"
+                id="sendBtn">{{'designEditor.sendlbl' | translate}}</button>
+            <button type="button" *ngIf="channelType === CHANNEL_INFO_HTML.CHANNEL_TYPE.SMS_CHANNEL" class="btn btn-primary shadow-none" (click)="sendTestSMS()" id="sendBtn">{{'designEditor.sendlbl' | translate}}</button>
+            <button type="button" *ngIf="channelType === CHANNEL_INFO_HTML.CHANNEL_TYPE.WHATS_APP_CHANNEL" class="btn btn-primary shadow-none" (click)="sendTestWhatsapp()" id="sendBtn">{{'designEditor.sendlbl' | translate}}</button>
+            <button type="button" *ngIf="channelType === CHANNEL_INFO_HTML.CHANNEL_TYPE.PUSH_NOTIFICATION" class="btn btn-primary shadow-none" (click)="sendPushNotification()" id="sendBtn">{{'designEditor.sendlbl' | translate}}</button>
+            <button type="button" *ngIf="channelType === CHANNEL_INFO_HTML.CHANNEL_TYPE.INAPP_NOTIFICATION" class="btn btn-primary shadow-none" (click)="sendInappNotification()" id="sendBtn">{{'designEditor.sendlbl' | translate}}</button>
+            <button type="button" *ngIf="channelType === CHANNEL_INFO_HTML.CHANNEL_TYPE.API_CHANNEL" class="btn btn-primary shadow-none" (click)="sendAPINotification()" id="sendBtn">{{'designEditor.sendlbl' | translate}}</button>
+        </div>
+    </div>
+
+    <div class="" *ngIf="responseReceived">
+        <hr />
+        <div class="validationReport d-flex">
+            <div class="reportItems">
+                <label>{{'designEditor.testEmailComponent.listNamelbl' | translate}}</label>
+                <div *ngIf="testEmailResponse !== null">{{testEmailResponse.listName}}</div>
+            </div>
+            <div class="separator"></div>
+            <div class="reportItems">
+                <label>{{'designEditor.testEmailComponent.messageTypelbl' | translate}}</label>
+                <div *ngIf="testEmailResponse !== null">{{testEmailResponse.msgType}}</div>
+            </div>
+            <div class="separator"></div>
+            <div class="reportItems">
+                <label>{{'designEditor.testEmailComponent.successfulExecutionslbl' |translate}}</label>
+                <div *ngIf="testEmailResponse !== null">{{testEmailResponse.successCount}}</div>
+            </div>
+            <div class="separator"></div>
+            <div class="reportItems">
+                <label>{{'designEditor.testEmailComponent.totalCustomersTargetedlbl' | translate}}</label>
+                <div *ngIf="testEmailResponse !== null">{{testEmailResponse.listSize}}</div>
+            </div>
+            <div class="separator"></div>
+            <div class="reportItems">
+                <label>{{'designEditor.testEmailComponent.failedExecutionslbl' | translate}}</label>
+                <div *ngIf="testEmailResponse !== null">{{testEmailResponse.listSize - testEmailResponse.successCount}}</div>
+            </div>
+        </div>
+        <div class="downloadError" *ngIf="!successDelivery">
+            <span (click)="downloadReport()">{{'designEditor.testEmailComponent.downloadErrorReportlbl' | translate}}</span>
+        </div>
+        <hr />
+        <div class="d-flex justify-content-end col-12">
+            <button type="button" class="btn btn-outline-primary buttonStyle shadow-none" id="closeBtn"
+                (click)="closeTestEmail()">{{'designEditor.closeBtn' | translate}}</button>
+        </div>
+    </div>
+</div>
+<ng-template #testListDropdownTemplate let-listObj="listObj">
+    <ng-container *ngIf="isTestList">
+        <div class="mergeTagExt-dropdown">
+            <div class="search-input-box pb-2" (click)="openExtDropdown()">
+              <input
+                type="text"
+                class="form-control shadow-none"
+                placeholder="{{ 'searchLbl' | translate }}"
+                [(ngModel)]="selectedSeedValue"
+                (input)="filterExtOptions($event)"                
+                />
+              <i class="far" [class.fa-angle-down]="!showSeedListDropdown" [class.fa-angle-up]="showSeedListDropdown"></i>
+            </div>
+            <ul *ngIf="showSeedListDropdown">
+              <ng-container *ngFor="let childObj of listObj">
+                <li id="{{childObj.dbKey}}" (click)="selectSeedListMethod(childObj)">
+                  <span>{{ childObj.listName }}</span>                                      
+                </li>
+              </ng-container>
+            </ul>
+          </div>
+    </ng-container>
+</ng-template>

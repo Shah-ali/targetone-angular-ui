@@ -1,0 +1,57 @@
+<div class="modal-container attachmentConatiner">
+  <div class="loaderMask" *ngIf="showLoader">
+    <div class="spinner-border text-dark" role="status">
+      <span class="visually-hidden d-none">{{ 'designEditor.loadinglbl' | translate }}</span>
+    </div>
+  </div>
+  <div class="d-flex justify-content-center align-items-center">
+    <div class="col-12 titleSection">
+      <div class="row">
+        <h5 class="col-10">{{ 'designEditor.attachmentComponent.attachfilelbl' | translate }}</h5>
+        <div class="col-2 text-right">
+          <i class="fa fa-times cursor-pointer iconPosition" (click)="closeAttachment()"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+  <hr class="m-0" />
+
+  <div class="fileBrowse">
+    <div class="attachedFile" *ngIf="attachedFileName !== ''">
+      <span>{{ attachedFileName }}</span
+      ><span class="pipe">|</span>
+      <i class="fa fa-times cursor-pointer fa-sm" (click)="deleteFile()"></i>
+    </div>
+    <div class="custom-file">
+      <div>
+        <input id="file-upload" type="file" (change)="changeFileName($event)" [(ngModel)]="filePath" hidden />
+        <span id="file-name">{{ 'designEditor.attachmentComponent.choosefilelbl' | translate }}</span>
+        <label for="file-upload" class="btn btn-outline-primary buttonStyle shadow-none ml-1">{{
+          'browse' | translate
+        }}</label>
+      </div>
+      <!-- <input type="file" class="custom-file-input" id="customFile" (change)="changeFileName($event)" [(ngModel)]="filePath">
+            <label class="custom-file-label" for="customFile">{{'designEditor.attachmentComponent.choosefilelbl' | translate}}</label> -->
+    </div>
+    <div class="status" *ngIf="successMsg !== ''">
+      <i class="fa fa-check-circle iconColor"></i><span>{{ successMsg }}</span>
+    </div>
+    <div class="status" *ngIf="fileDeleted !== ''">
+      <span>{{ fileDeleted }}</span>
+    </div>
+  </div>
+
+  <hr />
+  <div class="d-flex justify-content-end col-12 mb-3">
+    <button
+      type="button"
+      class="btn btn-outline-primary buttonStyle shadow-none mr-3"
+      id="closeBtn"
+      (click)="closeAttachment()">
+      {{ 'designEditor.closeBtn' | translate }}
+    </button>
+    <button type="button" class="btn btn-primary shadow-none" id="attachBtn" (click)="attachFile()">
+      {{ 'designEditor.attachmentComponent.attachfilelbl' | translate }}
+    </button>
+  </div>
+</div>

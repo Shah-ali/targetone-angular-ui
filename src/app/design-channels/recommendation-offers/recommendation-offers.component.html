@@ -1,0 +1,374 @@
+<div class="modal-container recommendationConatiner">
+    <div class="loaderMask" *ngIf="showLoader">
+        <div class="spinner-border text-dark" role="status">
+            <span class="visually-hidden d-none">{{'recommendationComponent.loadinglbl' | translate}}</span>
+        </div>
+    </div>
+    <div class="col-12 mainContainer p-0">
+        <div class="reco-section">
+            <div class="d-flex">
+                <div class="col-6 d-flex flex-column p-0 headerLabls" *ngIf="productContentDialogId == 'rule-offer'">
+                    <div class="title defaultPointer">{{'recommendationComponent.productAddonLbl' | translate}}</div>
+                    <div class="subTitle defaultPointer">{{'recommendationComponent.productSubTitleAddonLbl' | translate}}</div>
+                </div>
+                <div class="col-3 d-flex flex-column p-0 headerLabls" *ngIf="productContentDialogId == 'reco-rule'">
+                    <div class="title defaultPointer">{{'recommendationComponent.productRecommendationlbl' | translate}}</div>
+                    <div class="mediumFont subTitle text-truncate defaultPointer" title="{{'recommendationComponent.chooseTemplateToAddInEmailLbl' | translate}}">{{'recommendationComponent.chooseTemplateToAddInEmailLbl' | translate}}</div>
+                </div>
+                <div class="col flex-column p-0">
+                    <!-- <div class="title">{{'DMEComponentLabels.selectDMElbl' | translate}}</div>
+                    <div class="subTitle">{{'DMEComponentLabels.subTitleChooseMgsLbl' | translate}}</div> -->
+                    <div class="row col-10 p-0 justify-content-center mt-2" id="navigatorCntext">
+                        <div class="text-left mr-5 p-0" id="navOne">
+                            <span class="numberInCircle blue" *ngIf="navigatorActiveStage1" [ngClass]="navigatorActiveStage1 ? 'blue':'grey'">1</span>
+                            <div class="circle" *ngIf="checkmarkEnable1">
+                                <div class="checkmark"></div> 
+                            </div>
+                            <label class="mediumFont navi-placemt-1">{{'recommendationComponent.selectPlacement' | translate}}</label>
+                        </div>
+                        <div class="text-left mr-5 p-0" id="navTwo">
+                            <span class="numberInCircle grey" *ngIf="(!navigatorActiveStage2 && !checkmarkEnable2) else highlightBlue">2</span>
+                            <ng-template #highlightBlue>
+                                <span class="numberInCircle" *ngIf="(navigatorActiveStage2 && !checkmarkEnable2)" [ngClass]="navigatorActiveStage2 ? 'blue':'grey'">2</span>  
+                            </ng-template>
+                            <div class="circle" *ngIf="checkmarkEnable2">
+                                <div class="checkmark"></div> 
+                            </div>                           
+                            <label class="mediumFont navi-advds-2">{{'recommendationComponent.selectTypicalOrAdvancedOptions' | translate}}</label>
+                        </div>                        
+                        <div class="text-left pl-0" id="navThree">
+                            <span class="numberInCircle" [ngClass]="navigatorActiveStage3 ? 'blue':'grey'">3</span>                            
+                            <label class="mediumFont navi-layout-3">{{'recommendationComponent.selectLayout' | translate}}</label>
+                        </div>
+                    </div>
+                </div>
+                <!-- cross button to cancel-->
+                <button type="button" class="close" (mousedown)="onClose()" aria-label="Close">
+                    <span aria-hidden="true"><i class="fal fa-times crossColor"></i></span>
+                </button>
+                
+            </div>
+            <hr class="separator"/>
+            
+        </div>
+        
+        <div class="innerContentMargin mt-3" id="recoSelectionSection" *ngIf="navigatorActiveStage1">
+            <div class="col pl-0 pt-2 mb-2 d-none">
+                <div class="col cardSection relative" id="pageCard_{{item.pageName}}" [ngClass]="pageSelectedId == item.pageName? 'active' : ''" *ngFor="let item of pageTypeWithCount" (click)="getPageDataOnChange(item.pageName);">
+                    <p class="mrgbttm ellipseText" title="{{item.pageName}}">{{item.pageName}}</p>
+                    <label class="margin0 fontMedium"><span class="noofplacements">{{'recommendationComponent.noofPlacementsLbl' | translate}}</span> <span class="ml-2 countPlacement">{{item.pageCount}}</span></label>
+                    <i class="fas fa-caret-down" [ngClass]="pageSelectedId == item.pageName? 'arrowSelectedPointer' : 'd-none'" id=""></i>
+                </div>
+            </div>
+            <div class="recoListContainer" *ngIf="showActivityRulesGrid">
+                <div class="noResultFound col-12 p-0" *ngIf="noResultFound">
+                    <span class="text">{{'recommendationComponent.noResultFoundLbl' | translate}}</span><span class="reset ml-2 cursor-pointer" (click)="resetcommendation()">{{'recommendationComponent.resetLbl' | translate}}</span>
+                </div>   
+                <div class="col-12 p-0 d-flex p-0 justify-content-end mb-2">
+                    <div class="searchReco col-3 p-0">
+                        <input type="text" placeholder="{{'searchLbl' | translate}}" (keyup)="searchByModelName($event)"
+                        id="searchInput" class="shadow-none form-control mediumFont" [(ngModel)]="searchText"/>
+                    </div>
+                </div>
+                              
+                <!-- Recommendation offer Table data -->
+                <div class="outerWrapTable col p-0">
+                    <ag-grid-angular 
+                        style="width: 100%; height: calc(100vh - 345px)" 
+                        class="ag-theme-alpine"
+                        [rowData]="modelDataListsArry" 
+                        [columnDefs]="columnHeadersRuleReco"
+                        [defaultColDef]="defaultColDef"
+                        [rowSelection]="rowSelection"
+                        [getRowId]="getRowId"
+                        [animateRows]="true" 
+                        [pagination]="true" 
+                        [paginationPageSize]="15"
+                        [suppressRowClickSelection]="true"
+                        [localeText]="localeText"
+                        >                        
+                    </ag-grid-angular>
+                    
+                </div>
+                <!-- <div class="col p-0" *ngIf="contextFlagToShowPersonalization">
+                    <input type="checkbox" class="margin0" id="checkContext" (click)="enablePresonalizationMethod($event);" [checked]="enablePresonlize">
+                    <label for="checkContext" class="mediumFont ml-2">{{'recommendationComponent.enableContextPersonalizationLbl' | translate}}</label>
+                </div> -->
+                
+            </div>
+            
+        </div>
+        
+        <div class="innerContentMargin row col p-0" *ngIf="navigatorActiveStage2">
+            <div class="col-12 pr-0" id="advanceAreaStyle">
+                <app-product-reco-advance #productPageAdvance (backToTipicalFromAdvance)="backToTipicalFromAdvance($event)" (basicAdvanceVal)="basicAdvanceMethod($event)"  (modelDataCollection)="modelDataCollectionMethod($event)"></app-product-reco-advance>
+            </div>
+                 
+        </div>
+    </div>
+
+    <div id="recoEditSection" *ngIf="navigatorActiveStage3">
+        <div class="innerContainer col-12 d-flex p-0">
+            <div class="leftSection col-4 p-0">
+                <div class="recoRule" *ngIf="!isProductOffersEnabled">
+                    <!-- Hide it for Product offers block -->
+                    <div class="editReco col-12 d-flex divStyle">
+                        <div class="col-6 p-0 text fontSizeH6">{{'recommendationComponent.recommendationRuleStep1Lbl' | translate}}</div>
+                        <div class="text-right col-6 p-0">
+                            <i class="fa fa-pencil cursor-pointer d-none" (click)="editRecoSelection()"></i>
+                        </div>
+                    </div>
+                    <div class="col-12 pt-4 ob-4 pb-4">
+                        <div class="selectedReco">
+                            <!-- <div class="title mb-3">{{selectedReco.name}}</div> -->
+                            <div class="col-12 p-0 d-flex">
+                                <div class="col-10 p-0">
+                                    <div class="heading fontSizeH6">{{'recommendationComponent.placementIdLbl' | translate}}</div>
+                                    <div class="content defaultPointer" title="{{selctedDataJsonObj.placementName}}">{{selctedDataJsonObj.placementName}}</div>
+                                </div>
+                                <div class="col-4 p-0 text-center d-none">
+                                    <div class="heading fontSizeH6">{{'recommendationComponent.placementDescLbl' | translate}}</div>
+                                    <div class="content defaultPointer" title="{{selctedDataJsonObj.placementDesc}}">{{selctedDataJsonObj.placementDesc}}</div>
+                                </div>
+                                
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="recoSettings mt-2" [ngClass]="!settingsPanelDrawer? 'minheightauto':''">
+                    <div class="recoNumber col-12 d-flex divStyle">
+                        <div class="col-10 p-0 text fontSizeH6">{{'recommendationComponent.setNumberOfProducts' | translate}} <span class="info"><i class="fal fa-info-circle ml-2" title="{{'recommendationComponent.setNumberOfProductsInfo' | translate}}"></i></span></div>
+                        <div class="text-right col-2 p-0"><i class="fa cursor-pointer" [ngClass]="settingsPanelDrawer? 'fa-angle-up':'fa-angle-down'" (click)="settingsPanelDrawer = !settingsPanelDrawer"></i></div>
+                    </div>
+                    <div class="col-12 pt-1 pb-1" *ngIf="settingsPanelDrawer">
+                        <div class="headText d-none">{{'recommendationComponent.numberOfRecommendationsLbl' | translate}}</div>
+                        <!-- <ul id="noofRecoSelect" class="mt-3" (click)="selectMaxProductSlider($event)">
+                            <li [ngClass]="isNoofRecoLimit == i+1 ? 'active':''"  *ngFor="let x of noofRecoConfig; let i = index;">{{x}}</li>
+                            
+                        </ul> -->
+                        <div class="slider-container mb-3">
+                            <div class="slider-value">{{'offerComponent.selectedItemTemplateLbl' | translate}} {{ sliderValue }}</div>
+                            <div class="slider-section">
+                                <span>1</span>
+                                <input
+                                type="range"
+                                [min]="1"
+                                [max]="noofRecoConfig"
+                                [(ngModel)]="sliderValue"
+                                (ngModelChange)="selectMaxProductSlider($event)"
+                                class="slider"
+                                />
+                                <span>{{ noofRecoConfig }}</span>
+                            </div>
+                            
+                            <div class="controls">
+                                <i class="fas fa-play fas fa-play fa-rotate-180" (click)="prevItem()"></i>
+                                <i class="fas fa-play fas fa-play" (click)="nextItem()"></i>
+                            </div>
+                        </div>
+                        <!-- <div>
+                            <input class="shadow-none inputStyle" type="number" min="1" max="8" placeholder="enter number" 
+                            [(ngModel)]="noOfReco" (change)="changeNumberOfCards(noOfReco)"/>
+                        </div> -->
+                    </div>
+                </div>
+                <div class="recoLayout mt-2" [ngClass]="!layoutPanelDrawer? 'minheightauto':''">   
+                    <div class="chooseLayout col-12 d-flex divStyle">
+                        <div class="col-6 p-0 text fontSizeH6">{{'recommendationComponent.chooselayoutStep2Lbl' | translate}}</div>
+                        <div class="text-right col-6 p-0"><i class="fa cursor-pointer" [ngClass]="layoutPanelDrawer? 'fa-angle-up':'fa-angle-down'" (click)="layoutPanelDrawer = !layoutPanelDrawer"></i></div>
+                    </div>
+                    <div class="col p-0" *ngIf="layoutPanelDrawer">
+                        <div class="layoutConatiner col-12 pt-2 mb-2">
+                            <!-- <div class="col p-0 mb-2">
+                                <input type="radio" class="mr-2 pointer" id="preBuildCheck" value="0" (change)="selectLayoutRecoProduct(0,$event)" [checked]="chooseLayoutType == 0">
+                                <label for="preBuildCheck" class="pointer">{{"recommendationComponent.prebuildTemplateLbl" | translate}}</label>
+                            </div> -->
+                            <div class="col-6 p-0 text-center mb-4 d-inline-block" *ngFor="let item of layoutArray; let count = index" [ngClass]="chooseLayoutType == 1 ? 'disabledLayoutArea':''">
+                                <img src="{{item.imgUrl}}"
+                                (click)="selectLayout(item.templateName, item.dbKey, count, 'fromHTML')" [ngClass]="{'selected': layout === item.templateName}"/>
+                            </div>
+                        </div>
+                        
+                    </div>                    
+                </div>
+                
+                
+            </div>
+            <div class="recoPreview col-8 ml-3">
+                <!-- <div class="col-2 p-0 sliderWithCount">
+                    <ngx-slider [(value)]="sliderValue" [options]="sliderOptions" (click)="onChangeSLiderVal($event,layout);"></ngx-slider>
+                </div> -->
+                <div class="previewHeader mb-4 pt-2">{{'recommendationComponent.previewLbl' | translate}}</div>
+                <div>
+                    <div class="col-12 scrollViewTemp" #parentProductElement></div>
+                    
+                </div>
+                <!-- <div class="productParent col-12 p-0" *ngIf="layout === 'layout2' || layout === 'layout4'"
+                    [ngClass]="{'layout4': layout === 'layout4'}">
+                    <div class="productPreview col-3 mb-4 layout2" *ngFor="let item of previewArr">
+                        <div class="text-center"><img src="./assets/images/previewImg.png"/></div>
+                        <div class="itemDetails">
+                            <div class="itemTitle mt-2">{{'recommendationComponent.zebronicsHeadPhonesLbl' | translate}}</div>
+                            <div class="itemDescription mt-2">
+                                {{'recommendationComponent.zebronicsHeadPhonesLbl' | translate}}
+                            </div>
+                        </div>
+                    </div>
+                </div> -->
+                
+            </div>
+        </div>
+        
+    </div>
+    
+</div>
+<div class="modal-footer d-flex border-0"> 
+    <!--footer Buttons-->
+    <div class="row col d-flex justify-content-end pr-0 align-items-center " *ngIf="navigatorActiveStage1">
+        <button type="button" id="cancelBtn" class="btn buttonCss shadow-none m-0 mr-2" (click)="onClose()">{{'cancel' | translate}}</button>
+        <button type="button" id="doneBtn" (click)="switchToAdvancePage(1)" [ngClass]="{'disabled': selectedActiveRow === false}" class="btn buttonPrimaryCss shadow-none m-0">{{'nextLbl' | translate}} <i class="far fa-arrowRight"></i></button>
+        <!-- <button type="button" id="doneBtn" (click)="insertRecommendation()" [ngClass]="{'disabled': editModeEnable === false}"
+        class="btn btn-outline-primary buttonStyle shadow-none">{{'designEditor.doneBtn' | translate}}</button> -->
+    </div>
+    <div class="row col d-flex justify-content-end pr-0 align-items-center " *ngIf="navigatorActiveStage2">
+        <!--footer Buttons-->
+       <div class="col-12 p-0 text-right">
+       <div class="col-12 justify-content-end p-0 align-items-center mt-1" *ngIf="productRecoPageLoadedEnabled">                    
+           <button type="button" id="backBtn" class="btn buttonCss shadow-none m-0 mr-2" *ngIf="productPageAdvance.advanceDetailsPage" (click)="gobackToAdvancePage()"> <i class="far fa-arrow-left"></i>  {{'backLbl' | translate}}</button>
+               <button type="button" id="backBtn" class="btn buttonCss shadow-none m-0 mr-2" *ngIf="productPageAdvance.basicAdvanceEnabled" (click)="gobackToGridPage()"> <i class="far fa-arrow-left"></i>  {{'backLbl' | translate}}</button>
+               <button type="button" id="cancelBtn" class="btn buttonCss shadow-none m-0 mr-2" (click)="onClose()">{{'cancel' | translate}}</button>
+               <button type="button" id="doneBtn" *ngIf="!advanceStage2" (click)="switchToAdvancePage(3)" class="btn buttonPrimaryCss shadow-none m-0">{{'nextLbl' | translate}} <i class="far fa-arrow-right"></i></button>
+               <button type="button" id="doneBtn" *ngIf="advanceStage2 && !productPageAdvance.advanceDetailsPage" (click)="switchToAdvancePage(2)" class="btn buttonPrimaryCss shadow-none m-0 typicalStage">{{'nextLbl' | translate}} <i class="far fa-arrow-right"></i></button>
+               <button type="button" id="doneBtn" *ngIf="advanceStage2 && productPageAdvance.advanceDetailsPage" (click)="switchToAdvancePage(3)" class="btn buttonPrimaryCss shadow-none m-0 browseStage">{{'nextLbl' | translate}} <i class="far fa-arrow-right"></i></button>
+               <!-- <button type="button" id="doneBtn" (click)="insertRecommendation()" [ngClass]="{'disabled': editModeEnable === false}"
+               class="btn btn-outline-primary buttonStyle shadow-none">{{'designEditor.doneBtn' | translate}}</button> -->
+       </div>
+       </div>
+       </div> 
+       <div class="row col d-flex justify-content-end pr-0 align-items-center " *ngIf="navigatorActiveStage3">
+        <!--footer Buttons-->
+       <div class="col-12 p-0 text-right">
+           <div class="col-12 d-flex justify-content-end p-0 align-items-center mt-1">
+               <button type="button" id="backBtn" class="btn buttonCss shadow-none m-0 mr-2" *ngIf="advancePageEnabled" (click)="goBackToMergeTagNBrowse()" [disabled]="isPublishedPersonalization"> <i class="far fa-arrow-left"></i>  {{'backLbl' | translate}}</button>
+               <button type="button" id="backBtn" class="btn buttonCss shadow-none m-0 mr-2" *ngIf="!advancePageEnabled" (click)="gobackToAdvancePage()" [disabled]="isPublishedPersonalization"> <i class="far fa-arrow-left"></i>  {{'backLbl' | translate}}</button>
+                   <button type="button" id="cancelBtn" class="btn buttonCss shadow-none m-0 mr-2" (click)="onClose()">{{'cancel' | translate}}</button>
+                   <button type="button" class="btn buttonPrimaryCss shadow-none m-0" id="doneBtn" (click)="switchToAdvancePage(4)" class="btn btn-primary buttonStyle shadow-none" [disabled]="isPublishedPersonalization">{{'designEditor.doneBtn' | translate}} <i class="far fa-arrowRight"></i></button>
+                   <!-- <button type="button" id="doneBtn" (click)="insertRecommendation()" [ngClass]="{'disabled': editModeEnable === false}"
+                   class="btn btn-outline-primary buttonStyle shadow-none">{{'designEditor.doneBtn' | translate}}</button> -->
+           </div>
+       </div>
+    </div> 
+</div>
+
+<div #recoDiv class="recommendationCards">
+    <div class="container" style="
+        background: transparent;
+        width: 100%;
+        text-align: center;">
+        <!-- <dynamic-content class="cmp-dynamic-content" id="widgets" type="{{placementType}}" placementId="{{placementIdsArry}}" [attr.name]="dataSetName" [attr.maxCount]="maxCountLayout">
+            <a href="{{imgUrlCard}}">{{dataSetName}} </a>
+        </dynamic-content> -->
+
+        <!-- layout 1 and layout 3 widgets -->
+        <div *ngIf="layout === 'layout1' || layout === 'layout3'" class="layoutCardsSection" style="text-align:left; padding: 10px 10px 1px 10px;">
+            <div class="productPreview" *ngFor="let item of previewArr index as i" style="
+                padding: 15px;
+                background: #FFFFFF;
+                margin-bottom: 10px;
+                border-radius: 5px;
+                overflow: auto;
+                box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 1px 3px 1px;
+                -webkit-box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 1px 3px 1px;
+                -moz-box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 1px 3px 1px;">
+
+                <div style="padding: 10px 15px 7px 0px;max-width: 100%;"
+                [ngStyle]="(layout === 'layout3' && i%2 !== 0) ? {'float': 'right', 'padding': '10px 0 7px 15px'} : {'float': 'left'}">
+                    <img class="prodActualImg" [attr.src]="prodImg" style="
+                    width: 80px;
+                    height: 80px;
+                    border-radius: 6px;display: none;"/> 
+                    <img class="prodTempImg" src="{{baseUrl}}/resources/img/inApp/PreviewImage.png" style="
+                    width: 80px;
+                    height: 80px;
+                    border-radius: 6px;"/>
+                </div>
+                <div class="itemDetails" style="padding-top: 30px;max-width: 100%;"
+                    [ngStyle]="(layout === 'layout3' && i%2 !== 0) ? {'float': 'right', 'text-align': 'right'} : {'float': 'left'}">
+                    <div class="itemTitle"
+                        [attr.title]="prodDesc" style="
+                        color: #333;
+                        font-size: 1rem;
+                        font-weight: 700;
+                        white-space: nowrap;
+                        overflow: hidden;
+                        text-overflow: ellipsis;">
+                        {{prodDesc}}
+                    </div>
+                    <div class="itemDescription" style="
+                        color: #333;
+                        font-weight: 400;
+                        margin-top: 10px;
+                        font-size: 12px;
+                        line-height: 22px;
+                        word-break: break-all;"
+                        [attr.title]="prodCode">
+                        {{prodCode}}
+                    </div>
+                </div>
+                <div style="clear:both"></div>
+            </div>
+        </div>
+
+        <!-- layout 2 and layout 4 widgets -->
+        <div *ngIf="layout === 'layout2' || layout === 'layout4'" style="padding-bottom: 10px; width: 100%"
+            [ngStyle]="layout === 'layout4' ? {'margin': '0 auto'} : {}">
+            <div class="productPreview" *ngFor="let item of previewArr index as i" style="
+                height:auto;
+                display: inline-block;
+                margin: 10px 5px 0 5px;
+                background: #fff;
+                padding: 15px;
+                border-radius: 5px;
+                box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 1px 3px 1px;
+                -webkit-box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 1px 3px 1px;
+                -moz-box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 1px 3px 1px;"
+                [ngStyle]="layout === 'layout4' ? {'width': '45%'} : {'width': '23%'}">
+                <div style="text-align:center;">
+                    <img class="prodActualImg" [attr.src]="prodImg" style="
+                    width: 80px;
+                    height: 80px;
+                    border-radius: 6px;display: none;"/> 
+                    <img class="prodTempImg" src="{{baseUrl}}/resources/img/inApp/PreviewImage.png" style="
+                    width: 80px;
+                    height: 80px;
+                    border-radius: 6px;"/>
+                </div>
+                <div class="itemDetails">
+                    <div class="itemTitle" style="
+                        color: #333;
+                        font-size: 1rem;
+                        font-weight: 700;
+                        margin-top: 10px;
+                        white-space: nowrap;
+                        overflow: hidden;
+                        text-overflow: ellipsis;"
+                        [attr.title]="prodDesc">
+                        {{prodDesc}}
+                    </div>
+                    <div class="itemDescription" style="
+                        color: #333;
+                        font-weight: 400;
+                        margin-top: 10px;
+                        font-size: 12px;
+                        line-height: 22px;
+                        word-break: break-all;"
+                        [attr.title]="prodCode">
+                        {{prodCode}}
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- <input type="hidden" value="" class="t1_p_recommendation"/> -->
+        <!-- <input type="hidden" value="{{tempRecoSelected | json}}" class="t1_p_recommendation"/> -->
+    </div>
+</div>

@@ -1,0 +1,31 @@
+{
+  "status": "SUCCESS",
+  "message": "SUCCESS",
+  "response": [
+    {
+      "tagId": 74,
+      "tagName": "Personalization_Untitle",
+      "status": "inactive",
+      "activationDate": null,
+      "creationDate": null,
+      "deactivationDate": "2023-11-04"
+    },
+    {
+      "tagId": 73,
+      "tagName": "Personalization_Untitle",
+      "status": "inactive",
+      "activationDate": null,
+      "creationDate": null,
+      "deactivationDate": "2023-11-04"
+    },
+    {
+      "tagId": 72,
+      "tagName": "duplicate-name",
+      "status": "inactive",
+      "activationDate": null,
+      "creationDate": null,
+      "deactivationDate": "2023-11-03"
+    }
+  ],
+  "type": null
+}

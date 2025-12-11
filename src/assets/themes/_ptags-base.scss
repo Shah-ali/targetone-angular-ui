@@ -1,0 +1,222 @@
+@import '../themes/variables.scss';
+
+/* PTAGS BASE Style Sheet */
+$font-stack: 'Poppins', sans-serif;
+
+// COLORS
+$blue: #026FE9;
+$black: #000000;
+$white: #FFFFFF;
+$gray20: #333333;
+$gray31: #4F4F4F;
+$gray40: #666666;
+$gray95: #F2F2F2;
+$light-gray: #F6F6F6;
+
+// TYPOGRAPHY
+$size-10: 10px;
+$size-12: 12px;
+$size-14: 14px;
+$size-16: 16px;
+$size-18: 18px;
+$size-20: 20px;
+
+$regular: 400;
+$medium: 500;
+$semi-bold: 600;
+
+// GAP
+.gap-0 {
+    gap: 0 !important
+}
+
+.gap-1 {
+    gap: .25rem !important
+}
+
+.gap-2 {
+    gap: .5rem !important
+}
+
+.gap-3 {
+    gap: 1rem !important
+}
+
+.gap-4 {
+    gap: 1.5rem !important
+}
+
+.gap-5 {
+    gap: 3rem !important
+}
+
+// PTAGS Wrapper
+.ptags-wrapper {
+
+    p,
+    label,
+    .label-sm,
+    input,
+    select,
+    .form-control,
+    .custom-select,
+    .btn-sm,
+    .btn {
+        font-weight: $regular;
+        font-size: $size-12;
+        line-height: normal;
+    }
+
+    .ptags-content {
+        background: $white;
+        padding: $size-20;
+        height: calc(100vh - #{$size-20 * 7.7});
+    }
+    .ptags-content-graph {
+        background: $white;
+        padding: $size-20;
+        height: 98%;
+    }
+
+    background: $gray95;
+    padding: $size-20;
+    clear: both;
+    font-family: $font-stack !important;
+    font-size: $size-12 !important;
+    color: $black !important;
+    font-weight: $regular !important;
+    overflow-x: hidden;
+    overflow-y: auto;
+    height: calc(100vh - 93px);
+    margin-bottom: 20px;
+    .heading {
+        font-size: $size-16;
+        font-weight: $semi-bold;
+        color: $gray31;
+    }
+
+    .sub-title {
+        font-weight: $medium;
+        color: $gray40;
+    }
+
+    .link {
+        color: $blue;
+    }
+
+    //FORMS
+    .form-control {
+        height: calc(1.5em + 0.75rem + 2px);
+        padding: 0.375rem 0.75rem;
+        font-size: $size-12;
+        font-weight: 400;
+        line-height: 1.5;
+        border: 1px solid #ced4da;
+        border-radius: 0.25rem;
+    }
+
+    // BUTTONS
+    .btn {
+        font-weight: 400;
+        padding: 0.375rem 0.75rem;
+        font-size: $size-12;
+        line-height: 1.5;
+        border-radius: 0.25rem;
+    }
+    .dropdown-toggle {
+       width:340px;
+       text-align: left;
+    }
+    .dropdown-toggle::after {
+      
+        margin-left: 20em; /* Adjust this value as needed */
+    
+      }
+    .btn-outline-primary {
+        &:hover,
+        &:focus {
+            color: $blue; 
+            //background-color: $blue;
+            border-color: $blue;
+        }
+        &:active {
+            color: $blue; 
+            //background-color: $blue;
+            border-color: $blue;
+        }
+        background: $white;
+    }    
+    .btn-close {
+        color: $black;
+        border: 0;
+    }
+    .btn-light {
+        color: $black;
+        background-color: $white;
+        border-color: $white;
+    }
+    .rounded-5 {
+        border-radius: 7px !important;
+    }
+}
+
+.ptags-modal {
+    &.modal {
+        .modal-header,
+        .modal-footer {
+            border: 0;
+        }
+        .modal-header {
+            .modal-title {
+                font-size: $size-16;
+            }
+            .btn-close {
+                color: $black;
+            }
+        }
+        .modal-body,
+        .modal-footer {             
+            p,
+            label, 
+            input,
+            select,
+            .form-control,
+            .custom-select,
+            .btn-sm,
+            .btn {
+                font-weight: $regular;
+                font-size: $size-12;
+                line-height: normal;
+            }
+            .form-control {
+                height: calc(1.5em + 0.75rem + 2px);
+                padding: 0.375rem 0.75rem;
+                font-size: $size-12;
+                font-weight: 400;
+                line-height: 1.5;
+                border: 1px solid #ced4da;
+                border-radius: 0.25rem;
+            } 
+            .btn {
+                font-weight: 400;
+                padding: 0.375rem 0.75rem;
+                font-size: $size-12;
+                line-height: 1.5;
+                border-radius: 0.25rem;
+                margin: 0;
+            }
+            .input-group {
+                .input-group-append {
+                    .btn {                         
+                        border: 0;
+                    }
+                    left: auto;
+                    right: 0px;
+                    position: absolute;
+                }
+            }
+            
+        }
+        z-index: 1055;
+    }
+}

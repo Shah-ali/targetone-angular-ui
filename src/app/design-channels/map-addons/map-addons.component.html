@@ -1,0 +1,56 @@
+
+<div class="modal-header">
+  <h5 class="modal-title col-6 align-items-left">
+    <span id="configureMapsTitle">{{ 'mapsPlugin.configureMaps' | translate }}</span>
+  </h5>
+</div>
+
+<div class="mergetagCompoent">
+  <app-merge-tag-copy></app-merge-tag-copy>
+</div>
+
+<div class="modal-body">
+  <div class="col-12 mt-3">
+    <div class="row col pr-0">
+      <div class="col-12 p-0 align-items-left">
+        <div><label class="smallLabel bold">{{ 'mapsPlugin.dynamicCoordinates' | translate }}</label></div>
+        <div class="flexDisplay">
+          <input class="form-control ml-0" type="text"  [(ngModel)]="dynamicLat" />
+          <input class="form-control" type="text"  [(ngModel)]="dynamicLng" />  
+        </div>
+      </div>
+      <!-- <div class="col-12 p-0 align-items-left">
+        <div><label class="smallLabel bold">{{ 'mapsPlugin.fallbackCoordinates' | translate }}</label></div>
+        <div class="flexDisplay">
+          <input class="form-control ml-0" type="text"  [(ngModel)]="defaultLat" (ngModelChange)="displayFallbackImage()"/>
+          <input class="form-control" type="text"  [(ngModel)]="defaultLng" (ngModelChange)="displayFallbackImage()" />  
+        </div>
+      </div> -->
+      <div class="col-6 p-0 align-items-left">
+        <div><label class="smallLabel bold">{{ 'mapsPlugin.type' | translate }}</label></div>
+        <div>
+          <select class="form-control ml-0" [(ngModel)] = "mapType">
+            <option *ngFor="let option of mapTypeOptions" [value]="option"  [selected]="option === mapType">
+              {{ ('mapsPlugin.' + option) | translate }}
+            </option>
+          </select>
+          
+        </div>
+      </div>
+
+      <div class="mapCtr">
+       
+      </div>
+
+     
+    </div>
+  </div>
+</div>
+<div class="modal-footer d-flex justify-content-right">
+  <button type="button" class="btn buttonCss shadow-none m-0 mr-1" id="closeBtn" (click)="onClose()">
+    {{ 'close' | translate }}
+  </button>
+  <button type="submit" class="btn buttonPrimaryCss shadow-none m-0" (click)="insertData()">
+    {{ 'done' | translate }}
+  </button>
+</div>

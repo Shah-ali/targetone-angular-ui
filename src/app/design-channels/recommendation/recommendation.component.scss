@@ -1,0 +1,332 @@
+.recommendationConatiner {
+    .reco-section {
+        background-color: #fff;
+        padding: 15px;
+    }
+
+    padding: 15px;
+    min-height: calc(100vh - 56px);
+    overflow: auto;
+    background-color: #F0F2F6;
+    .mainContainer {
+        padding: 15px;
+        .title {
+            font-size: 1rem;
+            color: #232323;
+        }
+        .subTitle {
+            font-size: 0.8rem;
+            color: #7B7B7B;
+        }
+        .separator {
+            margin: 10px 0;
+        }
+        #cancelBtn {
+            font-size: 0.9rem;
+            border: 0;
+            background: 0;
+            margin-right: 10px;
+        }
+        #doneBtn {
+            &.disabled {
+                pointer-events: none;
+                opacity: 0.5;
+            }
+        }
+        .searchNCreateReco {
+            margin-top: 35px;
+            .searchReco {
+                .iconPosition {
+                    position: absolute;
+                    top: 12px;
+                    left: 15px;
+                    z-index: 1;
+                    color: #666;
+                }
+                #searchInput {
+                    border: 1px solid #ccc;
+                    border-radius: 5px;
+                    padding: 9px;
+                    width: 98%;
+                    position: relative;
+                    padding-left: 40px;
+                    box-shadow: none;
+                    &:focus-visible {
+                        box-shadow: none;
+                        border: 0;
+                    }
+                }
+            }
+            .recoTypeStyle {
+                position: relative;
+                top: -23px;
+                .text {
+                    font-size: 0.8rem;;
+                    color: #666;
+                }
+            }
+            .recoDropdownStyle {
+                width: 100%;
+                height: 40px;
+                padding: 9px;
+                background: #FFFFFF;
+                border: 1px solid #D9D9D9;
+                box-sizing: border-box;
+                border-radius: 7px;
+                font-size: 0.8rem;;
+                color: #333;
+                text-align: left;
+            }
+            .createRecoBtn {
+                width: 95%;
+                padding: 9px;
+                background: #026FE9;
+                border-radius: 7px;
+                font-size: 0.8rem;;
+                color: #fff;
+                margin-left: 15px;
+                border: 0;
+            }
+        }
+        .recentList {
+            .text {
+                font-size: 0.8rem;;
+                color: #666;
+            }
+            .iconColor {
+                color: #026FE9;
+                font-size: 0.8rem;;
+            }
+            .refreshList {
+                font-size: 0.8rem;;
+                color: #026FE9;
+                text-transform: uppercase;
+            }
+        }
+        .recoListContainer {
+            .recoListDiv {
+                background: #FFFFFF;
+                border: 1px solid #D9D9D9;
+                box-sizing: border-box;
+                border-radius: 7px;
+                padding: 15px;
+                .recoTitle {
+                    font-size: 1rem;
+                    color: #333;
+                    font-weight: 600;
+                }
+                .recoTypeSelection {
+                    font-weight: 500;
+                    font-size: 0.8rem;
+                    text-align: center;
+                    letter-spacing: 0.5px;
+                    text-transform: uppercase;
+                    color: #026FE9;
+                    background: #ECF5FF;
+                    border-radius: 4px;
+                    padding: 4px 10px;
+                }
+                .dataSeparator {
+                    border-left: 1px solid #D9D9D9;
+                    padding-left: 10px;
+                }
+                .recoHeading {
+                    font-size: 0.9rem;
+                    color: #666;
+                    font-weight: 600;
+                    margin-bottom: 5px;
+                }
+                .recoData {
+                    font-size: 12px;
+                    font-weight: 600;
+                    color: #232323;
+                    white-space: nowrap;
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+                    padding-right: 5px;
+                }
+            }
+            .noResultFound {
+                background-color: #fff;
+                height: 330px;
+                .text {
+                    color: #666;
+                    font-size: 1rem;
+                    font-weight: 600;
+                }
+                .reset {
+                    color: #026FE9;
+                    font-size: 1rem;
+                    font-weight: 400;
+                }
+            }
+        }
+    }
+    #recoEditSection {
+        height: calc(100vh - 182px);
+        overflow-y: auto;
+        .innerContainer {
+            .leftSection {
+                max-width: 32%;
+                background: #F0F2F6;
+                .text {
+                    font-weight: 600;
+                    font-size: 12px;
+                }
+                .divStyle {
+                    border-bottom: 1px solid #ccc;
+                    padding: 10px 15px 5px 15px;
+                }
+                .recoRule {
+                    background: #fff;
+                    .selectedReco {
+                        padding: 15px;
+                        background: #F4F9FF;
+                        border: 1px solid #4E9AF0;
+                        box-sizing: border-box;
+                        box-shadow: 0px 2px 4px 1px rgba(78, 154, 240, 0.2);
+                        border-radius: 7px;
+                        .title {
+                            font-size: 1rem;
+                            color: #333;
+                        }
+                        .heading {
+                            color: #666;
+                            font-size: 12px;
+                            font-weight: 700;
+                        }
+                        .content {
+                            font-size: 12px;
+                            font-weight: 600;
+                            white-space: nowrap;
+                            overflow: hidden;
+                            text-overflow: ellipsis;
+                            padding-right: 5px;
+                        }
+                    }
+                }
+                .recoLayout {
+                    background-color: #fff;
+                    .layoutConatiner {
+                        img {
+                            width: 169px;
+                            background: #FFFFFF;
+                            border: 1px solid rgba(0, 0, 0, 0.1);
+                            box-sizing: border-box;
+                            border-radius: 5px;
+                            cursor: pointer;
+                            &.selected {
+                                border: 2px solid #007BFF;
+                            }
+                        }
+                    }
+                }
+                .recoSettings {
+                    background-color: #fff;
+                    .headText {
+                        color: #333;
+                        font-size: 0.9rem;
+                        font-weight: 500;
+                    }
+                    .inputStyle {
+                        width: 281px;
+                        height: 40px;
+                        background: #FFFFFF;
+                        border: 1px solid #C2C9D1;
+                        box-sizing: border-box;
+                        border-radius: 7px;
+                        padding-left: 15px;
+                        margin-top: 5px;
+                    }
+                }
+            }
+            .recoPreview {
+                background: #fff;
+                .previewHeader {
+                    font-size: 12px;
+                    font-weight: 500;
+                }
+
+                .productParent {
+                    text-align: center;
+                    width: 780px;
+                    margin: 0 auto;
+                }
+                .productPreview {
+                    display: inline-block;
+                    padding: 15px;    
+                    height: 164px;
+                    background: #FFFFFF;
+                    border-radius: 5px;
+                    box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 1px 3px 1px;
+                    -webkit-box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 1px 3px 1px;
+                    -moz-box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 1px 3px 1px;
+                    .itemDetails {
+                        .itemTitle {
+                            color: #333;
+                            font-size: 1rem;
+                            font-weight: 700;
+                            white-space: nowrap;
+                            overflow: hidden;
+                            text-overflow: ellipsis;
+                        }
+                        .itemDescription {
+                            color: #333;
+                            font-weight: 400;
+                            font-size: 12px;
+                            line-height: 22px;
+                        }
+                    }
+                }
+                .layout2 {
+                    height: 295px;
+                    max-width: 180px;
+                    margin-right: 15px;
+                    &:last-child {
+                        margin-right: 0;
+                    }
+                    &:nth-child(4) {
+                        margin-right: 0;
+                    }
+                }
+                .reverseLayout:nth-child(even) {
+                    .reverseContent {
+                        flex-direction: row-reverse;
+                    }
+                    .itemTitle, .itemDescription {
+                        text-align: right;
+                    }   
+                }
+                .layout4 {
+                    margin: 0;
+                    .productPreview {
+                        display: inline-block;
+                        height: 295px;
+                    }
+                }
+            }
+        }
+    }
+    .loaderMask{
+        position: absolute;
+        height: 100vh;
+        width: 100%;
+        z-index: 1;
+        background-color: rgb(238, 238, 238);
+        display: flex;
+        align-items: center; 
+        justify-content: center; 
+        font-size: 24px;
+        opacity: 30%;
+        overflow: hidden;
+        z-index: 10;
+    }
+
+    .innerContentMargin {
+        margin: 0 15px;
+    }
+}
+
+.recommendationCards {
+    display: none;
+}

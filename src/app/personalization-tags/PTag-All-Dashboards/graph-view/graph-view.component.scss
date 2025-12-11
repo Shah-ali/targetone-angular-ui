@@ -1,0 +1,113 @@
+@import '../../../../../src/custom-style.scss';
+.form-group.hidden {
+    width: 0;
+    margin: 0;
+    border: none;
+    padding: 0;
+}
+  .custom-day {
+    text-align: center;
+    padding: 0.185rem 0.25rem;
+    display: inline-block;
+    height: 2rem;
+    width: 2rem;
+  }
+  .height32{
+    height: 2rem;
+    width:100px;
+  }
+  .bordernoneInput{border:none;}
+  .custom-day.focused {
+    background-color: #e6e6e6;
+  }
+  .custom-day.range, .custom-day:hover {
+    background-color: rgb(2, 117, 216);
+    color: white;
+  }
+  .custom-day.faded {
+    background-color: rgba(2, 117, 216, 0.5);
+  }
+  .timeZoneGtmtext{
+		position: absolute;
+		z-index: 99;
+		top: 12px;
+		right: -70px;
+		font-size: 13px;
+		font-weight: 500;
+    }
+    .fa-calendar-alt {
+      top: 8px;
+      right: -10px;
+      color: #ccc;
+      cursor: pointer;
+  }
+  .graphAreaAllPerforms{
+    width:100%;
+    height: auto;
+    margin-top: 10px;
+    background-color: #fff;
+  }
+  .echarts-container {
+    height: 600px; /* Set the height as needed */
+    
+      .pagination {
+        margin-top: 10px;
+        position: absolute;
+        bottom: -33px;
+        right: 0;
+        margin-bottom: 10px; /* Adjust as needed */
+      }
+  }
+  .ag-theme-alpine .ag-row-selected {
+    background-color: #d1e7fd !important; /* Light Blue */
+  }
+  .chartBorderRoundedStyle{
+    border-radius: 10px;
+    box-shadow: 0px 2px 6px 3px #e9e9e9;
+  }
+  .setClearIcon{
+    position: absolute;
+    right: 25px;
+    top: 7px;
+  }
+  .normalStyleFont{
+    font-style: normal;
+    cursor: pointer;
+  }
+  .chart-toggle {
+  width: 114px;
+  height: 45px;
+  background-color: #f4f4f4;
+  border-radius: 8px; // rounded corners only
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 4px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.chart-btn {
+  flex: 1;
+  height: 100%;
+  border-radius: 8px; //rounded corners inside
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: transparent;
+  transition: background-color 0.2s ease;
+
+  img {
+    width: 24px;
+    height: 24px;
+    filter: grayscale(100%) opacity(0.6);
+    transition: filter 0.2s ease;
+  }
+
+  &.active {
+    background-color: #ffffff;
+    img {
+      filter: none;
+    }
+  }
+}
+

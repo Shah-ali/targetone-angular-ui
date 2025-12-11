@@ -1,0 +1,104 @@
+@import "/src/custom-style.scss";
+.buttonCss {
+  @include secondaryBttn;
+}
+
+.buttonPrimaryCss {
+  @include primaryBttn;
+}
+
+.dataLayerSection {
+  padding: 15px 10px;
+}
+
+.tree-view {
+  font-family: sans-serif;
+  padding: 10px;
+  border: 1px solid #ccc;
+  height: calc(100vh - 200px);
+  overflow-y: auto;
+
+  /* Tree list styles */
+  .tree-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  /* Tree node styles */
+  .tree-node {
+    position: relative;
+
+    .fas,
+    .fal,
+    .far {
+      font-size: 14px;
+    }
+
+    .node-content {
+      display: flex;
+      align-items: center;
+      padding: 5px;
+      cursor: pointer;
+
+      .expand-icon {
+        margin-right: 5px;
+        font-weight: bold;
+      }
+
+      .node-name {
+        flex-grow: 1;
+        font-size: 14px;
+
+        .node-count {
+          font-size: 13px;
+          color: red;
+        }
+      }
+
+      .actions {
+        position: relative;
+
+        .three-dots {
+          cursor: pointer;
+          font-size: 18px;
+          font-weight: bold;
+          display: flex;
+          line-height: 1;
+        }
+
+        .action-menu {
+          position: fixed;
+          background-color: white;
+          border: 1px solid #ccc;
+          padding: 5px;
+          z-index: 1000;
+          display: flex;
+          flex-direction: column;
+          box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+          transition: opacity 0.3s ease, visibility 0.3s ease;
+          max-height: 150px; // Optional: Limit the height
+          max-width: 200px; // Optional: Limit the width
+          overflow-y: auto; // Optional: Add scroll if content overflows
+
+          button {
+            margin: 2px 0;
+          }
+        }
+      }
+    }
+
+    .typeIcon {
+      margin: 0 5px;
+    }
+  }
+
+  /* Indentation for child nodes */
+  .input {
+    padding-left: 30px;
+
+    .grandchildren {
+      padding-left: 30px;
+    }
+  }
+}

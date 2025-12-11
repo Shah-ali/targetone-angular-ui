@@ -1,0 +1,160 @@
+@import '../../../custom-style.scss';
+.buttonCss {
+  @include secondaryBttn;
+}
+
+.buttonPrimaryCss {
+  @include primaryBttn;
+}
+.crossColor{
+  color:#9C9C9C;
+}
+
+.wellPaddSty {
+  padding: 18px 20px;
+}
+.activeScriptSelected{
+  background-color: #ddedff !important;
+  border: 1px solid #afd5ff;
+}
+.backGrnd {
+  //background: #f2f2f2;
+  border: 1px solid #E9E9E9;
+  border-radius: 8px;
+  width:98%;
+  margin:0;
+}
+.width98Css{
+  width: 98%;  
+}
+.borderBttmZero{
+  border-bottom: none !important;
+}
+.scriptJsApi-dropdown {
+  position: relative;
+  display: inline-block;
+  width: 100%;
+
+  .search-input-box {
+    position: relative;
+    cursor: pointer;
+    i {
+      position: absolute;
+      right: 12px;
+      top: 11px;
+    }
+
+    input.jsapiInput {
+      width: 100%;
+      height: 39.9px;
+      padding: 8px;
+      border: 1px solid #ccc;
+      font-size: 12px;
+      cursor: pointer;
+    }
+  }
+
+  ul {
+    position: absolute;
+    width: 100%;
+    max-height: calc(100vh - 404px);
+    list-style: none;
+    background-color: #F8F8F8;
+    border: 1px solid #ccc;
+    overflow-y: auto;
+    padding: 5px;
+    margin: 0;
+    font-size: 12px;
+    z-index: 999;
+
+    li {
+      display: block;
+      padding: 3px;
+      cursor: pointer;
+      justify-content: space-between;
+      background-color: #F8F8F8;
+      border-bottom: 1px solid #ccc;
+      label{
+        display: inline-block;
+        line-height: 10px;
+      }
+    }
+  
+    li:hover {
+      background-color: #E6E6E6;
+    }
+  }
+
+  .singleObject,
+  .multiObject {
+    width: 56px;
+    margin-left: 10px;
+    color: #212529;
+    font-size: 80%;
+    border-radius: 5em;
+    min-width: 1.5em;
+    padding: 3px 6px;
+    text-align: center;
+  }
+
+  .singleObject {
+    border: 2px solid #399916;
+  }
+
+  .multiObject {
+    border: 2px solid #9f30e5;
+  }
+}
+.successMsgSampleJSON{
+  background-color: #ECFFEC;
+  border:1px solid #28A54D;
+  font-size: 12px;
+  font-weight: 500;
+  border-left-width: 4px;
+  padding: 1%;
+  width:98%;
+  
+}
+.createApibodyContent {
+  width: 98%;
+  height: calc(100vh - 190px);
+  overflow-x: hidden;
+  overflow-y: auto;
+  margin: 0 1%;
+  .jsonToGridConversionSection {
+    background: #fffef2;
+    border: 1px dotted #868b47;
+    width: 99%;
+    position: relative;
+
+    .loaderMask {
+      position: absolute;
+      height: 100%;
+      width: 100%;
+      z-index: 1;
+      background-color: rgb(238, 238, 238);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 24px;
+      opacity: 30%;
+      overflow: hidden;
+      z-index: 10;
+    }
+  }
+
+  .error-message {
+    color: red;
+    font-size: 12px;
+    margin-top: 5px;
+  }
+}
+
+.apiTestingSection {
+  .urlWrapping {
+    overflow-wrap: break-word;
+    word-break: break-word;
+    hyphens: auto;
+  }
+}
+

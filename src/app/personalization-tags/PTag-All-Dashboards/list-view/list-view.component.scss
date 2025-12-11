@@ -1,0 +1,128 @@
+@import '../../../../custom-style.scss';
+.buttonCss {
+  @include secondaryBttn;
+  line-height: 1.5;
+}
+.buleBtn {
+  background-color: #3366ff;
+  color: #fff;
+}
+.buttonPrimaryCss {
+  @include primaryBttn;
+}
+.responsiveIcon{
+  max-width: 100%;
+    width: 17%;
+}
+.wordbreakLabel{
+  word-break: break-all;
+  text-align:left;
+  padding:5px;
+}
+.disabledBtn{
+  pointer-events: none;
+  cursor: not-allowed;
+  color: #ECF5FF;
+  border: 1px solid #9AC5F6;
+  background: #9AC5F6;
+}
+.barIcon{
+    background-image: url(../../../../assets/pTagDash_JSON/icon/icon_bar.svg);
+    background-size: 12px;
+    background-position: 5px center;
+    background-repeat: no-repeat;
+    padding-left: 22px;
+  }
+
+  .fa-star {
+    color: #C29A2B;
+    cursor: pointer;
+
+    &:hover {
+      transform: scale(1.5);
+    }
+  }
+  .truncateTextPname{
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    max-width: 120px;
+    cursor: pointer;
+  }
+  .truncateTextPnameDrpdn{
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    max-width: 153px;
+    cursor: pointer;
+  }
+  .dropdown-menu[x-placement^=bottom] {
+    left: -151px !important;
+}
+
+  .fav-msg-style {
+    margin: 0;
+    span {
+      color: red;
+    }
+  }
+  .tagURLSection {
+    hr {
+      color: #6f6f6f;
+    }
+    > div {
+      display: flex;
+      font-size: 14px;
+      font-weight: 500;
+      padding: 10px 0;
+      border-bottom: 1px solid #eee;
+      align-items: center;
+      word-break: break-all;
+  
+      &:last-child {
+        border: none;
+      }
+  
+      span i {
+        cursor: pointer;
+      }
+    }
+  }
+  .infoMsgCopyPtag{
+    background-color: #ECF5FF;
+    border:1px solid #80B7F4;
+    color: #666666;
+    font-size: 11px;
+    font-weight: 500;
+    border-left-width: 4px;
+    padding: 1.8%;
+    width:98%;
+    text-align: left;
+    
+  }
+  .warningMsgEditActive{
+    background-color: #FFF6E7;
+    border:1px solid #FFC54E;
+    color: #666666;
+    font-size: 11px;
+    font-weight: 500;
+    border-left-width: 4px;
+    padding: 1.8%;
+    width:98%;
+    text-align: left;
+    
+  }
+  .warnColor{
+    color:#FFC54E;
+  }
+  .infoColor{
+    color:#80B7F4;
+  }
+  .contentMsgStyle{
+    padding: .2% 2%;
+  }
+  .wordbreakLabel{
+    word-break: break-all;
+    text-align:left;
+    padding:5px;
+  }

@@ -1,0 +1,74 @@
+<div class="modal-container recommendationConatiner">
+    <div class="loaderMask" *ngIf="showLoader">
+        <div class="spinner-border text-dark" role="status">
+            <span class="visually-hidden d-none">{{'recommendationComponent.loadinglbl' | translate}}</span>
+        </div>
+    </div>
+    <div class="col-12 mainContainer p-0">
+        <div class="reco-section">
+            <div class="d-flex">                
+                <div class="col-12 d-flex justify-content-end p-0 align-items-center">
+                    <div><button type="button" class="btn buttonCss shadow-none m-0 mr-1" id="cancelBtn" (click)="onClose()">{{'cancel' | translate}}</button></div>
+                    <div>
+                        <button type="button" id="doneBtn" *ngIf="navigatorActiveStage2"  (click)="insertDmeRow()" [ngClass]="{'disabled': navigateToDesignPageEnable }"
+                        class="btn buttonPrimaryCss shadow-none m-0">{{'designEditor.doneBtn' | translate}}</button>
+                    </div>
+                </div>
+            </div>
+            <hr class="separator"/>
+        </div>
+
+        <div class="" id="recoSelectionSection" *ngIf="showActivityRulesGrid">
+            <div class="recoListContainer mt-2">
+                <!-- Recommendation offer Table data -->
+                <div class="outerWrapTable col p-0">
+                    <div class="row col p-0">
+                        <div class="col-2 mb-2">
+                            <div class="col p-0">
+                                <label class="mediumFont">{{'DMEOffersComponent.contextTypeLbl' | translate}}</label>
+                                <select class="form-control shadow-none col-12 mediumFont recoDropdownStyle" 
+                                     (disabled)="contextTypedropDown">
+                                    <option value="-1" selected>{{'DMEOffersComponent.customerDefinedModelLbl' | translate}}</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-2 p-0 mb-2">
+                            <div class="col p-0">
+                                <label class="mediumFont">{{'recommendationComponent.entityTypeLbl' | translate}}</label>
+                                <select class="form-control mediumFont shadow-none col-12 recoDropdownStyle" 
+                                    >
+                                    <option value="-1" selected>{{'journeySetUp.all' | translate}}</option>                                    
+                                </select>
+                            </div>
+                        </div>                        
+                        <div class="col-2 p-0 mb-2">
+                            <div class="col p-0">
+                                <label class="mediumFont"></label>
+                                <input class="form-control mediumFont shadow-none col-12 mt-2 ml-3" placeholder="{{'DMEOffersComponent.searchByModelNameLbl' | translate}}" (keyup)="searchByModelName($event);">
+                            </div>
+                        </div>
+                    </div>
+                    <ag-grid-angular 
+                        style="width: 100%; height: calc(100vh - 240px)" 
+                        class="ag-theme-alpine"
+                        [rowData]="modelDataListsArry" 
+                        [columnDefs]="columnHeadersRuleReco"
+                        [defaultColDef]="defaultColDef"
+                        [rowSelection]="rowSelection"
+                        [getRowId]="getRowId"
+                        [animateRows]="true" 
+                        [pagination]="true" 
+                        [paginationPageSize]="10"
+                        [suppressRowClickSelection]="true"
+                        [localeText]="localeText"                    
+                        >                        
+                    </ag-grid-angular>
+                    
+                </div>
+                
+            </div>
+        </div>
+    </div>
+    
+</div>
+

@@ -1,0 +1,41 @@
+<div class="col pr-0 alignItems p-0  {{currentSelectedInput}}" [attr.data-currentInputId]="currentSelectedInput" #showcurrentMergeTagDrpdwn>
+    <!-- <div class="floatingDivCopied smallFont" *ngIf="copiedDivEnabled">{{'productRecoAdvanceComponent.copiedTextFromMergeTagLbl' | translate}}</div>
+    <ngx-dropdown-treeview #mergeTagsListData
+        [buttonClass]="customBootstrapStyle"
+        class="treeViewDropdownStyle"
+        [config]="configuration"
+        [items]="items"                             
+        (selectedChange)="onSelectedChange($event)"
+        >                                    
+    </ngx-dropdown-treeview> -->
+
+
+    
+    <!-- <div class="col p-0">
+        <input type="text" class="form-control smallFont" (click)="showMergeTagDropDownMethod($event)">
+        <i class="fas text-right caretPositionRight" [ngClass]="openMergeTagDataPopup ? 'fa-caret-up' : 'fa-caret-down'"></i>
+    </div>  -->
+    <div class="col p-0 mergeTagDrawerPopup" *ngIf="openMergeTagDataPopup">
+        <ul class="col p-0 list-group mergeDropDownStyling" #listOfMergeTagDataElemReference>
+            <li class="list-group-item d-flex justify-content-left align-items-center p-2 smallFont" *ngFor="let item of mergeTagDataItems; let i = index" value="{{item.value}}" (name)="stringfyJsonMethod(item);" title="{{item.text}}">
+                <!-- <ng-container *ngFor = "let childobj of getChildrenDataMethod(item.children) | keyvalue;"> -->
+                    <i class="fas fa-caret-down m-0 mr-2" [attr.data-index]="i" [attr.data-label]="item.text" [attr.data-uuid]="uuidOnload" (click)="getChildrenDataMethod($event,item);"></i>
+                <!-- </ng-container>                     -->
+                    <label class="m-0 smallLabel ellipseText" title="{{item.text}}">{{item.text}}</label>                    
+                    <!-- <ng-container *ngFor = "let childobj of getChildrenDataMethod(item.children) | keyvalue;">
+                        <input type="hidden" class="hiddenVal_{{item.text}}" value="{{childobj.value}}" [attr.data-uuid]="uuidOnload">
+                    </ng-container> -->
+                    
+                    <!-- <ng-container *ngIf="item.children">
+                        <ul class="innerLevel-1" name="item.text" *ngIf="childExapand">
+                            <li class="m-0" *ngFor="let level1 of item.children">
+                                <i class="far fa-caret-down"></i>
+                                <span>{{level1.text}}</span>
+                                <i class="far fa-copy"></i>
+                            </li>
+                        </ul>
+                    </ng-container> -->
+            </li>           
+          </ul>        
+    </div>
+</div>

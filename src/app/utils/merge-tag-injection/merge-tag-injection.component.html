@@ -1,0 +1,142 @@
+<div class="container-fluid merge-tag-injection-section">
+  <div class="row no-gutters">
+    <!-- LEFT SIDEBAR -->
+    <div class="col-5 sidebar p-0 pr-2">
+      <!-- <div class="mb-3 top-header">
+        <div><i class="far fa-database"></i></div>
+        <h5 class="title ml-2 p-0 m-0">Data Models</h5>
+      </div> -->
+
+      <!-- STORED DATA ACCORDION -->
+      <div class="accordion-section" *ngFor="let obj of this.mergeTagJSONData">
+        <div class="accordion-header" (click)="toggleStoredData(obj.name)">
+          <div class="left">
+            <div *ngIf="obj.name == 'storedData'"><i class="far fa-database"></i></div>
+            <div *ngIf="obj.name == 'apiData'"><i class="far fa-bolt"></i></div>
+            <div *ngIf="obj.name == 'dmeData'"><i class="far fa-sitemap"></i></div>
+            <span>{{ obj.displayName }}</span>
+            <span class="items-count ml-3 mt-1">{{ obj.items.length }}</span>
+          </div>
+          <div class="right ml-2 plus-icon-section" *ngIf="obj.name != 'storedData'" (click)="addItems($event, obj)">
+            <!-- <i class="fas" [ngClass]="openStoredDataMap[obj.name] ? 'fa-chevron-down' : 'fa-chevron-right'"></i> -->
+            <i class="fal fa-plus"></i>
+          </div>
+        </div>
+
+        <div class="accordion-body" *ngIf="openStoredDataMap[obj.name]">
+          <ul class="list-group model-list">
+            <li
+              class="list-group-item"
+              *ngFor="let item of obj.items"
+              (click)="selectModel(item)"
+              [class.active]="selectedModel?.name === item.name">
+              <span class="text">
+                <i *ngIf="item.name == 'Customer'" class="fal fa-user mr-1"></i>
+                <i *ngIf="item.name == 'Promotion'" class="fal fa-cube mr-1"></i>
+                <i *ngIf="item.name == 'Event'" class="fal fa-calendar-check mr-1"></i>
+                <i *ngIf="obj.name == 'apiData'" class="far fa-bolt mr-1"></i>
+                <i *ngIf="obj.name == 'dmeData'" class="far fa-sitemap mr-1"></i>
+                <div class="text-span"> {{ item.name }}
+                  <div class="text-span-1" *ngIf="(obj.name == 'apiData' || obj.name == 'dmeData') && item.maxCount > 0" >
+                    <span class="span-1">Multi Object</span>
+                    <span class="span-2 ml-1">[0...{{ item.maxCount }}]</span>
+                  </div>
+                  <div class="text-span-1" *ngIf="(obj.name == 'apiData' || obj.name == 'dmeData') && item.maxCount <= 0" >
+                    <span class="span-1">Single Object</span>
+                  </div>
+                </div>
+              </span> 
+              <span class="fields-count">{{ item.attributeCount }}</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- RIGHT PANEL -->
+    <div class="col-7 p-2 content" *ngIf="selectedModel">
+      <div class="top-model-name">
+        <div class="model-name">
+          <h4 class="mb-0 mr-2">{{ selectedModel.name }}</h4>
+          <!-- <div *ngIf="maxCountVal > 0" class="max-count-value">[0...{{ maxCountVal }}]</div> -->
+        </div>
+        <div
+          *ngIf="selectedModel.name != 'Customer' && selectedModel.name != 'Promotion' && selectedModel.name != 'Event'"
+          (click)="deleteMergeTag(selectedModel.type, selectedModel.name)">
+          <i class="fal fa-trash-alt"></i>
+        </div>
+      </div>
+      <p class="text-muted mb-4">{{ selectedModel.attributeCount }} fields available</p>
+
+      <div class="serach-input-wrapper">
+        <i class="fal fa-search"></i>
+        <input
+          name="search"
+          type="text"
+          (keyup)="onSearch($event)"
+          class="form-control mb-3"
+          placeholder="Search models and fields" />
+      </div>
+
+      <div class="field-cards">
+        <div class="card field-card mb-3" *ngFor="let field of tempSelectedModel">
+          <div class="card-body">
+            <div class="d-flex justify-content-between mb-2">
+              <span class="field-label">{{ field.displayName }}</span>
+              <!-- <span class="badge badge-light">{{ field.type }}</span> -->
+            </div>
+
+            <div class="code-section">
+              <div class="">
+                <code class="field-code d-block mb-2" tooltip="{{ field.actualName }}">
+                  {{ '{{'+field.actualName+'}}' }}
+                </code>
+              </div>
+              <div class="">
+                <i
+                  class="far fa-copy cursor-pointer"
+                  #t1="bs-tooltip"
+                  [triggers]="'manual'"
+                  tooltip="Copied!"
+                  (click)="copyToPaste(t1, '{' + field.actualName + '}')"></i>
+              </div>
+            </div>
+
+            <div class="code-section" *ngIf="field.varArrayType">
+              <div class="">
+                <code class="field-code d-block mb-2" tooltip="{{ field.actualName }}">
+                  {{ '{{'+field.actualName+'[X]}}' }}
+                </code>
+              </div>
+              <div class="">
+                <i
+                  class="far fa-copy"
+                  #t2="bs-tooltip"
+                  [triggers]="'manual'"
+                  tooltip="Copied!"
+                  (click)="copyToPaste(t2, '{' + field.actualName + '[X]}')"></i>
+              </div>
+            </div>
+
+            <small class="text-muted">
+              Description:
+              <span>Lorem ipsum dolor sit amet, consectetur adipiscing elit</span>
+            </small>
+
+            <!-- <div class="mt-3 d-flex">
+              <button class="btn btn-outline-secondary btn-sm mr-2"
+                      (click)="copy(field.code)">
+                <i class="far fa-copy"></i>
+              </button>
+
+              <button class="btn btn-primary btn-sm"
+                      (click)="insertField(field.code)">
+                Insert
+              </button>
+            </div> -->
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

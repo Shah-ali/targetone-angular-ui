@@ -1,0 +1,50 @@
+@use "sass:map";
+
+$theme-light: (
+    "bg-main": #f4f4f4,
+    "color-main": #232323,
+    "bg-primary": #edf7ff,  //#E7F6FF
+    "color-white" : #ffffff,
+    "color-primary": #0780DB,
+    "bg-secondary": #F6F6F6,
+    "color-secondary": #AAAAAA,
+    "color-secondary-dark": #7B7B7B,
+    "color-secondary-light" : #4f4f4f,
+    "bg-grey": #F1F1F1,
+    "bg-help": rgba(255, 249, 216,0.5),
+    "btn-bg-primary": #0780DB,
+    "gradient-color-primary": linear-gradient(180deg, #AAAAAA 0%, #0AA5FF 100%),
+    "border-color-primary": #E9E9E9,
+    "border-color-secondary": #BDBDBD,
+    "box-shadow-primary": rgba(0, 0, 0, 0.1),
+    "box-shadow-secondary": rgba(0, 0, 0, 0.25),
+    "light-green": #DDF7D8,
+    "green": #65D971,
+    "light-blue" : #CEF9FF,
+    "purple": #946CD4,
+    "light-orange": #FFF4D0,
+    "light-red": #FEE4D4,
+    "red": #F8705E,
+    "bg-red": #FB987E,
+    "dark-red": #F4312A,
+    "blue-color"  : #0AA5FF,
+    "green1":#38C153
+);
+
+$theme-dark: (
+    "bg-main": #333,
+    "color-main": #fff,
+    "bg-primary": #F3FBFE,
+    "color-white" : #fff,
+    "color-primary": #47C6FF,
+    "bg-secondary": #F6F6F6,
+    "color-secondary": #AAAAAA,
+    "color-secondary-dark": #7B7B7B,
+    "bg-grey": #F1F1F1,
+    "bg-help": #FFF4D0,
+    "btn-bg-primary": #F8705E,
+    "gradient-color-primary": linear-gradient(180deg, #AAAAAA 0%, #0AA5FF 100%),
+    "border-color-primary": #E9E9E9,
+    "border-color-secondary": #BDBDBD,
+    "box-shadow-primary": rgba(0, 0, 0, 0.25)
+);

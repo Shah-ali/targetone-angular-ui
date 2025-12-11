@@ -1,0 +1,156 @@
+<div class="modal-header">
+  <h5 class="modal-title" id="exampleModalLabel">
+    <span class="largeLable">{{ 'imageAddons.advancedImageConfigLbl' | translate }}</span>
+  </h5>
+</div>
+<div class="modal-body">
+  <div class="col-12 p-0 imageArea">
+    <div class="accordionSection">
+      <div class="accordion" id="accordion">
+        <div class="accordion-item">
+          <div class="card">
+            <div class="card-header" id="viewPort" (click)="toggleCollapse(0)">
+              <div class="col-7 p-0 res">
+                <div
+                  class="toggleEnableDisable mr-2 p-0"
+                  [ngClass]="maxWidthAccorActive ? 'toggleEnable' : 'toggleDisable'">
+                  <div class="toggleButton">
+                    <label class="switch ml-1">
+                      <input
+                        type="checkbox"
+                        class="enableImageCk"
+                        id=""
+                        [checked]="maxWidthAccorActive"
+                        (click)="activateMaxWidth()" />
+                      <span class="slider round"></span>
+                    </label>
+                  </div>
+                </div>
+                <span>{{ 'imageAddons.maxWidthLbl' | translate }}</span>
+              </div>
+              <div>
+                <span class="collapse-arrow" [ngClass]="{ collapsed: !isCollapsed[0] }">
+                  <i class="fal fa-chevron-right"></i>
+                </span>
+              </div>
+            </div>
+            <div
+              class="collapse"
+              id="collapse0"
+              [ngClass]="{ show: !isCollapsed[0] }"
+              [attr.aria-labelledby]="'viewPort'"
+              data-parent="#accordion">
+              <div class="card-body" [ngClass]="maxWidthAccorActive ? '' : 'disabledFields'">
+                <div class="col-12 p-0 viewPortStyle">
+                  <div class="col-5 mr-5 p-0">
+                    <div class="imageBox"><input
+                      type="number"
+                      name="width"
+                      class="form-control"
+                      [(ngModel)]="widthValue"
+                      required
+                      #widthFieldControl="ngModel" />
+                      <span>px</span>
+                    </div>
+                    <div
+                      class="error-message"
+                      *ngIf="true && widthFieldControl.invalid && (widthFieldControl.dirty || widthFieldControl.touched)">
+                      <div *ngIf="widthFieldControl.hasError('required')">
+                        {{ 'imageAddons.errors.specifyWidthTextError' | translate }}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <hr />
+        <div class="accordion-item">
+          <div class="card">
+            <div class="card-header" (click)="toggleCollapse(1)">
+              <div class="col-11 p-0 res">
+                <div class="toggleEnableDisable mr-2 p-0" [ngClass]="viewPortAccorActive ? 'toggleEnable' : 'toggleDisable'">
+                  <div class="toggleButton">
+                    <label class="switch ml-1">
+                      <input
+                        type="checkbox"
+                        class="enableImageCk"
+                        id=""
+                        [checked]="viewPortAccorActive"
+                        (click)="activateViewPort()" />
+                      <span class="slider round"></span>
+                    </label>
+                  </div>
+                </div>
+                <span>{{ 'imageAddons.resizeImagesLbl' | translate }}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <hr />
+        <div class="accordion-item">
+          <div class="card">
+            <div class="card-header" id="conditions" (click)="toggleCollapse(2)">
+              <div class="col-7 p-0 res">
+                <div
+                  class="toggleEnableDisable mr-2 p-0"
+                  [ngClass]="conditionAccorActive ? 'toggleEnable' : 'toggleDisable'">
+                  <div class="toggleButton">
+                    <label class="switch ml-1">
+                      <input
+                        type="checkbox"
+                        class="enableImageCk"
+                        id=""
+                        [checked]="conditionAccorActive"
+                        (click)="activateCondition()" />
+                      <span class="slider round"></span>
+                    </label>
+                  </div>
+                </div>
+                <span>{{ 'imageAddons.conditionLbl' | translate }}</span>
+              </div>
+              <div>
+                <span class="collapse-arrow" [ngClass]="{ collapsed: !isCollapsed[2] }">
+                  <i class="fal fa-chevron-right"></i>
+                </span>
+              </div>
+            </div>
+            <div
+              class="collapse"
+              id="collapse0"
+              [ngClass]="{ show: !isCollapsed[2] }"
+              [attr.aria-labelledby]="'conditions'"
+              data-parent="#accordion">
+              <div class="card-body" [ngClass]="conditionAccorActive ? '' : 'disabledFields'">
+                <div class="col-12 p-0 mb-2 conditionLabel">
+                  <div>&nbsp;</div>
+                  <div><app-merge-tag-copy></app-merge-tag-copy></div>
+                </div>
+                <div class="col-12 p-0 conditionTextArea">
+                  <textarea [placeholder]="'imageAddons.conditionPlaceholder' | translate" [(ngModel)]="conditionTextArea" required #condFieldControl="ngModel"></textarea>
+                  <div
+                    class="error-message"
+                    *ngIf="true && condFieldControl.invalid && (condFieldControl.dirty || condFieldControl.touched)">
+                    <div *ngIf="condFieldControl.hasError('required')">
+                      {{ 'imageAddons.errors.specifyConditionError' | translate }}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="helpTextToBuildCondition"><a class="pointer" (click)="helpOLH('advance-image-content')">{{ 'imageAddons.helpTextToBuildCondition' | translate }}</a></div>
+</div>
+<div class="modal-footer d-flex justify-content-right">
+  <button type="button" class="btn buttonCss shadow-none m-0 mr-1" id="closeBtn" (click)="onClose()">
+    {{ 'close' | translate }}
+  </button>
+  <button type="submit" class="btn buttonPrimaryCss shadow-none m-0" (click)="insertData()">
+    {{ 'done' | translate }}
+  </button>
+</div>

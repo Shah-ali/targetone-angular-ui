@@ -1,0 +1,83 @@
+<div class="modal-header">
+  <h5 class="modal-title" id="exampleModalLabel">
+    <p class="mediumLable m-0">{{ 'beeEditorGlobalComponent.addParameterLbl' | translate }}</p>
+    <p class="smallFont text-muted">{{'beeEditorGlobalComponent.subTitleInfoMsgForAddParameterLbl' | translate}}</p>
+  </h5>
+  
+  <!-- <button type="button" class="close" (modown)="onClose()" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button> -->
+</div>
+<div class="modal-body">
+  <div class="col-12 p-0 tagParamsArea">
+    <!-- Extra parameters Area -->
+    <div class="col-12 mb-3 ml-3 panelStyleDesign" id="brandArea-panel">
+      <div class="row col pr-0">
+        <div class="col-8 p-0 align-items-left">
+        </div>
+        <div class="col-4 p-0 align-items-right text-right d-none">
+          <label class="mediumFont bluelink pointer" (click)="clearKeyValueData()">{{ 'clearLbl' | translate }}</label>
+        </div>
+      </div>
+      <div class="col p-0 keyValueAddArea" #tagParametersDropdown id="keyValueAddArea">
+        <div class="row col keyValueBlock p-0 mt-2" *ngFor="let item of keyValueArray">
+          <div class="col-5 align-items-left">
+            <input class="form-control mb-1 smallLabel" [(ngModel)]="item.key" title="{{item.key}}" placeholder="{{'beeEditorGlobalComponent.enterParameterNameInputLbl' | translate}}" (input)="callTagParaNameValidationMethod($event)" />
+          </div>
+          <div class="row col-6 align-items-left p-0 mr-1">
+            <div class="col" [ngClass]="item.isMultiValEnbale ? '' : 'pr-0'">
+              <select
+                class="form-control index_{{ item.id }} typeSelectList smallLabel"
+                id="rowId_{{ item.id }}"
+                title="{{item.value}}"                
+                (change)="setTypeOfParameter($event, item.id)">                
+                <option value="">{{'beeEditorGlobalComponent.selectDataTypeDropdownLbl' | translate}}</option>
+                <ng-container *ngFor="let list of item.options">            
+                  <option  *ngIf="list == 'dotLine'" disabled>----------------</option>
+                  <option  *ngIf="list != 'dotLine'" [value]="list">{{list}}</option>
+                </ng-container>
+                
+              </select>
+            </div>
+            <div class="col-4 p-0" *ngIf="item.isMultiValEnbale">
+              <select
+                class="form-control index_{{ item.id }} delimSelectList_{{ item.id }} smallLabel"
+                id="rowId_{{ item.id }}"
+                title="{{item.splitBy}}"
+                (change)="onChangeMultiValueString($event, item.id)">                
+                <option *ngFor="let delim of delimitersObj | keyvalue" [value]="delim.value">{{ delim.value }}</option>
+              </select>
+            </div>
+          </div>
+          <div class="col-1 p-0 align-items-left">
+            <!-- <i class="far fa-plus-circusele fa-lg linkColor ml-3 mt-3 pointer" *ngIf="item.add"></i>  -->
+            <i
+              class="fal fa-minus-circle fa-lg linkColor ml-3 mt-3 pointer text-muted"
+              (click)="removeKeyValue(item)"
+              *ngIf="!item.add" title="{{'removeLbl' | translate}}"></i>
+          </div>
+        </div>
+        <div class="row col-11 p-0 mt-3">
+          <button
+            type="button"
+            class="btn buttonCss shadow-none mr-3 mb-2"
+            (click)="addNewKeyValue()"
+            [disabled]="addAnotherDisable || disabledDoneBtnTagParams">
+            <i class="far fa-plus"></i> {{ 'beeEditorGlobalComponent.addParameterBttonLbl' | translate }}
+          </button>
+        </div>
+      </div>
+      <!-- <div class="col-12 text-right p-0">
+            <button type="button" class="btn btn-outline-primary buttonStyle shadow-none" [disabled]="extraPramasLmitExceeded" (click)="addNewKeyValue(item)"><i class="far fa-plus"></i> Add</button>
+        </div>                        -->
+    </div>
+  </div>
+</div>
+<div class="modal-footer d-flex justify-content-right">
+  <button type="submit" class="btn buttonCss shadow-none m-0 mr-1" id="closeBtn" (click)="onClose()">
+    {{ 'close' | translate }}
+  </button>
+  <button type="button" class="btn buttonPrimaryCss shadow-none m-0 mr-1" id="btnDone" [disabled]="disabledDoneBtnTagParams" (click)="saveParametersObjVal()">
+    {{ 'done' | translate }}
+  </button>
+</div>

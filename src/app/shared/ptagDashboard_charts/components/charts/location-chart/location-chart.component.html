@@ -1,0 +1,41 @@
+
+<div echarts [options]="options" class="echarts-container col">
+</div>
+<div class="col p-0">
+    <div class="pagination row col justify-content-end p-0" *ngIf="!disabledDownloadDropdown">
+        <ngb-pagination [collectionSize]="totalItems" [(page)]="currentPage" [pageSize]="pageSize"
+          aria-label="Pagination" (pageChange)="onPageChange($event)"></ngb-pagination>
+      </div>
+</div>
+  <div class="col p-0 m-3">
+    <div class="col p-0">
+        <div class="row col justify-content-end">
+           <select class="form-control col-2 mb-3 p-0" (change)="downloadOptionChooseMethod($event)" [disabled]="disabledDownloadDropdown">
+            <option value="-1">{{'activePerformanceLocationChartLabel.selectDownloadLocationLbl' | translate}}</option>
+            <option value="1">{{'activePerformanceLocationChartLabel.downloadAsCSVfileLbl' | translate}}</option>
+            <option value="2">{{'activePerformanceLocationChartLabel.downloadAsXLSfileLbl' | translate}}</option>
+           </select>
+        </div>
+    </div>
+    <div class="col p-0">
+        <ag-grid-angular 
+            #myAgGrid
+            style="width: 98%; height: calc(100vh - 375px)" 
+            class="ag-theme-alpine"
+            [rowData]="rowData" 
+            [columnDefs]="columnHeadersRuleReco"
+            [defaultColDef]="defaultColDef"
+            [rowSelection]="rowSelection"
+            [getRowId]="getRowId"
+            [animateRows]="true" 
+            [pagination]="true" 
+            [paginationPageSize]="200"
+            [suppressRowClickSelection]="true"
+            [localeText]="localeText" 
+            [suppressScrollOnNewData] = "true" 
+            (paginationChanged)="paginationChangeMethod($event)"                         
+            >                        
+        </ag-grid-angular>
+    </div>
+    
+  </div>

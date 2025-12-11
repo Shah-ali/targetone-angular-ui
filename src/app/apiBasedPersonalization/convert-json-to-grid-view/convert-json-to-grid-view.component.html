@@ -1,0 +1,213 @@
+<div class="row accordion-panel-grid col p-2 mb-2" (click)="switchAccordPanelMethod(accordPanelGridOnOff);">
+    <label class="mediumFont col m-0">
+        <span>{{'apiPersonalization.apiIntegrationAccordionLbl' | translate}}</span>        
+    </label>
+    <i class="row col fa justify-content-end p-0 m-0 caretIconAccrd" [ngClass]="accordPanelGridOnOff == 1 ? 'fa-caret-up' : 'fa-caret-down'"></i> 
+    
+</div>
+<div class="row col" *ngIf="showAccordionPanelgrid">    
+    <div class="col p-0">
+        <!-- <ng-container *ngTemplateOutlet="innerChildData">
+        </ng-container> -->
+        <!-- let item of generatedSampleJson -->
+        <div class="col wrapperChild" #nestedInnerChildContentToTablesData>
+            <ng-container class="" *ngIf="checkIfArrayOrObjMethod(generatedSampleJson)">
+            
+            <div class="row col p-0 tableViewFOrApiJson tableFor_{{arrayElement}}_{{i}}_{{i}}" *ngFor="let item of simplyfiedGeneratedSampleJson; let i=index">
+                <div class="col-2 p-0 jsonKeyName keyName|{{arrayElement}} nameSection_{{arrayElement}}_{{i}}_{{i}} checked|{{arrayElement}}|{{expandedValForTempSave}}" [attr.name]="arrayElement">                                                                                                                                                                                                                   
+                    <!-- <input type="checkbox" class="checkInput checkInput|{{i}}|{{item.key}}|{{item.value}} checkValign" name="{{item.key}}" *ngIf="!isArrayObj(item.value) && typeOf(item.value) !== 'object';" name="{{item.key}}" [disabled]="multiArrayPath"> -->
+                    <!-- <label class="smallLabel mt-2 ml-2" *ngIf="isArrayObj(item.value)" name="{{item.key}}">Multi object output</label>  -->
+                    <!-- <label class="smallLabel mt-2 ml-2" *ngIf="typeOf(item.value) !== 'object';"></label>  -->
+                    
+                    <label class="smallLabel p-2 align-base key_{{arrayElement}}"  title="{{i}}">{{i}}</label>
+                </div>
+                <div class="col p-0 jsonValName valSection_{{arrayElement}}_{{i}}_{{i}}" #nestedInnerChildContent>
+                    <div class="row col">
+                        <div class="smallLabel aconPlusdiv|{{arrayElement}}|{{i}} ml-2 mt-2 align-middle">[ <i class="far fa-plus fa-sm aconPlus|{{arrayElement}}|{{i}}|{{i}} plusIconClick cursor-pointer useArrayList" [attr.name]="i" [attr.data-uniquePathId]="i" [attr.data-expandedName]="i" [attr.data-arryLoopIndex]="i" [attr.data-uuid]="item.uuid" [attr.data-isArrayOfItem]="true" [attr.data-originExpand]="i"></i> ]</div>
+                        <div class="smallLabel mt-2 ml-2 defaultPointer" > <span class="smallFont text-muted">[ {{i}} ]</span></div>                            
+                        <button type="button" class="aconPlus|{{arrayElement}}|{{i}}|{{i}} ml-2 mt-2 useArrayBtn d-none" [attr.name]="i" [attr.data-arryLoopIndex]="i" [attr.data-uuid]="item.uuid" [attr.data-uniquePathId]="i" [attr.data-originExpand]="i" [attr.data-fromHtmlTemplate]="fromHtmlTemplate">{{'apiPersonalization.usethisArrayLbl' |translate}}</button>
+                        <ng-container *ngFor = "let obj of getKeyValueOnClickMethod(item) | keyvalue;">
+                                <input type="hidden" class="hiddenVal|{{arrayElement}}|{{i}}|{{i}}" value="{{obj.value}}" [attr.data-uuid]="item.uuid" [attr.name]="item.key">
+                        </ng-container>
+                            
+                    </div>                        
+                    <div class="col mt-2 mb-2 childTableStyle childTableView|{{arrayElement}}|{{i}}|{{i}} childView|{{item.uuid}}" id="levelOneChildView|{{i}}" #childTableViewContent [attr.name]="i" [attr.data-arryLoopIndex]="i" [attr.data-uuid]="item.uuid"> 
+                        
+                    </div>
+                </div>  
+            </div>              
+            </ng-container>
+
+
+
+            <ng-container *ngIf="!checkIfArrayOrObjMethod(generatedSampleJson)">
+                <!-- single object selecte -->
+            <div class="row col p-0 tableViewFOrApiJson tableFor_{{i}}_{{item.key}}_{{i}}" *ngFor="let item of simplyfiedGeneratedSampleJson let i=index">
+                <!-- <ng-container *ngFor="let uuidCode of fetchUuidMethod(i,item.key)"> -->
+
+                
+                <div class="col-2 p-0 jsonKeyName keyName|{{item.key}} nameSection_{{i}}_{{item.key}}_{{i}} checked|{{item.key}}|{{item.key}}|{{item.key}}" [ngClass]="item.uuid" [attr.name]="item.key"> 
+                    <ng-container *ngFor="let xTypeof of checkValueWhatTypeOfMethod(item.key,item.value)">
+                        <input type="checkbox" class="checkInput checkInput|{{i}}|{{item.key}}|{{xTypeof}} checkValign" [attr.data-uniquePathId]="item.key"  [attr.data-arryLoopIndex]="i" *ngIf="!isArrayObj(item.value) && typeOf(item.value) !== 'object';" name="{{item.key}}"  [attr.data-parentExpandedName]="item.key" [disabled]="multiArrayPath" [attr.data-uuid]="item.uuid" [attr.data-originExpand]="item.key">
+                    </ng-container>                                                                                                                                                                                                                  
+                    
+                    <!-- <label class="smallLabel mt-2 ml-2" *ngIf="isArrayObj(item.value)" name="{{item.key}}">Multi object output</label>  -->
+                    <!-- <label class="smallLabel mt-2 ml-2" *ngIf="typeOf(item.value) !== 'object';"></label>  -->
+                    
+                    <label class="smallLabel p-2 align-base key_{{item.key}}_{{i}}"  title="{{item.key}}">{{item.key}}</label>
+                </div>
+                <div class="col p-0 jsonValName valSection_{{i}}_{{item.key}}_{{i}}" #nestedInnerChildContent>
+                    <ng-container *ngIf="filterIfKeyValueInObject(item.value,item.key) === 'object'">
+                        <ng-container>
+                            <div class="row col">
+                                <div class="smallLabel aconPlusdiv|{{i}}|{{item.key}}|{{i}} ml-2 mt-2 align-middle" #plushMinusIconElement>[ <i class="far fa-plus fa-sm aconPlus|{{i}}|{{item.key}}|{{i}} plusIconClick cursor-pointer" [attr.name]="item.key" [attr.data-expandedName]="item.key" [attr.data-uniquePathId]="item.key" [attr.data-uuid]="item.uuid" [attr.data-originExpand]="item.key"></i> ]</div>
+                                <div class="smallLabel mt-2 ml-2 defaultPointer">{{item.key}}</div>
+                                <ng-container *ngFor = "let obj of getKeyValueOnClickMethod(item.value) | keyvalue;">
+                                    <input type="hidden" class="hiddenVal|{{i}}|{{item.key}}|{{i}}" value="{{obj.value}}" [attr.data-uuid]="item.uuid" [attr.name]="item.key">
+                                </ng-container>
+                                
+                            </div>  
+                        </ng-container>
+                                              
+                    <div class="col mt-2 mb-2 childTableStyle childTableView|{{i}}|{{item.key}}|{{i}} childView|{{item.uuid}}" id="levelOneChildView|{{item.key}}" #childTableViewContent *ngIf="expandedValForTempSave == item.key" [attr.name]="item.key" [attr.data-uuid]="item.uuid">
+                        
+                    </div>
+                    </ng-container>
+                    <ng-container *ngIf="filterIfKeyValueInObject(item.value,item.key) === 'array'">
+                        <!-- MultiObject selecttion -->
+                        <!-- <label class="smallLabel ml-2 mt-2 align-middle text-muted">{{'apiPersonalization.multiObjectOutputLbl' | translate}} </label> -->
+                        <!-- <div class="row col p-0 childTableView_{{i}}_{{item.key}}" *ngIf="expandedValForTempSave == item.key">
+                            
+                        </div> -->
+                        <div class="row col">
+                            <div class="smallLabel aconPlusdiv|{{i}}|{{item.key}}_{{i}} ml-2 mt-2 align-middle">[ <i class="far fa-plus fa-sm aconPlus|{{i}}|{{item.key}}|{{i}} plusIconClick cursor-pointer useArrayList" [attr.name]="item.key" [attr.data-uniquePathId]="item.key" [attr.data-expandedName]="item.key" [attr.data-uuid]="item.uuid" [attr.data-originExpand]="item.key"></i> ]</div>
+                            <div class="smallLabel mt-2 ml-2 defaultPointer" >{{item.key}}</div>                            
+                            <button type="button" class="aconPlus|{{i}}|{{item.key}}|{{i}} ml-2 mt-2 useArrayBtn" [attr.data-arryLoopIndex]="i" name="{{item.key}}|0" [attr.data-uniquePathId]="item.key" [attr.data-parentExpandedName]="item.key"  *ngIf="multiArrayPath" [attr.data-uuid]="item.uuid" [attr.data-originExpand]="item.key" [attr.data-fromHtmlTemplate]="fromHtmlTemplate">{{'apiPersonalization.usethisArrayLbl' |translate}}</button>
+                            <ng-container *ngFor = "let obj of getKeyValueOnClickMethod(item.value) | keyvalue;">
+                                <input type="hidden" class="hiddenVal|{{i}}|{{item.key}}|{{i}}" value="{{obj.value}}" [attr.data-uuid]="item.uuid" [attr.name]="item.key">
+                            </ng-container>
+                            
+                        </div>                        
+                        <div class="col mt-2 mb-2 ml-3 childTableStyle childTableView|{{i}}|{{item.key}}|{{i}} childView|{{item.uuid}}" id="levelOneChildView|{{item.key}}" #childTableViewContent *ngIf="expandedValForTempSave == item.key" [attr.name]="item.key" [attr.data-uuid]="item.uuid"> 
+                            
+                        </div>
+                    
+                    </ng-container>
+                    <ng-container *ngIf="filterIfKeyValueInObject(item.value,item.key) !== 'object' && filterIfKeyValueInObject(item.value,item.key) !== 'array'">
+                        <!-- String, number, boolean value -->
+                        <label class="smallLabel ml-2 mt-2 align-middle text-break" [ngClass]="typeOf(item.value) == 'string' ? 'stringCss' : 'numberCss'" title="{{item.value}}" [attr.data-uuid]="item.uuid">{{item.value}}</label>
+                        <!-- <div class="row col p-0 childTableView_{{i}}_{{item.key}}" *ngIf="expandedValForTempSave == item.key">
+                            
+                        </div> -->
+                    </ng-container>
+                    
+                </div>
+
+                <!-- </ng-container> -->
+         </div>
+         </ng-container>
+         <!--
+           <ng-template #innerChildData ngFor let-myContext [ngForOf]="myContext | keyvalue" let-j="index">
+                            <div class="row col p-0 tableViewFOrApiJson tableFor_{{i}}_{{item.key}}_{{j}}">
+                                <div class="col-2 p-0 jsonKeyName nameSection_{{i}}_{{item.key}}_{{j}}">                                                                                                                                                                                                                   
+                                    <label class="smallLabel p-2 align-base key_{{item.key}}_{{j}}">{{item.key}}</label>
+                                </div>
+                                <div class="col p-0 jsonValName valSection_{{i}}_{{item.key}}_{{j}}" #nestedInnerChildContent>
+                                    <ng-container *ngIf="filterIfKeyValueInObject(item.value,item.key) === 'object'">
+                                        <span class="smallLabel icon_{{i}}_{{item.key}}_{{j}} ml-2 mt-2 align-middle">[ <i class="far fa-plus fa-sm plus_{{i}}_{{item.key}}" (click)="expandInnerChildObj($event,item.value,item.key,i);"></i> ]</span>
+                                        <label class="smallLabel mt-2 ml-2" >{{item.key}}</label>
+                                    <div class="row col p-0 childTableView_{{i}}_{{item.key}}_{{j}}" *ngIf="expandedValForTempSave == item.key">
+                                        
+                                    </div>
+                                    </ng-container>
+                                    <ng-container *ngIf="filterIfKeyValueInObject(item.value,item.key) === 'array'">
+                                        <label class="smallLabel ml-2 mt-2 align-middle text-muted">Multi object output </label>
+                                        
+                                    </ng-container>
+                                    <ng-container *ngIf="filterIfKeyValueInObject(item.value,item.key) !== 'object' && filterIfKeyValueInObject(item.value,item.key) !== 'array'">
+                                        <label class="smallLabel ml-2 mt-2 align-middle">{{item.value}}</label>
+                                        
+                                    </ng-container>
+                                    
+                                </div>
+                
+                         </div>
+                        </ng-template>
+            <ng-template #innerChildData ngFor let-myContext [ngForOf]="myContext | keyvalue" let-index="index">
+            <div class="row col p-0 tableViewFOrApiJson" >
+                <div class="col-2 p-0 jsonKeyName">
+                    <input type="checkbox" class="">
+                    <label class="smallLabel">{{myContext.key}}</label>
+                </div>
+                <div class="col p-0 jsonValName">
+                    [<i class="far fa-plus"></i>]
+                    <label class="smallLabel">{{myContext.value}}</label>
+                    <div class="row col d-none p-0 childTableView"></div>
+                </div>
+            </div>
+         </ng-template> -->
+        </div>        
+    </div> 
+</div>
+<div class="row col mt-4 mb-2">
+    <div class="row col-6" *ngIf="multiArrayPath">
+        <div class="col p-0">
+            <label class="smallLabel m-0 mt-2">{{'apiPersonalization.arrayElementPathLbl' | translate}}</label>
+        </div>
+        <div class="col-8 p-0">
+            <input type="text" class="form-control smallLabel defaultPointer" #useThisArrayFocusOn [(ngModel)]="usedArrayPathSelected" title="{{usedArrayPathSelected}}" readonly>
+        </div>
+    </div>    
+    <div class="row col m-0 justify-content-end p-0 relative">
+        <label class="smallLabel linkColor pointer pt-2 " (click)="addManualFieldsMethod();">
+            {{'apiPersonalization.addOutputFieldsManuallyLbl' | translate}}
+        </label>
+        <div class="row showManualFieldAdded m-0 p-2" [ngClass]="multiArrayPath ? 'col-8' : 'col-4'" *ngIf="showAddFieldsManualPopup">
+            <i class="fas fa-caret-up fa-lg arrowPointUp"></i>
+            <div class="row col m-0">
+                <div class="col-2 m-0 p-0">
+                    <label class="smallLabel">{{'apiPersonalization.attributeFieldLbl' | translate}}</label>
+                </div>
+                <div class="col m-0">
+                    <input class="form-control m-0 mt-1 smallLabel" [(ngModel)]="manualFieldNameAdded" type="text" placeholder="{{'apiPersonalization.pathApiLbl' | translate}}">
+                </div>
+                <div class="col-1 m-0">
+                    <i class="fas fa-plus-circle fa-lg circlePlusIcon pointer" (click)="addFieldsInExistingArrayMethod();" title="{{'apiPersonalization.addFieldsManuallytitleLbl' | translate}}"></i>
+                </div>
+            </div>            
+        </div>
+    </div>
+</div>
+
+<div class="row accordion-panel-grid col p-2 mt-3" (click)="switchAccordPanelTableMethod(accordPanelTableOnOff);">
+    <label class="mediumFont col m-0">
+        <span>{{'apiPersonalization.fieldsofSelectedArrayLbl' | translate}}</span>
+    </label>    
+    <i class="row col fa justify-content-end p-0 m-0 caretIconAccrd" [ngClass]="accordPanelTableOnOff == 1 ? 'fa-caret-up' : 'fa-caret-down'"></i> 
+</div> 
+<div class="row col p-2 whitebck border3sides" *ngIf="defaultMsgForTableView">
+    <label class="mediumFont emptyFieldsCss">
+        {{'apiPersonalization.selectAnArrayAbovetoViewitsFieldsLbl' | translate}}
+    </label>
+</div>
+<div class="row col pt-3 whitebck border3sides" *ngIf="showAccordionPanelTable">
+   <table class="table tableStyleCustom whitebck" #fieldsSelectedPathSection>
+    <thead class="thead-light">
+      <tr>
+        <th scope="col" class="smallLabel" *ngFor="let headerItem of headerArry">
+            {{headerItem}}</th>        
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let item of rowDataArry" id="row_{{item.id}}">
+        <td class="smallLabel width25P">
+            <input type="text" class="form-control p-2 smallLabel col-11 text-truncate path_{{item.selectedName}}" title="{{item.selectedName}}" [(ngModel)]="item.selectedName">
+            </td>
+        <!-- <td class="smallLabel">{{item.type}}</td> -->
+        <td class="smallLabel text-truncate width75P" title="{{item.path}}">{{item.path}}</td>
+        <td><i class="far fa-trash fa-sm cursor-pointer" (click)="deleteEntryMethod($event,item.id,item.fieldId,item);"></i></td>
+      </tr>
+      
+    </tbody>
+  </table>
+</div>

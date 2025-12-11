@@ -1,0 +1,78 @@
+@import "../../../custom-style.scss";
+.buttonCss {
+  @include secondaryBttn;
+}
+
+.buttonPrimaryCss {
+  @include primaryBttn;
+}
+
+.journeyContainer {
+    background: #F7F9FC;
+    border-radius: 10px;
+    padding: 30px;
+    .journeyDetails {
+        background: #fff;
+        border-radius: 5px;
+        padding: 0 20px;
+        .journeyContents {
+            height: 100px;
+            .journey-name {
+                color: #000;
+                opacity: 0.4;
+                font-size: 1.1rem;
+            }
+            #journey-name {
+                border-color: #0091FF;
+                border-radius: 5px;
+                &::placeholder {
+                    color: #999;
+                    font-weight: lighter;
+                }
+            }
+            .alignButton {
+                text-align: end;
+            }
+        }
+    }
+
+    .journeyTemplates {
+        .searchSection {
+            height: 100px;
+            align-items: center;
+            .sortBy {
+                span {
+                    font-size: 14px;
+                }
+                .parameter {
+                    display: inline-block;
+                    margin-left: 10px;
+                    height: 35px;
+                    font-weight: 300;
+                }
+            }
+            .searchBox {
+                justify-content: end;
+                align-items: center;
+                border-bottom: 1px solid #ccc;
+                #searchTemplateBtn {
+                    border: none;
+                    background: transparent;
+                    flex: 1;
+                    padding: 0;
+                    height: 30px;
+                    &::placeholder {
+                        color: #999;
+                        font-weight: lighter;
+                    }
+                }
+                .fa-search {
+                    border: none;
+                    background: transparent;
+                    padding: 0;
+                    color: #aaa;
+                }
+            }
+        }
+    }
+}

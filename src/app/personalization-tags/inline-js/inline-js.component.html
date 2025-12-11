@@ -1,0 +1,213 @@
+<div class="modal-header">
+  <h5 class="modal-title" id="exampleModalLabel">
+    <span class="largeLable" *ngIf="!editModeInlineJS && !viewModeInlineJS">{{ 'inlineJSComponent.label.createNewScript' | translate }}</span>
+    <span class="largeLable" *ngIf="viewModeInlineJS">{{ 'inlineJSComponent.label.viewScript' | translate }}</span>
+    <span class="largeLable" *ngIf="editModeInlineJS">{{ 'inlineJSComponent.label.editScript' | translate }}</span>
+  </h5>
+  <button type="button" class="close" (mousedown)="onClose()" aria-label="Close">
+    <span aria-hidden="true"><i class="fal fa-times"></i></span>
+  </button>
+</div>
+
+<div class="modal-body p-0 bodySection inlineJsSection">
+  <div class="outterwrapper col inlineJsArea">
+    <div class="loaderMask" *ngIf="showLoader">
+      <div class="spinner-border text-dark" role="status">
+        <span class="visually-hidden d-none">{{ 'designEditor.loadinglbl' | translate }}</span>
+      </div>
+    </div>
+
+    <div class="row p-0 innerBody">
+      <div class="col-3 p-4 scriptParams">
+        <div class="fields">
+          <label class="smallLabel bold control-label">{{ 'inlineJSComponent.label.scriptName' | translate }}</label>
+          <input
+            type="text"
+            name="scriptName"
+            class="form-control"
+            [(ngModel)]="scriptName"
+            (input)="validateScriptName()"
+            [ngClass]="editModeInlineJS || viewModeInlineJS ? 'disabledClass' : ''"
+            [disabled]="editModeInlineJS || viewModeInlineJS"
+            [ngClass]="{
+              'valid-input': scriptNameError === '' && scriptName.trim() !== '',
+              'invalid-input': scriptNameError !== ''
+            }"
+            required />
+        </div>
+        <div *ngIf="scriptNameError" class="error-message">
+          {{ scriptNameError }}
+        </div>
+        <div class="fields mt-2">
+          <label class="smallLabel bold">{{ 'inlineJSComponent.label.scriptDescription' | translate }}</label>
+          <textarea
+            name="scriptDesc"
+            class="form-control"
+            [(ngModel)]="scriptDesc"
+            [ngClass]="viewModeInlineJS ? 'disabledClass' : ''"
+            [disabled]="viewModeInlineJS"></textarea>
+        </div>
+        <hr class="mt-4" />
+        <div class="input-section">
+          <div *ngFor="let field of dynamicInputs; let i = index" class="field-container">
+            <label class="smallLabel bold" for="field{{ i }}">{{ 'inlineJSComponent.label.input' | translate }} {{ i + 1 }}</label>
+            <div class="row m-0">
+              <div class="col-10 p-0">
+                <input
+                  class="form-control"
+                  type="text"
+                  id="field{{ i }}"
+                  [(ngModel)]="field.value"
+                  (input)="validateDynamicInput(field)"
+                  [ngClass]="{
+                    'valid-input': field.error === '' && field.value.trim() !== '',
+                    'invalid-input': field.error !== ''
+                  }"
+                  required />
+              </div>
+              <div class="col-1" *ngIf="!viewModeInlineJS">
+                <i *ngIf="dynamicInputs.length > 1" class="fal fa-minus-circle fa-lg cursor-pointer" (click)="removeInputField(i)"></i>
+              </div>
+            </div>
+            <div *ngIf="field.error" class="error-message" [id]="field.id + 'Error'">
+              {{ field.error }}
+            </div>
+          </div>
+        </div>
+        <div class="row col-11 p-0 m-0 mt-2" *ngIf="!viewModeInlineJS">
+          <button class="btn buttonCss shadow-none mr-0" (click)="addInputField()" [disabled]="disabledAddBttn">
+            <i class="far fa-plus"></i> {{ 'beeEditorGlobalComponent.addAnotherLbl' | translate }}
+          </button>
+        </div>
+        <hr class="mt-4" />
+        <div class="multiValueChecbox">
+          <label class="col-12 p-0" for="multiOutput">
+            <input type="checkbox" name="multiValueOutput" (click)="toggleMultiOutput()" [(ngModel)]="isMultiOutputChecked" />
+            {{ 'inlineJSComponent.label.multiValueOutput' | translate }}
+          </label>
+        </div>
+        <div class="multiValueSection" *ngIf="isMultiOutputChecked">
+          <div *ngFor="let field of dynamicOutputs; let i = index" class="field-container">
+            <label class="smallLabel bold" for="field{{ i }}">{{ 'inlineJSComponent.label.output' | translate }} {{ i + 1 }}</label>
+            <div class="row m-0">
+              <div class="col-10 p-0">
+                <input
+                  class="form-control"
+                  type="text"
+                  id="outputField{{ i }}"
+                  [(ngModel)]="field.value"
+                  (input)="validateDynamicOutput(field)"
+                  [ngClass]="{
+                    'valid-input': field.error === '' && field.value.trim() !== '',
+                    'invalid-input': field.error !== ''
+                  }"
+                  required />
+              </div>
+              <div class="col-1" *ngIf="!viewModeInlineJS">
+                <i *ngIf="dynamicInputs.length > 1" class="fal fa-minus-circle fa-lg cursor-pointer" (click)="removeOutputField(i)"></i>
+              </div>
+            </div>
+            <div *ngIf="field.error" class="error-message" [id]="field.id + 'Error'">
+              {{ field.error }}
+            </div>
+          </div>
+        </div>
+        <div class="row col-11 p-0 m-0 mt-2" *ngIf="!viewModeInlineJS && isMultiOutputChecked">
+          <button class="btn buttonCss shadow-none mr-0" (click)="addOutputField()" [disabled]="disabledAddBttn2">
+            <i class="far fa-plus"></i> {{ 'beeEditorGlobalComponent.addAnotherLbl' | translate }}
+          </button>
+        </div>
+
+      </div>
+      <div class="col p-4 scriptEditor">
+        <label class="smallLabel bold">{{ 'inlineJSComponent.label.scriptEditor' | translate }}</label>
+        <div class="scriptEditorSection p-4">
+          <div class="header">
+            <span class="a">function</span>&nbsp;<span class="b">{{ scriptName }} ({{ activeParameters }})</span> <br /><span
+              class="c"
+              >{{ '{' }}</span
+            ><br />&nbsp;&nbsp;
+            <span class="c" *ngIf="!isMultiOutputChecked">let output;</span>
+            <span class="c" *ngIf="isMultiOutputChecked">let output = {{ outputParameters | json }}</span>
+          </div>
+          <div
+            class="inlineJSCodeMirror mediumFontPlus m-0 p-0"
+            #codemirrorElementReference
+            [ngClass]="[isTestConsoleOpened ? 'CodeMirrorWithConsole' : 'CodeMirrorWithoutConsole']">
+            <ngx-codemirror
+              #codemirror
+              [options]="codeMirrorOptions"
+              [(ngModel)]="logic"
+              (ngModelChange)="setEditorContent($event)">
+            </ngx-codemirror>
+          </div>
+          <!-- <textarea
+            [(ngModel)]="logic" 
+            rows="8"
+            class="m-3 logic-textarea"
+            placeholder="
+            The logic that re-arranges the input values is written here
+            For example - If price is greater $0.99 show $ in a certain font size and show cents in a certain font size
+            else
+            show $ in a certain font size and show cents in a certain font size"></textarea> -->
+          <div class="footer">
+            <span class="a">&nbsp;&nbsp;return output;</span><br />
+            <span class="c">{{ '}' }}</span>
+          </div>
+          <div class="run-code-bttn">
+            <button class="btn buttonCss shadow-none mr-0" (click)="openTestConsole()" ngbTooltip="{{'inlineJSComponent.label.runcodeTooltipLbl' | translate}}" tooltipClass="ngbTooltipStyle" placement="left">{{ 'inlineJSComponent.label.runCode' | translate }}</button>
+          </div>
+        </div>
+
+        <div
+          class="sidebar__expand-handle pointer"
+          [ngClass]="{ 'sidebar__collapse-handle': !isTestConsoleOpened }"
+          (click)="toggleTestConsole()"
+          [ngbTooltip]="
+            isTestConsoleOpened
+              ? ('inlineJSComponent.label.hideTestConsole' | translate)
+              : ('inlineJSComponent.label.showTestConsole' | translate)
+          "
+          tooltipClass="ngbTooltipStyle">
+          <i class="fal fa-chevron-right mt-2 fa-sm"></i>
+        </div>
+      </div>
+
+      <div class="col-3 p-2 testConsole" *ngIf="isTestConsoleOpened">
+        <div class="testConsoleInner">
+          <div class="col-12 pl-3 pt-3 headerText">
+            <label class="smallLabel bold">{{ 'inlineJSComponent.label.testConsole' | translate }}</label>
+            <span class="smallLabel linkColor pointer" (click)="cleanConsole()">{{ 'clearAllLbl' | translate }}</span>
+          </div>
+          <hr />
+          <div #parentDiv class="output-section"></div>
+          <div class="field-container">
+            <div class="row m-0 p-2 callingFuncSection">
+              <div class="col-10 p-0 scriptText">{{ scriptName }} &#40;</div>
+              <div class="col-5 p-0 mt-1 scriptFields" *ngFor="let field of dynamicInputs; let i = index">
+                <span class="scriptText" *ngIf="i > 0 && i != 0">&nbsp;&#44;&nbsp;</span>
+                <input class="form-control" type="text" id="pfield{{ i }}" />
+              </div>
+              <div class="col p-0 scriptText">&nbsp;&#41;</div>
+              <div class="runCode mt-1 pointer" (click)="runTest()">
+                <img src="./assets/images/inline-js/executeFunc.svg" ngbTooltip="{{'inlineJSComponent.label.executeTestConsoleMsg' | translate}}" tooltipClass="ngbTooltipStyle" placement="left" />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="modal-footer d-flex justify-content-right">
+    <button type="button" class="btn buttonCss shadow-none m-0 mr-2" id="closeBtn" (click)="onClose()">
+      {{ 'close' | translate }}
+    </button>
+    <button
+      type="submit"
+      *ngIf="!viewModeInlineJS && !isPublishedPersonalization"
+      (click)="saveInlineJs()"
+      class="btn buttonPrimaryCss shadow-none m-0">
+      {{ 'saveLbl' | translate }}
+    </button>
+  </div>
+</div>

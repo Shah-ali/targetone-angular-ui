@@ -1,0 +1,115 @@
+/* PTAGS Style Sheet */
+
+@import 'assets/themes/ptags-base';
+@import 'assets/themes/ptags-table';
+
+/* Scroll bar width */
+::-webkit-scrollbar {
+  width: 5px;
+  height: 5px;
+}
+
+body {
+  font-family: 'Poppins', sans-serif;
+  box-sizing: border-box;
+  height: calc(100vh - 5px);
+}
+
+p {
+  margin-bottom: 0.5rem;
+}
+
+.ptags-wrapper {
+
+  // Custom Tabs
+  .custom-tabs {
+    &.nav-tabs {
+      .nav-link {
+        color: $gray31;
+        &:focus,
+        &:active,
+        &.active {
+          background-color: transparent;
+          border-color: transparent;
+          border-bottom-color: $blue;
+          border-bottom-width: 2px;
+        }
+
+        &.active {
+          color: $blue;
+        }
+
+        padding-top: 4px;
+        background: transparent;
+      }
+    }
+  }
+
+  // Custom Dropdown
+  a {
+    &.custom-dropdown {
+      &.dropdown-toggle {
+        &::after {
+          display: none;
+        }
+
+        color: $black;
+      }
+    }
+  }
+
+  .dropdown-menu {
+    .dropdown-item {
+      padding: 12px 16px;
+      width: 196px;
+    }
+
+    font-size: calc($size-12);
+    border-radius: 7px;
+    border: 1px solid var(--black-19, #E6E6E6);
+    background: #FFF;
+    padding: 8px 0px;
+    box-shadow: 0px 4px 8px 0px rgba(96, 97, 112, 0.16);
+
+    
+  }
+  .ellipseTextLabel{
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    max-width: 120px;
+  }
+  // Custom Popover
+  .popover {
+    .popover-header {
+      .btn {
+        padding: 2px;
+      }
+
+      font-size: calc($size-12);
+      background: transparent;
+    }
+
+    border: 0;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.15);
+  }
+
+  .popover-body {
+    .list-group-item {
+      padding-left: 0.5rem;
+    }
+
+    font-size: calc($size-12);
+    padding: 0.5rem 0.75rem !important;
+  }
+
+  .form-control {
+    &.search-field {
+      padding-left: 25px;
+      background-image: url(assets/pTagDash_JSON/icon/search.svg);
+      background-size: 12px;
+      background-position: 5px center;
+      background-repeat: no-repeat;
+    }
+  }
+}

@@ -1,0 +1,20 @@
+@import '../../../custom-style.scss';
+.buttonCss {
+  @include secondaryBttn;
+}
+
+.buttonPrimaryCss {
+  @include primaryBttn;
+}
+.viewSimulateBodyContent{
+    height: calc(100vh - 227px);
+    overflow-x: hidden;
+    overflow-y: auto;
+    font-size: 12px;
+    font-weight: 400;
+        
+    label{
+      font-size: 12px;
+      word-break: break-all;
+    }
+}

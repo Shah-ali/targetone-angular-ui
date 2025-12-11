@@ -1,0 +1,111 @@
+{
+  "status": "SUCCESS",
+  "message": "SUCCESS",
+  "response": [
+    {
+      "tagId": 68,
+      "tagName": "api-row-preview",
+      "status": "draft",
+      "activationDate": null,
+      "creationDate": "2023-10-21",
+      "deactivationDate": null
+    },
+    {
+      "tagId": 67,
+      "tagName": "non-dme-preview",
+      "status": "draft",
+      "activationDate": null,
+      "creationDate": "2023-10-21",
+      "deactivationDate": null
+    },
+    {
+      "tagId": 66,
+      "tagName": "dme-test",
+      "status": "draft",
+      "activationDate": null,
+      "creationDate": "2023-10-19",
+      "deactivationDate": null
+    },
+    {
+      "tagId": 65,
+      "tagName": "Personalization_Untitle",
+      "status": "draft",
+      "activationDate": null,
+      "creationDate": "2023-10-17",
+      "deactivationDate": null
+    },
+    {
+      "tagId": 64,
+      "tagName": "Personalization_Untitle",
+      "status": "draft",
+      "activationDate": null,
+      "creationDate": "2023-10-16",
+      "deactivationDate": null
+    },
+    {
+      "tagId": 63,
+      "tagName": "preview",
+      "status": "draft",
+      "activationDate": null,
+      "creationDate": "2023-10-10",
+      "deactivationDate": null
+    },
+    {
+      "tagId": 62,
+      "tagName": "css-test",
+      "status": "draft",
+      "activationDate": null,
+      "creationDate": "2023-09-21",
+      "deactivationDate": null
+    },
+    {
+      "tagId": 61,
+      "tagName": "Hotel-Review-Tag",
+      "status": "draft",
+      "activationDate": null,
+      "creationDate": "2023-09-15",
+      "deactivationDate": null
+    },
+    {
+      "tagId": 60,
+      "tagName": "hr2",
+      "status": "draft",
+      "activationDate": null,
+      "creationDate": "2023-09-14",
+      "deactivationDate": null
+    },
+    {
+      "tagId": 59,
+      "tagName": "hr1",
+      "status": "draft",
+      "activationDate": null,
+      "creationDate": "2023-09-14",
+      "deactivationDate": null
+    },
+    {
+      "tagId": 58,
+      "tagName": "TARGET-15176",
+      "status": "draft",
+      "activationDate": null,
+      "creationDate": "2023-09-14",
+      "deactivationDate": null
+    },
+    {
+      "tagId": 57,
+      "tagName": "hotel-review-pre",
+      "status": "draft",
+      "activationDate": null,
+      "creationDate": "2023-09-14",
+      "deactivationDate": null
+    },
+    {
+      "tagId": 51,
+      "tagName": "fale safe test",
+      "status": "draft",
+      "activationDate": null,
+      "creationDate": "2023-09-02",
+      "deactivationDate": null
+    }
+  ],
+  "type": null
+}

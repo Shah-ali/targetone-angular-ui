@@ -1,0 +1,21 @@
+@font-face {
+  font-family: "ConduitBold";
+  font-style: normal;
+  font-stretch: normal;
+  font-display: swap;
+  src: url("BergFreundeFonts/ConduitBold.woff") format("woff");
+}
+@font-face {
+  font-family: "ConduitExtraBold";
+  font-style: normal;
+  font-stretch: normal;
+  font-display: swap;
+  src: url("BergFreundeFonts/ConduitExtraBold.woff") format("woff");
+}
+@font-face {
+  font-family: "ConduitLight";
+  font-style: normal;
+  font-stretch: normal;
+  font-display: swap;
+  src: url("BergFreundeFonts/ConduitLight.woff") format("woff");
+}

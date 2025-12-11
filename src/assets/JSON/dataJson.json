@@ -1,0 +1,36 @@
+{
+    "data":[
+    {
+        "uid":"1",
+        "title":"New Year Product ",
+        "imgsrc":"https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/delish-homemade-pizza-horizontal-1542312378.png?crop=1.00xw:1.00xh;0,0&resize=980:*",
+        "content":"Happy New Year ahead",
+        "display":true,
+        "buttonName":"Buy"
+    },
+    {
+        "uid":"2",
+        "title":"20% Discount ",
+        "imgsrc":"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTC_pG5ZblY2lw2HF8wr1ivKfaX_pexjdKTwA&usqp=CAU",
+        "content":"offer valid on all items",
+        "display":true,
+        "buttonName":"Add"
+    },
+    {
+        "uid":"3",
+        "title":"Apply 20% off",
+        "imgsrc":"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSoJU1j7yzdXz_SvOGcq5qi5k3DHR_6xKTRIw&usqp=CAU",
+        "content":"Apply coupon code",
+        "display":true,
+        "buttonName":"Buy"
+    },
+    {
+        "uid":"4",
+        "title":"upto 50% off",
+        "imgsrc":"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSoJU1j7yzdXz_SvOGcq5qi5k3DHR_6xKTRIw&usqp=CAU",
+        "content":"Apply coupon code",
+        "display":true,
+        "buttonName":"Buy"
+    }
+    ]
+}

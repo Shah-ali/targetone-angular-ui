@@ -1,0 +1,204 @@
+<!-- Modal Header -->
+<div class="modal-header">
+  <h5 class="modal-title" id="exampleModalLabel">
+    <span class="largeLable">{{ "ratingPlugin.configureRatings" | translate }}</span>
+  </h5>
+</div>
+<!-- Modal Body -->
+<div class="modal-body">
+  <div class="col-12 p-0 ratingsArea">
+    <!-- Max Stars Configuration -->
+    <div class="col-12 mb-3">
+      <div class="row">
+        <!-- Max Stars Setting -->
+        <div class="col-md-6 col-12 pl-md-0 maxStarsSection mb-2">
+          <label class="smallLabel bold">{{ "ratingPlugin.maxNumberStarsRatings" | translate }}</label>
+          <div class="star-settings">
+            <i
+              [ngClass]="maxStars <= 1 ? 'disabledPlusMinusBtn' : ''"
+              class="fal fa-minus-circle mr-1"
+              (click)="adjustStars(-1)"></i>
+            <input type="text" name="inputMaxStars" [value]="maxStars" class="form-control mr-1" readonly />
+            <i
+              [ngClass]="maxStars >= 5 ? 'disabledPlusMinusBtn' : ''"
+              class="fal fa-plus-circle"
+              (click)="adjustStars(1)"></i>
+          </div>
+        </div>
+
+        <!-- Stars Preview & Controls -->
+        <div class="col-5 p-0 align-items-left mt-2 ml-3 stars-display">
+          <!-- Star Preview -->
+          <span *ngFor="let star of starsArray">
+            <i class="fas fa-star" [style.color]="starColor" [style.fontSize]="starSize"></i>
+          </span>
+
+          <!-- Number of Ratings Display -->
+          <span
+            *ngIf="noOfRatings"
+            class="ml-2"
+            [ngStyle]="{
+              'font-family': selectedFont,
+              'font-size': selectedFontSize,
+              'font-weight': selectedWeight,
+              color: fontColor
+            }">
+            ({{ noOfRatings }})
+          </span>
+
+          <!-- Star Size Slider -->
+          <div class="col-12 mt-3 d-flex align-items-center gap-2">
+            <label class="smallLabel mb-0 me-1">{{ "ratingPlugin.defineSize" | translate }}</label>
+            <input
+              type="range"
+              [value]="starRangeSize"
+              min="12"
+              max="32"
+              step="2"
+              class="form-range compact-range"
+              (input)="updateStarSize($event)" />
+          </div>
+
+          <!-- Star Color Picker -->
+          <div class="col-12 mt-3 d-flex align-items-center gap-2">
+            <label class="smallLabel mb-0 me-2">{{ "ratingPlugin.selectColor" | translate }}</label>
+            <input type="color" [(ngModel)]="starColor" class="color-picker-box" />
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Rating Value Input -->
+    <div class="col-12 d-flex align-items-end flex-nowrap pl-0 mt-3">
+      <div class="flex-grow-1">
+        <label class="smallLabel bold mb-1">{{ "ratingPlugin.ratingsValue" | translate }}</label>
+        <input class="form-control rating-input" type="text" [(ngModel)]="ratingValue" />
+      </div>
+      <div class="ml-2 d-flex align-items-end">
+        <app-merge-tag-copy></app-merge-tag-copy>
+      </div>
+    </div>
+
+    <!-- Condition Input -->
+    <div class="condtionSpace mt-2 ms-2">
+      <div class="col-12 mt-3">
+        <div class="conditionSection">
+          <div class="form-group mt-3 d-flex align-items-center">
+            <label class="smallLabel condition-label me-3 m-0">{{ "ratingPlugin.selectCondLbl" | translate }}</label>
+            <input
+              type="number"
+              class="form-control"
+              [(ngModel)]="ratingConditionValue"
+              (blur)="checkMaxRatingCondValue($event)" />
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- False Condition Options -->
+    <div class="condtionSpace mt-2 ml-2" *ngIf="shouldShowFalseConditionOptions">
+      <span>{{ "ratingPlugin.ifConditionIsFalseTxt" | translate }}</span>
+      <div class="row radio mt-2">
+        <label class="col-3" for="withSpace">
+          <input type="radio" name="condtionSpace" [value]="true" [(ngModel)]="selectedSpaceOption" />
+          {{ "ratingPlugin.showSpaceTxt" | translate }}
+        </label>
+        <label class="col-4" for="withoutSpace">
+          <input type="radio" name="condtionSpace" [value]="false" [(ngModel)]="selectedSpaceOption" />
+          {{ "ratingPlugin.noShowSpaceTxt" | translate }}
+        </label>
+      </div>
+    </div>
+
+    <!-- Condition Toggle -->
+    <div class="accordion-item mb-0 mt-3">
+      <div class="card">
+        <div class="card-header d-flex align-items-center justify-content-between" (click)="toggleCollapse(2)">
+          <div class="d-flex align-items-center">
+            <div
+              class="toggleEnableDisable me-2 d-flex align-items-center"
+              [ngClass]="addRatingsAccorActive ? 'toggleEnable' : 'toggleDisable'">
+              <div class="toggleButton">
+                <label class="switch m-0">
+                  <input
+                    type="checkbox"
+                    class="enableImageCk"
+                    [checked]="addRatingsAccorActive"
+                    (click)="toggleAddRatings(); $event.stopPropagation()" />
+                  <span class="slider round"></span>
+                </label>
+              </div>
+            </div>
+            <span class="toggle-label fw-bold small">{{ "ratingPlugin.numberofratingsLbl" | translate }}</span>
+          </div>
+          <div [ngClass]="{ 'rotate-down': isCollapsed[2] }">
+            <i class="fal fa-chevron-down"></i>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Add Number of Ratings Input Section -->
+    <div class="condtionSpace add-ratings-section mt-3 ms-1" *ngIf="addRatingsAccorActive">
+      <div class="add-ratings-scroll-container">
+        <!-- Rating Input -->
+        <div class="form-group mb-2">
+          <label class="smallLabel">{{ "ratingPlugin.ratingsnumber" | translate }}</label>
+          <input
+            type="text"
+            class="form-control rating-number-input"
+            [(ngModel)]="noOfRatings"
+            placeholder="{{ 'ratingPlugin.AddNoofRatingsPlaceholderLbl' | translate }}" />
+        </div>
+
+        <!-- Font Type and Color Picker - First Row -->
+        <div class="d-flex gap-3 mt-3">
+          <!-- Font Type -->
+          <div class="form-group flex-fill mb-0">
+            <label class="smallLabel">{{ "ratingPlugin.FontType" | translate }}</label>
+            <select class="form-control" [(ngModel)]="selectedFont">
+              <option *ngFor="let font of fontOptions" [value]="font">{{ font }}</option>
+            </select>
+          </div>
+
+          <!-- Font Color -->
+          <div class="form-group mb-0" style="min-width: 120px">
+            <label class="smallLabel">{{ "ratingPlugin.RatingsColor" | translate }}</label>
+            <input type="color" [(ngModel)]="fontColor" class="color-picker-box" />
+          </div>
+        </div>
+
+        <!-- Font Weight and Font Size - Second Row -->
+        <div class="d-flex gap-3 mt-3">
+          <div class="form-group flex-fill mb-0">
+            <select class="form-control" [(ngModel)]="selectedWeight">
+              <option *ngFor="let weight of weightOptions" [value]="weight.value">{{ weight.label }}</option>
+            </select>
+          </div>
+
+          <div class="form-group flex-fill mb-0">
+            <select class="form-control" [(ngModel)]="selectedFontSize">
+              <option *ngFor="let size of fontSizes" [value]="size">{{ size }}</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-group mb-3 mt-2 d-flex align-items-center gap-2">
+          <label class="smallLabel rating-label">
+            {{ "ratingPlugin.showifnoofratingsgreaterthanLbl" | translate }}
+          </label>
+          <input type="text" class="form-control rating-value-input" [(ngModel)]="numberOfRatingValue" />
+        </div>
+      </div>
+    </div>
+    <!-- Submit Buttons -->
+    <div class="modal-footer d-flex justify-content-end">
+      <button type="button" class="btn buttonCss shadow-none m-0 mr-1" id="closeBtn" (click)="onClose()">
+        {{ "close" | translate }}
+      </button>
+      <button type="submit" class="btn buttonPrimaryCss shadow-none m-0" (click)="saveRatings()">
+        {{ "done" | translate }}
+      </button>
+    </div>
+  </div>
+</div>

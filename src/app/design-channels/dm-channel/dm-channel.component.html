@@ -1,0 +1,145 @@
+<app-channels></app-channels>
+<div class="col-12 dmLayoutContainer">
+    <div class="row col-12 p-0 m-0  mb-3 relative">
+        <h6 class="col p-0 pl-1 m-0 mt-3 titleHeadtext"></h6>
+        <button class="btn buttonStyle buttonCssStyle shadow-none mr-3" (click)="openOfferSliderPopup();">{{'designEditor.beeEditorComponent.globalMergeTaglbl2' | translate}}</button>
+        <button class="btn buttonStyle buttonCssStyle shadow-none p-0" (click)="finalSaveMethod();">{{'save' | translate}}</button>
+        
+            <div class="col-1 d-none inappActionListEnable">
+                <select class="smallLabel">
+                  <option value="-1">{{'dmMultiOfferComponent.actionLbl' | translate}}</option>
+                  <option>Test {{channelObj.channelName}}</option>
+                </select>
+            </div>
+        
+    </div>
+    <div class="row innerContainer col-12 p-0 m-0">
+        <div class="col p-4 tempLayoutSection">
+            <div class="row col info-Blue m-0 p-0" *ngIf="isInfoSectionAreaEnabled">
+                <div class="col-11 p-2">                    
+                    <h6 class="m-0 p-0"> 
+                        <i class="far fa-info-circle iconBlue"></i>  
+                        <label class="m-0 p-0 pl-2"> {{'dmMultiOfferComponent.informationLbl' | translate}}</label>
+                        <p class="pl-4 text-muted mrgtop-3"><sub>{{'dmMultiOfferComponent.customerAttrIncludeLbl' | translate}}</sub></p>
+                    </h6>
+                    
+                </div>
+                <div class="col text-right">
+                    <i class="far fa-times fa-sm mt-3 pointer" (click)="isInfoSectionAreaEnabled = false"></i>
+                </div>
+            </div>
+            <div class="col" #includeOffersSection>
+                <div class="row mt-3">
+                    <div class="col-9 p-0">
+                        <div class="col p-0">
+                            <label class="smallLabel">{{'dmMultiOfferComponent.includeOfferNRecommendLbl' | translate}}</label>
+                            <div class="toggleButton d-inline-block">
+                                <label class="switch ml-3">
+                                    <input type="checkbox" class="includeOfferChk" id="" (click)="includeOffersMethod($event);">
+                                    <span class="slider round"></span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>                    
+                </div>
+                
+                <div class="row mt-2 backgCol p-3" #offersTableDataSection *ngIf="isIncludeOfferEnabled; else noOffersRecommendations">
+                    <div class="row col-12 mb-4 p-0 pl-2">
+                        <ul class="col-9 p-0 nav tabsLiStyle add-botton-border">
+                            <li class="" (click)="switchRecoTab(0);"  [ngClass]="tabActiveReco === 0? 'active':''">{{'designEditor.offerDrawerComponent.Offers' | translate}} <span class="smallLabel"> ({{staticOfferArry.length}})</span></li>
+                            <li class="" (click)="switchRecoTab(1);"  [ngClass]="tabActiveReco === 1? 'active':''">{{'designEditor.offerDrawerComponent.recommendations' | translate}} <span class="smallLabel"> ({{recoofferArry.length}})</span></li>
+                        </ul> 
+                        <!-- <div class="col p-0 m-0 text-right">
+                            <button class="btn buttonStyle buttonCssStyle shadow-none p-0 smallLabel mr-15" [disabled]="!isIncludeOfferEnabled" type="button" (click)="openOfferSliderPopup();">
+                                <i class="fas fa-plus mr-1"></i> 
+                                <span *ngIf="tabActiveReco === 0">{{'dmMultiOfferComponent.addOfferlbl' | translate}}</span> 
+                                <span *ngIf="tabActiveReco === 1">{{'dmMultiOfferComponent.addRecommedationLbl' | translate}}</span>
+                            </button>
+                        </div>  -->  
+                    </div>
+                    <table class="table-striped tableStyleCustom smallLabel">
+                        <thead *ngIf="tabActiveReco === 1; else offersTableHead">
+                            <th class="col-3 pl-4">
+                                <!-- <input type="checkbox" class="form-input mr-2 verticalMiddle"> -->
+                                <label>{{'dmMultiOfferComponent.ruleNameLbl' | translate}}</label></th>
+                            <th class="col-3"><label>{{'dmMultiOfferComponent.offersLbl' | translate}}</label> </th>
+                            <th class="col-3"><label>{{'dmMultiOfferComponent.couponsLbl' | translate}}</label></th>
+                            <th class="col"><label>{{'dmMultiOfferComponent.actionsLbl' | translate}}</label></th>
+                        </thead>
+                        <ng-template #offersTableHead>
+                        <thead>
+                            <th class="col-2 pl-4">
+                                <!-- <input type="checkbox" class="form-input mr-2 verticalMiddle"> -->
+                                <label>{{'dmMultiOfferComponent.titleLbl' | translate}}</label></th>
+                            <th class="col-2"><label>{{'dmMultiOfferComponent.descLbl' | translate}}</label> </th>
+                            <th class="col-2"><label>{{'dmMultiOfferComponent.startDateLbl' | translate}}</label></th>
+                            <th class="col-2"><label>{{'dmMultiOfferComponent.endDateLbl' | translate}}</label></th>
+                            <th class="col-2"><label>{{'dmMultiOfferComponent.couponLbl' | translate}}</label></th>
+                            <th class="col"><label>{{'dmMultiOfferComponent.actionsLbl' | translate}}</label></th>
+                        </thead>
+                        </ng-template>
+                        <tbody *ngIf="tabActiveReco === 1; else offertableBody">
+                            <tr *ngIf="ObjectKeys(showIngridData).length === 0; else recorulesAdded">
+                                <td class="col pl-4 text-center" colspan="4">
+                                    {{'dmMultiOfferComponent.infoOnLoadDetailsLbl' | translate}}
+                                </td>
+                            </tr>
+                            <ng-template #recorulesAdded>
+                                <tr *ngFor="let x of showIngridData['recooffer']" id="tempKey_{{x.templateKey}}">
+                                    <td class="col-3 pl-4">
+                                        <!-- <input type="checkbox" id="rule_{{x.dbKey}}" class="form-input mr-2 verticalMiddle"> -->
+                                        <label>{{x.name}}</label></td>
+                                    <td class="col-3"><label class="ml-3">{{x.count}}</label></td>
+                                    <td class="col-3"><input type="checkbox" id="chk_{{x.dbKey}}" class="form-input ml-3 verticalMiddle recoCouponFlag_{{x.dbKey}}"  (click)="getCouponFlagReco($event,x.dbKey);"></td>
+                                    <td class="col">
+                                        <i class="far fa-trash mr-3 fa-lg verticalMiddle" (click)="deleteRecoOffersFromGrid(x.dbKey)"></i>
+                                        <i class="far fa-eye fa-lg verticalMiddle"></i>
+                                    </td>
+                                </tr>
+                            </ng-template>                           
+                            
+                        </tbody>
+                        <ng-template #offertableBody>
+                            <tbody *ngIf="ObjectKeys(showIngridData).length > 0; else noRulesAdded">
+                            <tr *ngFor="let x of showIngridData['staticoffer']">
+                                <td class="col-2 pl-4">
+                                    <!-- <input type="checkbox" id="rule_{{x.dbKey}}" class="form-input mr-2 verticalMiddle"> -->
+                                    <label>{{x.offerTitle}}</label></td>
+                                <td class="col-2"><label>{{x.offerDesc}}</label></td>
+                                <td class="col-2"><label>{{x.offerStDate | date : "dd/MM/y"}}</label></td>
+                                <td class="col-2"><label>{{x.offerEndDate | date : "dd/MM/y"}}</label></td>
+                                <td class="col-2"><input type="checkbox" id="chk_{{x.dbKey}}" class="form-input verticalMiddle offerCouponFlag_{{x.dbKey}}"  (click)="getCouponFlagOffers($event,x.dbKey);"></td>
+                                <td class="col">
+                                    <i class="far fa-trash mr-3 fa-lg verticalMiddle" (click)="deleteOfferFromGrid(x.dbKey)"></i>
+                                    <i class="far fa-eye fa-lg verticalMiddle"></i>
+                                </td>
+                            </tr>
+                        </tbody>
+                        <ng-template #noRulesAdded>
+                            <tbody>
+                                <tr >
+                                    <td class="col pl-4 text-center" colspan="6">
+                                        {{'dmMultiOfferComponent.addOfferInfoDetailsLbl' | translate}}
+                                    </td>
+                                </tr>
+                            </tbody>
+                            </ng-template>
+                        </ng-template>
+                    </table>
+                </div>
+                <ng-template #noOffersRecommendations>
+                    <div class="col p-3 backgCol text-center">
+                        <label class="smallLabel ">{{'dmMultiOfferComponent.addRecommendationInfoDetailsLbl' | translate}}</label>
+                    </div>
+                </ng-template>
+            </div>
+        </div>
+
+    </div>
+   
+
+</div> <!--End Div-->
+<div class="customeOffers relative" *ngIf="offerDrawerSectionEnable" [ngClass]="offerDrawerSectionEnable ? 'slideIN':'slideOUT'">
+    <app-offers-drawer [dataFromParent]="modalRef" (onCloseOfferPopup)="onCloseOfferDrawer();" (offersAppendToInput)="finalOffersSelected($event);"></app-offers-drawer>
+</div>
+<!-- <div class="backdrop_offerSlider" *ngIf="backropOffersEnable"></div> -->

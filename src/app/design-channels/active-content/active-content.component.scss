@@ -1,0 +1,252 @@
+@import "../../../custom-style.scss";
+.buttonCss {
+  @include secondaryBttn;
+}
+
+.buttonPrimaryCss {
+  @include primaryBttn;
+}
+
+.ac-dashboard-header {
+  height: 64px;
+  background-color: #fff;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+
+  .img1 {
+    width: 40px;
+    height: 40px;
+    margin-left: 20px;
+  }
+
+  .img2 {
+    height: 20px;
+    margin-left: 20px;
+  }
+}
+
+.dashboard-container {
+  padding: 25px 10px 10px 10px;
+  height: 100%; /* no fixed height */
+  background-color: #f0f0f0;
+
+  .tab-header {
+    display: flex;
+    flex-shrink: 0;
+
+    button {
+      background: none;
+      border: none;
+      font-weight: 500;
+      font-size: 14px;
+      padding: 10px 15px;
+      cursor: pointer;
+      color: #666666;
+      border-bottom: 2px solid #ccc;
+
+      &.active {
+        color: #026fe9;
+        border-bottom: 2px solid #026fe9;
+      }
+    }
+  }
+
+  .tagName {
+    font-size: 13px;
+    color: #000;
+    font-weight: bold;
+    margin-bottom: 8px;
+    text-align: left;
+    max-width: 250px;
+    cursor: pointer;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .tagDate{
+    font-size: 12px;
+  }
+
+  .toolbar {
+    display: flex;
+    justify-content: flex-end;
+    gap: 12px;
+    margin-bottom: 10px;
+    flex-shrink: 0;
+
+    .sort-button {
+      background: #f0f0f0;
+      border: none;
+      padding: 6px 12px;
+      cursor: pointer;
+      font-size: 14px;
+    }
+
+    input {
+      padding: 10px 6px 10px 30px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      min-width: 240px;
+      font-size: 12px;
+
+    }
+  }
+  .card-grid-container {
+    flex: 1; // take remaining space
+    overflow-y: auto;
+    height: calc(100vh - 170px);
+    min-height: 0;
+  }
+  .card-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 16px;
+    overflow-y: auto; /* makes it scrollable */
+    flex: 1;
+    background-color: #fff;
+    padding: 25px 15px;
+
+    .ptag-card {
+      background: #fff;
+      border: 1px solid #e0e0e0;
+      border-radius: 8px;
+      padding: 12px;
+
+      img {
+        width: 100%;
+        height: auto;
+        border-radius: 4px;
+      }
+
+      h4 {
+        margin: 10px 0 4px;
+        font-size: 16px;
+        font-weight: 600;
+      }
+
+      p {
+        font-size: 13px;
+        color: #666;
+      }
+    }
+  }
+  .radio-wrapper {
+    text-align: left;
+
+    input {
+      cursor: pointer;
+    }
+  }
+  .image-container {
+    width: 100%;
+    height: 160px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 4px;
+    overflow: hidden;
+
+    img {
+      max-width: 100%;
+      max-height: 100%;
+      object-fit: contain;
+    }
+
+    .image-placeholder {
+      width: 100%;
+      height: 100%;
+      background-color: #f0f0f0;
+      color: #999;
+      font-size: 13px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+  }
+
+  .cards-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+  }
+
+  .card {
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    padding: 12px;
+    width: 250px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .card img {
+    width: 100%;
+    height: 120px;
+    object-fit: contain;
+    margin-bottom: 8px;
+  }
+  .view-details-button {
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    background-color: #ffffff;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    padding: 10px 16px;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    transition: box-shadow 0.2s ease;
+
+    img {
+      height: 20px;
+      width: 20px;
+    }
+
+    &:hover {
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+    }
+  }
+  .spinner-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 200px;
+}
+
+.spinner {
+  border: 5px solid #eee;
+  border-top: 5px solid #3f51b5;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  animation: spin 1s linear infinite;
+}
+.modal-footer {
+  position: fixed;
+  bottom: 15px;
+  right: 6px;
+  width: auto;
+  background: #f0f0f0;
+  left: 5px;
+  flex-shrink: 0;
+}
+#searchContainer{
+  position: relative;
+  .fa-search{
+    position: absolute;
+    top: 14px;
+    left: 8px;
+  }
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+}

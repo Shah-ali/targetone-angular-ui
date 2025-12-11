@@ -1,0 +1,429 @@
+<app-channels></app-channels>
+<div class="col-12 inAppLayoutContainer">
+    
+    <div class="row col-12 p-0 m-0  mb-3 relative">
+        <h6 class="col p-0 pl-1 m-0 mt-3 titleHeadtext">{{'inappChannelComponent.specifyInappDetailsLbl' | translate}}</h6>
+        <button class="btn buttonStyle buttonCssStyle shadow-none mr-3" (click)="openOfferSliderPopup($event, '');">{{'designEditor.beeEditorComponent.globalMergeTaglbl2' | translate}}</button>
+        <button class="btn buttonStyle buttonCssStyle shadow-none mr-3" (click)="openTestInappModal(testInappNotifyModel)">{{'inappChannelComponent.testInappButtonLbl' | translate}}</button>
+        <button class="btn buttonStyle buttonCssStyle shadow-none p-0" (click)="finalSaveMethod();">{{'designEditor.saveBtn' | translate}}</button>
+        
+            <div class="col-1 d-none inappActionListEnable">
+                <select class="smallLabel">
+                  <option value="-1">{{'designEditor.actionsLbl' | translate}}</option>
+                  <option>{{'dmMultiOfferComponent.testLbl' | translate}} {{channelObj.channelName}}</option>
+                </select>
+            </div>
+        
+    </div>
+    <div class="row innerContainer d-flex col-12 p-0">
+        <div class="col-8 m-0 tempLayoutSection mr-3 ">  
+            <!-- LEFT side panel-->   
+            <div class="col p-3 mt-3" id="inapp-section" >     
+                <div class="row col p-1">
+                    <div class="col mt-1 p-0">
+                        <h6 class="col-12 p-0 m-0 ml-2 mediumLable">{{'dmColumnarCompontent.templateLbl' | translate}}</h6>
+                    </div>
+                    <div class="col-1 text-right p-0">
+                        <i class="fas fa-caret-down fa-sm" (click)="isTemplateSectionEnabled = !isTemplateSectionEnabled"></i>
+                    </div>
+                </div>            
+               <div class="row col p-0" *ngIf="isTemplateSectionEnabled">
+                <div class="row col-12 p-0 m-0 ml-3" id="layout-section">
+                    <div class="col p-0">
+                        <ul class="nav tabsLiStyle">                
+                            <li class="p-0 pb-2 pt-2 text-center" [ngClass]="templateTabActive === templatesLayoutObj[x].dbKey? 'active':''" *ngFor="let x of Objects.keys(templatesLayoutObj); let i = index;" id="{{templatesLayoutObj[x].dbKey}}">
+                                <div class="col" (click)="switchTemplateTab(i,templatesLayoutObj[x].dbKey);">
+                                    <img class="p-2" src="{{templatesLayoutObj[x].imgUrl}}" id="img_{{templatesLayoutObj[x].dbKey}}">
+                                </div>
+                                <select class="form-control smallFont selectLayoutcss" id="select_{{templatesLayoutObj[x].dbKey}}" (change)="onChangeTemplateLayout($event,templatesLayoutObj[x].dbKey);">
+                                    <option  *ngFor="let y of inappTemplatesObj[templatesLayoutObj[x].dbKey]" value="{{y.dbKey}}" >{{y.templateName}}</option>
+                                </select>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                 <!-- Animation area-->
+                <div class="row col m-0 mt-4" #animationSection>
+                    <div class="col p-0 m-0 pl-4" id="enableAnimation">
+                        <input type="checkbox" class="form-input m-0 mr-3 animationEnabled verticalMiddle" id="enableCheck" (click)="enableAnimationMethod($event);">
+                        <label class="smallLabel">{{'inappChannelComponent.enableAnimationLbl' | translate}}</label>
+                    </div>
+                    <div class="col p-0 m-0" id="entranceType">
+                        <p class="p-0 m-0 mb-1"><label class="smallLabel text-muted p-0 m-0">{{'inappChannelComponent.entranceTypeLbl' | translate}}</label></p>
+                        <p class="p-0 m-0"><select class="form-input smallLabel inputStyle selectEntranceType col-9" id="selectEntranceType" [disabled]="entranceTypeDisabled" (change)="setAnimatedType($event);">
+                            <option value="0" selected>{{'designEditor.mobilePushComponent.default' | translate }}</option>
+                            <option value="1">{{'inappChannelComponent.topLbl' | translate}}</option>
+                            <option value="2">{{'inappChannelComponent.bottomLbl' | translate}}</option>
+                        </select></p>
+                    </div>
+                    <div class="col p-0 m-0" id="timerEnable">
+                        <p class="p-0 m-0 mb-1"><label class="smallLabel text-muted p-0 timerChk">{{'inappChannelComponent.timerLbl' | translate}}</label></p>
+                        <p class="p-0 m-0">
+                            <input type="checkbox" class="form-input smallLabel m-0 mr-3 verticalMiddle timerCheckbox" id="timerCheck" [disabled]="entranceTypeDisabled" (click)="setTimerMethod($event);">
+                            <input type="number" class="form-input smallLabel inputStyle timerValueInput" id="timerValue" [(ngModel)]="timerValue" maxlength="2" min="2" max="15" [disabled]="timerDisabled" (keyup)="setTimerVal($event);">
+                        </p>
+                    </div>
+                </div>
+                </div>
+            </div>
+            <div class="col p-3 mt-3" id="backGround-section">
+                 <!-- Background panel section-->   
+                 <div class="row col p-1">
+                    <div class="col mt-2 p-0">
+                        <h6 class="col-12 p-0 ml-2 mediumLable">{{'inappChannelComponent.backgroundLbl' | translate}}</h6> 
+                    </div>
+                    <div class="col-1 text-right p-0">
+                        <i class="fas fa-caret-down fa-sm" (click)="isbackgroundSectionEnabled = !isbackgroundSectionEnabled"></i>
+                    </div>
+                </div>
+                 <div class="row col p-0 mt-3" *ngIf="isbackgroundSectionEnabled">
+                    <div class="row col p-0 m-0" #backgoundSection>
+                        <div class="col-2 ml-2 colorSectionArea" id="colorSection">
+                            <p class="p-0 m-0 mb-3 col">
+                                <input type="radio" class="mr-1 bgColor" value="0" id="colorChk" [checked]="!backGrndImageEnabled" (click)="setbackgroundColorRImg('color');">
+                                <label for="colorChk" class="smallLabel text-muted p-0 m-0 verticalTopText">{{'inappChannelComponent.colorLbl' | translate}}</label>
+                            </p>
+                            <p class="p-0 m-0 col" *ngIf="!backGrndImageEnabled">
+                                <input type="text" class="form-control inputStyle bordernone" >
+                                <span class="backGrdColrbox" [style.background]="bckGrdColorSelected"></span>
+                                <i class="far fa-palette fa-lg colorPickBck colorpicker"  [(colorPicker)]="color" [cpPosition]="'bottom-right'" (colorPickerChange)="setFontColor($event);"></i>
+                            </p>
+                        </div>
+                        <div class="col imageSectionArea" id="imageSection">
+                            <p class="p-0 m-0 mb-3 col">
+                                <input type="radio" class="mr-1 bgImage" value="1" id="imageChk" [checked]="backGrndImageEnabled" (click)="setbackgroundColorRImg('image');">
+                                <label for="imageChk" class="smallLabel text-muted p-0 m-0 verticalTopText">{{'inappChannelComponent.imageLbl' | translate}}</label>
+                            </p>
+                            <p class="p-0 m-0 col" *ngIf="backGrndImageEnabled">
+                                <input type="text" class="form-control inputStyle bgImageInput" (keyup)="setBackgrdImg($event);">
+                            </p>
+                        </div>
+                    </div>
+                 </div>
+            </div>
+            <div class="col p-3 mt-3" id="text-section">
+                <!-- Text panel section-->   
+                <div class="row col p-1">
+                    <div class="col mt-2 p-0">
+                        <h6 class="col-12 p-0 ml-2 mediumLable">{{'inappChannelComponent.textLbl' | translate}}</h6> 
+                    </div>
+                    <div class="col-1 text-right p-0">
+                        <i class="fas fa-caret-down fa-sm" (click)="isTextSectionEnabled = !isTextSectionEnabled"></i>
+                    </div>
+                </div>
+                <div class="col p-0 mt-3" *ngIf="isTextSectionEnabled">
+                    <div class="row col p-0 ml-1" id="NavTabs">
+                        <ul class="nav tabsLiStyle tabsNoSpace mb-2">
+                            <li class="" (click)="switchTextTab(0);" [ngClass]="textTabActive === 0? 'active':''">{{'inappChannelComponent.titleLbl' | translate}}</li>
+                            <li (click)="switchTextTab(1);" [ngClass]="textTabActive === 1? 'active':''">{{'inappChannelComponent.subtitleLbl' | translate}}</li>
+                            <li (click)="switchTextTab(2);" [ngClass]="textTabActive === 2? 'active':''">{{'inappChannelComponent.messageLbl' | translate}}</li>
+                        </ul>
+                    </div>
+                    <div class="col p-2 mt-1 backgroundWhite">
+                        <div class="row col p-1 ml-1 mt-2">
+                            <div class="col p-0" id="formatterTools">
+                                <ul class="nav fontAlignmentControls" #formatterTools>
+                                    <li class="isFontStyle"  [ngClass]="isSelectedFormat['fontstyle'] ? 'active' : '' ">
+                                        <select class="smallFont fontfamilyElemt" style="width: 100px;height: 24px"  title="{{'inappChannelComponent.fontFamilyLbl' | translate}}" (change)="selectFormatterStyle($event,'fontstyle');">
+                                            <option value="Helvetica Neue,arial" selected>{{'inappChannelComponent.arialLbl' | translate}}</option>
+                                            <option value="comic sans ms,sans-serif">{{'inappChannelComponent.comicsanMslbl' | translate}}</option>
+                                            <option value="verdana,sans-serif">{{'inappChannelComponent.verdanaLbl' | translate}}</option>
+                                            <option value="georgia,serif">{{'inappChannelComponent.georgiaLbl' | translate}}</option>
+                                            <option value="Tahoma,serif">{{'inappChannelComponent.tahomaLbl' | translate}}</option>
+                                            <option value="Roboto">{{'inappChannelComponent.latoLbl' | translate}}</option>
+                                            <option value="Trebuchet MS">{{'inappChannelComponent.avenirLbl' | translate}}</option>
+                                        </select>
+                                    </li>
+                                    <li class="isFontSize" [ngClass]="isSelectedFormat['fontsize']? 'active' : '' "> 
+                                        <select class="smallFont fontsizeElemt" style="width: 40px;height: 24px" title="{{'inappChannelComponent.fontSizeLbl' | translate}}" (change)="selectFormatterStyle ($event,'fontsize')">
+                                            <option value="18">8</option>
+                                            <option value="20">10</option>
+                                            <option value="22">12</option>
+                                            <option value="24">14</option>
+                                            <option value="26">16</option>
+                                            <option value="28">18</option>
+                                            <option value="30">20</option>
+                                            <option value="32">22</option>
+                                            <option value="34" selected>24</option>
+                                            <option value="36">26</option>
+                                            <option value="38">28</option>
+                                            
+                                        </select>
+                                    </li>
+                                    <li class="isFontColot" title="{{'inappChannelComponent.fontColorLbl' | translate}}" [ngClass]="isSelectedFormat['color'] ? 'active' : '' ">
+                                        <span class="fontColorcontainer"></span>
+                                        <div ><span class="colorpicker fontColorIcon " style="min-width:auto;" [(colorPicker)]="color" [cpPosition]="'bottom-right'" (colorPickerChange)="setTextColor($event);"><i class="fas fa-fill-drip" ></i></span></div>
+                                    </li>
+                                    <li class="isFontDecor">
+                                        <span class="fontBoldIcon fas fa-bold mr-3"  title="{{'inappChannelComponent.boldLbl' | translate}}" [ngClass]="isSelectedFormat['bold']? 'active' : '' " (click)="selectFormatterStyle ($event,'bold')" value="bold"></span>
+                                        <span class="fontItalicIcon fas fa-italic mr-3"  title="{{'inappChannelComponent.italicLbl' | translate}}" [ngClass]="isSelectedFormat['italic']? 'active' : '' " (click)="selectFormatterStyle ($event,'italic')"></span>
+                                        <span class="fontUnderlineIcon fas fa-underline mr-3"  title="{{'inappChannelComponent.underlineLbl' | translate}}" [ngClass]="isSelectedFormat['underline']? 'active' : '' " (click)="selectFormatterStyle ($event,'underline')"></span>
+                                    </li>
+                                    <li class="isFontAlign">
+                                        <span class="leftAlignIcon fas fa-align-left mr-3"  title="{{'inappChannelComponent.leftLbl' | translate}}" [ngClass]="isSelectedFormat['left']? 'active' : '' " (click)="selectFormatterStyle ($event,'left')"></span>
+                                        <span class="centerAlignIcon fas fa-align-center mr-3"  title="{{'inappChannelComponent.centerLbl' | translate}}" [ngClass]="isSelectedFormat['center']? 'active' : '' " (click)="selectFormatterStyle ($event,'center')"></span>
+                                        <span class="rightAlignIcon fas fa-align-right mr-3"  title="{{'inappChannelComponent.rightLbl' | translate}}" [ngClass]="isSelectedFormat['right']? 'active' : '' " (click)="selectFormatterStyle ($event,'right')"></span>
+                                        <span class="justifyAlignIcon fas fa-align-justify mr-3"  title="{{'inappChannelComponent.justifyLbl' | translate}}" [ngClass]="isSelectedFormat['justify']? 'active' : '' " (click)="selectFormatterStyle ($event,'justify')"></span>
+                                    </li>
+        
+                                </ul>
+                            </div>
+                            
+                        </div>
+                        <div class="row col p-0 pt-3 pl-4" id="formatterInputArea">
+                            <div class="titleDiv position-relative col titleTabContent" #titleInputContent *ngIf="textTabActive === 0">
+                                <div [attr.contenteditable]="true" class="title editable" 
+                                    id="title" name="androidTitle" (keyup)="getCaretIndex($event,'title');" (click)="getCaretIndex($event,'title');"
+                                    spellcheck="false" (paste)="getCaretIndex($event,'title');" (keydown.Tab)="getCaretIndex($event,'title');"                               
+                                    ngDefaultControl isNative="true" perLine="7" showPreview="false"
+                                    >
+                                </div>
+                                <emoji-mart class="emoji-mart-inapp" [custom]="customEmojis" *ngIf="emojisToggle" title="{{'inappChannelComponent.pickyouremojiLbl' | translate}}" [showPreview]="false" 
+                                (emojiSelect)="addEmojiItem($event, 'title')" [enableSearch]="false" [enableFrequentEmojiSort]="true" [showSingleCategory]="true" 
+                                    [include]="['custom']" emoji="point_up" [i18n]="i18nObject" [emojiTooltip]="false">
+                                </emoji-mart>
+    
+                                <!-- <div class="d-inline iconContainer">
+                                    <i class="far fa-grin" (click)="emojisToggle = !emojisToggle"></i>
+                                    <span class="fal fa-plus" id="" [ngClass]="enablePlusBtn ? '' : 'disabledPlusBtn'" (click)="openOfferSliderPopup($event, 'title');"></span>
+                                </div> -->
+                            </div>
+                            <!-- SubTitle content -->
+                            <div class="titleDiv position-relative col subTitleTabContent" #subtitleInputContent *ngIf="textTabActive === 1">
+                                <div [attr.contenteditable]="true" class="subtitle editable" 
+                                    id="subtitle" name="subtitle" (keyup)="getCaretIndex($event,'subtitle');" (click)="getCaretIndex($event,'subtitle');"
+                                    spellcheck="false" (paste)="getCaretIndex($event,'subtitle');" (keydown.Tab)="getCaretIndex($event,'subtitle');"                               
+                                    ngDefaultControl isNative="true" perLine="7" showPreview="false"
+                                    >
+                                </div>
+                                <emoji-mart class="emoji-mart-inapp" [custom]="customEmojis" *ngIf="emojisToggle" title="{{'inappChannelComponent.pickyouremojiLbl' | translate}}" [showPreview]="false" 
+                                (emojiSelect)="addEmojiItem($event, 'subtitle')" [enableSearch]="false" [enableFrequentEmojiSort]="true" [showSingleCategory]="true" 
+                                    [include]="['custom']" emoji="point_up" [i18n]="i18nObject" [emojiTooltip]="false">
+                                </emoji-mart>
+    
+                                <!-- <div class="d-inline iconContainer">
+                                    <i class="far fa-grin" (click)="emojisToggle = !emojisToggle"></i>
+                                    <span class="fal fa-plus" id="" [ngClass]="enablePlusBtn ? '' : 'disabledPlusBtn'" (click)="openOfferSliderPopup($event, 'subtitle');"></span>
+                                </div> -->
+                            </div>
+                            <!-- Message Tab-->
+                            <div class="titleDiv position-relative col messageTabContent" #messageInputContent *ngIf="textTabActive === 2">
+                                <div [attr.contenteditable]="true" class="message editable" 
+                                    id="message" name="message" (keyup)="getCaretIndex($event,'message');" (click)="getCaretIndex($event,'message');"
+                                    spellcheck="false" (paste)="getCaretIndex($event,'message');" (keydown.Tab)="getCaretIndex($event,'message');"                               
+                                    ngDefaultControl isNative="true" perLine="7" showPreview="false"
+                                    >
+                                </div>
+                                <emoji-mart class="emoji-mart-inapp" [custom]="customEmojis" *ngIf="emojisToggle" title="{{'inappChannelComponent.pickyouremojiLbl' | translate}}" [showPreview]="false" 
+                                (emojiSelect)="addEmojiItem($event, 'message')" [enableSearch]="false" [enableFrequentEmojiSort]="true" [showSingleCategory]="true" 
+                                    [include]="['custom']" emoji="point_up" [i18n]="i18nObject" [emojiTooltip]="false">
+                                </emoji-mart>
+    
+                                <!-- <div class="d-inline iconContainer">
+                                    <i class="far fa-grin" (click)="emojisToggle = !emojisToggle"></i>
+                                    <span class="fal fa-plus" id="" [ngClass]="enablePlusBtn ? '' : 'disabledPlusBtn'" (click)="openOfferSliderPopup($event, 'message');"></span>
+                                </div> -->
+                            </div>
+                        </div>
+                    </div>
+                   
+                </div>
+                
+            </div>
+            <div class="col p-3 mt-3 imageOutterPanel" #imageOutterPanel id="image-section">
+                <!-- Image panel section-->   
+                <div class="row col p-1">
+                    <div class="col mt-2 p-0">
+                        <h6 class="col-12 p-0 ml-2 mediumLable">{{'inappChannelComponent.imageLbl' | translate}}</h6> 
+                    </div>
+                    <div class="col-1 text-right p-0">
+                        <i class="fas fa-caret-down fa-sm" (click)="showHideInappSections('imageOutterPanel');"></i>
+                    </div>
+                </div>
+                <div class="row col p-0 mt-3" *ngIf="isImageSectionEnabled">
+                   <div class="row col p-0 m-0" #imageSection>
+                    <div class="col-1 p-0 ml-2">
+                        <p class="p-0 m-0 mb-1"></p>
+                        <div class="toggleButton col-10 d-inline-block p-0 marginTop30">
+                            <label class="switch ml-3">
+                                <input type="checkbox" class="enableImageCk" id="" (click)="imageSectionEnableMethod($event);">
+                                <span class="slider round"></span>
+                            </label>
+                        </div>
+                        
+                    </div>
+                       <div class="col-4 ml-2 p-0" id="">
+                           <div class="p-0 m-0 mb-1 col">
+                               <label class="smallLabel text-muted p-0 m-0">{{'inappChannelComponent.imageLbl' | translate}}</label>
+                           </div>
+                           <div class="p-0 m-0 col">
+                               <input type="text" class="form-control inputStyle imageUrlPath" [disabled]="imageInputDisabled" [(ngModel)]="imageSelected" (keyup)="insertImageMethod($event);" (change)="insertImageMethod($event);">
+                           </div>
+                       </div>
+                       <div class="col p-0" id="imageSection">
+                        <div class="p-0 m-0 mb-1 col">
+                            <label class="smallLabel text-muted p-0 m-0"></label>
+                        </div>
+                        <div class="row col p-0 m-0 mb-1 pl-2">
+                            <div class="col-3 p-0 pl-2 lineHeightCustom">
+                                <input type="checkbox" class="mr-1 imgDeeplinkCk verticalMiddle" [disabled]="imageInputDisabled" (click)="deepLinkImageEnableMethod($event);">
+                                <label class="smallLabel text-muted p-0 m-0 ml-1 verticalMiddle ellipseTextInapp" title="{{'inappChannelComponent.deeplinkLbl' | translate}}">{{'inappChannelComponent.deeplinkLbl' | translate}}</label>
+                            </div>
+                            <div class="col">
+                                <input type="text" class="inputStyle form-control imgDeeplinkUrlPath" placeholder="{{'inappChannelComponent.specifylinkLbl' | translate}}" [disabled]="deeplinkImageInputDisabled" [(ngModel)]="deeplinkImagePath" (change)="getdeepLinkImagePathUrl($event);">
+                            </div>
+                        </div>                        
+                  </div>
+                   </div>
+                </div>
+           </div>
+           <div class="col p-3 mt-3 buttonOutterPanel" #buttonOutterPanel id="button-section">
+            <!-- Background panel section-->   
+            <div class="row col p-1">
+                <div class="col mt-2 p-0">
+                    <h6 class="col-12 p-0 ml-2 mediumLable">{{'inappChannelComponent.bottomLbl' | translate}}</h6> 
+                </div>
+                <div class="col-1 text-right p-0">
+                    <i class="fas fa-caret-down fa-sm" (click)="showHideInappSections('buttonOutterPanel')"></i>
+                </div>
+            </div>
+            <div class="col p-0 mt-3" *ngIf="isButtonSectionEnabled">
+                <div class="row col p-0 ml-1" id="NavTabs">
+                    <ul class="nav tabsLiStyle tabsNoSpace mb-2">
+                        <li class="btnTab1" (click)="switchButtonTab(1,editChannelDataObj);" [ngClass]="buttonTabActive === 1? 'active':''">{{'webPushComponent.button1lbl' | translate}}</li>
+                        <li class="btnTab2" (click)="switchButtonTab(2,editChannelDataObj);" [ngClass]="buttonTabActive === 2? 'active':''">{{'webPushComponent.button2lbl' | translate}}</li>
+                    </ul>
+                </div> 
+             <div class="col p-0 m-0 mt-3" *ngIf="buttonTabActive === 1" #button1AreaSection>
+               <div class="row col p-0 m-0">
+                 <div class="col-1 p-0 ml-2">
+                    <p class="p-0 m-0 mb-1"></p>
+                    <div class="toggleButton col-10 d-inline-block p-0 marginTop30">
+                        <label class="switch">
+                            <input type="checkbox" class="btn1SectionEnabled" id="" value="0" (click)="button1Enablemethod($event);">
+                            <span class="slider round"></span>
+                        </label>
+                    </div>
+                    
+                 </div>
+                   <div class="col-4 p-0 mrgoffsetleft" id="">
+                       <div class="p-0 m-0 mb-1 col">
+                           <label class="smallLabel text-muted p-0 m-0">{{'inappChannelComponent.textLbl' | translate}}</label>
+                       </div>
+                       <div class="p-0 m-0 col relative">
+                           <input type="text" class="inputStyle form-control btn1NameInput" [disabled]="!button1ActiveEnable"  (keyup)="setButtonText($event);">
+                           <i class="far fa-palette fa-lg colorPickBck colorpicker" [ngClass]="!button1ActiveEnable ? 'disabledPlusBtn': ''"   [(colorPicker)]="color" [cpPosition]="'bottom-right'" (colorPickerChange)="setButton1TextColor($event);"></i>
+                       </div>
+                   </div>
+                   <div class="col p-0" id="">
+                    <div class="p-0 m-0 mb-1 col">
+                        <label class="smallLabel text-muted p-0 m-0"></label>
+                    </div>
+                    <div class="row p-0 m-0 mb-1 col pl-2">                        
+                        <div class="col-3 p-0 pl-2 lineHeightCustom">
+                            <input type="checkbox" class="mr-1 deeplinkBtn1Ck verticalMiddle" [disabled]="!button1ActiveEnable" (click)="deeplinkEnableForButton1($event);">
+                            <label class="smallLabel text-muted p-0 m-0 ml-1 verticalMiddle ellipseTextInapp" title="{{'inappChannelComponent.deeplinkLbl' | translate}}">{{'inappChannelComponent.deeplinkLbl' | translate}}</label>
+                        </div>
+                        <div class="col">
+                            <input type="text" class="inputStyle form-control deeplinkBtn1UrlPath" [disabled]="deeplinkButton1InputDisabled" [(ngModel)]="deeplinkBtn1SelectedPath" placeholder="{{'inappChannelComponent.specifylinkLbl' | translate}}" (keyup)="getdeeplinkBtn1UrlPath($event);">
+                        </div>
+                    </div>                      
+                  </div>
+               </div>
+               <div class="row col p-0 mt-2">
+                <div class="col-1 p-0"></div>
+                <div class="col-4 p-0 ml-3">
+                    <div class="p-0 m-0 mb-3 col">
+                        <div class="col p-0">
+                            <label class="smallLabel text-muted p-0 m-0 mb-1">{{'inappChannelComponent.buttonBackgroundLbl' | translate}}</label>
+                        </div>
+                        <div class="col-6 p-0 relative">
+                            <input type="text" id="" class="inputStyle smallLabel form-control" [disabled]="!button1ActiveEnable">
+                            <span class="backGrdColrbox" [style.background]="bckgrdBtn1ColorSelected"></span>
+                            <i class="far fa-palette fa-lg colorPickBck colorpicker" [ngClass]="!button1ActiveEnable ? 'disabledPlusBtn': ''"  [(colorPicker)]="color" [cpPosition]="'bottom-right'" (colorPickerChange)="setButton1BgColor($event);"></i>
+                        </div>
+                    </div>
+                    
+                </div>
+                
+               
+             </div>
+             </div>
+             <!-- Button 2 section area-->
+             <div class="col p-0 m-0 mt-3" *ngIf="buttonTabActive === 2"  #button2AreaSection>
+                <div class="row col p-0 m-0">
+                  <div class="col-1 p-0 ml-2">
+                     <p class="p-0 m-0 mb-1"></p>
+                     <div class="toggleButton col-10 d-inline-block p-0 marginTop30">
+                         <label class="switch">
+                             <input type="checkbox" class="btn2SectionEnabled" id="" value="1" (click)="button2Enablemethod($event)">
+                             <span class="slider round"></span>
+                         </label>
+                     </div>
+                     
+                  </div>
+                    <div class="col-4 p-0 mrgoffsetleft" id="">
+                        <div class="p-0 m-0 mb-1 col">
+                            <label class="smallLabel text-muted p-0 m-0">{{'inappChannelComponent.textLbl' | translate}}</label>
+                        </div>
+                        <div class="p-0 m-0 col relative">
+                            <input type="text" class="inputStyle form-control btn2NameInput" [disabled]="!button2ActiveEnable" (keyup)="setButton2Text($event);">
+                            <i class="far fa-palette fa-lg colorPickBck colorpicker" [ngClass]="!button2ActiveEnable ? 'disabledPlusBtn': ''"  [(colorPicker)]="color" [cpPosition]="'bottom-right'" (colorPickerChange)="setButton2TextColor($event);"></i>
+                        </div>
+                    </div>
+                    <div class="col p-0" id="imageSection">
+                     <div class="p-0 m-0 mb-1 col">
+                         <label class="smallLabel text-muted p-0 m-0"></label>
+                     </div>
+                     <div class="row p-0 m-0 mb-1 col pl-2">                        
+                         <div class="col-3 p-0 pl-2 lineHeightCustom">
+                             <input type="checkbox" class="mr-1 deeplinkBtn2Ck verticalMiddle" [disabled]="!button2ActiveEnable" (click)="deeplinkEnableForButton2($event)">
+                             <label class="smallLabel text-muted p-0 m-0 ml-1 verticalMiddle ellipseTextInapp" title="{{'inappChannelComponent.deeplinkLbl' | translate}}">{{'inappChannelComponent.deeplinkLbl' | translate}}</label>
+                         </div>
+                         <div class="col">
+                             <input type="text" class="inputStyle form-control deeplinkBtn2UrlPath" [disabled]="deeplinkButton2InputDisabled" [(ngModel)]="deeplinkBtn2SelectedPath" placeholder="{{'inappChannelComponent.specifylinkLbl' | translate}}" (keyup)="getdeeplinkBtn2UrlPath($event)">
+                         </div>
+                     </div>                      
+                   </div>
+                </div>
+                <div class="row col p-0 mt-2">
+                 <div class="col-1 p-0"></div>
+                 <div class="col-4 p-0 ml-3">
+                     <div class="p-0 m-0 mb-3 col">
+                         <div class="col p-0">
+                             <label class="smallLabel text-muted p-0 m-0 ml-1">{{'inappChannelComponent.buttonBackgroundLbl' | translate}}</label>
+                         </div>
+                         <div class="col-6 p-0 relative">
+                             <input type="text" id="" class="inputStyle smallLabel form-control" [disabled]="!button2ActiveEnable">
+                             <span class="backGrdColrbox" [style.background]="bckgrdBtn2ColorSelected"></span>
+                             <i class="far fa-palette fa-lg colorPickBck colorpicker" [ngClass]="!button2ActiveEnable ? 'disabledPlusBtn': ''" [(colorPicker)]="color" [cpPosition]="'bottom-right'" (colorPickerChange)="setButton2BgColor($event);"></i>
+                         </div>
+                     </div>
+                     
+                 </div>
+                 
+                </div>
+              
+             </div>
+            </div>
+        </div>    
+        </div>
+        <!-- Right side Panel Notification Preview starts here -->
+        <div class="notificationPreview col">
+            <div class="previewHeading text-center">{{'designEditor.mobilePushComponent.notificationPreview' | translate}}</div>  
+            <div class="androidPreview mt-3">
+                <div class="smartphone" #previewHtmlElement>
+                    <!--Html Preview Will render here-->
+                    
+                </div>
+            </div>          
+        </div>
+    </div>
+</div><!--End-->
+<div class="customeOffers relative" *ngIf="offerDrawerSectionEnable" [ngClass]="offerDrawerSectionEnable ? 'slideIN':'slideOUT'">
+    <app-offers-drawer [dataFromParent]="modalRef" (onCloseOfferPopup)="onCloseOfferDrawer();" (offersAppendToInput)="finalOffersSelected($event);"></app-offers-drawer>
+</div>
+<ng-template #testInappNotifyModel>
+    <app-test-email [dataFromParent]="modalRef" [finalInappPayloadData]="finalInappPayloadData"></app-test-email>
+</ng-template>
+<!-- <div class="backdrop_offerSlider" *ngIf="backropOffersEnable"></div> -->

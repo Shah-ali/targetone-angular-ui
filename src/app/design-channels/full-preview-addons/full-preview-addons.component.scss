@@ -1,0 +1,113 @@
+.modal-open .modal {
+    overflow-x: hidden;
+    overflow-y: hidden;
+}
+.outerWrapper.fullPreviewArea{
+    height: calc(100vh - 74px);
+    width: 100%;
+    padding: 1rem;
+    .fullprevwLable{
+        // font-size: 1rem;
+        font-weight: 600;
+    }
+    .blue{
+        color:#026FE9;
+        cursor: pointer;
+    }
+    .grey{
+        color:#ddd;
+        cursor: pointer;
+    }
+    #thumbnailContent{
+        border:none;
+        overflow: hidden !important;
+        height: calc(100vh - 184px);
+        width: 100%;
+      }
+      #thumbnailContent html body table{
+        width:600px !important;
+      }
+      .row-justify {
+        justify-content: center;
+      }
+      
+      .scrollTable{
+        height: 300px;
+        overflow-x: hidden;
+        overflow-y: auto;
+      }
+   .smallFont{
+    font-size: .69rem;
+    }
+    .mediumFont{
+        font-size: .75rem;
+    }
+    .previewControls{
+        border-radius: 10px;
+        border: 1px solid #ccc;
+        padding: 10px;
+        height: calc(100vh - 93px);
+    }
+    .hrFullLine{
+        margin: 6px -10px;
+    }
+    
+    #leftSidePreviewSection{
+        .backShadeLayer{
+            width: 100%;
+            height: 100%;
+            background-color: #ccc;
+            opacity: 80%;
+            z-index: 90;
+            position: absolute;
+        }
+        
+        .htmlSectionApperdArea {
+            border: 1px solid #cccc;
+            border-radius: 10px;
+            height: calc(100vh - 165px);
+            overflow-x: hidden;
+            overflow-y: auto;
+            z-index: 999;
+        }
+    }
+    #rightSidePreviewSection{
+        padding-bottom: 10px;
+        height: calc(100vh - 83px);
+        overflow-x: hidden;
+        overflow-y: auto;
+    }
+    .sliderWithCount{
+        position: relative;
+        .box {
+            width: 150px;
+            height: 75px;
+            background-color: black;
+            color: #fff;
+            padding: 20px;
+            position: absolute;
+            margin: 40px;
+            float: left;
+            border-radius:10px;
+          }
+          .box.arrow-bottom:after {
+            content: " ";
+            position: absolute;
+            left:40%;
+            bottom: -15px;
+            border-top: 15px solid black;
+            border-right: 15px solid transparent;
+            border-left: 15px solid transparent;
+            border-bottom: none;
+          }
+        
+        .progressbarSliderBase{
+            background-color: #026FE9;
+            border-radius: 10px;
+            width: 200px;
+            height: 10px;
+        }
+    }
+
+
+}

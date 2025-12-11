@@ -1,0 +1,414 @@
+<!-- <app-tag-failsafe
+(callBeeInstance)="saveEmail()"
+(updateBeeEditorTempObj)="reloadBeeEditor($event)"></app-tag-failsafe> -->
+<div class="modal-header d-flex align-items-center simulateMoodalHeader">
+  <h5 class="modal-title" id="exampleModalLabel">
+    <span class="largeLable">{{ 'beeEditorGlobalComponent.simulateLbl' | translate }}</span>
+  </h5>
+  <span class="ml-2">
+    <span *ngIf="isPublishedPersonalization"><img src="./assets/images/prodIcon.svg"/></span>
+    <span *ngIf="isSavedAsQA"><img src="./assets/images/QAIcon.svg"/></span>
+    <span *ngIf="!isPublishedPersonalization && !isSavedAsQA"><img src="./assets/images/draftIcon.svg"/></span>
+  </span>
+  <span class="pTagNameStyle ml-2">{{this.pTagObjDetails.name}}</span>
+  
+  <button type="button" class="close" (mousedown)="onClose()" aria-label="Close">
+    <span aria-hidden="true"><i class="fal fa-times"></i></span>
+  </button>
+</div>
+<div class="modal-body p-0 bodySection pTagsimulateSection">
+  <div class="outterwrapper col tagUrlArea">
+    <div class="loaderMask" *ngIf="showLoader">
+      <div class="spinner-border text-dark" role="status">
+        <span class="visually-hidden d-none">{{ 'designEditor.loadinglbl' | translate }}</span>
+      </div>
+    </div>
+    <div class="row p-3 previewSectionLeft">
+      <div class="col-9 pl-0">
+        <div class="row col p-0 justify-content-center m-0">
+          <ul class="nav tabsLiStyle tabsNoSpace mb-3" *ngIf="!ensembleAiEnabled else ensembleTabVisible">
+            <li class="" ngbTooltip="{{ 'simulatePtagComponent.fullImageTagTooltips' | translate }}" tooltipClass="ngbTooltipStyle" (click)="switchTextTab(0)" [ngClass]="tabActive === 0 ? 'active' : ''">
+              {{ 'simulatePtagComponent.fullImageTagLbl' | translate }}
+            </li>
+            <li ngbTooltip="{{ 'simulatePtagComponent.fragmentsImageTooltips' | translate }}" tooltipClass="ngbTooltipStyle" (click)="switchTextTab(1)" [ngClass]="tabActive === 1 ? 'active' : ''">
+              {{ 'simulatePtagComponent.fragmentsImageTagLbl' | translate }}
+            </li>
+            <li ngbTooltip="{{ 'simulatePtagComponent.htmlTagTooltips' | translate }}" tooltipClass="ngbTooltipStyle" (click)="switchTextTab(2)" [ngClass]="tabActive === 2 ? 'active' : ''">
+              {{ 'simulatePtagComponent.htmlTagLbl' | translate }}
+            </li>
+            <li ngbTooltip="{{ 'simulatePtagComponent.deepLinkTooltips' | translate }}" tooltipClass="ngbTooltipStyle" (click)="switchTextTab(3)" [ngClass]="tabActive === 3 ? 'active' : ''">
+              {{ 'simulatePtagComponent.deepLinkLbl' | translate }}
+            </li>
+            <li *ngIf="landingPageEnabled" ngbTooltip="{{ 'simulatePtagComponent.landingPageTagLbl' | translate }}" tooltipClass="ngbTooltipStyle" (click)="switchTextTab(4)" [ngClass]="tabActive === 4 ? 'active' : ''">
+              {{ 'simulatePtagComponent.landingPageTagLbl' | translate }}
+            </li>
+          </ul>
+          <ng-template #ensembleTabVisible>
+            <ul class="nav tabsLiStyle tabsNoSpace mb-3">
+              <li ngbTooltip="{{ 'simulatePtagComponent.fragmentsImageTooltips' | translate }}" tooltipClass="ngbTooltipStyle" (click)="switchTextTab(1)" class="active">
+                {{ 'simulatePtagComponent.fragmentsImageTagLbl' | translate }}
+              </li>
+          </ul>
+          </ng-template>
+        </div>
+        <div class="row p-2 pl-3 whiteBck m-0" *ngIf="!deepLinkContent">
+          <div class="col-0">
+            <label class="smallLabel pr-2 mt-2">{{ 'simulatePtagComponent.tagURLLbl' | translate }}</label>
+          </div>
+          <div class="row col p-0 pl-2">
+            <div class="col-11 p-0" *ngIf="fullTagImageContent">
+              <label class="tagUrlStyle xSmallLable ml-2 mt-2">{{ tagSimulateURL }}</label>
+            </div>
+            <div class="col-11 p-0" *ngIf="fragmentsContentIframe">
+              <label class="tagUrlStyle xSmallLable ml-2 mt-2">{{ fragmentTagSimulateURL }}</label>
+            </div>
+            <div class="col-11 p-0" *ngIf="htmlTagViewContent">
+              <label class="tagUrlStyle xSmallLable ml-2 mt-2">{{ htmlFullTagUrlAPI }}</label>
+            </div>
+            <div class="col-1 text-right pr-4" *ngIf="htmlFullTagUrlAPI !== undefined && htmlTagViewContent">
+              <i
+                class="far fa-copy align-text-bottom pointer mrgtop11"
+                #t1="ngbTooltip"
+                triggers="manual"
+                ngbTooltip="{{ 'productRecoAdvanceComponent.copiedTextFromMergeTagLbl' | translate }}"
+                (click)="copyToPaste(t1, htmlFullTagUrlAPI)"></i>
+            </div>
+            <div class="col-1 text-right pr-4" *ngIf="tagSimulateURL !== undefined && fullTagImageContent">
+              <i
+                class="far fa-copy align-text-bottom pointer mrgtop11"
+                #t1="ngbTooltip"
+                triggers="manual"
+                ngbTooltip="{{ 'productRecoAdvanceComponent.copiedTextFromMergeTagLbl' | translate }}"
+                (click)="copyToPaste(t1, tagSimulateURL)"></i>
+            </div>
+            <div class="col-1 text-right pr-4" *ngIf="fragmentTagSimulateURL !== undefined && fragmentsContentIframe">
+              <i
+                class="far fa-copy align-text-bottom pointer mrgtop11"
+                #t1="ngbTooltip"
+                triggers="manual"
+                ngbTooltip="{{ 'productRecoAdvanceComponent.copiedTextFromMergeTagLbl' | translate }}"
+                (click)="copyToPaste(t1, fragmentTagSimulateURL)"></i>
+            </div>
+          </div>
+        </div>
+        <div class="row mr-0 pl-3 previewLbl" [ngClass]="fragmentsContentIframe ? '' : 'mt-4'">
+          <div class="col-12 p-0 d-flex justify-content-between" [ngClass]="fragmentsContentIframe ? 'mt-4' : ''">
+            <label class="smallLabel mr-3">{{ 'recommendationComponent.previewLbl' | translate }}</label>
+            <div class="deviceView d-flex" *ngIf="landingTagViewContent">
+              <span>View as:</span>
+              <i class="far fa-desktop mr-3" (click)="switchDeviceView(1)" [class.selected]="!isMobileView" ngbTooltip="{{ 'designEditor.emailEditor.desktoplbl' | translate }}"></i>
+              <i class="far fa-mobile" (click)="switchDeviceView(2)" [class.selected]="isMobileView" ngbTooltip="{{ 'designEditor.emailEditor.mobilelbl' | translate }}"></i>
+            </div>
+          </div>
+          <div class="col p-0 text-right">
+            <button
+              type="button"
+              [ngClass]="fragmentsContentIframe ? 'mt-3' : ''"
+              class="btn buttonCss m-0 mb-3 mr-2 ellipeDownloadLabel"
+              *ngIf="fragmentsContentIframe"
+              (click)="filterDeeplinkFragmentMapAreaMethod()"
+              [disabled]="iframeContentLoaded === undefined"
+              ngbTooltip="{{ 'simulatePtagComponent.fragmentDeeplinkTooltipLbl' | translate }}">
+              <img src="{{ this.baseUrl }}/resources/imgs/downloadPtag.png" width="15" height="15" class="mr-1 displayinlineText" />{{
+                'simulatePtagComponent.fragmentDeeplink' | translate
+              }}
+            </button>
+            <button
+              type="button"
+              [ngClass]="fragmentsContentIframe ? 'mt-3' : ''"
+              class="btn buttonCss m-0 mb-3 mr-2 ellipeDownloadLabel"
+              *ngIf="fragmentsContentIframe"
+              (click)="filterStylingAndHtmlTagOnDownLoadMethod()"
+              [disabled]="iframeContentLoaded === undefined"
+              ngbTooltip="{{ 'simulatePtagComponent.downloadPrettyFragmentTooltips' | translate }}">
+              <img src="{{ this.baseUrl }}/resources/imgs/downloadPtag.png" width="15" height="15" class="mr-1 displayinlineText" />{{
+                'simulatePtagComponent.downloadPrettyFragmentLbl' | translate
+              }}
+            </button>
+            <button
+              type="button"
+              [ngClass]="fragmentsContentIframe ? 'mt-3' : ''"
+              class="btn buttonCss m-0 mb-3 ellipeDownloadLabel"
+              *ngIf="fragmentsContentIframe"
+              (click)="saveAsHtmlFragments()"
+              [disabled]="iframeContentLoaded === undefined"
+              ngbTooltip="{{ 'simulatePtagComponent.downloadHTMLwithalltagsTooltips' | translate }}">
+              <img src="{{ this.baseUrl }}/resources/imgs/downloadPtag.png" width="15" height="15" class="mr-1 displayinlineText" />{{
+                'simulatePtagComponent.downloadHTMLwithalltagsLbl' | translate
+              }}
+            </button>
+            <button
+              type="button"
+              class="btn buttonCss m-0 mb-3"
+              *ngIf="deepLinkContent"
+              id="copyBtn"
+              (click)="openViewDeepLinkPopupModal()"
+              [disabled]="deeplinkContentLoaded === undefined">
+              <i class="fal fa-eye"></i>
+              {{ 'simulatePtagComponent.viewTagDeepLinkLbl' | translate }}
+            </button>
+            <button
+              type="button"
+              class="btn buttonCss m-0 mb-3 ml-2"
+              *ngIf="deepLinkContent"
+              (click)="copyToPaste(t1, deepTagPublishedData)"
+              [disabled]="deeplinkContentLoaded === undefined">
+              <i
+                class="far fa-copy align-text-top"
+                #t1="ngbTooltip"
+                triggers="manual"
+                ngbTooltip="{{ 'productRecoAdvanceComponent.copiedTextFromMergeTagLbl' | translate }}"></i>
+              {{ 'copy' | translate }}
+            </button>
+          </div>
+        </div>
+        <div
+          class="col p-0 previewSectionPanel"
+          *ngIf="fullTagImageContent"
+          [ngClass]="
+            (isMobileDeviceEnabled && !customSettings) || (!isMobileDeviceEnabled && customSettings)
+              ? 'greyViewBckGrd'
+              : ''
+          ">
+          <!-- Preview Area here -->
+          <!-- <iframe class="" [ngClass]="isMobileDeviceEnabled ? 'mobileView' : ''" id="thumbnailContent" allowfullscreen>
+                    </iframe> -->
+          <img
+            #simulateImageWidthHeight
+            src="{{ simulateImgPath }}"
+            class="responsive imageSimulateAreaSection"
+            *ngIf="!isMobileDeviceEnabled && !customSettings"
+            [ngClass]="!isMobileDeviceEnabled && !customSettings ? 'desktopView' : ''"
+            alt="" />
+          <img
+            #simulateImageWidthHeight
+            src="{{ simulateImgPath }}"
+            class="responsive imageSimulateAreaSection"
+            *ngIf="isMobileDeviceEnabled && !customSettings"
+            [ngClass]="isMobileDeviceEnabled && !customSettings ? 'mobileView' : ''"
+            alt="" />
+          <img
+            #simulateImageWidthHeight
+            src="{{ simulateImgPath }}"
+            class="responsive imageSimulateAreaSection"
+            *ngIf="!isMobileDeviceEnabled && customSettings"
+            [ngClass]="!isMobileDeviceEnabled && customSettings ? 'desktopView' : ''"
+            alt="" />
+        </div>
+        <div class="col p-0 previewSectionPanel" #deepIframeElement *ngIf="deepLinkContent"></div>
+        <div class="col p-0 fragmentSectionPreview" #fragmentIframeElement *ngIf="fragmentsContentIframe">
+          <!-- Preview Area here -->
+          <!-- <div class="loaderMask" *ngIf="showLoader">
+                        <div class="spinner-border text-dark" role="status">
+                           <span class="visually-hidden d-none">{{'designEditor.loadinglbl' | translate}}</span>
+                        </div>
+                    </div>       -->
+          <!-- <iframe class="fragmentIframeSection" *ngIf="reloadIframeWhenSimulateCall" id="thumbnailContent" #fragmentIframeElement allowfullscreen src=""></iframe> -->
+        </div>
+        <div class="p-0 htmlTagSectionPreview" *ngIf="htmlTagViewContent" [ngClass]="!isMobileView ? 'col' : 'col-3' "> 
+          <iframe
+            class="fragmentIframeSection"
+            #htmlTagIframeContent
+            id="thumbnailContent"
+            allowfullscreen
+            src=""></iframe>
+        </div>
+      </div>
+      <div class="col-3 whiteBck previewSectionRight">
+        <!-- <ng-container *ngIf="htmlTagViewContent">
+                    <h2 class="borderBttmLine"><label>{{'fullpreviewComponent.previewControlLbl' | translate}}</label></h2>
+                    <ul class="nav tabsLiStyle tabsNoSpace m-2 justify-content-center" >
+                        <li (click)="switchPreviewTab(1);" [ngClass]="[previewActive === 1? 'active':'' , logConsoleEnable ? '' : 'disabled-tab']">{{'simulatePtagComponent.logConsoleLbl' | translate}}</li>
+                    </ul>                    
+                </ng-container>      -->
+        <ng-container *ngIf="fullTagImageContent || fragmentsContentIframe || htmlTagViewContent || deepLinkContent">
+          <ul class="nav tabsLiStyle tabsNoSpace m-2 justify-content-center">
+            <li class="" (click)="switchPreviewTab(0)" ngbTooltip="{{ 'fullpreviewComponent.previewControlLbl' | translate }}" [ngClass]="previewActive === 0 ? 'active' : ''">
+              {{ 'fullpreviewComponent.previewControlLbl' | translate }}
+            </li>
+            <li (click)="switchPreviewTab(1)" ngbTooltip="{{ 'simulatePtagComponent.logConsoleLbl' | translate }}" [ngClass]="[previewActive === 1 ? 'active' : '', logConsoleEnable ? '' : 'disabled-tab']">
+              {{ 'simulatePtagComponent.logConsoleLbl' | translate }}
+            </li>
+          </ul>
+        </ng-container>
+
+        <div class="col mb-3 p-0" *ngIf="previewControlEnabled">
+          <!--Preview Section-->
+          <ng-container *ngIf="fullTagImageContent || fragmentsContentIframe || deepLinkContent">
+            <div class="row col p-0 mb-2 mt-4 mb-4 justify-content-center" *ngIf="!deepLinkContent">
+              <div class="col p-0 d-flex justify-content-center ml-5">
+                <div
+                  class="deviceStyle"
+                  (click)="switchDeviceToSeePixelVal(1)"
+                  *ngIf="fullTagImageContent || htmlTagViewContent">
+                  <i class="far fa-desktop" [ngClass]="!isMobileDeviceEnabled && !customSettings ? 'linkColor' : ''"></i
+                  ><span
+                    class="xSmallLable mr-4 align-middle pl-2"
+                    [ngClass]="!isMobileDeviceEnabled && !customSettings ? 'linkColor' : ''"
+                    >{{ 'designEditor.emailEditor.desktoplbl' | translate }}</span
+                  >
+                </div>
+                <div
+                  class="deviceStyle"
+                  (click)="switchDeviceToSeePixelVal(2)"
+                  *ngIf="fullTagImageContent || htmlTagViewContent">
+                  <i class="far fa-mobile" [ngClass]="isMobileDeviceEnabled && !customSettings ? 'linkColor' : ''"></i
+                  ><span
+                    class="xSmallLable mr-4 align-middle pl-2"
+                    [ngClass]="isMobileDeviceEnabled && !customSettings ? 'linkColor' : ''"
+                    >{{ 'designEditor.emailEditor.mobilelbl' | translate }}</span
+                  >
+                </div>
+                <div class="deviceStyle" (click)="switchDeviceToSeePixelVal(0)" *ngIf="!(ensembleAiEnabled && fragmentsContentIframe)">
+                  <i class="fal fa-tools" [ngClass]="!isMobileDeviceEnabled && customSettings ? 'linkColor' : ''"></i
+                  ><span
+                    class="xSmallLable mr-4 align-middle pl-2"
+                    [ngClass]="!isMobileDeviceEnabled && customSettings ? 'linkColor' : ''"
+                    >{{ 'simulatePtagComponent.customSettingsLbl' | translate }}</span
+                  >
+                </div>
+              </div>
+            </div>
+
+            <div class="col p-0 row justify-content-center m-1" *ngIf="!(ensembleAiEnabled && fragmentsContentIframe)">
+              <div class="row col mb-2 p-0">
+                <div class="col-6 p-0 pr-2">
+                  <div class="col p-0">
+                    <div class="col p-0">
+                      <label class="xSmallLable text-muted">{{ 'simulatePtagComponent.widthLbl' | translate }}</label>
+                    </div>
+                    <div class="col p-0 mr-1 d-flex">
+                      <input
+                        class="form-control col p-0 mr-1 pl-2"
+                        type="number"
+                        [(ngModel)]="deviceWidthNHeight.w"
+                        (change)="getWidtheightPixel($event, 'w')"
+                        (blur)="getWidtheightPixel($event, 'w')"
+                        [disabled]="
+                          (isMobileDeviceEnabled && !customSettings) ||
+                          (!isMobileDeviceEnabled && !customSettings && !deepLinkContent)
+                        " />
+                      <label class="smallLabel align-middle mt-2">{{
+                        'simulatePtagComponent.pixelsLbl' | translate
+                      }}</label>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-6 p-0 pr-2">
+                  <div class="col p-0">
+                    <div class="col p-0">
+                      <label class="xSmallLable text-muted">{{ 'simulatePtagComponent.heightLbl' | translate }}</label>
+                    </div>
+                    <div class="col p-0 d-flex">
+                      <input
+                        class="form-control col mr-1 p-0 pl-2"
+                        type="number"
+                        [(ngModel)]="deviceWidthNHeight.h"
+                        (change)="getWidtheightPixel($event, 'h')"
+                        (blur)="getWidtheightPixel($event, 'h')"
+                        [disabled]="
+                          (isMobileDeviceEnabled && !customSettings) ||
+                          (!isMobileDeviceEnabled && !customSettings && !deepLinkContent)
+                        " />
+                      <label class="smallLabel align-middle mt-2">{{
+                        'simulatePtagComponent.pixelsLbl' | translate
+                      }}</label>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </ng-container>
+          <h5 class="mb-4 mediumFont mt-4">{{ 'simulatePtagComponent.tagParametersLbl' | translate }}</h5>
+          <div class="col p-0 m-0 tagPramasAreaSection">
+            <div
+              class="row col p-0 mb-3 m-0"
+              *ngFor="let item of reteriveTagParams; let i = index"
+              id="tagPara_{{ item.name }}">
+              <div class="col-4">
+                <label class="mediumFont mt-2">{{ item.name }}</label>
+              </div>
+              <div class="col-8">
+                <input
+                  type="text"
+                  class="form-control mediumFont pr-4"
+                  value="{{ item.fieldValue }}"
+                  (keyup)="collectParameterTags(item.name, $event)" />
+                  <i class="fal fa-times-circle circleColorX" *ngIf="item.fieldValue !== undefined && item.fieldValue !== ''" (click)="clearParamsValueMethod(item.name);"></i>
+              </div>
+            </div>
+          </div>
+
+          <div class="row col p-0 m-0 mt-3 justify-content-end">
+            <button
+              type="button"
+              class="btn buttonCss m-0 mr-3 mb-2"
+              (click)="simulateCallMethod()"
+              *ngIf="fullTagImageContent">
+              {{ 'beeEditorGlobalComponent.simulateLbl' | translate }}
+            </button>
+            <button
+              type="button"
+              class="btn buttonCss m-0 mr-3 mb-2"
+              (click)="loadFragmentHtmlIntoIframeMethod(true)"
+              *ngIf="fragmentsContentIframe">
+              {{ 'beeEditorGlobalComponent.simulateLbl' | translate }}
+            </button>
+            <button
+              type="button"
+              class="btn buttonCss m-0 mr-3 mb-2"
+              (click)="htmlTagSimulateCallMethod(true)"
+              *ngIf="htmlTagViewContent">
+              {{ 'beeEditorGlobalComponent.simulateLbl' | translate }}
+            </button>
+            <button
+              type="button"
+              class="btn buttonCss m-0 mr-3 mb-2"
+              (click)="deepLinkTagSimulateCallMethod(true)"
+              *ngIf="deepLinkContent">
+              {{ 'beeEditorGlobalComponent.simulateLbl' | translate }}
+            </button>
+          </div>
+        </div>
+        <div class="col mb-3 p-0" *ngIf="!previewControlEnabled">
+          <!-- Show Console log here -->
+          <div class="col p-0 m-0">
+            <div class="col consoleLogText mt-3">
+              {{ simulateConsoleLogDetails }}
+            </div>
+          </div>
+          <div class="row p-0 m-0 mt-3">
+            <label
+              type="button"
+              class="border-0 linkColor xSmallLable text-left col-8 mt-2"
+              [ngClass]="!isConsoleLogPresent ? 'disabled-tab' : ''"
+              (click)="openViewSimulatePopupModal()"
+              >{{ 'simulatePtagComponent.viewSimulationLbl' | translate }}</label
+            >
+            <button
+              type="button"
+              class="btn buttonCss m-0 mb-2 col"
+              [disabled]="!isConsoleLogPresent"
+              (click)="copyToPaste(t2, simulateConsoleLogDetails)">
+              <i
+                class="far fa-copy align-text-top mt-1 mr-1"
+                #t2="ngbTooltip"
+                triggers="manual"
+                ngbTooltip="{{ 'productRecoAdvanceComponent.copiedTextFromMergeTagLbl' | translate }}"></i>
+              {{ 'copy' | translate }}
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="modal-footer d-flex justify-content-right">
+  <button type="button" class="btn buttonCss shadow-none m-0" id="closeBtn" (click)="onClose()">
+    {{ 'close' | translate }}
+  </button>
+  <!-- <button type="submit" class="btn btn-primary buttonStyle shadow-none">Done</button> -->
+</div>
+<div class="modalBackdropCustom" *ngIf="viewSimulatePopupEnable"></div>
+<!-- <app-view-simulate-log-console *ngIf="viewSimulatePopupEnable"></app-view-simulate-log-console>
+ -->

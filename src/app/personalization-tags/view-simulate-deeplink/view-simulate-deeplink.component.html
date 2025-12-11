@@ -1,0 +1,29 @@
+<div class="modal-header">
+  <h5 class="modal-title" id="exampleModalLabel">
+    <span class="mediumLable">View tag</span>
+  </h5>
+  <button type="button" class="close" (mousedown)="onClose()" aria-label="Close">
+    <span aria-hidden="true"><i class="fal fa-times"></i></span>
+  </button>
+</div>
+<div class="modal-body">
+  <div class="row m-0 col viewDeepLinkBodyContent p-3" #simulateLogConsoleContent>{{ overAllDeepLinkObj }}</div>
+</div>
+<div class="modal-footer d-flex justify-content-right">
+  
+  <button type="button" class="btn buttonCss shadow-none m-0 mr-1" id="closeBtn" (click)="onClose()">
+    {{ 'close' | translate }}
+  </button>
+  <button
+    type="button"
+    class="btn buttonPrimaryCss shadow-none m-0 mr-1"
+    id="copyBtn"
+    (click)="copyToPaste(t1, overAllDeepLinkObj)">
+    <i
+      class="far fa-copy align-text-top"
+      #t1="ngbTooltip"
+      triggers="manual"
+      ngbTooltip="{{ 'productRecoAdvanceComponent.copiedTextFromMergeTagLbl' | translate }}"></i>
+    {{ 'copy' | translate }}
+  </button>
+</div>

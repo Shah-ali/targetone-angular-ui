@@ -1,0 +1,139 @@
+<div class="outterWrapper">
+  <div class="row m-0">
+    <div class="col p-0">
+      <app-bee-editor-global (parentEditorFunction)="openInlineJsList()" *ngIf="selectedCurrEditor == 'email'"></app-bee-editor-global>
+      <app-grapesjs *ngIf="selectedCurrEditor == 'whatsapp'"></app-grapesjs>
+      <div class="inline-js-container" *ngIf="isExpendedSection">
+        <div class="expendedSection">
+          <div class="header">
+            <div class="icon">
+              <img src="./assets/images/inline-js/icon.svg" />
+              <span class="text ml-2">{{ 'inlineJSComponent.label.inlineJs' | translate }}</span>
+            </div>
+
+            <div class="close" (click)="openInlineJsList()"><img src="./assets/images/inline-js/close-slider.svg" /></div>
+          </div>
+          <hr />
+          <div class="listofInlineJSFuncSection">
+            <div class="createSection">
+              <span>{{ 'inlineJSComponent.label.listOfFunctions' | translate }}</span>
+              <button class="btn buttonCss shadow-none" *ngIf="!isPublishedPersonalization" (click)="OpenInlineJsPopup('')">
+                + {{ 'inlineJSComponent.label.createNewScript' | translate }}
+              </button>
+            </div>
+            <hr />
+            <div class="listSection mt-3">
+              <div>
+                <!-- Tabs -->
+                <ul class="nav tabsLiStyle tabsNoSpace mb-3">
+                  <li (click)="setTab(1)" [class.active]="selectedTab == 1">
+                    {{ 'inlineJSComponent.label.allTab' | translate }}
+                  </li>
+                  <li (click)="setTab(2)" [class.active]="selectedTab == 2">
+                    {{ 'inlineJSComponent.label.activeTab' | translate }}
+                  </li>
+                  <li (click)="setTab(3)" [class.active]="selectedTab == 3">
+                    {{ 'inlineJSComponent.label.disabledTab' | translate }}
+                  </li>
+                </ul>
+
+                <!-- Search Input -->
+                <input
+                  type="text"
+                  class="form-control mt-2 mb-2"
+                  (input)="filteredScripts()"
+                  placeholder="{{ 'inlineJSComponent.placeholders.searchFunctions' | translate }}"
+                  [(ngModel)]="searchQuery" />
+                <hr />
+                <!-- Collapsible List -->
+                <div class="listOfScripts">
+                  <div *ngFor="let scriptObj of scriptsData; let i = index">
+                    <div class="collapsible" (click)="toggleExpand(i)">
+                      <div class="pointer">
+                        <span *ngIf="expandedScriptIndex === i"><i class="fas fa-caret-up mr-2"></i></span>
+                        <span *ngIf="expandedScriptIndex !== i"><i class="fas fa-caret-down mr-2"></i></span>
+                        <span class="script-name">
+                          <svg-icon
+                            *ngIf="scriptObj.jsType == 1"
+                            ngbTooltip="{{ 'inlineJSComponent.label.systemCreated' | translate }}"
+                            src="./assets/images/system_created_func.svg"
+                            [svgStyle]="{ 'width.px': 20 }"></svg-icon>
+                          <svg-icon
+                            *ngIf="scriptObj.jsType == 2"
+                            ngbTooltip="{{ 'inlineJSComponent.label.userCreated' | translate }}"
+                            src="./assets/images/user_created_func.svg"
+                            [svgStyle]="{ 'width.px': 20 }">
+                          </svg-icon>
+                          &nbsp;&nbsp;{{ scriptObj.functionName }}
+                        </span>
+                      </div>
+                    </div>
+                    <div *ngIf="expandedScriptIndex === i" class="content px-3">
+                      <p class="script-desc mt-2 mb-2">{{ scriptObj.functionDesc }}</p>
+                      <div class="actions">
+                        <div *ngIf="scriptObj.jsType == 2">
+                          <span class="func-owner-1 mr-1">{{ 'inlineJSComponent.label.userCreated' | translate }}</span
+                          ><span class="px-2">|</span>
+                        </div>
+                        <div *ngIf="scriptObj.jsType == 1">
+                          <span class="func-owner-2 mr-1">{{ 'inlineJSComponent.label.systemCreated' | translate }}</span
+                          ><span class="px-2">|</span>
+                        </div>
+                        <div class="action-bttns">
+                          <i
+                            class="fal fa-eye fa-sm mx-2 pointer"
+                            ngbTooltip="{{ 'view' | translate }}"
+                            *ngIf="!isPublishedPersonalization && scriptObj.jsType != 1"
+                            (click)="ViewFunction(scriptObj)"></i>
+                          <i
+                            #t1="ngbTooltip"
+                            triggers="manual"
+                            ngbTooltip="{{ 'copiedLbl' | translate }}"
+                            class="fal fa-copy fa-sm mx-2 pointer"
+                            *ngIf="scriptObj.active == 1"
+                            (click)="copyFuncScript(t1, scriptObj)"></i>
+                          <i
+                            class="fal fa-pencil fa-sm mx-2 pointer"
+                            ngbTooltip="{{ 'edit' | translate }}"
+                            *ngIf="!isPublishedPersonalization && scriptObj.jsType != 1 && scriptObj.active == 1"
+                            (click)="editFunction(scriptObj)"></i>
+                        </div>
+                        <span *ngIf="!isPublishedPersonalization && scriptObj.active == 1" class="px-2">|</span>
+                        <div *ngIf="!isPublishedPersonalization && scriptObj.active == 1" class="use-func-bttn ml-1">
+                          <button class="btn buttonCss shadow-none" (click)="openUseFunction(scriptObj.inlineJSKey)">
+                            {{ 'inlineJSComponent.label.useFunction' | translate }}
+                          </button>
+                        </div>
+                      </div>
+                      <div class="disabled-section mt-2" *ngIf="scriptObj.jsType == 2 && !isPublishedPersonalization">
+                        <i
+                          [ngbTooltip]="
+                            (scriptObj.active == 1
+                              ? 'inlineJSComponent.label.disableFunction'
+                              : 'inlineJSComponent.label.enableFunction'
+                            ) | translate
+                          "
+                          tooltipClass="ngbTooltipStyle"
+                          class="far fa-lg disabled-function"
+                          [attr.cid]="scriptObj.active"
+                          [ngClass]="scriptObj.active == 1 ? 'fa-toggle-on' : 'fa-toggle-off'"
+                          (click)="activatePTag($event, scriptObj.inlineJSKey, scriptObj.functionName)"></i>
+                        <label *ngIf="scriptObj.active == 1">{{
+                          'inlineJSComponent.label.disableFunction' | translate
+                        }}</label>
+                        <label *ngIf="scriptObj.active == 2">{{
+                          'inlineJSComponent.label.enableFunction' | translate
+                        }}</label>
+                      </div>
+                    </div>
+                    <hr />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,31 @@
+
+<div class="row pl-2 pr-3 pt-1 ml-0 mr-0 whiteBg" [ngClass]="isPreview ? 'pb-2' : 'pb-0 border-bottom' ">   
+    <div class="p-1 pointer" *ngIf="!isPreview">
+      <img src="./assets/images/back.png" width="25px" routerLink="/email-templates" (click)="getPreviousObjs();">
+    </div>
+    <div class="p-1" *ngIf="!isPreview">
+      <label class="font-small" *ngIf="!isTemplateLibraryMode">{{'designEditor.failsafePage.editDesignForlbl' | translate}}</label>
+    </div> 
+    <div class="pl-1" *ngIf="!isTemplateLibraryMode">
+      <ul class="tab-list pl-0 mb-0 mt-1">
+        <li class="" [ngClass]="setActive == 0? 'active primary' : 'text-muted'"  (click)="setFailSafeDetails(0,false,1);">         
+             <span>{{channelName}}</span>
+        </li>
+        <li class="" *ngIf="!isTemplateLibraryMode" [ngClass]="[setActive == 1? 'active primary' : 'text-muted', (!isFailSafeEnable) ? 'disabledLi' : 'text-muted']" (click)="setFailSafeDetails(1,true,0);">
+             <span class=""> {{channelName}} {{'designEditor.failsafePage.failsafelbl' | translate}}</span><span *ngIf="!isFailSafeEnable">{{'designEditor.failsafePage.optionallbl' | translate}}</span>
+        </li>
+      </ul>
+    </div>
+    <div class="col p-0 text-right float-right" *ngIf="!isPreview">
+      <div *ngIf="!isTemplateLibraryMode else saveTemplateInS3">
+        <input class="mr-1 align-middle" type="checkbox" id="failsafeEnable" [(ngModel)]="isFailSafeEnable" (click)="enableFailSafe($event);">
+        <label class="font-small mr-1" for="failsafeEnable"> {{'designEditor.failsafePage.enableFailsafelbl' | translate}} </label>
+        <button type="button" class="btn buttonCss shadow-none mr-1" (click)="onsaveMyTemplate(true);" [disabled]="ispromoExecutedOrRunning">{{'designEditor.failsafePage.saveastemplatebtn' | translate}}</button>
+        <button type="button" class="btn buttonCss shadow-none" (click)="onsave();" [disabled]="ispromoExecutedOrRunning">{{'designEditor.failsafePage.saveBtn' | translate}} {{channelName}}</button>
+      </div>       
+       <ng-template #saveTemplateInS3>
+        <button type="button" class="btn buttonCss shadow-none mr-1 mb-2" (click)="onsaveMyTemplate(true);" [disabled]="ispromoExecutedOrRunning">{{'designEditor.failsafePage.saveBtn' | translate}}</button>
+       </ng-template>
+    </div>
+</div>
+

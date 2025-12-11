@@ -1,0 +1,27 @@
+<!-- Offcanvas -->
+<ng-template #content let-offcanvas>
+    <div class="offcanvas-header d-flex align-items-center px-4">
+        <div class="">
+            <h4 class="offcanvas-title" id="offcanvas-basic-title">Filter by campaign</h4>
+            <h6 class="sub-title">Select specific campaigns to view its dashboard</h6>
+        </div>        
+    </div>
+    <div class="offcanvas-body px-4 h-100">
+        <div class="mb-3 w-75">
+            <label for="selectCampaigns">Select Campaigns</label>
+            <select class="form-control" id="selectCampaigns">
+                <option>Campaign name</option>
+                <option>Campaign name</option>
+                <option>Campaign name</option>
+                <option>Campaign name</option>
+            </select>            
+        </div>        
+        <div class="d-flex h-75"> 
+            <div class="d-flex align-self-end ml-auto gap-2"> 
+                <button type="button" class="btn btn-outline-primary" (click)="offcanvas.dismiss('Cancel')">Cancel</button>
+                <button type="button" class="btn btn-primary" (click)="offcanvas.dismiss('Apply')">Apply</button>
+            </div> 
+        </div> 
+    </div>
+</ng-template>
+<!-- Offcanvas -->
