@@ -78,7 +78,7 @@
           placeholder="Search models and fields" />
       </div>
 
-      <div class="field-cards">
+      <div class="field-cards" *ngIf="tempSelectedModel.length > 0; else noFieldFound">
         <div class="card field-card mb-3" *ngFor="let field of tempSelectedModel">
           <div class="card-body">
             <div class="d-flex justify-content-between mb-2">
@@ -118,7 +118,7 @@
               </div>
             </div>
 
-            <small class="text-muted">
+            <small class="text-muted" *ngIf="field.description">
               Description:
               <span>Lorem ipsum dolor sit amet, consectetur adipiscing elit</span>
             </small>
@@ -137,6 +137,13 @@
           </div>
         </div>
       </div>
+      <ng-template #noFieldFound>
+        <div class="no-field-found text-center mt-5">
+          <i class="fal fa-exclamation-circle fa-2x mb-3"></i>
+          <h6>No fields found</h6>
+          <p class="text-muted">Try adjusting your search or filter to find what you're looking for.</p>
+        </div>
+      </ng-template>
     </div>
   </div>
 </div>

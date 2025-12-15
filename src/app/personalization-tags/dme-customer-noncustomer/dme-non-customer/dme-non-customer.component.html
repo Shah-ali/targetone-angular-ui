@@ -32,7 +32,7 @@
             <div class="col-6 flex-column p-0">
                 <!-- <div class="title">{{'DMEComponentLabels.selectDMElbl' | translate}}</div>
                 <div class="subTitle">{{'DMEComponentLabels.subTitleChooseMgsLbl' | translate}}</div> -->
-                <div class="row col p-0 justify-content-center mt-3" id="navigatorCntext" *ngIf="multiArrayPath">
+                <div class="row col p-0 justify-content-center mt-3" id="navigatorCntext" *ngIf="multiArrayPath && !isMergedTagOffersDrawerOpen">
                     <div class="text-left mr-5 p-0" id="navOne">
                         <span class="numberInCircle blue" *ngIf="navigatorActiveStage1" [ngClass]="navigatorActiveStage1 ? 'blue':'grey'">1</span>
                         <div class="circle" *ngIf="checkmarkEnable1">
@@ -97,7 +97,7 @@
           </div>
           </div>
           <div class="col mt-3 mb-3 p-0">
-            <div class="col API-Grid-Section dottedBorder mt-3 pl-3 pr-1" *ngIf="viewParameterSectionEnabled else withoutDataView">
+            <div class="col API-Grid-Section dottedBorder mt-3 pl-3 pr-1" *ngIf="viewParameterSectionEnabled else withoutDataView" [ngStyle]="isMergedTagOffersDrawerOpen && multiArrayPath ? {'height':'calc(100vh - 392px)'} : {'height':'calc(100vh - 218px)'}">
               <div class="row col mt-2">
                 <label class="m-0">{{'apiPersonalization.filterParametersLbl' | translate}}</label>
               </div>
@@ -148,7 +148,7 @@
             </div>
             
             <ng-template #withoutDataView>
-              <div class="row col displayAreaView">
+              <div class="row col displayAreaView" [ngStyle]="isMergedTagOffersDrawerOpen && multiArrayPath ? {'height':'calc(100vh - 376px)'} : {'height':'calc(100vh - 262px)'}">
                  <label class="mediumFont labelMiddle">{{'apiPersonalization.selectDMETableToDefineFiltersLbl' | translate}}</label>
               </div>
             </ng-template>

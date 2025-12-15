@@ -98,9 +98,7 @@ export class MergeTagCopyComponent implements OnInit {
     this.httpService.post(url).subscribe((data) => {
       if (data.status === 'SUCCESS') {
         this.mergeTagDataItems = JSON.parse(data.response).root;
-
         this.loadData();
-        console.log(this.mergeTagDataItems);
       }
     });
   }
@@ -122,7 +120,7 @@ export class MergeTagCopyComponent implements OnInit {
   }
   loadData() {
     const parentComponentName = GlobalConstants.parentComponentName;
-    if (parentComponentName == 'TextAddonsComponent' || parentComponentName == 'ImageAddonsComponent' || parentComponentName == 'UseInlineFuncComponent') {
+    if (parentComponentName == 'TextAddonsComponent' || parentComponentName == 'ImageAddonsComponent' || parentComponentName == 'UseInlineFuncComponent' || parentComponentName == 'MergeTagInjectionComponent') {
       this.items = this.getItemsAdvanced(this.mergeTagDataItems);
     } else {
       this.items = this.getItems(this.mergeTagDataItems);
@@ -173,7 +171,7 @@ export class MergeTagCopyComponent implements OnInit {
     let itemsArray: TreeviewItem[] = [];
     parentChildObj.forEach((set: TreeItem) => {
       let newSet;
-      if (set.children != undefined && set.text !== 'Customer' && set.text !== 'Tag parameters' && set.text !== 'Product' && set.text !== 'Promotion') {
+      if (set.children != undefined && set.text !== 'Customer' && set.text !== 'Tag parameters' && set.text !== 'Product' && set.text !== 'Promotion' && set.text !== 'Event') {
         const filterTextValues = ids;
         const newSetChildren = set.children.filter(function (item) {
           return filterTextValues.includes(item.text);
@@ -191,6 +189,13 @@ export class MergeTagCopyComponent implements OnInit {
 
       if (newSet) {
         if (newSet.children) {
+          if(GlobalConstants.parentComponentName == 'MergeTagInjectionComponent') {
+            newSet.children.forEach((item) => {
+              if(item.varArrayType) {
+                item.value = item.value+'[X]';
+              }
+            });
+          }
           itemsArray.push(new TreeviewItem(newSet, true));
         }
       }

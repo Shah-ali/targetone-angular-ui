@@ -10,6 +10,7 @@ import { AppConstants } from "@app/app.constants";
 import Swal from "sweetalert2";
 import { response } from "express";
 import { TranslateService } from "@ngx-translate/core";
+import { GlobalConstants } from "@app/design-channels/common/globalConstants";
 
 @Component({
   selector: "app-merge-tag-injection",
@@ -54,6 +55,9 @@ export class MergeTagInjectionComponent implements OnInit {
   }
 
   ngAfterViewInit(): void {
+    GlobalConstants.selectedDmeModels = [];
+    GlobalConstants.selectedApiModels = [];
+
     this.ngZone.run(() => {
       this.mergeTagJSONData = JSON.parse(this.jsonData);
 
@@ -62,6 +66,13 @@ export class MergeTagInjectionComponent implements OnInit {
         this.openStoredDataMap[firstItem] = true; */
         this.mergeTagJSONData.forEach((item) => {
           this.openStoredDataMap[item.name] = true;
+
+          if (item.displayName === "API Data") {
+            GlobalConstants.selectedApiModels.push(...item.items.map((re) => ({ id: re.name })));
+          }
+          if (item.displayName === "DME Data") {
+            GlobalConstants.selectedDmeModels.push(...item.items.map((re) => ({ id: re.name })));
+          }
         });
         this.selectedModel = this.mergeTagJSONData[0].items[0];
         this.tempSelectedModel = this.selectedModel.input;
