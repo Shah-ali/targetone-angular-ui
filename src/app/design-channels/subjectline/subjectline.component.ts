@@ -79,6 +79,9 @@ export class SubjectlineComponent implements OnInit {
   TemperaryRange: any;
   i18nObject: { search: any; notfound: any; pickyourEmojiTooltip: any; categories: { search: any; recent: any; custom: any; }; };
   isPreheaderInputEnableFailsafe: boolean = false;
+  subjectLine:any;
+  editPublish:any;
+  viewPublish:any;
   constructor(private shareService: SharedataService, private http: HttpService, private el:ElementRef, private modalService: BsModalService,private translate: TranslateService,private dataService: DataService) { 
     this.i18nObject = {
       search: this.translate.instant('searchLbl'),
@@ -151,6 +154,10 @@ export class SubjectlineComponent implements OnInit {
 
   ngOnInit(): void {
     this.varArgsMergeTags = GlobalConstants.varArgs;
+  }
+  ngAfterViewInit() {
+    this.inputsubject.nativeElement.innerHTML =  this.dataService.getSubjectLine() || '';
+    this.viewPublish = this.dataService.getViewPublish();
   }
   specialCharactersToHMTL(str){
     if(str !== undefined){

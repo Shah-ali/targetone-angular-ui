@@ -99,7 +99,8 @@ export class TriggerAnalyticsComponent implements OnInit {
      console.log(this.channelObj);    
   }   
   async getSavedTemplatePromo(){  
-    let url = AppConstants.API_END_POINTS.GET_SAVED_USAGE_TEMPLATES+`?promoKey=${GlobalConstants.promoKey}`;
+    let editPublish =  this.dataService.getEditPublish();
+    let url = AppConstants.API_END_POINTS.GET_SAVED_USAGE_TEMPLATES+`?promoKey=${GlobalConstants.promoKey}&editPublish=${editPublish}`;
     const data = await this.http.post(url).toPromise();  
       if(data.status == "SUCCESS" ){
         if(data.response == ""){
@@ -459,14 +460,22 @@ createHrefMap(){
   
   getPayLoadJson(){
     //this.loadCurrentObj();
-    this.payloadSavingJson = GlobalConstants.payLoadSavedObjAllChannels;
-    this.vendorDesc = this.payloadSavingJson.channels[0].subjectObj.vendorDesc;
-    this.subject = this.payloadSavingJson.channels[0].subjectObj.subject;
-    this.preHeader = this.payloadSavingJson.channels[0].subjectObj.preHeader;
+  /*  this.payloadSavingJson = GlobalConstants.payLoadSavedObjAllChannels;
+    this.vendorDesc = this.payloadSavingJson.channels[0].subjectObj?.vendorDesc;
+    this.subject = this.payloadSavingJson.channels[0].subjectObj?.subject;
+    this.preHeader = this.payloadSavingJson.channels[0].subjectObj?.preHeader;
     this.tempId = this.payloadSavingJson.channels[0].uuid;
     this.isPayload = true;
-    this.imgThumbnailView = JSON.parse(this.payloadSavingJson.channels[0].thumbnailImage).thumbnail_desktop;
-    this.imgThumbnailMobileView = JSON.parse(this.payloadSavingJson.channels[0].thumbnailImage).thumbnail_mobile;
+    this.imgThumbnailView = JSON.parse(this.payloadSavingJson.channels[0].thumbnailImage)?.thumbnail_desktop;
+    this.imgThumbnailMobileView = JSON.parse(this.payloadSavingJson.channels[0].thumbnailImage)?.thumbnail_mobile;  */
+    const ch0 = this.payloadSavingJson?.channels?.[0];
+    this.vendorDesc  = ch0?.subjectObj?.vendorDesc ?? '';
+    this.subject     = ch0?.subjectObj?.subject ?? '';
+    this.preHeader   = ch0?.subjectObj?.preHeader ?? '';
+    this.tempId      = ch0?.uuid ?? '';
+    this.isPayload   = !!ch0;
+    const thumbJson  = ch0?.thumbnailImage ? JSON.parse(ch0.thumbnailImage) : null;
+    this.imgThumbnailView = thumbJson?.thumbnail_desktop ?? '';
   }
   getRunningOrExecutedObj(){// old promotion saved already on load data
     let subObj = {};

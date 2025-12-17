@@ -3,20 +3,23 @@
     <div class="row col p-1 m-0 pl-3">
       <div class="col pt-2 pl-0">        
         <label class="top-d-heading mt-2 pt-1">{{'designEditor.emailEditor.emailTemplatelbl' | translate}}</label>
+        <span *ngIf="ispromoExecutedOrRunning && (editPublish)" ><img class="p-2" src="./assets/images/draftIcon.svg"/></span>
       </div>
       <div class="col text-right pt-2 pr-0 mr-0" *ngIf="!isTemplateLibraryMode else newTemplateS3">
           <ng-template #changeTemplate>            
-            <button type="button" class="btn buttonCss shadow-none mr-2" (click)="backToTemplateView();" [disabled]="promoExecutedOrRunning"><span >{{'designEditor.emailEditor.changeTemplatelbl' | translate}}</span></button>
+            <button type="button" class="btn buttonCss shadow-none mr-2" (click)="backToTemplateView();" *ngIf="!editPublish;" [disabled]="promoExecutedOrRunning"><span >{{'designEditor.emailEditor.changeTemplatelbl' | translate}}</span></button>
         </ng-template>
-          <ng-template #editTemplate><button class="btn successOutline shadow-none mr-3" routerLink="/bee-editor" (click)="editTemplateSelected();" [disabled]="promoExecutedOrRunning">{{'designEditor.emailEditor.editTemplatelbl' | translate}}</button></ng-template>
-        <button type="button" *ngIf="!isPreview; else changeTemplate" class="btn buttonCss shadow-none mr-2" (click)="openPreviewModal();" [disabled]="promoExecutedOrRunning"><span >{{'designEditor.emailEditor.chosenAsAtemplatelbl' | translate}}</span></button>
-        <button type="button" class="btn successOutline shadow-none mr-3" routerLink="/bee-editor" (click)="editTemplateSelected();" [disabled]="promoExecutedOrRunning" *ngIf="!isPayload; else editTemplate;">{{'designEditor.emailEditor.proceedBtn' | translate}}</button>
+        <ng-template #editTemplate><button class="btn successOutline shadow-none mr-3" routerLink="/bee-editor" (click)="editTemplateSelected();" *ngIf="!editPublish;" [disabled]="promoExecutedOrRunning">{{'designEditor.emailEditor.editTemplatelbl' | translate}}</button></ng-template>
+        <button type="button" *ngIf="!isPreview && !editPublish; else changeTemplate" class="btn buttonCss shadow-none mr-2" (click)="openPreviewModal();" [disabled]="promoExecutedOrRunning"><span >{{'designEditor.emailEditor.chosenAsAtemplatelbl' | translate}}</span></button>
+        <button type="button" class="btn successOutline shadow-none mr-3" routerLink="/bee-editor" (click)="editTemplateSelected();" [disabled]="promoExecutedOrRunning" *ngIf="!isPayload && !editPublish; else editTemplate;">{{'designEditor.emailEditor.proceedBtn' | translate}}</button>
+        <button type="button" class="btn successOutline shadow-none mr-3" routerLink="/bee-editor" (click)="discardChages();"  *ngIf="!isPayload && editPublish;">{{'designEditor.emailEditor.discardChanges' | translate}}</button>
+        <button type="button" class="btn successOutline shadow-none mr-3" routerLink="/bee-editor" (click)="editTemplateSelected();"  *ngIf="!isPayload && editPublish;">{{'designEditor.emailEditor.proceedToEdit' | translate}}</button>
       </div>
       <ng-template #newTemplateS3>       
         <button type="button" *ngIf="!isPreview else editTemplateS3" class="btn buttonCss shadow-none mr-2 mt-3" routerLink="/bee-editor" (click)="getEmptyTemplateJson();"> <i class="far fa-plus fa-sm"></i> {{'designEditor.emailEditor.createTemplateBtn' | translate}}</button>
       </ng-template>
       <ng-template #editTemplateS3>        
-        <button type="button" class="btn buttonCss shadow-none mr-2 mt-3" routerLink="/bee-editor" (click)="editTemplateSelected();">{{'designEditor.emailEditor.editTemplatelbl' | translate}}</button>
+        <button type="button" class="btn buttonCss shadow-none mr-2 mt-3" routerLink="/bee-editor" *ngIf="!editPublish;" (click)="editTemplateSelected();">{{'designEditor.emailEditor.editTemplatelbl' | translate}}</button>
       </ng-template>
     </div>
  

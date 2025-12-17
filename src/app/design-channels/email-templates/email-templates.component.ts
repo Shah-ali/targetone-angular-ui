@@ -74,6 +74,9 @@ export class EmailTemplatesComponent implements OnInit {
   arrayOfDeleteTemp: string[] = [];
   isMultidelete: any;
   isSelecteDeleteId: any;
+  editPublish: boolean = false;
+  viewPublish : boolean = false;
+  ispromoExecutedOrRunning:any;
  // @Output() previewMode = new EventEmitter<boolean>();
   constructor(private http: HttpService, private router: Router,private shareService:SharedataService, private loader: LoaderService, private dataService: DataService, private ngZone: NgZone,
     private translate: TranslateService) { 
@@ -83,7 +86,13 @@ export class EmailTemplatesComponent implements OnInit {
         this.gridView = true;
       }
     });
+    shareService.ispromoExecutedOrRunning.subscribe(res => {
+        this.ispromoExecutedOrRunning =res;        
     
+    });
+    this.editPublish = this.dataService.getEditPublish();
+    this.viewPublish = this.dataService.getViewPublish();
+    this.dataService.setIsTemplateChanged(false);       
     this.initializeComponent();  
     
     this.loader.ShowLoader();
@@ -100,8 +109,9 @@ export class EmailTemplatesComponent implements OnInit {
       if(!this.isTemplateLibraryMode){
         await this.getPromotionKey(); 
         await this.getpromoChannelObj();
+        if(!this.editPublish){
         await this.getSavedTemplatePromo();
-
+        }
         this.loader.ShowLoader();
         if (GlobalConstants.isPreviewMode) {
           await this.getPayLoadJson();
@@ -136,7 +146,7 @@ export class EmailTemplatesComponent implements OnInit {
     }
   }
   async getSavedTemplatePromo(){ 
-    let url = AppConstants.API_END_POINTS.GET_SAVED_USAGE_TEMPLATES+`?promoKey=${GlobalConstants.promoKey}`;
+    let url = AppConstants.API_END_POINTS.GET_SAVED_USAGE_TEMPLATES+`?promoKey=${GlobalConstants.promoKey}&editPublish=${this.editPublish}`;
     const data = await this.http.post(url).toPromise();
    // this.http.post(url).subscribe(data => {
       if(data.status == "SUCCESS" ){
@@ -267,7 +277,8 @@ export class EmailTemplatesComponent implements OnInit {
       GlobalConstants.promoCommKey = this.promoCommKey;
       this.promotionObj={ "promoKey":this.promoKey,"promoCommKey":this.promoCommKey }
       this.shareService.promoKeyObj.next(this.promotionObj);      
-    }else{
+    }
+    else{
       if(GlobalConstants.isSavedEmails && GlobalConstants.promoKey !== undefined){
         this.promoKey=GlobalConstants.promoKey;
         this.promoCommKey = GlobalConstants.promoCommKey;
@@ -411,7 +422,16 @@ export class EmailTemplatesComponent implements OnInit {
           item.uuid = item.id;
         });
       }
+      if(this.editPublish || this.viewPublish){
+        let templateText:any = this.shareService.savedAdminComTemplateObj.getValue();
+        // --- Current Selected Channel ---
+        let currentSelectedChannelIndex = parseInt(this.shareService.setActiveChannelTab.value) || 0;
+        // --- Template UID ---
+        this.tempId = templateText?.[currentSelectedChannelIndex]?.templateUuid;
+      }
+      else{
       this.tempId = this.loadTemplates[0].uuid;
+      }
       this.sortByDate('desc',this.loadTemplates);
       this.getPaginateData();
       this.latest = false;
@@ -470,6 +490,7 @@ export class EmailTemplatesComponent implements OnInit {
     this.defaultPreview =   imgView;
   }
   getThumbnailId(imgView, mobileView,id,index){
+    this.dataService.setIsTemplateChanged(true);
     this.tempId = "";
     this.tempId = id;    
     this.selectedItem = index;
@@ -746,6 +767,23 @@ deleteTemplateS3(deltId,evt){
   } 
   console.log(this.arrayOfDeleteTemp);
 }
+ discardChages(){
+    let endpoint = AppConstants.API_END_POINTS.DISCARD_DRAFT+`?promoKey=${GlobalConstants.promoKey}&promoSplitKey=${this.currentSplitId}`;
+    this.loader.ShowLoader();
+    this.http.post(endpoint).subscribe((data) => {
+          if (data.status === 'SUCCESS') {
+            this.dataService.setEditPublish(undefined);
+            this.dataService.setViewPublish(undefined);
+            this.shareService.showViewButton$.next(true);
+            this.shareService.showEditButton$.next(true);
+             this.shareService.channelTabsLocked$.next(false);
+            this.router.navigate(['/trigger-analytics']);
+          }else{
+            console.log('changes are not discarded')
+            this.removeLoader();
+          }
+        });
+  }
 multiDeleteTemplate(evt,currtList){
   if(evt.target.checked){
     if(currtList.length > 0){

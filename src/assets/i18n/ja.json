@@ -198,7 +198,11 @@
         "deleteTemplate": "テンプレートを削除する",
         "deleteTemplateMgslbl": "選択されたテンプレートが削除されます。進めてもよろしいでしょうか？",
         "changeTempateAfeterSaveWaringMgslbl": "保存されたデータは消えてしまいます。進めてもよろしいでしょうか？"
-      }
+      },
+      "discardChanges":"Discard Changes",
+      "proceedToEdit":"Proceed to Edit",
+      "saveChanges": "Save Changes",
+      "publishChanges": "Publish Chages"
     },
     "failsafePage": {
       "editDesignForlbl": "デザインを編集",
@@ -209,8 +213,13 @@
       "saveastemplatebtn": "テンプレートとして保存する",
       "saveBtn": "保存",
       "confirmationMgs": {
-        "savedDatawillbeLostMgslbl": "保存されたデータは消えてしまいます。進めてもよろしいでしょうか？"
-      }
+        "savedDatawillbeLostMgslbl": "保存されたデータは消えてしまいます。進めてもよろしいでしょうか？",
+        "EditPubshiedChannel" : "Editing this channel will create a new draft version. The currently published version will continue to run until you publish the updated version.",
+        "proceed":"Are you sure you want to continue?",
+        "continueEdit":"Continue Edit"
+      },
+      "viewChannel":"View",
+      "editChannel":"Edit this channel"
     },
     "subjectlineComponent": {
       "subjectLinelbl": "件名",
@@ -251,6 +260,7 @@
       "mergeTaglbl": "マージタグ",
       "fullPreview": "完全なプレビュー",
       "designforLbl": "のためのデザイン",
+      "publishConfirmationMsg":"Do you want to publish the changes", 
       "validationMsg": {
         "emailSubjectShouldNotBeEmptyMsglbl": "メールチャネルの件名を空にすることはできません。",
         "emailFailsafeSubjectShouldNotBeEmptyAlertMsg": "フェイルセーフのメールチャネルの件名を空にすることはできません。",
@@ -340,6 +350,13 @@
       "selectTagTypelbl": "ソースを選択",
       "selectPropertylbl": "プロパティを選択する",
       "addOffersNRecommendationLbl": "マージタグを追加",
+      "mergeTagInjectionLbl": "マージタグの挿入",
+      "multiObjectLbl": "マルチオブジェクト",
+      "singleObjectLbl": "単一オブジェクト",
+      "fieldsAvailableLbl": "利用可能なフィールド",
+      "searchModelsAndFieldsPlaceholder": "モデルとフィールドを検索する",
+      "noFieldsFoundLbl": "フィールドが見つかりませんでした",
+      "noFieldsFoundMsg": "探しているものを見つけるには、検索条件やフィルターを調整してみてください。",
       "inclusionsLbl": "包含",
       "exclusionsLbl": "例外",
       "boostRecommendationsLbl": "レコメンドをブーストする",
@@ -347,6 +364,7 @@
       "clearCurrentLbl": "現在のものをクリアする",
       "clearAllLbl": "すべてクリア",
       "dataNotFoundLbl": "データが見つかりません",
+      "deleteMergeTagComfirmationMsgLbl": "削除してもよろしいですか  '{{value1}}' {{value2}}?",
       "pleaseSelectOneAttributeTocontinuelblMsg": "選択されたオファーのいずれか1つの属性を選択してください",
       "pleaseSelectAnyOneOfferToContinuelblMsg": "いずれか一つのオファーを選んでお進みください。"
     },
@@ -1459,7 +1477,10 @@
     "Previewlbl": "プレビュー",
     "Abovelbl": "上に表示",
     "Belowlbl": "下に表示",
-    "Overlaylbl": "オーバーレイ"
+    "Overlaylbl": "オーバーレイ",
+    "Applylbl": "適用する",
+    "Closelbl": "近い",
+    "RotationDegLbl": "回転"
 }
 }
 

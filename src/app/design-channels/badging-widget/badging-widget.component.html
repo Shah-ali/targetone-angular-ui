@@ -5,11 +5,16 @@
     <div class="header-bar">
       <h1 class="title">{{ 'badgingwidget.SocialProof' | translate }}</h1>
       <div class="header-buttons">
+        <div class="bottom-btn-wrapper">
+  <button 
+    type="submit"
+    class="btn buttonPrimaryCss shadow-none"
+    (click)="insertData()">
+      {{ 'badgingwidget.Applylbl' | translate }}
+      </button>
+      </div>
        <button type="button" class="btn buttonCss shadow-none m-0 mr-1" id="closeBtn" (click)="onClose()">
-    {{ 'close' | translate }}
-  </button>
-  <button type="submit" class="btn buttonPrimaryCss shadow-none m-0"  (click)="insertData()">
-    {{ 'done' | translate }}
+    {{ 'badgingwidget.Closelbl' | translate }}
   </button>
   </div>
     </div>
@@ -71,7 +76,7 @@
                   type="text"
                   id="message"
                   class="form-control"
-                  [(ngModel)]="badge.message"
+                  [(ngModel)]="badge.message" (ngModelChange)="updateLivePreview()"
                   placeholder="80 People Viewed Today"
                 />
               </div>
@@ -87,12 +92,12 @@
                       type="text"
                       id="bgColor"
                       class="form-control color-input"
-                      [(ngModel)]="badge.bgColor"
+                      [(ngModel)]="badge.bgColor" (ngModelChange)="updateLivePreview()"
                     />
                     <input
                       type="color"
                       class="color-picker"
-                      [(ngModel)]="badge.bgColor"
+                      [(ngModel)]="badge.bgColor" (ngModelChange)="updateLivePreview()"
                     />
                   </div>
                 </div>
@@ -106,7 +111,7 @@
                       type="text"
                       id="fontColor"
                       class="form-control color-input"
-                      [(ngModel)]="badge.fontColor"
+                      [(ngModel)]="badge.fontColor" (ngModelChange)="updateLivePreview()"
                     />
                     <input
                       type="color"
@@ -125,12 +130,12 @@
                       type="text"
                       id="borderColor"
                       class="form-control color-input"
-                      [(ngModel)]="badge.borderColor"
+                      [(ngModel)]="badge.borderColor" (ngModelChange)="updateLivePreview()"
                     />
                     <input
                       type="color"
                       class="color-picker"
-                      [(ngModel)]="badge.borderColor"
+                      [(ngModel)]="badge.borderColor" (ngModelChange)="updateLivePreview()"
                     />
                   </div>
                 </div>
@@ -145,7 +150,7 @@
                   <input
                     type="number"
                     class="form-control"
-                    [(ngModel)]="badge.borderRadius"
+                    [(ngModel)]="badge.borderRadius" (ngModelChange)="updateLivePreview()"
                   />
                   <span class="ms-2">px</span>
                 </div>
@@ -160,7 +165,7 @@
                   <input
                     type="number"
                     class="form-control"
-                    [(ngModel)]="badge.fontSize"
+                    [(ngModel)]="badge.fontSize" (ngModelChange)="updateLivePreview()"
                   />
                   <span class="ms-2">px</span>
                 </div>
@@ -172,12 +177,27 @@
                   {{ 'badgingwidget.Fontstyle' | translate }}
                 </label>
                 <select class="form-control" [(ngModel)]="badge.fontStyle">
-                  <option value="normal">Normal</option>
-                  <option value="italic">Italic</option>
-                  <option value="bold">Bold</option>
+                  <option value="normal">{{'designEditor.mobilePushComponent.normal' | translate}}</option>
+                  <option value="italic">{{'inappChannelComponent.italicLbl' | translate}}</option>
+                  <option value="bold">{{'inappChannelComponent.boldLbl' | translate}}</option>
                 </select>
               </div>
-            </div>
+              <!-- Rotation -->
+ <div class="mb-3">
+  <label class="form-label d-block">
+     {{ 'badgingwidget.RotationDegLbl' | translate }}
+  </label>
+  <div class="d-flex align-items-center">
+    <input
+      type="number"
+      class="form-control"
+      [(ngModel)]="badge.rotation"
+      (ngModelChange)="updateLivePreview()"
+      placeholder="0"
+    />
+  </div>
+</div>
+                       </div>
 
        <!-- Display section -->
 <div *ngIf="activeTab === 'displaysettings'" class="form-section">
@@ -296,58 +316,8 @@
             </div>
           </div>
         </div>
-
-        <!-- Right Panel -->
-        <div class="col-md-9">
-          <div class="panel-box right-panel">
-            <h5 class="mb-3 preview-title">
-              {{ 'badgingwidget.Previewlbl' | translate }}
-            </h5>
-
-<div class="preview-image-wrapper d-flex flex-row flex-wrap gap-2">
-  <div class="product-with-badge" *ngFor="let img of productImages" style="flex: 0 0 auto; position: relative;">
-    
-    <!-- Above Badge -->
-    <div
-      *ngIf="badge.position === 'above'"
-      class="viewed-badge above"
-      [ngStyle]="getBadgeStyle()"
-    >
-      <img [src]="badge.icon || './assets/images/fireicon.png'" alt="Fire icon" class="fire-icon" />
-      <div class="viewed-text" [innerHTML]="badge.message || '80 People <br>Viewed today'"></div>
-    </div>
-
-    <!-- Image + Overlay Badge -->
-    <div class="image-container position-relative">
-      <!-- Overlay Badge -->
-      <div
-        *ngIf="badge.position === 'overlay'"
-        class="viewed-badge overlay"
-        [ngStyle]="getBadgeStyle(true)"
-      >
-        <img [src]="badge.icon || './assets/images/fireicon.png'" alt="Fire icon" class="fire-icon" />
-        <div class="viewed-text" [innerHTML]="badge.message || '80 People <br>Viewed today'"></div>
-      </div>
-
-      <img [src]="img" alt="Product" class="product-img" />
-    </div>
-
-    <!-- Below Badge -->
-    <div
-      *ngIf="badge.position === 'below'"
-      class="viewed-badge below"
-      [ngStyle]="getBadgeStyle()"
-    >
-      <img [src]="badge.icon || './assets/images/fireicon.png'" alt="Fire icon" class="fire-icon" />
-      <div class="viewed-text" [innerHTML]="badge.message || '80 People <br>Viewed today'"></div>
-    </div>
-    
   </div>
 </div>
 </div>
  </div> 
 </div> 
-</div> 
-</div> 
-</div>
-</div>

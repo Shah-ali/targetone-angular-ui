@@ -139,6 +139,11 @@ export const AppConstants = {
 
     //  Ensemble AI API
     GET_ENSEMBLE_SETTINGS_API:'/personalizationTags/getEnsambledSettings',
+    VIEW_CHANNEL: "/triggerPromo/viewPublishJourney",
+    EDIT_PUBLISH_JOURNRY:"/triggerPromo/editPublishJourney",
+    DISCARD_DRAFT : "/triggerPromo/discardDraft",
+    SAVE_EDIT_PUBLISH_DRAFT:"/triggerPromo/saveEditPublishDraft",
+    PUBLISH_DRAFT : "/triggerPromo/publishDraft"
   },
   API_PERSONSOALIZATION_TAGS_END_POINTS: {
     GET_LIST: "/personalizationTags/loadPersonalizationTags",

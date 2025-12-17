@@ -15,7 +15,7 @@
             <div *ngIf="obj.name == 'apiData'"><i class="far fa-bolt"></i></div>
             <div *ngIf="obj.name == 'dmeData'"><i class="far fa-sitemap"></i></div>
             <span>{{ obj.displayName }}</span>
-            <span class="items-count ml-3 mt-1">{{ obj.items.length }}</span>
+            <!-- <span class="items-count ml-3 mt-1">{{ obj.items.length }}</span> -->
           </div>
           <div class="right ml-2 plus-icon-section" *ngIf="obj.name != 'storedData'" (click)="addItems($event, obj)">
             <!-- <i class="fas" [ngClass]="openStoredDataMap[obj.name] ? 'fa-chevron-down' : 'fa-chevron-right'"></i> -->
@@ -38,15 +38,20 @@
                 <i *ngIf="obj.name == 'dmeData'" class="far fa-sitemap mr-1"></i>
                 <div class="text-span"> {{ item.name }}
                   <div class="text-span-1" *ngIf="(obj.name == 'apiData' || obj.name == 'dmeData') && item.maxCount > 0" >
-                    <span class="span-1">Multi Object</span>
+                    <span class="span-1">{{'designEditor.offerDrawerComponent.multiObjectLbl' | translate}}</span>
                     <span class="span-2 ml-1">[0...{{ item.maxCount }}]</span>
                   </div>
                   <div class="text-span-1" *ngIf="(obj.name == 'apiData' || obj.name == 'dmeData') && item.maxCount <= 0" >
-                    <span class="span-1">Single Object</span>
+                    <span class="span-1">{{'designEditor.offerDrawerComponent.singleObjectLbl' | translate}}</span>
                   </div>
                 </div>
               </span> 
-              <span class="fields-count">{{ item.attributeCount }}</span>
+              <!-- <span class="fields-count">{{ item.attributeCount }}</span> -->
+              <div class="delete-icon"
+                *ngIf="item.name != 'Customer' && item.name != 'Promotion' && item.name != 'Event'"
+                (click)="deleteMergeTag(item.type, item.name)">
+                <i class="fal fa-trash-alt fa-xs"></i>
+              </div>
             </li>
           </ul>
         </div>
@@ -60,13 +65,13 @@
           <h4 class="mb-0 mr-2">{{ selectedModel.name }}</h4>
           <!-- <div *ngIf="maxCountVal > 0" class="max-count-value">[0...{{ maxCountVal }}]</div> -->
         </div>
-        <div
+        <!-- <div
           *ngIf="selectedModel.name != 'Customer' && selectedModel.name != 'Promotion' && selectedModel.name != 'Event'"
           (click)="deleteMergeTag(selectedModel.type, selectedModel.name)">
           <i class="fal fa-trash-alt"></i>
-        </div>
+        </div> -->
       </div>
-      <p class="text-muted mb-4">{{ selectedModel.attributeCount }} fields available</p>
+      <p class="text-muted mb-4"><b>{{ selectedModel.attributeCount }}</b> {{'designEditor.offerDrawerComponent.fieldsAvailableLbl' | translate}}</p>
 
       <div class="serach-input-wrapper">
         <i class="fal fa-search"></i>
@@ -75,7 +80,7 @@
           type="text"
           (keyup)="onSearch($event)"
           class="form-control mb-3"
-          placeholder="Search models and fields" />
+          placeholder="{{'designEditor.offerDrawerComponent.searchModelsAndFieldsPlaceholder' | translate}}" />
       </div>
 
       <div class="field-cards" *ngIf="tempSelectedModel.length > 0; else noFieldFound">
@@ -119,7 +124,7 @@
             </div>
 
             <small class="text-muted" *ngIf="field.description">
-              Description:
+              {{'descriptionLbl' | translate}}:
               <span>Lorem ipsum dolor sit amet, consectetur adipiscing elit</span>
             </small>
 
@@ -140,8 +145,8 @@
       <ng-template #noFieldFound>
         <div class="no-field-found text-center mt-5">
           <i class="fal fa-exclamation-circle fa-2x mb-3"></i>
-          <h6>No fields found</h6>
-          <p class="text-muted">Try adjusting your search or filter to find what you're looking for.</p>
+          <h6>{{'designEditor.offerDrawerComponent.noFieldsFoundLbl' | translate}}</h6>
+          <p class="text-muted">{{'designEditor.offerDrawerComponent.noFieldsFoundMsg' | translate}}</p>
         </div>
       </ng-template>
     </div>

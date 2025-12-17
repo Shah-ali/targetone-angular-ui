@@ -141,7 +141,7 @@ export class MergeTagInjectionComponent implements OnInit {
 
   deleteMergeTag(type, selectedModelName) {
     Swal.fire({
-      titleText: this.translate.instant("designEditor.offerDrawerComponent.deleteMergeTagComfirmationMsgLbl"),
+      titleText: this.translate.instant("designEditor.offerDrawerComponent.deleteMergeTagComfirmationMsgLbl", {value1: selectedModelName, value2: type}),
       showCancelButton: true,
       confirmButtonText: this.translate.instant("yes"),
       cancelButtonText: this.translate.instant("cancel"),

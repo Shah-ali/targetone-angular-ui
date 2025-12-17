@@ -109,5 +109,8 @@ export class SharedataService {
   fusionAPIJsModule:any = new Rx.BehaviorSubject<boolean>(false);
   assignedPriviledgeEnableForTenents = new Rx.BehaviorSubject<any>(undefined);
   grapesJsEnabled:any = new Rx.BehaviorSubject<boolean>(false);
+  showViewButton$ = new Rx.BehaviorSubject<any>(undefined);
+  showEditButton$ = new Rx.BehaviorSubject<any>(undefined);
+  channelTabsLocked$ = new Rx.BehaviorSubject<boolean>(false);
   constructor() {}
 }

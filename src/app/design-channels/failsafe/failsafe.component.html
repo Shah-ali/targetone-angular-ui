@@ -1,31 +1,43 @@
 
-<div class="row pl-2 pr-3 pt-1 ml-0 mr-0 whiteBg" [ngClass]="isPreview ? 'pb-2' : 'pb-0 border-bottom' ">   
+<div class="row pl-2 pr-3 pt-1 pb-1 ml-0 mr-0 whiteBg" [ngClass]="isPreview ? 'pb-2 pt-2' : 'pb-0 border-bottom' ">   
     <div class="p-1 pointer" *ngIf="!isPreview">
-      <img src="./assets/images/back.png" width="25px" routerLink="/email-templates" (click)="getPreviousObjs();">
+      <img *ngIf="!ispromoExecutedOrRunning" src="./assets/images/back.png" width="25px" routerLink="/email-templates" (click)="getPreviousObjs();">
     </div>
     <div class="p-1" *ngIf="!isPreview">
-      <label class="font-small" *ngIf="!isTemplateLibraryMode">{{'designEditor.failsafePage.editDesignForlbl' | translate}}</label>
+      <label  class="font-small" *ngIf="!isTemplateLibraryMode && !ispromoExecutedOrRunning">{{'designEditor.failsafePage.editDesignForlbl' | translate}}</label>
     </div> 
     <div class="pl-1" *ngIf="!isTemplateLibraryMode">
       <ul class="tab-list pl-0 mb-0 mt-1">
         <li class="" [ngClass]="setActive == 0? 'active primary' : 'text-muted'"  (click)="setFailSafeDetails(0,false,1);">         
              <span>{{channelName}}</span>
         </li>
-        <li class="" *ngIf="!isTemplateLibraryMode" [ngClass]="[setActive == 1? 'active primary' : 'text-muted', (!isFailSafeEnable) ? 'disabledLi' : 'text-muted']" (click)="setFailSafeDetails(1,true,0);">
+        <li class="" *ngIf="!isTemplateLibraryMode && !ispromoExecutedOrRunning" [ngClass]="[setActive == 1? 'active primary' : 'text-muted', (!isFailSafeEnable) ? 'disabledLi' : 'text-muted']" (click)="setFailSafeDetails(1,true,0);">
              <span class=""> {{channelName}} {{'designEditor.failsafePage.failsafelbl' | translate}}</span><span *ngIf="!isFailSafeEnable">{{'designEditor.failsafePage.optionallbl' | translate}}</span>
         </li>
       </ul>
     </div>
+    <div class="p-2" *ngIf="ispromoExecutedOrRunning && (editPublish)">
+       <span ><img src="./assets/images/draftIcon.svg"/></span>
+    </div>
     <div class="col p-0 text-right float-right" *ngIf="!isPreview">
       <div *ngIf="!isTemplateLibraryMode else saveTemplateInS3">
-        <input class="mr-1 align-middle" type="checkbox" id="failsafeEnable" [(ngModel)]="isFailSafeEnable" (click)="enableFailSafe($event);">
-        <label class="font-small mr-1" for="failsafeEnable"> {{'designEditor.failsafePage.enableFailsafelbl' | translate}} </label>
-        <button type="button" class="btn buttonCss shadow-none mr-1" (click)="onsaveMyTemplate(true);" [disabled]="ispromoExecutedOrRunning">{{'designEditor.failsafePage.saveastemplatebtn' | translate}}</button>
-        <button type="button" class="btn buttonCss shadow-none" (click)="onsave();" [disabled]="ispromoExecutedOrRunning">{{'designEditor.failsafePage.saveBtn' | translate}} {{channelName}}</button>
+        <input *ngIf="!ispromoExecutedOrRunning" class="mr-1 align-middle hide" type="checkbox" id="failsafeEnable" [(ngModel)]="isFailSafeEnable" (click)="enableFailSafe($event);">
+        <label *ngIf="!ispromoExecutedOrRunning" class="font-small mr-1" for="failsafeEnable"> {{'designEditor.failsafePage.enableFailsafelbl' | translate}} </label>
+        <button *ngIf="!ispromoExecutedOrRunning" type="button" class="btn buttonCss shadow-none mr-1 " (click)="onsaveMyTemplate(true);" [disabled]="ispromoExecutedOrRunning">{{'designEditor.failsafePage.saveastemplatebtn' | translate}}</button>
+        <button *ngIf="!ispromoExecutedOrRunning" type="button" class="btn buttonCss shadow-none " (click)="onsave();" [disabled]="ispromoExecutedOrRunning">{{'designEditor.failsafePage.saveBtn' | translate}} {{channelName}}</button>
       </div>       
        <ng-template #saveTemplateInS3>
         <button type="button" class="btn buttonCss shadow-none mr-1 mb-2" (click)="onsaveMyTemplate(true);" [disabled]="ispromoExecutedOrRunning">{{'designEditor.failsafePage.saveBtn' | translate}}</button>
        </ng-template>
     </div>
+     <div *ngIf="ispromoExecutedOrRunning && (viewPublish || editPublish) && (!showViewButton || !showEditButton )" class="col p-0 mt-1 mb-1 text-right float-right">
+        <button  [disabled]="viewPublish" type="button" class="btn buttonCss shadow-none  mr-2 " (click)="discardChages();" >{{'designEditor.emailEditor.discardChanges' | translate}}</button>
+        <button  [disabled]="viewPublish" type="button" class="btn buttonCss shadow-none mr-2 " (click)="saveChanges();">{{'designEditor.emailEditor.saveChanges' | translate}}</button>
+        <button  [disabled]="viewPublish" type="button" class="btn buttonCss shadow-none " (click)="publishChanges();" >{{'designEditor.emailEditor.publishChanges' | translate}}</button>       
+    </div> 
+    <div *ngIf="ispromoExecutedOrRunning && (showViewButton || showEditButton )" class="col p-0 mt-1 mb-1 text-right float-right">
+        <button *ngIf="showViewButton" type="button" class="btn buttonCss shadow-none mr-2 " (click)="viewChannel();">{{'designEditor.failsafePage.viewChannel' | translate}}</button>
+        <button *ngIf="showEditButton" type="button" class="btn buttonCss shadow-none " (click)="editChannel();" >{{'designEditor.failsafePage.editChannel' | translate}}</button>        
+    </div> 
 </div>
 

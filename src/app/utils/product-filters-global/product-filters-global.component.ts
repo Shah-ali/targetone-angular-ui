@@ -69,9 +69,13 @@ export class ProductFiltersGlobalComponent implements OnInit {
     };
 
     this.parameterStringType = [{[this.operatorTranslations.equal]:'='},{[this.operatorTranslations.notEqual]:"!="},{[this.operatorTranslations.like]:"like"},{[this.operatorTranslations.startsWith]:"starts with"},{[this.operatorTranslations.endsWith]:"ends with"}];
-    this.parameterNumberType = [
-      { [this.operatorTranslations.equal]: '=' },
-      { [this.operatorTranslations.notEqual]: '!=' }
+    this.parameterNumberType = [   
+      { ["="]: '=' },
+      { ["!="]: '!=' },
+      { ["<"]: '&lt;' },
+      { [">"]: '&gt;' },
+      { ["<="]: '&lt;=' },
+      { [">="]: '&gt;=' }
     ];
     // this.shareService.getDataModelIdForProductFilters.subscribe((res:any) => {
     //   if(res !== undefined){

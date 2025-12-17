@@ -116,7 +116,11 @@
                 "deleteTemplate":"Eliminar plantilla",
                 "deleteTemplateMgslbl":"La plantilla seleccionada será eliminada. Estás seguro de que quieres continuar?",
                 "changeTempateAfeterSaveWaringMgslbl":"¡Tus datos guardados se perderán! Estás seguro de que quieres continuar?"
-            }           
+            },
+            "discardChanges":"Discard Changes",
+            "proceedToEdit":"Proceed to Edit",
+            "saveChanges": "Save Changes",
+            "publishChanges": "Publish Chages"           
 
         },
         "failsafePage":{
@@ -127,8 +131,13 @@
             "saveastemplatebtn":"Guardar como plantilla",
             "saveBtn":"Ahorrar",
             "confirmationMgs":{
-                "savedDatawillbeLostMgslbl":"¡Tus datos guardados se perderán! Estás seguro de que quieres continuar?"
-            }
+                "savedDatawillbeLostMgslbl":"¡Tus datos guardados se perderán! Estás seguro de que quieres continuar?",
+                "EditPubshiedChannel" : "Editing this channel will create a new draft version. The currently published version will continue to run until you publish the updated version.",
+                "proceed":"Are you sure you want to continue?",
+                "continueEdit":"Continue Edit"
+            },
+            "viewChannel":"View",
+            "editChannel":"Edit this channel"
         },
         "subjectlineComponent":{
             "subjectLinelbl":"Línea de asunto",
@@ -161,6 +170,7 @@
             "globalMergeTaglbl":"Combinar etiquetas",
             "fullPreview": "Vista previa completa",
             "designforLbl":"Diseñado para",
+            "publishConfirmationMsg":"Do you want to publish the changes",
             "validationMsg":{
                 "emailSubjectShouldNotBeEmptyMsglbl":"El asunto no puede estar vacío para el canal de correo electrónico.",
                 "emailFailsafeSubjectShouldNotBeEmptyAlertMsg":"El asunto no puede estar vacío para el canal de correo electrónico a prueba de fallas.",

@@ -40,6 +40,7 @@ export class ChannelsComponent implements OnInit {
   previousSplitId: any;
   isTemplateLibraryMode:boolean = false;
   CHANNEL_INFO_HTML = AppConstants.CHANNEL_INFO;
+  tabsLocked = false;
 
   constructor(private http:HttpService, private shareService: SharedataService, private route: ActivatedRoute, private router: Router,private ngZone: NgZone, private translate: TranslateService, private dataService: DataService) {
    this.designForChannels = this.translate.instant('designEditor.beeEditorComponent.designforLbl');
@@ -67,6 +68,9 @@ export class ChannelsComponent implements OnInit {
    this.shareService.setActiveChannelTab.subscribe(res => {
      this.setActive = res;
    })
+   this.shareService.channelTabsLocked$.subscribe(locked => {
+    this.tabsLocked = locked;
+   });
   this.getPayLoadJson();
   if(Object.keys(this.channelObj).length > 0){      
     if(!this.isTemplateEditMode){
@@ -110,8 +114,17 @@ export class ChannelsComponent implements OnInit {
   }
   
   loadNewChannel(currentObj,indx){
+    if(currentObj.promoExecutedOrRunning){
+      this.shareService.showEditButton$.next(true);      
+      this.shareService.showViewButton$.next(true);
+      this.dataService.setViewPublish(undefined);
+      this.dataService.setEditPublish(undefined);
+    }
     this.currentObjOnTabClick(currentObj);
     if(this.setActive != indx){
+      this.shareService.setActiveChannelTab.next(indx);
+      // lock tabs AFTER user has clicked
+      this.tabsLocked = true;
       this.setActive = indx;   
       GlobalConstants.setActiveTab = indx; //First Tab active by default     
       this.shareService.showMergedTagCopyIcon.next(false); 

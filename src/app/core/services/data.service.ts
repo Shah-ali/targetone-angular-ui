@@ -36,6 +36,11 @@ export class DataService {
   activeContentTagKey:any;
   activeContentPtagName: any = null;
   SimulationState: any = '';
+  viewPublish : any = undefined; 
+  editPublish : any = undefined ;
+  publishChanges : any = undefined;
+  subjectLine:any='';
+  isTemplateChanged: any = undefined;
   constructor(private httpService: HttpService, private translate: TranslateService) {}
 
   set userDetailsData(user: User) {
@@ -191,13 +196,43 @@ export class DataService {
     return this.selectedTag;
   }
 
+  setViewPublish(viewPublish){
+    this.viewPublish = viewPublish;
+  }
   
+  getViewPublish():any{
+    return this.viewPublish;
+  }
+  setEditPublish(editPublish){
+    this.editPublish = editPublish;
+  }
+  getEditPublish():any{
+    return this.editPublish;
+  }
+  setIsTemplateChanged(isTemplateChanged){
+    this.isTemplateChanged = isTemplateChanged;
+  }
+  getIsTemplateChanged(){
+    return this.isTemplateChanged;
+  }
   setSimulationState(SimulationState:any):void{
     this.SimulationState = SimulationState;
   }
   
   getSimulationState():any{
     return this.SimulationState;
+  }
+  setPublishChages(publishChanges){
+    this.publishChanges = publishChanges;
+  }
+  getPublishChages():any{
+    return this.publishChanges; 
+  }
+  setSubjectLine(subjectLine){
+    this.subjectLine = subjectLine;
+  }
+  getSubjectLine():any{
+    return this.subjectLine;
   }
 
   private dataActiveContent = new BehaviorSubject<any>({});

@@ -199,7 +199,11 @@
         "deleteTemplate": "Delete template",
         "deleteTemplateMgslbl": "Selected template will be deleted. Are you sure you want to continue?",
         "changeTempateAfeterSaveWaringMgslbl": "Your saved data will be lost! Are you sure you want to continue?"
-      }
+      },
+      "discardChanges":"Discard Changes",
+      "proceedToEdit":"Proceed to Edit",
+      "saveChanges": "Save Changes",
+      "publishChanges": "Publish Chages"
     },
     "failsafePage": {
       "editDesignForlbl": "Edit design for",
@@ -210,8 +214,13 @@
       "saveastemplatebtn": "Save as template",
       "saveBtn": "Save",
       "confirmationMgs": {
-        "savedDatawillbeLostMgslbl": "Your saved data will be lost! Are you sure you want to continue?"
-      }
+        "savedDatawillbeLostMgslbl": "Your saved data will be lost! Are you sure you want to continue?",
+        "EditPubshiedChannel" : "Editing this channel will create a new draft version. The currently published version will continue to run until you publish the updated version.",
+        "proceed":"Are you sure you want to continue?",
+        "continueEdit":"Continue Edit"
+      },
+      "viewChannel":"View",
+      "editChannel":"Edit this channel"
     },
     "subjectlineComponent": {
       "subjectLinelbl": "Subject line",
@@ -252,6 +261,7 @@
       "mergeTaglbl": "Merge tags",
       "fullPreview": "Full preview",
       "designforLbl": "Design for",
+      "publishConfirmationMsg":"Do you want to publish the changes",
       "validationMsg": {
         "emailSubjectShouldNotBeEmptyMsglbl": "Subject cannot be empty for Email Channel.",
         "emailFailsafeSubjectShouldNotBeEmptyAlertMsg": "Subject cannot be empty for failsafe Email Channel.",
@@ -343,6 +353,12 @@
       "selectPropertylbl": "Select property",
       "addOffersNRecommendationLbl": "Add merge tags",
       "mergeTagInjectionLbl": "Merge tag Injection",
+      "multiObjectLbl": "Multi Object",
+      "singleObjectLbl": "Single Object",
+      "fieldsAvailableLbl": "fields available",
+      "searchModelsAndFieldsPlaceholder": "Search models and fields",
+      "noFieldsFoundLbl": "No fields found",
+      "noFieldsFoundMsg": "Try adjusting your search or filter to find what you're looking for.",
       "inclusionsLbl": "Inclusions",
       "exclusionsLbl": "Exclusions",
       "boostRecommendationsLbl": "Boost recommendations",
@@ -350,7 +366,7 @@
       "clearCurrentLbl": "Clear current",
       "clearAllLbl": "Clear all",
       "dataNotFoundLbl": "Data not found",
-      "deleteMergeTagComfirmationMsgLbl": "Are you sure you want to delete the this merge tag?",
+      "deleteMergeTagComfirmationMsgLbl": "Are you sure you want to delete the '{{value1}}' {{value2}}?",
       "validationMsg": {
         "pleaseSelectOneAttributeTocontinuelblMsg": "Please select any one attribute for the selected offer",
         "pleaseSelectAnyOneOfferToContinuelblMsg": "Please select any one offer to continue."
@@ -1468,7 +1484,10 @@
     "Previewlbl": "Preview",
     "Abovelbl": "Above",
     "Belowlbl": "Below",
-    "Overlaylbl": "Overlay"
-}
+    "Overlaylbl": "Overlay",
+    "Applylbl": "Apply",
+    "Closelbl": "Close",
+    "RotationDegLbl": "Rotation"
+  }
 }
 

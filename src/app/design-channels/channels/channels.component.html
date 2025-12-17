@@ -4,7 +4,7 @@
     </div>
     <div class="p-1">
       <ul class="tab-list">
-        <li class="pb-1 mr-2" *ngFor="let chObj of channelObj; let i = index" [ngClass]="setActive == i? 'active' : ''"  (click)="loadNewChannel(chObj,i);">
+        <li class="pb-1 mr-2" *ngFor="let chObj of channelObj; let i = index"  [class.active]="setActive == i"  [class.disabledTab]="tabsLocked && setActive !== i"  (click)="loadNewChannel(chObj,i);">
             <i class="far fa-envelope" *ngIf="chObj.channelType === CHANNEL_INFO_HTML.CHANNEL_TYPE.EMAIL"></i>
             <i class="fa fa-mobile-android-alt" *ngIf="chObj.channelType === CHANNEL_INFO_HTML.CHANNEL_TYPE.PUSH_NOTIFICATION"></i>
             <i class="fa fa-mobile-android-alt" *ngIf="chObj.channelType === CHANNEL_INFO_HTML.CHANNEL_TYPE.INAPP_NOTIFICATION"></i>

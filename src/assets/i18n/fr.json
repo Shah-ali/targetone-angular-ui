@@ -199,7 +199,11 @@
         "deleteTemplate": "Supprimer le modèle",
         "deleteTemplateMgslbl": "Le modèle sélectionné sera supprimé. Êtes-vous sûr de vouloir continuer ?",
         "changeTempateAfeterSaveWaringMgslbl": "Vos données enregistrées seront perdues ! Êtes-vous sûr de vouloir continuer ?"
-      }
+      },
+      "discardChanges":"Discard Changes",
+      "proceedToEdit":"Proceed to Edit",
+      "saveChanges": "Save Changes",
+      "publishChanges": "Publish Chages"
     },
     "failsafePage": {
       "editDesignForlbl": "Modifier la conception pour",
@@ -210,8 +214,13 @@
       "saveastemplatebtn": "Enregistrer comme modèle",
       "saveBtn": "Enregistrer",
       "confirmationMgs": {
-        "savedDatawillbeLostMgslbl": "Vos données enregistrées seront perdues ! Êtes-vous sûr de vouloir continuer ?"
-      }
+        "savedDatawillbeLostMgslbl": "Vos données enregistrées seront perdues ! Êtes-vous sûr de vouloir continuer ?",
+        "EditPubshiedChannel" : "Editing this channel will create a new draft version. The currently published version will continue to run until you publish the updated version.",
+        "proceed":"Are you sure you want to continue?",
+        "continueEdit":"Continue Edit"
+      },
+      "viewChannel":"View",
+      "editChannel":"Edit this channel"
     },
     "subjectlineComponent": {
       "subjectLinelbl": "Objet du message",
@@ -252,6 +261,7 @@
       "mergeTaglbl": "Fusionner les tags",
       "fullPreview": "Aperçu complet",
       "designforLbl": "Concevoir pour",
+      "publishConfirmationMsg":"Do you want to publish the changes",
       "validationMsg": {
         "emailSubjectShouldNotBeEmptyMsglbl": "L'objet ne peut pas être vide pour le canal de messagerie électronique.",
         "emailFailsafeSubjectShouldNotBeEmptyAlertMsg": "L'objet ne peut pas être vide pour le canal de messagerie électronique de secours.",
@@ -343,6 +353,13 @@
       "selectTagTypelbl": "Sélectionner la source",
       "selectPropertylbl": "Sélectionner la propriété",
       "addOffersNRecommendationLbl": "Ajouter des balises de fusion",
+      "mergeTagInjectionLbl": "Injection de balise de fusion",
+      "multiObjectLbl": "Multi-objets",
+      "singleObjectLbl": "Objet unique",
+      "fieldsAvailableLbl": "champs disponibles",
+      "searchModelsAndFieldsPlaceholder": "Rechercher des modèles et des champs",
+      "noFieldsFoundLbl": "Aucun champ trouvé",
+      "noFieldsFoundMsg": "Essayez d'ajuster votre recherche ou vos filtres pour trouver ce que vous cherchez.",
       "inclusionsLbl": "Inclusions",
       "exclusionsLbl": "Exclusions",
       "boostRecommendationsLbl": "Améliorer les recommandations",
@@ -350,6 +367,7 @@
       "clearCurrentLbl": "Effacer le courant",
       "clearAllLbl": "Tout effacer",
       "dataNotFoundLbl": "Données non trouvées",
+      "deleteMergeTagComfirmationMsgLbl": "Êtes-vous sûr de vouloir supprimer '{{value1}}' {{value2}}?",
       "validationMsg": {
         "pleaseSelectOneAttributeTocontinuelblMsg": "Veuillez sélectionner un attribut pour l'offre sélectionnée",
         "pleaseSelectAnyOneOfferToContinuelblMsg": "Veuillez sélectionner une offre pour continuer."
@@ -1468,7 +1486,10 @@
     "Previewlbl": "Aperçu",
     "Abovelbl": "Au-dessus",
     "Belowlbl": "En dessous",
-    "Overlaylbl": "Superposition"
+    "Overlaylbl": "Superposition",
+    "Applylbl": "Appliquer",
+    "Closelbl": "Fermer",
+    "RotationDegLbl": "Rotation"
 }
 }
 

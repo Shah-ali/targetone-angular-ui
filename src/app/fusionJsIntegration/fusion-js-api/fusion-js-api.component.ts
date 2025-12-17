@@ -193,7 +193,7 @@ export class FusionJsAPIComponent implements OnInit {
         } else{
           if(JsObj.status == 3){ // unpublished
             this.discardChangesEnabled = true; // for unpublished enable discard button
-            //this.showUnpublishedMsgEnabled = true; // show unpublished message every onload.
+            this.showUnpublishedMsgEnabled = false
           }else{
             this.discardChangesEnabled = false;  
             this.showUnpublishedMsgEnabled = false;

@@ -51,7 +51,7 @@
                         <!-- <input class="form-input form-control mr-3 borderinput" id="subject_{{currentSplitId}}" placeholder="" type="text" (blur)="showEmojiPicker_subject = false" (focus)="showEmojiPicker_subject = false"
                                   #subjectInputElement  name="subject" [(ngModel)]="subject" (change)="getSubjectObj();" autocomplete="off">  -->
                                   
-                        <div [attr.contenteditable]="true" class="mr-3 borderinput subjectDiv" id="subject_{{currentSplitId}}" name="subject" [(ngModel)]="subject" ngDefaultControl isNative="true" perLine="7" showPreview="false" (blur)="showEmojiPicker_subject = false;subjectNpreheaderObj();" (focus)="showEmojiPicker_subject = false; mergeTagBtnEnable = false" #subjectInputElement (keydown.enter)="onEnter($event)" spellcheck="false" [innerHTML]="tempSubject | sanitizeHtml" (keyup)="getCaretIndex($event);" (click)="getCaretIndex($event);" (paste)="onPaste($event)">
+                        <div [attr.contenteditable]="!viewPublish" class="mr-3 borderinput subjectDiv" id="subject_{{currentSplitId}}" name="subject" [(ngModel)]="subject" ngDefaultControl isNative="true" perLine="7" showPreview="false" (blur)="showEmojiPicker_subject = false;subjectNpreheaderObj();" (focus)="showEmojiPicker_subject = false; mergeTagBtnEnable = false" #subjectInputElement (keydown.enter)="onEnter($event)" spellcheck="false" [innerHTML]="tempSubject | sanitizeHtml" (keyup)="getCaretIndex($event);" (click)="getCaretIndex($event);" (paste)="onPaste($event)">
                         </div>
                         <i (click) ="showEmojiPicker = false; showEmojiPicker_subject = !showEmojiPicker_subject" class="far fa-grin emojiIcon"></i><br>
                         <button type="button" class="btn buttonCss shadow-none add-tags-subject" (click)="addTagsSubject(mergeTagModal)" [disabled]="mergeTagBtnEnable" (focus)="mergeTagBtnEnable = false"><span >{{'designEditor.subjectlineComponent.addTagsBtn' | translate}}</span></button>
@@ -115,7 +115,7 @@
               </div>
               <div class="row mr-0 ml-3 mt-3 mb-3" *ngIf="isFirstOpen">
                 <div class="col text-right mt-2">
-                    <button class="btn buttonCss shadow-none m-0" (click)="getSubjectObj();isFirstOpen=false;">{{'designEditor.doneBtn' | translate}}</button>
+                    <button class="btn buttonCss shadow-none m-0" [disabled]="viewPublish" (click)="getSubjectObj();isFirstOpen=false;">{{'designEditor.doneBtn' | translate}}</button>
                 </div>
               </div>
     </div>

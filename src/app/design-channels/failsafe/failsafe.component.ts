@@ -1,11 +1,13 @@
-import { Component, OnInit,Output,EventEmitter, Input } from '@angular/core';
+import { Component, OnInit,Output,EventEmitter, Input, NgZone } from '@angular/core';
 import { HttpService } from '@app/core/services/http.service';
 import { LoaderService } from '@app/core/services/loader.service';
 import { SharedataService } from '@app/core/services/sharedata.service';
+import {DataService} from '@app/core/services/data.service';
 import { GlobalConstants } from '../common/globalConstants';
 import { AppConstants } from '@app/app.constants';
 import BeefreeSDK from '@beefree.io/sdk';
 import Swal from 'sweetalert2';
+import { Router, UrlSegment } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 @Component({
   selector: 'app-failsafe',
@@ -36,7 +38,22 @@ export class FailsafeComponent implements OnInit {
   currentObj: any;
   isTemplateEditMode: boolean = false;
   isTemplateLibraryMode:boolean =false;
-  constructor(private shareService: SharedataService, private loader: LoaderService, private http: HttpService,private translate: TranslateService) { 
+  showViewButton : any=undefined ;
+  showEditButton : any = undefined ;
+  viewPublish:any = false;
+  editPublish:any = false;
+  constructor(private shareService: SharedataService,private dataService:DataService, private loader: LoaderService, private http: HttpService,private translate: TranslateService,private router: Router, private ngZone: NgZone,) { 
+      shareService.ispromoExecutedOrRunning.subscribe(res => {
+        this.ispromoExecutedOrRunning =res;        
+      });
+      this.viewPublish = this.dataService.getViewPublish();
+      this.editPublish = this.dataService.getEditPublish();
+      this.shareService.showViewButton$.subscribe(val => {
+        this.showViewButton = (val ?? this.ispromoExecutedOrRunning);
+      });
+      this.shareService.showEditButton$.subscribe(val => {
+        this.showEditButton = (val ?? this.ispromoExecutedOrRunning);
+      });
     this.shareService.templateLibrary.subscribe(res => {
       this.isTemplateLibraryMode = res;
     });
@@ -76,7 +93,7 @@ export class FailsafeComponent implements OnInit {
   ngOnInit(): void {
   }
   async getSavedTemplatePromo(){  
-        let url = AppConstants.API_END_POINTS.GET_SAVED_USAGE_TEMPLATES+`?promoKey=${GlobalConstants.promoKey}`;
+        let url = AppConstants.API_END_POINTS.GET_SAVED_USAGE_TEMPLATES+`?promoKey=${GlobalConstants.promoKey}&editPublish=${this.editPublish}`;
         const data = await this.http.post(url).toPromise();
        // this.http.post(url).subscribe(data => {
           if(data.status == "SUCCESS" ){
@@ -206,6 +223,73 @@ export class FailsafeComponent implements OnInit {
     //this.shareService.subjectObj.next(this.subjectObj);
     this.callBeeInstance.emit(beeInstance);
   }
+  viewChannel(){
+      let url = AppConstants.API_END_POINTS.VIEW_CHANNEL+`?promoKey=${this.currentObj.promoKey}&promoSplitKey=${this.currentObj.promoSplitKey}`
+       this.http.post(url).subscribe((res) => {
+      if (res !== undefined) {
+        console.log(res);
+      }
+    }); 
+    this.dataService.setViewPublish(true);
+    this.dataService.setEditPublish(false);
+    this.shareService.channelTabsLocked$.next(true);
+    this.editPublish = false;
+    this.viewPublish = true;
+    this.shareService.showViewButton$.next(false);
+    this.shareService.showEditButton$.next(false);
+    this.router.navigate(
+        ['/bee-editor'],
+        { queryParams: { },        
+    });
+  }
+  editChannel(){   
+    Swal.fire({
+      icon: 'warning',
+      title: this.translate.instant('designEditor.failsafePage.confirmationMgs.EditPubshiedChannel'),
+      text: this.translate.instant('designEditor.failsafePage.confirmationMgs.proceed'),
+      showCancelButton: true,
+      confirmButtonText: this.translate.instant('designEditor.failsafePage.confirmationMgs.continueEdit'),
+      cancelButtonText: this.translate.instant('designEditor.cancelBtn'),
+      allowOutsideClick:false,
+      allowEscapeKey:false,
+      padding: "1em"
+    }).then((result) => {
+      if (result.value) {
+        let url =AppConstants.API_END_POINTS.EDIT_PUBLISH_JOURNRY + `?promoKey=${this.currentObj.promoKey}&promoSplitKey=${this.currentObj.promoSplitKey}`
+        this.http.post(url).subscribe((data) => {
+          if (data.status === 'SUCCESS') {
+            this.dataService.setViewPublish(false);
+            this.dataService.setEditPublish(true);
+            this.shareService.showViewButton$.next(false);
+            this.shareService.showEditButton$.next(false);  
+            this.shareService.channelTabsLocked$.next(true);       
+            this.router.navigate(
+              ['/email-templates'],
+              { queryParams: {},
+              state: {
+                payloadObj: this.payloadObj   
+              }
+        });
+          }else{
+            console.log('issue with draft creation ')
+          }
+    }); 
+     /*  this.dataService.setViewPublish(false);
+            this.dataService.setEditPublish(true);
+            this.dataService.setShowViewButton(false);
+            this.dataService.setShowEditButton(false);         
+                       this.router.navigate(
+              ['/email-templates'],
+              { queryParams: {},
+              state: {
+                payloadObj: this.payloadObj   
+              }
+        });  */ 
+      }else{
+        this.isFailSafeEnable = true;
+      }
+    }) 
+  }
   onTabSwitch(){    
     //this.loader.HideLoader();
     const beeInstance = new BeefreeSDK(); 
@@ -214,6 +298,53 @@ export class FailsafeComponent implements OnInit {
   onsaveMyTemplate(isSaveAsTemplate){
     this.loader.ShowLoader();
     this.saveAsTemplate.emit(isSaveAsTemplate);
+  }
+  removeLoader() {
+    this.ngZone.run(() => {
+      this.loader.loadCount = 0;
+      this.loader.HideLoader();
+    });
+  }
+  discardChages(){
+    let endpoint = AppConstants.API_END_POINTS.DISCARD_DRAFT+`?promoKey=${this.promotionKey}&promoSplitKey=${this.currentSplitId}`;
+    this.loader.ShowLoader();
+    this.http.post(endpoint).subscribe((data) => {
+          if (data.status === 'SUCCESS') {
+            this.removeLoader();
+            this.dataService.setEditPublish(undefined);
+            this.dataService.setViewPublish(undefined);
+            this.shareService.showViewButton$.next(true);
+            this.shareService.showEditButton$.next(true);
+            this.shareService.channelTabsLocked$.next(false);
+            this.router.navigate(['/trigger-analytics']);
+          }else{
+            console.log('changes are not discarded')
+            this.removeLoader();
+          }
+        });
+  }
+  saveChanges(){
+    this.onsave();
+  }
+  publishChanges(){
+    Swal.fire({
+      title: this.translate.instant('designEditor.beeEditorComponent.publishConfirmationMsg'),
+      //text: 'Your saved data will be lost!',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: this.translate.instant('designEditor.yesBtn'),
+      cancelButtonText: this.translate.instant('designEditor.cancelBtn'),
+      allowOutsideClick:false,
+      allowEscapeKey:false,
+      padding: "1em"
+    }).then((result) => {
+      if (result.value) {
+        this.dataService.setPublishChages(true);
+        this.onsave();
+      }else{
+         this.dataService.setPublishChages(false);
+      }
+    })    
   }
   enableFailSafe(event){
     if(event.target.checked){

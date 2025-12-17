@@ -150,6 +150,12 @@ export class BeeEditorComponent implements OnInit {
   isPersonalizeTagMode: boolean = false;
   fullPreviewMode: boolean = false;
   customFontsObj: any;
+  editPublish: any;
+  viewPublish: any;
+  templateText: any;
+  currentSelectedChannel:any;
+  templateUid:any;
+  saveDraft: boolean = false;
 
   constructor(
     private http: HttpService,
@@ -219,7 +225,25 @@ export class BeeEditorComponent implements OnInit {
     if (this.isTemplateLibraryMode && this.isEmptyJsonToloadInBeeEditor) {
       this._urlPath = undefined;
     }
-    this.isTemplateEditMode = GlobalConstants.isEditMode;
+    this.viewPublish = this.dataService.getViewPublish();
+    this.editPublish = this.dataService.getEditPublish();
+    const hasPublish = !!(this.viewPublish || this.editPublish);
+    this.templateText = this.shareService.savedAdminComTemplateObj.getValue();
+    // --- Current Selected Channel ---
+    this.currentSelectedChannel = parseInt(this.shareService.setActiveChannelTab.value) || 0;
+    let subjectLine = this.templateText?.[this.currentSelectedChannel]?.subjectLine || '';
+    this.dataService.setSubjectLine(subjectLine);
+    // --- Template UID ---
+    this.templateUid = this.templateText?.[this.currentSelectedChannel]?.templateUuid;
+    // --- No URL path but publish mode? Load config settings ---
+    if (hasPublish && !this.dataService.getIsTemplateChanged()) {
+      if (this.templateText?.length > 0) {
+        const tempObj = JSON.parse(this.templateText[this.currentSelectedChannel].actualTemplateText);
+        this.getBeeConfigSettings(tempObj);
+      }
+      return;
+    }
+    // --- Final load ---
     this.getBeeEditorLoadObj(this._urlPath);
   }
   @HostListener('document:click', ['$event'])
@@ -452,6 +476,7 @@ export class BeeEditorComponent implements OnInit {
     });
   }
   getBeeEditorLoadObj(url) {
+    url = url+`&editPublish=${this.editPublish}`
     this.loader.ShowLoader();
     if (this.isTemplateEditMode) {
       // Load saved Template
@@ -876,6 +901,7 @@ export class BeeEditorComponent implements OnInit {
         this.removeLoader();
       },
       onSave: (jsonFile, htmlFile) => {
+        let endpoint;
         GlobalConstants.actionsPreviewEnable = false;
         this.shareService.failSafeEnable.subscribe((res) => {
           this.isFailSafeEnabled = res;
@@ -887,7 +913,16 @@ export class BeeEditorComponent implements OnInit {
             });
           }
         }
-        const endpoint = AppConstants.API_END_POINTS.SAVE_ADMIN_PEOMO_TEMPLATE_USAGE; //"http://localhost:3000/saveMessage";//"https://plugin-demos.getbee.io/saveMessage";//https://bee-multiparser.getbee.io/api/v3/parser/email?p=true&mtp=true&b=false";//"http://localhost:3000/saveMessage";
+      if (this.editPublish && this.dataService.getPublishChages()) {
+        endpoint = AppConstants.API_END_POINTS.PUBLISH_DRAFT+`?promoKey=${this.templateText?.[this.currentSelectedChannel]?.promoKey}&promoSplitKey=${this.templateText?.[this.currentSelectedChannel]?.promoSplitKey}`;
+      } 
+      else if (this.editPublish) {
+        this.saveDraft = true;
+        endpoint = AppConstants.API_END_POINTS.SAVE_EDIT_PUBLISH_DRAFT+`?promoKey=${this.templateText?.[this.currentSelectedChannel]?.promoKey}&promoSplitKey=${this.templateText?.[this.currentSelectedChannel]?.promoSplitKey}`;
+      } 
+      else {
+        endpoint = AppConstants.API_END_POINTS.SAVE_ADMIN_PEOMO_TEMPLATE_USAGE; //"http://localhost:3000/saveMessage";//"https://plugin-demos.getbee.io/saveMessage";//https://bee-multiparser.getbee.io/api/v3/parser/email?p=true&mtp=true&b=false";//"http://localhost:3000/saveMessage";
+      }
         // if(!this.isTestEmail) {
         //   this.loader.ShowLoader();
         // }
@@ -1335,6 +1370,7 @@ export class BeeEditorComponent implements OnInit {
       this.finalPayload = this.payloadWithoutFailsafe;
       //this.subjctObj = this.payloadWithoutFailsafe.channels[0].subjectObj;
       this.finalPayload.channels[0].failSafeInfo = data;
+      this.finalPayload.channels[0].uuid = this.templateKey;
       this.failsafeInfo = data;
       this.payloadWithFailsafe = this.finalPayload;
       if (this.isTestEmail) {
@@ -1531,7 +1567,7 @@ export class BeeEditorComponent implements OnInit {
           channelId: this.commChannelKey,
           json: jsonFile,
           html: htmlFile,
-          uuid: this.templateKey,
+          uuid: this.templateKey || this.templateUid,
           promoSplitKey: this.currentSplitId,
           thumbnailImage: this.getThumbnailObj,
           subjectObj: this.subjctObj,
@@ -1767,6 +1803,13 @@ export class BeeEditorComponent implements OnInit {
         showConfirmButton: true,
         confirmButtonText: this.translate.instant('designEditor.okBtn'),
       });
+      if(this.saveDraft && !this.dataService.getPublishChages()){        
+        this.saveDraft = false;
+        this.dataService.setEditPublish(undefined);
+        this.dataService.setViewPublish(undefined);
+        this.shareService.channelTabsLocked$.next(false);
+        this.removeLoader();
+      }
       this.ngZoneCallMethod();
     } else {
       this.removeLoader();
@@ -1794,7 +1837,17 @@ export class BeeEditorComponent implements OnInit {
     //------- manually navigate to respective component ---------------
     this.ngZone.run(() => {
       this.shareService.activeSplitId.next(this.currentSplitId);
+        if(this.editPublish && this.dataService.getPublishChages() && !this.saveDraft){
+          this.shareService.showViewButton$.next(undefined);
+          this.shareService.showEditButton$.next(undefined);
+          this.dataService.setEditPublish(undefined);
+          this.dataService.setViewPublish(undefined);
+           this.shareService.channelTabsLocked$.next(false);
+          this.router.navigate(['/trigger-analytics']);
+        }
+        else if(!this.editPublish && !this.saveDraft){
       this.router.navigate(['/email-templates']);
+        }
     });
   }
   callBeeToGetHtml(){
