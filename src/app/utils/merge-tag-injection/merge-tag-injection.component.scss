@@ -86,12 +86,6 @@
       margin-bottom: 6px;
       border-radius: 10px;
 
-      .delete-icon {
-        > i {
-          color: red;
-        }
-      }
-
       &.active {
         background: #007bff;
         color: #fff;

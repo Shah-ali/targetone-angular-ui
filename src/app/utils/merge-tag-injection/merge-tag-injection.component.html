@@ -47,6 +47,11 @@
                 </div>
               </span> 
               <!-- <span class="fields-count">{{ item.attributeCount }}</span> -->
+              <div class="edit-icon"
+                *ngIf="item.name != 'Customer' && item.name != 'Promotion' && item.name != 'Event'"
+                (click)="editMergeTag(item.type, item.name)">
+                <i class="fal fa-pencil fa-xs"></i>
+              </div>
               <div class="delete-icon"
                 *ngIf="item.name != 'Customer' && item.name != 'Promotion' && item.name != 'Event'"
                 (click)="deleteMergeTag(item.type, item.name)">

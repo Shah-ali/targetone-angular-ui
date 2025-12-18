@@ -450,6 +450,7 @@ export class ApiPersonalizationComponent implements OnInit {
       this.singleMultiCheckEnable[0].checked = true;
       this.singleMultiCheckEnable[1].checked = false; 
       this.multiArrayPath = false;
+      this.shareService.MultiArryAPIorDMEObj.next('single');
       this.singleOrMultiVal = 0;
       let filterOBj = this.singleOrMultiObjMethod(this.api_responses,0);
       
@@ -467,6 +468,7 @@ export class ApiPersonalizationComponent implements OnInit {
       this.singleMultiCheckEnable[1].checked = true;
       this.singleMultiCheckEnable[0].checked = false;
       this.multiArrayPath = true;
+      this.shareService.MultiArryAPIorDMEObj.next('multi');
       this.singleOrMultiVal = 1;
       let filterOBj = this.singleOrMultiObjMethod(this.api_responses,1);
       this.clearSelectionRowMethod();

@@ -17,7 +17,6 @@ import { TreeItem, TreeviewConfig, TreeviewI18n, TreeviewItem } from 'ngx-treevi
 })
 export class MergeTagCopyComponent implements OnInit {
   @ViewChild('mergeTagsListData', { static: false }) mergeTagsListData!: ElementRef;
-
   isPersonalizeTagMode: boolean = false;
   tagKey: any;
   promotionKey: number = 0;
@@ -35,6 +34,7 @@ export class MergeTagCopyComponent implements OnInit {
     maxHeight: 500,
   });
   mergeTagModels: any;
+  multiArrayPath: any;
 
   constructor(
     private translate: TranslateService,
@@ -54,6 +54,10 @@ export class MergeTagCopyComponent implements OnInit {
     this.shareService.currentSelectedChannelObj.subscribe((res: any) => {
       this.currentSplitId = res.currentSplitId;
       this.commChannelKey = res.commChannelKey;
+    });
+
+    this.shareService.MultiArryAPIorDMEObj.subscribe((res) => {
+      this.multiArrayPath = res;
     });
 
     this.getMergeTagData();
@@ -90,7 +94,7 @@ export class MergeTagCopyComponent implements OnInit {
     if (this.isPersonalizeTagMode) {
       url = `${baseEndpoint}?tagKey=${this.tagKey}&wa=true${apiParams}`;
     } else if (parentComponentName == "MergeTagInjectionComponent") {
-      url = `${baseEndpoint}?promoKey=${this.promotionKey}&splitKey=${this.currentSplitId}&wa=true${apiParams}&mergeTagJourney=true`;
+      url = `${baseEndpoint}?promoKey=${this.promotionKey}&splitKey=${this.currentSplitId}&wa=true${apiParams}&mergeTagJourney=true&objType=${this.multiArrayPath}`;
     } else {
       url = `${baseEndpoint}?promoKey=${this.promotionKey}&splitKey=${this.currentSplitId}&wa=true${apiParams}`;
     }

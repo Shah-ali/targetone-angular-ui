@@ -186,28 +186,27 @@ export class FusionJsAPIComponent implements OnInit {
     setTimeout(() => {
       if(JsObj.status == 2 || JsObj.status == 3){
         let objPublish = JsObj.publishedScript === undefined ? "":  JsObj.draftScript; // for Publish also we are using draft script.
-        this.jsScriptWrittenContent = decodeURIComponent(objPublish);    
+        this.jsScriptWrittenContent = decodeURIComponent(objPublish);  
+        this.showUnpublishedMsgEnabled = false;  
         if(isSavedCall){
           this.discardChangesEnabled = discardFlag;
           this.showUnpublishedMsgEnabled = isSavedCall; 
         } else{
           if(JsObj.status == 3){ // unpublished
             this.discardChangesEnabled = true; // for unpublished enable discard button
-            this.showUnpublishedMsgEnabled = false
           }else{
-            this.discardChangesEnabled = false;  
-            this.showUnpublishedMsgEnabled = false;
+            this.discardChangesEnabled = false;            
           }          
         }    
       }else{
         let objDraft = JsObj.draftScript === undefined ? "":  JsObj.draftScript;
         this.jsScriptWrittenContent = decodeURIComponent(objDraft);
+        this.showUnpublishedMsgEnabled = false;
         if(isSavedCall){
           this.discardChangesEnabled = discardFlag;
           this.showUnpublishedMsgEnabled = isSavedCall; 
         } else{
-          this.discardChangesEnabled = false; 
-          this.showUnpublishedMsgEnabled = false;
+          this.discardChangesEnabled = false;          
         }              
       }
       if(!this.returnValue){

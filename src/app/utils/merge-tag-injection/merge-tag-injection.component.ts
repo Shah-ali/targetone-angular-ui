@@ -176,6 +176,10 @@ export class MergeTagInjectionComponent implements OnInit {
     });
   }
 
+  editMergeTag(type, selectedModelName) {
+    
+  }
+
   onSearch(event: any): void {
     this.tempSelectedModel = this.selectedModel.input;
     if (event.target.value === "") {

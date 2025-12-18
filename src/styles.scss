@@ -802,7 +802,6 @@ label.control-label:after {
 }
 .customeOffers {
   /* align-items: flex-end; */
-  width: 38%;
   height: 100%;
   margin: 0;
   padding: 10px;
@@ -1917,13 +1916,6 @@ label.control-label:after {
     width: 100%;
   }
 }
-
-@media screen and (max-width: 1366px) {
-  .customeOffers {
-    width: 48% !important;
-  }
-}
-
 
 @import '../src/ptags-styles.scss';
 @import '../src/introjs.css';

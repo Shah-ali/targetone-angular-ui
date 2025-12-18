@@ -460,6 +460,7 @@ export class DMENonCustomerComponent implements OnInit {
       this.singleMultiCheckEnable[0].checked = true;
       this.singleMultiCheckEnable[1].checked = false; 
       this.multiArrayPath = false;
+      this.shareService.MultiArryAPIorDMEObj.next('single');
       this.singleOrMultiVal = 0;
       this.isSortable = false;
       this.sortableObj = {};
@@ -469,6 +470,7 @@ export class DMENonCustomerComponent implements OnInit {
       this.singleMultiCheckEnable[1].checked = true;
       this.singleMultiCheckEnable[0].checked = false;
       this.multiArrayPath = true;
+      this.shareService.MultiArryAPIorDMEObj.next('multi');
       this.singleOrMultiVal = 1;
       this.clearSelectionRowMethod();
     }
