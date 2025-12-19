@@ -17,7 +17,7 @@
             <span>{{ obj.displayName }}</span>
             <!-- <span class="items-count ml-3 mt-1">{{ obj.items.length }}</span> -->
           </div>
-          <div class="right ml-2 plus-icon-section" *ngIf="obj.name != 'storedData'" (click)="addItems($event, obj)">
+          <div class="right ml-2 plus-icon-section" *ngIf="obj.name != 'storedData'" (click)="addorEditItems($event, obj, false)">
             <!-- <i class="fas" [ngClass]="openStoredDataMap[obj.name] ? 'fa-chevron-down' : 'fa-chevron-right'"></i> -->
             <i class="fal fa-plus"></i>
           </div>
@@ -49,7 +49,7 @@
               <!-- <span class="fields-count">{{ item.attributeCount }}</span> -->
               <div class="edit-icon"
                 *ngIf="item.name != 'Customer' && item.name != 'Promotion' && item.name != 'Event'"
-                (click)="editMergeTag(item.type, item.name)">
+                (click)="addorEditItems($event, obj, true)">
                 <i class="fal fa-pencil fa-xs"></i>
               </div>
               <div class="delete-icon"
@@ -90,19 +90,19 @@
 
       <div class="field-cards" *ngIf="tempSelectedModel.length > 0; else noFieldFound">
         <div class="card field-card mb-3" *ngFor="let field of tempSelectedModel">
-          <div class="card-body">
+          <div class="merge-card-body">
             <div class="d-flex justify-content-between mb-2">
               <span class="field-label">{{ field.displayName }}</span>
               <!-- <span class="badge badge-light">{{ field.type }}</span> -->
             </div>
 
             <div class="code-section">
-              <div class="">
+              <div class="col-11 p-0">
                 <code class="field-code d-block mb-2" tooltip="{{ field.actualName }}">
                   {{ '{{'+field.actualName+'}}' }}
                 </code>
               </div>
-              <div class="">
+              <div class="col-1 p-0">
                 <i
                   class="far fa-copy cursor-pointer"
                   #t1="bs-tooltip"

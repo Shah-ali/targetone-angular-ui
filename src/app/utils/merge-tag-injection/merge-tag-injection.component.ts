@@ -31,6 +31,7 @@ export class MergeTagInjectionComponent implements OnInit {
   showLoader: boolean = false;
   tempSelectedModel: any = null;
   maxCountVal: number = 0;
+  selectedMergeTagData: any;
 
   constructor(
     private bsModalRef: BsModalRef,
@@ -96,11 +97,28 @@ export class MergeTagInjectionComponent implements OnInit {
     navigator.clipboard.writeText(code);
   }
 
-  addItems(event: MouseEvent, code) {
+  addorEditItems(event: MouseEvent, code, isEdit) {
     event.stopPropagation();
 
     const isAPI = code.name === "apiData";
     const modalComponent: any = code.name === "apiData" ? ApiPersonalizationComponent : DMENonCustomerComponent;
+
+    if(isEdit) {
+      let tempSelectedData = {
+        apiName: "Practice_Api3",
+        input_params: "{\"ProductId\":\"{TagParam.ProductId}\"}",
+        rowName: "000",
+        type: "api"
+      }
+
+      let selectedData = {
+        id: "000",
+        selectedValue: JSON.stringify(tempSelectedData)
+      }
+      
+      this.shareService.isApiConsumeEditMode.next(selectedData);
+      GlobalConstants.isRowEditModeEnable = true;
+    }
 
     const modalConfig = {
       class: "modal-dialog-centered mergeTagInjectionModal",
@@ -117,14 +135,14 @@ export class MergeTagInjectionComponent implements OnInit {
       //console.log('promotionKey:', this.promotionKey);
       //console.log('currentSplitId:', this.currentSplitId);
 
-      const payload = receivedData.selectedMergeTagData;
-      this.maxCountVal = payload.maxCount || 0;
+      this.selectedMergeTagData = receivedData.selectedMergeTagData;
+      this.maxCountVal = this.selectedMergeTagData.maxCount || 0;
       //console.log('Selected API received from modal:', payload);
 
       this.showLoader = true;
       const urlString =
-        AppConstants.MERGE_TAG_INJECTION.SAVE_MERGE_TAGS + this.promotionKey + "&splitId=" + this.currentSplitId;
-      this.http.post(urlString, payload).subscribe((data) => {
+        AppConstants.MERGE_TAG_INJECTION.SAVE_MERGE_TAGS + this.promotionKey + "&splitId=" + this.currentSplitId+"&edit=false";
+      this.http.post(urlString, this.selectedMergeTagData).subscribe((data) => {
         if (data.status === "FAIL") {
           Swal.fire({
             icon: "warning",

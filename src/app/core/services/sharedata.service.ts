@@ -112,6 +112,6 @@ export class SharedataService {
   showViewButton$ = new Rx.BehaviorSubject<any>(undefined);
   showEditButton$ = new Rx.BehaviorSubject<any>(undefined);
   channelTabsLocked$ = new Rx.BehaviorSubject<boolean>(false);
-  MultiArryAPIorDMEObj = new Rx.BehaviorSubject('');
+  MultiArryAPIorDMEObj = new Rx.BehaviorSubject('single');
   constructor() {}
 }

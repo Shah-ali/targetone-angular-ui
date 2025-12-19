@@ -192,6 +192,10 @@
       height: calc(100vh - 205px);
       overflow-x: hidden;
       overflow-y: auto;
+
+      .merge-card-body {
+        padding: 10px;
+      }
     }
 
     h4 {
@@ -232,7 +236,6 @@
   }
 
   .field-code {
-    width: 260px;
     font-size: 12px;
     background: #f3f5f8;
     padding: 8px 12px;
