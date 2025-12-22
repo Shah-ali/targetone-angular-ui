@@ -49,7 +49,7 @@
               <!-- <span class="fields-count">{{ item.attributeCount }}</span> -->
               <div class="edit-icon"
                 *ngIf="item.name != 'Customer' && item.name != 'Promotion' && item.name != 'Event'"
-                (click)="addorEditItems($event, obj, true)">
+                (click)="addorEditItems($event, item, true)">
                 <i class="fal fa-pencil fa-xs"></i>
               </div>
               <div class="delete-icon"

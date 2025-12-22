@@ -12,7 +12,7 @@ import { ColDef, GetRowIdFunc, GetRowIdParams } from 'ag-grid-community';
 import lodash from 'lodash';
 import { BsModalRef } from 'ngx-bootstrap/modal';
 import { TreeviewItem, TreeviewConfig, TreeItem } from 'ngx-treeview';
-import { Subject } from 'rxjs';
+import { Subject, take } from 'rxjs';
 import Swal from 'sweetalert2';
 import { v4 as uuidv4 } from 'uuid';
 import { Options } from '@angular-slider/ngx-slider';
@@ -200,7 +200,7 @@ export class DMENonCustomerComponent implements OnInit {
     return dynamicContentElement ? dynamicContentElement.getAttribute(attributeName) : null;
   }
   loadDmeNonCustomerMethod(){
-    this.shareService.isDMENonCustomerEditMode.subscribe((res:any) => {
+    this.shareService.isDMENonCustomerEditMode.pipe(take(1)).subscribe((res:any) => {
       if(GlobalConstants.isRowEditModeEnable) {
         this.isRowEditModeEnable = true;
       } else {
@@ -331,6 +331,10 @@ export class DMENonCustomerComponent implements OnInit {
 
     this.inputParamSelected = this.createSavedObj.parameterValues;
     this.selectedDmeDataObj = this.createSavedObj;
+
+    if(this.isMergedTagOffersDrawerOpen) {
+      this.sliderValue = resObj.maxCount;
+    }
     
     if(!this.isNewDmeNonCustomerBlock){
       this.shareService.selectedRowCheckedbox.next({name:this.createSavedObj.modelName,blockName:'dmeNonCustomer',editMode:true});

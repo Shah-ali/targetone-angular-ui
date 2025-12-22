@@ -12,7 +12,7 @@ import { ColDef, GetRowIdFunc, GetRowIdParams } from 'ag-grid-community';
 import lodash from 'lodash';
 import { BsModalRef } from 'ngx-bootstrap/modal';
 import { TreeviewItem, TreeviewConfig, TreeItem } from 'ngx-treeview';
-import { Subject } from 'rxjs';
+import { Subject, take } from 'rxjs';
 import Swal from 'sweetalert2';
 import { v4 as uuidv4 } from 'uuid';
 import { Options } from '@angular-slider/ngx-slider';
@@ -176,7 +176,12 @@ export class ApiPersonalizationComponent implements OnInit {
       maxCount : this.createSavedObj.maxCount
     }
     this.inputParamSelected = this.createSavedObj.input_params;
-    this.selectedApiDataObj = this.createSavedObj;    
+    this.selectedApiDataObj = this.createSavedObj;
+    
+    if(this.isMergedTagOffersDrawerOpen) {
+      this.sliderValue = resObj.maxCount;
+    }
+
     if(!this.isNewApiConsumeBlock){
       setTimeout(() => {        
         this.shareService.selectedRowCheckedbox.next({name:this.createSavedObj.apiName,blockName:'api',editMode:true});
@@ -359,7 +364,7 @@ export class ApiPersonalizationComponent implements OnInit {
         this.isPublishedPersonalization = res; 
       }      
     });
-    this.shareService.isApiConsumeEditMode.subscribe((res:any) => {
+    this.shareService.isApiConsumeEditMode.pipe(take(1)).subscribe((res:any) => {
       if(GlobalConstants.isRowEditModeEnable) {
         this.isRowEditModeEnable = true;
       } else {

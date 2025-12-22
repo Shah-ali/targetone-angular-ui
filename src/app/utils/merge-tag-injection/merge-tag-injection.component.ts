@@ -99,26 +99,44 @@ export class MergeTagInjectionComponent implements OnInit {
 
   addorEditItems(event: MouseEvent, code, isEdit) {
     event.stopPropagation();
+    let isAPI: any;
 
-    const isAPI = code.name === "apiData";
-    const modalComponent: any = code.name === "apiData" ? ApiPersonalizationComponent : DMENonCustomerComponent;
-
-    if(isEdit) {
-      let tempSelectedData = {
-        apiName: "Practice_Api3",
-        input_params: "{\"ProductId\":\"{TagParam.ProductId}\"}",
-        rowName: "000",
-        type: "api"
-      }
-
-      let selectedData = {
-        id: "000",
-        selectedValue: JSON.stringify(tempSelectedData)
-      }
-      
-      this.shareService.isApiConsumeEditMode.next(selectedData);
+    if (isEdit) {
+      isAPI = code.type === "API";
+      let maxCount = code.maxCount > 0 ? code.maxCount : undefined;
       GlobalConstants.isRowEditModeEnable = true;
+
+      let tempSelectedData = {
+        input_params: JSON.stringify(code.filters),
+        type: code.type,
+        maxCount: maxCount,
+      };
+
+      if (code.type == "API") {
+        tempSelectedData["apiName"] = code.name;
+      } else {
+        tempSelectedData["modelName"] = code.name;
+      }
+      let selectedData = {
+        selectedValue: JSON.stringify(tempSelectedData),
+      };
+
+      if (code.type == "API") {
+        this.shareService.isApiConsumeEditMode.next(selectedData);
+      } else {
+        this.shareService.isDMENonCustomerEditMode.next(selectedData);
+      }
+    } else {
+      isAPI = code.name === "apiData";
+      GlobalConstants.isRowEditModeEnable = false;
+      if (isAPI) {
+        this.shareService.isApiConsumeEditMode.next("");
+      } else {
+        this.shareService.isDMENonCustomerEditMode.next("");
+      }
     }
+
+    const modalComponent: any = isAPI ? ApiPersonalizationComponent : DMENonCustomerComponent;
 
     const modalConfig = {
       class: "modal-dialog-centered mergeTagInjectionModal",
@@ -141,7 +159,12 @@ export class MergeTagInjectionComponent implements OnInit {
 
       this.showLoader = true;
       const urlString =
-        AppConstants.MERGE_TAG_INJECTION.SAVE_MERGE_TAGS + this.promotionKey + "&splitId=" + this.currentSplitId+"&edit=false";
+        AppConstants.MERGE_TAG_INJECTION.SAVE_MERGE_TAGS +
+        this.promotionKey +
+        "&splitId=" +
+        this.currentSplitId +
+        "&edit=" +
+        isEdit;
       this.http.post(urlString, this.selectedMergeTagData).subscribe((data) => {
         if (data.status === "FAIL") {
           Swal.fire({
@@ -159,7 +182,10 @@ export class MergeTagInjectionComponent implements OnInit {
 
   deleteMergeTag(type, selectedModelName) {
     Swal.fire({
-      titleText: this.translate.instant("designEditor.offerDrawerComponent.deleteMergeTagComfirmationMsgLbl", {value1: selectedModelName, value2: type}),
+      titleText: this.translate.instant("designEditor.offerDrawerComponent.deleteMergeTagComfirmationMsgLbl", {
+        value1: selectedModelName,
+        value2: type,
+      }),
       showCancelButton: true,
       confirmButtonText: this.translate.instant("yes"),
       cancelButtonText: this.translate.instant("cancel"),
@@ -192,10 +218,6 @@ export class MergeTagInjectionComponent implements OnInit {
         });
       }
     });
-  }
-
-  editMergeTag(type, selectedModelName) {
-    
   }
 
   onSearch(event: any): void {
