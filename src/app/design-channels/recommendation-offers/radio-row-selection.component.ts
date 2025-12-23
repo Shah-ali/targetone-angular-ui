@@ -8,10 +8,13 @@ import { TranslateService } from '@ngx-translate/core';
   selector: 'app-radio-row-selection',
   template: `
   <div class="radio-container">
-  <input type="radio" name="radio_api_row" value="{{this.selectedName}}" [(checked)]="params.node.selected" class="radioGridSelected" style="vertical-align: middle;" (click)="handleChange($event, params.node)">
-</div>
-  `,
+    <input type="radio" name="radio_api_row" value="{{this.selectedName}}" [(checked)]="params.node.selected" class="radioGridSelected" style="vertical-align: middle;" (click)="handleChange($event, params.node)" [disabled]="params.context.isMergedTagOffersDrawerOpen && params.context.isRowEditModeEnable">
+  </div>`,
   styles: [
+    `.radioGridSelected:disabled {
+      cursor: not-allowed;
+      opacity: 0.5;
+    }`
   ]
 })
 export class RadioRowSelectionComponent implements ICellRendererAngularComp {
