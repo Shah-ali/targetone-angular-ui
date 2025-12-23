@@ -1,4 +1,5 @@
 .merge-tag-injection-section {
+  width: 628px;
   background: #f7f9fc;
 
   .sidebar {
@@ -6,6 +7,7 @@
     border-right: 1px solid #dfe3e8;
     height: calc(100vh - 59px);
     overflow: auto;
+    width: 280px;
 
     .top-header {
       display: flex;
@@ -82,7 +84,7 @@
       cursor: pointer;
       display: flex;
       justify-content: space-between;
-      padding: 10px 12px;
+      padding: 10px 7px;
       margin-bottom: 6px;
       border-radius: 10px;
 
@@ -159,6 +161,7 @@
 
   .content {
     background: #f9fbff;
+    width: calc(100% - 280px);
 
     .top-model-name {
       display: flex;
@@ -237,14 +240,21 @@
 
   .field-code {
     font-size: 12px;
-    background: #f3f5f8;
+    background: linear-gradient(to right, rgba(60, 131, 246, 0.15), rgba(60, 131, 246, 0.1), transparent);
     padding: 8px 12px;
-    border-radius: 6px;
+    border-radius: 12px;
     font-family: monospace;
     margin-right: 10px;
-
+    color: #3c83f6;
+    font-weight: 600;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+  }
+}
+
+@media screen and (max-width: 1369px) {
+  .merge-tag-injection-section { 
+    width: 567px;
   }
 }

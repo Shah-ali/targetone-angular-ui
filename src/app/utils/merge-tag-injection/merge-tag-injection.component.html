@@ -47,7 +47,8 @@
                 </div>
               </span> 
               <!-- <span class="fields-count">{{ item.attributeCount }}</span> -->
-              <div class="edit-icon"
+              <div style="display: flex;">
+                <div class="edit-icon mr-1"
                 *ngIf="item.name != 'Customer' && item.name != 'Promotion' && item.name != 'Event'"
                 (click)="addorEditItems($event, item, true)">
                 <i class="fal fa-pencil fa-xs"></i>
@@ -57,6 +58,8 @@
                 (click)="deleteMergeTag(item.type, item.name)">
                 <i class="fal fa-trash-alt fa-xs"></i>
               </div>
+              </div>
+              
             </li>
           </ul>
         </div>
@@ -113,12 +116,12 @@
             </div>
 
             <div class="code-section" *ngIf="field.varArrayType">
-              <div class="">
+              <div class="col-11 p-0">
                 <code class="field-code d-block mb-2" tooltip="{{ field.actualName }}">
                   {{ '{{'+field.actualName+'[X]}}' }}
                 </code>
               </div>
-              <div class="">
+              <div class="col-1 p-0">
                 <i
                   class="far fa-copy"
                   #t2="bs-tooltip"
