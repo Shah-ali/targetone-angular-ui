@@ -134,6 +134,7 @@ export class MergeTagInjectionComponent implements OnInit {
       } else {
         this.shareService.isDMENonCustomerEditMode.next("");
       }
+      this.shareService.MultiArryAPIorDMEObj.next("single");
     }
 
     const modalComponent: any = isAPI ? ApiPersonalizationComponent : DMENonCustomerComponent;
@@ -172,7 +173,17 @@ export class MergeTagInjectionComponent implements OnInit {
             text: data.message,
           });
         } else {
+          GlobalConstants.selectedDmeModels = [];
+          GlobalConstants.selectedApiModels = [];
           this.mergeTagJSONData = JSON.parse(data.response);
+          this.mergeTagJSONData.forEach((item) => {
+            if (item.displayName === "API Data") {
+              GlobalConstants.selectedApiModels.push(...item.items.map((re) => ({ id: re.name })));
+            }
+            if (item.displayName === "DME Data") {
+              GlobalConstants.selectedDmeModels.push(...item.items.map((re) => ({ id: re.name })));
+            }
+          });
         }
         this.showLoader = false;
         this.cd.detectChanges();
@@ -196,27 +207,40 @@ export class MergeTagInjectionComponent implements OnInit {
         confirmButton: "buttonCssStyle",
       },
     }).then((result) => {
-      if (result.isConfirmed) {
-        const urlString =
-          AppConstants.MERGE_TAG_INJECTION.DELETE_MERGE_TAGS +
-          this.promotionKey +
-          "&type=" +
-          type +
-          "&name=" +
-          encodeURIComponent(selectedModelName) +
-          "&splitId=" +
-          this.currentSplitId;
-        this.http.post(urlString).subscribe((res) => {
-          console.log("Delete res:", res);
-          console.log("selectedModel:", this.selectedModel);
+      if (!result.isConfirmed) {
+        return;
+      }
 
-          this.mergeTagJSONData = JSON.parse(res.response);
-          if (this.mergeTagJSONData?.length > 0) {
-            this.selectedModel = this.mergeTagJSONData[0].items[0];
-            this.tempSelectedModel = this.selectedModel.input;
+      const urlString =
+        AppConstants.MERGE_TAG_INJECTION.DELETE_MERGE_TAGS +
+        this.promotionKey +
+        `&type=${type}` +
+        `&name=${encodeURIComponent(selectedModelName)}` +
+        `&splitId=${this.currentSplitId}`;
+      this.http.post(urlString).subscribe((res) => {
+        //console.log("Delete res:", res);
+        //console.log("selectedModel:", this.selectedModel);
+
+        this.mergeTagJSONData = JSON.parse(res.response);
+        if (this.mergeTagJSONData?.length) {
+          const firstItem = this.mergeTagJSONData[0]?.items?.[0];
+          if (firstItem) {
+            this.selectedModel = firstItem;
+            this.tempSelectedModel = firstItem.input;
+          }
+        }
+
+        GlobalConstants.selectedDmeModels = [];
+        GlobalConstants.selectedApiModels = [];
+        this.mergeTagJSONData?.forEach((item) => {
+          if (item.displayName === "API Data") {
+            GlobalConstants.selectedApiModels.push(...item.items.map((re) => ({ id: re.name })));
+          }
+          if (item.displayName === "DME Data") {
+            GlobalConstants.selectedDmeModels.push(...item.items.map((re) => ({ id: re.name })));
           }
         });
-      }
+      });
     });
   }
 

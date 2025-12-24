@@ -169,13 +169,24 @@ export class MergeTagCopyComponent implements OnInit {
   getItemsAdvanced(parentChildObj: any[]) {
     let selectedDME = GlobalConstants.selectedDmeModels;
     let selectedAPI = GlobalConstants.selectedApiModels;
-    const id1 = selectedDME.map((item) => item.id);
-    const id2 = selectedAPI.map((item) => item.id);
-    const ids = [...id1, ...id2];
+    const ids = [
+      ...selectedDME.map(item => item.id),
+      ...selectedAPI.map(item => item.id)
+    ];
+
+    const excludedTexts = [
+      'Customer',
+      'Tag parameters',
+      'Product',
+      'Promotion',
+      'Event'
+    ];
+
     let itemsArray: TreeviewItem[] = [];
+
     parentChildObj.forEach((set: TreeItem) => {
       let newSet;
-      if (set.children != undefined && set.text !== 'Customer' && set.text !== 'Tag parameters' && set.text !== 'Product' && set.text !== 'Promotion' && set.text !== 'Event') {
+      if (set.children && !excludedTexts.includes(set.text)) {
         const filterTextValues = ids;
         const newSetChildren = set.children.filter(function (item) {
           return filterTextValues.includes(item.text);
@@ -194,9 +205,18 @@ export class MergeTagCopyComponent implements OnInit {
       if (newSet) {
         if (newSet.children) {
           if(GlobalConstants.parentComponentName == 'MergeTagInjectionComponent') {
+            const isApiOrDme = newSet.text === 'API parameters' || newSet.text === 'DME';
             newSet.children.forEach((item) => {
-              if(item.varArrayType) {
-                item.value = item.value+'[X]';
+              if (isApiOrDme) {
+                item.children?.forEach((cItem) => {
+                  if(cItem.varArrayType) {
+                    cItem.value = `${cItem.value}[X]`;
+                    //cItem.text = `${cItem.text}[X]${cItem.varArrayType}`;
+                  }
+                });
+              } else if(item.varArrayType) {
+                item.value = `${item.value}[X]`;
+                //item.text = `${item.text}[X]${item.varArrayType}`;
               }
             });
           }
